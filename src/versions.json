@@ -1,5 +1,17 @@
 [
  {
+  "version": "13.3.1",
+  "date": "2026-10-14",
+  "titre": "Correctif : bouton mises à jour sans backup ouvert",
+  "resume": "Le bouton Mises à jour et installation, la vérification au démarrage et l'installation de l'application fonctionnent maintenant dès l'ouverture de la page, même quand aucun backup n'est chargé.",
+  "changements": [
+   "Le code des mises à jour et de l'installation démarre avec la page, et non plus seulement après l'ouverture d'un backup : le bouton du bandeau réagit dès l'écran « Aucun backup ouvert ».",
+   "La vérification au démarrage et la proposition d'installation de l'application se font aussi sans backup ouvert.",
+   "Aucun autre changement."
+  ],
+  "onglets": []
+ },
+ {
   "version": "13.3",
   "date": "2026-10-14",
   "titre": "Bouton mises à jour et installation dans le bandeau",

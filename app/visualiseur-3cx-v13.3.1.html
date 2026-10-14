@@ -667,10 +667,101 @@ document.addEventListener('click', e => {
     <button id="fwhdr" class="fwhdr" title="Vérifier les firmwares des téléphones (liste officielle 3CX)" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg><span class="lb">Vérifier les firmwares</span><span class="dot" hidden></span></button>
     <span class="updwrap"><button id="updbtn" class="fwhdr updbtn" title="Mises à jour et installation" aria-label="Mises à jour et installation" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="dot" hidden></span></button><div id="updpop" class="updpop" role="dialog" aria-label="Mises à jour et installation" hidden></div></span>
     <select id="segsel" aria-label="Magasin affiché" title="Filtrer l'interface par magasin" hidden></select>
-    <style>.vmenu{display:flex;gap:6px;align-items:center}.vmenu select{background:var(--panel2,#f1f3f6);color:var(--text,#1b1f24);border:1px solid var(--line,#e2e6eb);border-radius:6px;padding:4px 8px;font:inherit;font-size:13px;cursor:pointer}.vmenu a{color:var(--accent,#2563eb);font-size:13px;text-decoration:none;white-space:nowrap}.vmenu a:hover{text-decoration:underline}</style><div class="vmenu"><select aria-label="Version de l'application" onchange="location.href=this.value"><option value="visualiseur-3cx-v13.3.html" selected>Version 13.3 (actuelle)</option><option value="anciennes-versions/visualiseur-3cx-v13.2.html">Version 13.2</option><option value="anciennes-versions/visualiseur-3cx-v13.1.html">Version 13.1</option><option value="anciennes-versions/visualiseur-3cx-v13.0.html">Version 13.0</option></select><a href="documentation.html">Documentation</a></div>
+    <style>.vmenu{display:flex;gap:6px;align-items:center}.vmenu select{background:var(--panel2,#f1f3f6);color:var(--text,#1b1f24);border:1px solid var(--line,#e2e6eb);border-radius:6px;padding:4px 8px;font:inherit;font-size:13px;cursor:pointer}.vmenu a{color:var(--accent,#2563eb);font-size:13px;text-decoration:none;white-space:nowrap}.vmenu a:hover{text-decoration:underline}</style><div class="vmenu"><select aria-label="Version de l'application" onchange="location.href=this.value"><option value="visualiseur-3cx-v13.3.1.html" selected>Version 13.3.1 (actuelle)</option><option value="anciennes-versions/visualiseur-3cx-v13.3.html">Version 13.3</option><option value="anciennes-versions/visualiseur-3cx-v13.2.html">Version 13.2</option><option value="anciennes-versions/visualiseur-3cx-v13.1.html">Version 13.1</option><option value="anciennes-versions/visualiseur-3cx-v13.0.html">Version 13.0</option></select><a href="documentation.html">Documentation</a></div>
   </div>
 </header>
 <div id="updbar" class="updbar" role="status" hidden></div>
+<script>
+// Mises à jour et installation : démarre au chargement de la page, même sans backup ouvert
+(() => {
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+// ---------- Vérification des mises à jour (dernière release publique de 3CXplore sur GitHub) ----------
+// seule requête Internet de l'outil : elle demande à GitHub le numéro de la dernière version ; aucune donnée du backup n'est envoyée
+const UPD_REPO = 'mat3108/3cxplore', APP_VERSION = '13.3.1';
+const updCmp = (a, b) => { const x = String(a).replace(/^v/, '').split('.').map(Number), y = String(b).replace(/^v/, '').split('.').map(Number);
+  for(let i = 0; i < Math.max(x.length, y.length); i++){ const d = (x[i] || 0) - (y[i] || 0); if(d) return d; } return 0; };
+const updOn = () => { try{ return localStorage.getItem('maj3cx') !== 'off'; }catch(e){ return true; } };
+async function updCheck(force){
+  if(/^__/.test(APP_VERSION)) return {err: 'version de la page inconnue'};
+  let c = null; try{ c = JSON.parse(localStorage.getItem('maj3cx-cache') || 'null'); }catch(e){}
+  if(!force && c && c.tag && Date.now() - c.t < 864e5) return c; // au plus une vérification par jour
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 6000);
+  try{
+    const r = await fetch('https://api.github.com/repos/' + UPD_REPO + '/releases/latest', {signal: ac.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', headers: {Accept: 'application/vnd.github+json'}});
+    clearTimeout(tm); if(!r.ok) throw new Error('GitHub a répondu ' + r.status);
+    const j = await r.json(); c = {t: Date.now(), tag: j.tag_name, url: j.html_url, name: j.name};
+    try{ localStorage.setItem('maj3cx-cache', JSON.stringify(c)); }catch(e){}
+    return c;
+  }catch(e){ clearTimeout(tm); return {err: e.name === 'AbortError' ? 'pas de réponse (hors ligne ?)' : e.message}; }
+}
+function updBanner(c){
+  window.__updLast = c; setTimeout(updDot, 0); const b = document.getElementById('updbar'); if(!b) return;
+  let ign = ''; try{ ign = localStorage.getItem('maj3cx-ignore') || ''; }catch(e){}
+  if(!c || c.err || !c.tag || updCmp(c.tag, APP_VERSION) <= 0 || ign === c.tag){ b.hidden = true; return; }
+  b.hidden = false;
+  b.innerHTML = `<span><b>${esc(c.name || '3CXplore ' + c.tag.replace(/^v/, ''))}</b> est disponible — vous utilisez la version ${esc(APP_VERSION)}.</span>${pwaWeb() ? `<a class="btn primary" href="${esc(window.APP_ROOT)}index.html">Ouvrir la nouvelle version</a>` : `<a class="btn primary" href="${esc(c.url)}" target="_blank" rel="noopener">Télécharger la mise à jour</a>`}<button class="btn" id="updx">Plus tard</button>`;
+  document.getElementById('updx').addEventListener('click', () => { try{ localStorage.setItem('maj3cx-ignore', c.tag); }catch(e){} b.hidden = true; });
+}
+if(!window.__updDone){ window.__updDone = true; if(updOn()) updCheck(false).then(updBanner); }
+else if(window.__updLast) updBanner(window.__updLast);
+// bouton « Vérifier maintenant » de l'onglet Interface (branché une seule fois)
+if(!window.__updWired){ window.__updWired = true;
+  document.addEventListener('click', async e => { if(!e.target.closest || !e.target.closest('#uiupdnow')) return; const st = document.getElementById('uiupdst'); if(st) st.textContent = 'Vérification…';
+    const c = await updCheck(true); updBanner(c);
+    if(st) st.textContent = c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `Mise à jour disponible : ${c.tag.replace(/^v/, '')} (vous utilisez ${APP_VERSION}).` : `Vous utilisez la dernière version (${APP_VERSION}).`; }); }
+
+// ---------- Application installable (version web servie en https, par exemple GitHub Pages) ----------
+// le service worker garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est là ;
+// les backups ne passent jamais par lui (ils sont lus depuis le disque, dans le navigateur)
+const PWA_URL = 'https://mat3108.github.io/3cxplore/';
+// page servie par un site sécurisé (https, ou localhost pour les essais) : pas depuis un fichier ouvert en double-clic
+function pwaWeb(){ return !!window.isSecureContext && /^https?:$/.test(location.protocol) && !!window.APP_ROOT && !/^__/.test(window.APP_ROOT); }
+if(!window.__pwaWired){ window.__pwaWired = true;
+  window.__pwa = {prompt: null, installed: matchMedia('(display-mode: standalone)').matches || navigator.standalone === true};
+  if('serviceWorker' in navigator && pwaWeb()) navigator.serviceWorker.register(window.APP_ROOT + 'sw.js', {scope: window.APP_ROOT}).catch(() => {});
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); window.__pwa.prompt = e; const b = document.getElementById('pwainst'); if(b) b.hidden = false; });
+  window.addEventListener('appinstalled', () => { window.__pwa.installed = true; window.__pwa.prompt = null; const s = document.getElementById('pwast'); if(s) s.textContent = '3CXplore est installé.'; });
+  document.addEventListener('click', async e => { if(!e.target.closest || !e.target.closest('#pwainst')) return; const p = window.__pwa.prompt; if(!p) return;
+    p.prompt(); try{ await p.userChoice; }catch(er){} window.__pwa.prompt = null; const b = document.getElementById('pwainst'); if(b) b.hidden = true; });
+}
+
+// ---------- Bouton « Mises à jour et installation » du bandeau du haut ----------
+function updDot(){
+  const b = document.getElementById('updbtn'); if(!b) return;
+  const c = window.__updLast, newer = c && !c.err && c.tag && updCmp(c.tag, APP_VERSION) > 0, inst = !!(window.__pwa && window.__pwa.prompt);
+  b.classList.toggle('has', !!(newer || inst)); b.querySelector('.dot').hidden = !(newer || inst);
+  b.title = newer ? `Mise à jour disponible : ${c.tag.replace(/^v/, '')}` : inst ? 'Installer 3CXplore comme application' : 'Mises à jour et installation';
+}
+function updPopRender(msg){
+  const p = document.getElementById('updpop'); if(!p) return;
+  const c = window.__updLast, P = window.__pwa || {}, newer = c && !c.err && c.tag && updCmp(c.tag, APP_VERSION) > 0;
+  const de = document.querySelector('.vmenu a[href*="documentation"]'), doc = de ? de.getAttribute('href') : '';
+  const state = msg || (c && c.err ? `Dernière vérification impossible : ${c.err}.` : newer ? `${c.name || '3CXplore ' + c.tag.replace(/^v/, '')} est disponible.` : c && c.tag ? 'Vous utilisez la dernière version.' : 'Pas encore vérifié.');
+  const dl = newer ? (pwaWeb() ? `<a class="btn primary" href="${esc(window.APP_ROOT)}index.html">Ouvrir la nouvelle version</a>` : `<a class="btn primary" href="${esc(c.url)}" target="_blank" rel="noopener">Télécharger la mise à jour</a>`) : '';
+  const inst = P.installed ? '<div class="muted">Installé comme application : les mises à jour se font automatiquement.</div>'
+    : pwaWeb() ? `<button class="btn" id="pwainst"${P.prompt ? '' : ' hidden'}>Installer l'application</button>${P.prompt ? '' : '<div class="muted">Installation : menu du navigateur (Chrome ou Edge) → « Installer 3CXplore ».</div>'}`
+    : `<div class="muted">Pour installer 3CXplore comme application, ouvrez la version web : <a href="${PWA_URL}" target="_blank" rel="noopener">${PWA_URL.replace(/^https:\/\//, '')}</a></div>`;
+  p.innerHTML = `<div class="updpv">3CXplore <b>${esc(APP_VERSION)}</b>${doc ? ` · <a href="${esc(doc)}">nouveautés</a>` : ''}</div>
+    <div class="updps" id="updst">${esc(state)}</div>
+    <div class="updpa"><button class="btn" id="updchk">Vérifier les mises à jour</button>${dl}</div>
+    <div class="updpi"><div class="updpt">Application</div>${inst}</div>
+    <div class="muted updpn">La vérification demande seulement à GitHub le numéro de la dernière version ; aucune donnée du backup n'est envoyée.${updOn() ? '' : ' Vérification au démarrage désactivée (onglet Interface).'}</div>`;
+}
+if(!window.__updHdr){ window.__updHdr = true;
+  document.addEventListener('click', async e => {
+    const btn = e.target.closest && e.target.closest('#updbtn'), pop = document.getElementById('updpop');
+    if(btn){ if(pop.hidden){ updPopRender(); pop.hidden = false; } else pop.hidden = true; return; }
+    if(e.target.closest && e.target.closest('#updchk')){ const st = document.getElementById('updst'); if(st) st.textContent = 'Vérification…';
+      const c = await updCheck(true); updBanner(c); updPopRender(c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `${c.name || '3CXplore ' + c.tag.replace(/^v/, '')} est disponible.` : `Vous utilisez la dernière version (${APP_VERSION}).`); return; }
+    if(pop && !pop.hidden && !(e.target.closest && e.target.closest('#updpop'))) pop.hidden = true; });
+  document.addEventListener('keydown', e => { const pop = document.getElementById('updpop'); if(e.key === 'Escape' && pop && !pop.hidden) pop.hidden = true; });
+  window.addEventListener('beforeinstallprompt', () => setTimeout(() => { updDot(); const pop = document.getElementById('updpop'); if(pop && !pop.hidden) updPopRender(); }, 0));
+}
+updDot();
+
+window.UPD = {on: updOn, check: updCheck, version: APP_VERSION};
+})();
+</script>
 <div class="layout">
   <aside id="side" aria-label="Menu principal">
     <nav id="nav"></nav>
@@ -5731,7 +5822,7 @@ V.interface = el => {
     <div class="pvgrid">${APP_NAVSTYLES.map(([k, l, d]) => `<button class="card pvcard${(A.nav || 'classique') === k ? ' on' : ''}" data-nav="${k}" type="button"><span class="nvpv nvpv-${k}"><i></i><i class="on"></i><i></i><i></i></span><b>${esc(l)}</b><span class="muted" style="font-size:12px">${esc(d)}</span></button>`).join('')}</div>
     <div class="grid two" style="margin-top:10px">
       ${opt('Groupes du menu', radios('uinf', A.navFold === 'on' ? 'on' : 'off', [['off', 'Toujours ouverts'], ['on', 'Repliables']]), 'Repliables : un clic sur « Vue d\'ensemble », « Configuration »… ouvre ou ferme le groupe (l\'onglet actif reste visible).')}
-      ${opt('Mises à jour', radios('uiupd', updOn() ? 'on' : 'off', [['on', 'Vérifier au démarrage'], ['off', 'Ne pas vérifier']]), 'Le bouton de téléchargement du bandeau du haut permet de vérifier à tout moment et d\'installer l\'application. Au démarrage (au plus une fois par jour), 3CXplore demande à GitHub le numéro de la dernière version publiée et affiche un bandeau si une mise à jour existe. C\'est la seule requête Internet de l\'outil : aucune donnée du backup n\'est envoyée.')}
+      ${opt('Mises à jour', radios('uiupd', window.UPD && !window.UPD.on() ? 'off' : 'on', [['on', 'Vérifier au démarrage'], ['off', 'Ne pas vérifier']]), 'Le bouton de téléchargement du bandeau du haut permet de vérifier à tout moment et d\'installer l\'application. Au démarrage (au plus une fois par jour), 3CXplore demande à GitHub le numéro de la dernière version publiée et affiche un bandeau si une mise à jour existe. C\'est la seule requête Internet de l\'outil : aucune donnée du backup n\'est envoyée.')}
       ${opt('Compteurs du menu', radios('uinc', A.navCount === 'off' ? 'off' : 'on', [['on', 'Affichés'], ['off', 'Masqués']]))}
       ${opt('Espacement du menu', radios('uins', A.navSpace === 'serre' ? 'serre' : 'confort', [['confort', 'Confortable'], ['serre', 'Serré']]))}
     </div>
@@ -7064,97 +7155,6 @@ V.historique = (el, arg) => {
   $('#hxq').addEventListener('input', e => { const q = gsNorm(e.target.value), sel = $('#hxu'); if(!q) return; const o = [...sel.options].find(o => gsNorm(o.text).includes(q)); if(o && o.value !== S.u){ S.u = o.value; S.k = ''; re(); setTimeout(() => { const i = $('#hxq'); if(i){ i.value = e.target.value; i.focus(); } }, 0); } });
   $('#hxprint').addEventListener('click', () => { printHTML($('#hxsheet').outerHTML.replace('id="hxsheet"', '')); });
 };
-
-// ---------- Vérification des mises à jour (dernière release publique de 3CXplore sur GitHub) ----------
-// seule requête Internet de l'outil : elle demande à GitHub le numéro de la dernière version ; aucune donnée du backup n'est envoyée
-const UPD_REPO = 'mat3108/3cxplore', APP_VERSION = '13.3';
-const updCmp = (a, b) => { const x = String(a).replace(/^v/, '').split('.').map(Number), y = String(b).replace(/^v/, '').split('.').map(Number);
-  for(let i = 0; i < Math.max(x.length, y.length); i++){ const d = (x[i] || 0) - (y[i] || 0); if(d) return d; } return 0; };
-const updOn = () => { try{ return localStorage.getItem('maj3cx') !== 'off'; }catch(e){ return true; } };
-async function updCheck(force){
-  if(/^__/.test(APP_VERSION)) return {err: 'version de la page inconnue'};
-  let c = null; try{ c = JSON.parse(localStorage.getItem('maj3cx-cache') || 'null'); }catch(e){}
-  if(!force && c && c.tag && Date.now() - c.t < 864e5) return c; // au plus une vérification par jour
-  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 6000);
-  try{
-    const r = await fetch('https://api.github.com/repos/' + UPD_REPO + '/releases/latest', {signal: ac.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', headers: {Accept: 'application/vnd.github+json'}});
-    clearTimeout(tm); if(!r.ok) throw new Error('GitHub a répondu ' + r.status);
-    const j = await r.json(); c = {t: Date.now(), tag: j.tag_name, url: j.html_url, name: j.name};
-    try{ localStorage.setItem('maj3cx-cache', JSON.stringify(c)); }catch(e){}
-    return c;
-  }catch(e){ clearTimeout(tm); return {err: e.name === 'AbortError' ? 'pas de réponse (hors ligne ?)' : e.message}; }
-}
-function updBanner(c){
-  window.__updLast = c; setTimeout(updDot, 0); const b = $('#updbar'); if(!b) return;
-  let ign = ''; try{ ign = localStorage.getItem('maj3cx-ignore') || ''; }catch(e){}
-  if(!c || c.err || !c.tag || updCmp(c.tag, APP_VERSION) <= 0 || ign === c.tag){ b.hidden = true; return; }
-  b.hidden = false;
-  b.innerHTML = `<span><b>${esc(c.name || '3CXplore ' + c.tag.replace(/^v/, ''))}</b> est disponible — vous utilisez la version ${esc(APP_VERSION)}.</span>${pwaWeb() ? `<a class="btn primary" href="${esc(window.APP_ROOT)}index.html">Ouvrir la nouvelle version</a>` : `<a class="btn primary" href="${esc(c.url)}" target="_blank" rel="noopener">Télécharger la mise à jour</a>`}<button class="btn" id="updx">Plus tard</button>`;
-  $('#updx').addEventListener('click', () => { try{ localStorage.setItem('maj3cx-ignore', c.tag); }catch(e){} b.hidden = true; });
-}
-if(!window.__updDone){ window.__updDone = true; if(updOn()) updCheck(false).then(updBanner); }
-else if(window.__updLast) updBanner(window.__updLast);
-// bouton « Vérifier maintenant » de l'onglet Interface (branché une seule fois)
-if(!window.__updWired){ window.__updWired = true;
-  document.addEventListener('click', async e => { if(!e.target.closest || !e.target.closest('#uiupdnow')) return; const st = document.getElementById('uiupdst'); if(st) st.textContent = 'Vérification…';
-    const c = await updCheck(true); updBanner(c);
-    if(st) st.textContent = c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `Mise à jour disponible : ${c.tag.replace(/^v/, '')} (vous utilisez ${APP_VERSION}).` : `Vous utilisez la dernière version (${APP_VERSION}).`; }); }
-
-// ---------- Application installable (version web servie en https, par exemple GitHub Pages) ----------
-// le service worker garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est là ;
-// les backups ne passent jamais par lui (ils sont lus depuis le disque, dans le navigateur)
-const PWA_URL = 'https://mat3108.github.io/3cxplore/';
-// page servie par un site sécurisé (https, ou localhost pour les essais) : pas depuis un fichier ouvert en double-clic
-function pwaWeb(){ return !!window.isSecureContext && /^https?:$/.test(location.protocol) && !!window.APP_ROOT && !/^__/.test(window.APP_ROOT); }
-if(!window.__pwaWired){ window.__pwaWired = true;
-  window.__pwa = {prompt: null, installed: matchMedia('(display-mode: standalone)').matches || navigator.standalone === true};
-  if('serviceWorker' in navigator && pwaWeb()) navigator.serviceWorker.register(window.APP_ROOT + 'sw.js', {scope: window.APP_ROOT}).catch(() => {});
-  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); window.__pwa.prompt = e; const b = document.getElementById('pwainst'); if(b) b.hidden = false; });
-  window.addEventListener('appinstalled', () => { window.__pwa.installed = true; window.__pwa.prompt = null; const s = document.getElementById('pwast'); if(s) s.textContent = '3CXplore est installé.'; });
-  document.addEventListener('click', async e => { if(!e.target.closest || !e.target.closest('#pwainst')) return; const p = window.__pwa.prompt; if(!p) return;
-    p.prompt(); try{ await p.userChoice; }catch(er){} window.__pwa.prompt = null; const b = document.getElementById('pwainst'); if(b) b.hidden = true; });
-}
-function pwaCard(){
-  const P = window.__pwa || {};
-  const body = P.installed ? '<p style="margin:0"><span class="pill ok">Installé</span> 3CXplore est ouvert comme application. Les mises à jour se font automatiquement : la nouvelle version est utilisée au prochain démarrage.</p>'
-    : pwaWeb() ? `<p style="margin:0 0 8px">Installez 3CXplore comme une application : icône sur le bureau, fenêtre à part, fonctionnement hors ligne et mises à jour automatiques.</p><button class="btn primary" id="pwainst"${P.prompt ? '' : ' hidden'}>Installer l'application</button> <span class="muted" id="pwast" style="font-size:12.5px">${P.prompt ? '' : 'Si le bouton n\'apparaît pas : menu du navigateur (Chrome ou Edge) → « Installer 3CXplore » ou icône d\'installation dans la barre d\'adresse.'}</span>`
-    : `<p style="margin:0">Cette page est ouverte depuis un fichier sur l'ordinateur : l'installation comme application n'est possible que depuis la version web. Ouvrez <a href="${PWA_URL}" target="_blank" rel="noopener">${PWA_URL}</a> dans Chrome ou Edge, puis choisissez « Installer 3CXplore ». Les backups y restent lus uniquement dans votre navigateur.</p>`;
-  return `<div class="card"><h3 style="margin-top:0">Application</h3>${body}</div>`;
-}
-
-// ---------- Bouton « Mises à jour et installation » du bandeau du haut ----------
-function updDot(){
-  const b = document.getElementById('updbtn'); if(!b) return;
-  const c = window.__updLast, newer = c && !c.err && c.tag && updCmp(c.tag, APP_VERSION) > 0, inst = !!(window.__pwa && window.__pwa.prompt);
-  b.classList.toggle('has', !!(newer || inst)); b.querySelector('.dot').hidden = !(newer || inst);
-  b.title = newer ? `Mise à jour disponible : ${c.tag.replace(/^v/, '')}` : inst ? 'Installer 3CXplore comme application' : 'Mises à jour et installation';
-}
-function updPopRender(msg){
-  const p = document.getElementById('updpop'); if(!p) return;
-  const c = window.__updLast, P = window.__pwa || {}, newer = c && !c.err && c.tag && updCmp(c.tag, APP_VERSION) > 0;
-  const de = document.querySelector('.vmenu a[href*="documentation"]'), doc = de ? de.getAttribute('href') : '';
-  const state = msg || (c && c.err ? `Dernière vérification impossible : ${c.err}.` : newer ? `${c.name || '3CXplore ' + c.tag.replace(/^v/, '')} est disponible.` : c && c.tag ? 'Vous utilisez la dernière version.' : 'Pas encore vérifié.');
-  const dl = newer ? (pwaWeb() ? `<a class="btn primary" href="${esc(window.APP_ROOT)}index.html">Ouvrir la nouvelle version</a>` : `<a class="btn primary" href="${esc(c.url)}" target="_blank" rel="noopener">Télécharger la mise à jour</a>`) : '';
-  const inst = P.installed ? '<div class="muted">Installé comme application : les mises à jour se font automatiquement.</div>'
-    : pwaWeb() ? `<button class="btn" id="pwainst"${P.prompt ? '' : ' hidden'}>Installer l'application</button>${P.prompt ? '' : '<div class="muted">Installation : menu du navigateur (Chrome ou Edge) → « Installer 3CXplore ».</div>'}`
-    : `<div class="muted">Pour installer 3CXplore comme application, ouvrez la version web : <a href="${PWA_URL}" target="_blank" rel="noopener">${PWA_URL.replace(/^https:\/\//, '')}</a></div>`;
-  p.innerHTML = `<div class="updpv">3CXplore <b>${esc(APP_VERSION)}</b>${doc ? ` · <a href="${esc(doc)}">nouveautés</a>` : ''}</div>
-    <div class="updps" id="updst">${esc(state)}</div>
-    <div class="updpa"><button class="btn" id="updchk">Vérifier les mises à jour</button>${dl}</div>
-    <div class="updpi"><div class="updpt">Application</div>${inst}</div>
-    <div class="muted updpn">La vérification demande seulement à GitHub le numéro de la dernière version ; aucune donnée du backup n'est envoyée.${updOn() ? '' : ' Vérification au démarrage désactivée (onglet Interface).'}</div>`;
-}
-if(!window.__updHdr){ window.__updHdr = true;
-  document.addEventListener('click', async e => {
-    const btn = e.target.closest && e.target.closest('#updbtn'), pop = document.getElementById('updpop');
-    if(btn){ if(pop.hidden){ updPopRender(); pop.hidden = false; } else pop.hidden = true; return; }
-    if(e.target.closest && e.target.closest('#updchk')){ const st = document.getElementById('updst'); if(st) st.textContent = 'Vérification…';
-      const c = await updCheck(true); updBanner(c); updPopRender(c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `${c.name || '3CXplore ' + c.tag.replace(/^v/, '')} est disponible.` : `Vous utilisez la dernière version (${APP_VERSION}).`); return; }
-    if(pop && !pop.hidden && !(e.target.closest && e.target.closest('#updpop'))) pop.hidden = true; });
-  document.addEventListener('keydown', e => { const pop = document.getElementById('updpop'); if(e.key === 'Escape' && pop && !pop.hidden) pop.hidden = true; });
-  window.addEventListener('beforeinstallprompt', () => setTimeout(() => { updDot(); const pop = document.getElementById('updpop'); if(pop && !pop.hidden) updPopRender(); }, 0));
-}
-updDot();
 
 // ---------- Sauvegarde complète des réglages ----------
 const SET_CATS = [
