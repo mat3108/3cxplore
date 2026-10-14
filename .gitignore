@@ -1,0 +1,18 @@
+# Backups 3CX et archives : données sensibles (appels, enregistrements, identifiants) — ne jamais versionner
+*.zip
+backup_extrait/
+
+# Exports de l'interface (CSV, réglages) : peuvent contenir des numéros de clients
+*.csv
+reglages-3cx-*.json
+suivi-3cx-*.json
+
+# Fichiers locaux
+.DS_Store
+.claude/
+
+# Paquets de partage (publiés dans les releases GitHub)
+dist/
+
+# Termes propres à l'organisation (neutralisation, contrôles) : uniquement en local
+scripts/local/

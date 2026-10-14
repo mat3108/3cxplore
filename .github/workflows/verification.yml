@@ -1,0 +1,34 @@
+# Contrôle automatique du dépôt à chaque envoi (push) et demande de fusion.
+# En cas d'échec, GitHub envoie un courriel à la personne qui a fait l'envoi.
+name: Contrôle du dépôt
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controle:
+    name: Pages, liens et données sensibles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Les pages générées correspondent aux sources
+        run: |
+          python3 scripts/generer_interface.py
+          if ! git diff --quiet; then
+            git diff --stat
+            echo "::error::Les fichiers générés ne correspondent pas aux sources : lancer python3 scripts/generer_interface.py puis envoyer le résultat."
+            exit 1
+          fi
+      - name: Fichiers interdits, données sensibles, liens et JavaScript
+        run: python3 scripts/verifier_depot.py
