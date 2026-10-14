@@ -1,5 +1,33 @@
 [
  {
+  "version": "15.1.1",
+  "date": "2026-10-14",
+  "titre": "Choix du menu : simplifié ou expert",
+  "resume": "Un sélecteur « Simplifié / Expert » en haut du menu de gauche permet de passer du menu épuré de la 15.1 (22 entrées et sous-onglets) au menu complet de la 15.0 (les 62 onglets à plat), sans recharger la page.",
+  "changements": [
+   "Sélecteur « Simplifié / Expert » en haut du menu de gauche, au-dessus de « Vue d'ensemble » ; masqué quand le menu est réduit aux icônes.",
+   "Simplifié (par défaut) : menu de la 15.1, onglets voisins regroupés avec des sous-onglets en haut de page.",
+   "Expert : menu de la 15.0, les 62 onglets à plat, sans sous-onglets.",
+   "Le choix est mémorisé dans ce navigateur ; l'onglet ouvert reste affiché au changement de menu.",
+   "Sélecteur traduit en anglais (Simple / Expert)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.1",
+  "date": "2026-10-14",
+  "titre": "Menu épuré : 22 entrées au lieu de 62",
+  "resume": "Le menu de gauche regroupe les onglets voisins sous une seule entrée (Acheminement, Postes et téléphones, Structure, Appels, Files et agents, Analyse, Sécurité et droits, Employés, Changements, Réglages) ; chaque entrée ouvre une page avec ses sous-onglets en haut. Aucun onglet n'est supprimé.",
+  "changements": [
+   "Menu de gauche : 22 entrées au lieu de 62, dans les mêmes quatre groupes.",
+   "Dix entrées regroupées : Acheminement (flux, diagramme, simulateur, contrôle des SDA, pièges, plan de numérotation), Postes et téléphones (postes, téléphones, touches BLF, modèle de touches, licences), Structure (départements, organigramme, IVR, groupes de sonnerie, jours fériés, horaires), Appels (appels, appels manqués, historique client, réceptions, parkings), Files et agents (files, appels en file, agents, effectif, personnes indispensables), Analyse (statistiques, classement, comparer les magasins, qualité, menus IVR), Sécurité et droits (sécurité, renvois externes, visibilité, matrice des droits, comparer deux utilisateurs), Employés (nouvel employé, départ, historique), Changements (suivi, comparaison, avant / après, modifications, journal d'audit) et Réglages (objectifs, magasins, interface, sauvegarde des réglages, paramètres).",
+   "Barre de sous-onglets en haut de chaque page regroupée, avec les compteurs ; l'entrée du menu rouvre le dernier sous-onglet consulté.",
+   "Les adresses des onglets ne changent pas (favoris, liens entre onglets, onglet d'accueil) ; la palette de commandes (⌘K) liste toujours les 62 onglets.",
+   "Libellés du menu traduits en anglais."
+  ],
+  "onglets": []
+ },
+ {
   "version": "15.0",
   "date": "2026-10-14",
   "titre": "3CXplore entièrement en anglais",
