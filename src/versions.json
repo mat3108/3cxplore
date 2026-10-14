@@ -1,5 +1,52 @@
 [
  {
+  "version": "14.0",
+  "date": "2026-10-14",
+  "titre": "Interface en anglais (première étape)",
+  "resume": "Nouveau bouton FR / EN dans le bandeau : 3CXplore s'affiche en anglais. Cette première étape traduit le cadre (menu, bandeau, accueil, chargement, mises à jour) et les onglets principaux ; les autres onglets restent en français pour l'instant et seront traduits dans les versions 14.x.",
+  "changements": [
+   "Bouton FR / EN dans le bandeau du haut, disponible même sans backup ouvert ; le choix est mémorisé dans le navigateur et la page se recharge sans perdre le backup ouvert.",
+   "Langue choisie automatiquement à la première ouverture selon la langue du navigateur (français si le navigateur est en français, anglais sinon).",
+   "Traduits en anglais : menu et noms des 62 onglets, bandeau, écran d'accueil, étapes de chargement, messages d'erreur, mises à jour et installation, tableaux (recherche, pages, filtres, export).",
+   "Onglets traduits : Tableau de bord, Postes, Téléphones, Appels, Appels manqués, Files d'attente, Départements, Interface, Licences et postes, et la fiche d'un poste.",
+   "Les données du backup (noms, numéros, départements) ne sont jamais traduites ; les dates et les nombres gardent leur format.",
+   "Les onglets pas encore traduits restent en français ; la documentation reste en français."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "13.4.1",
+  "date": "2026-10-14",
+  "titre": "Correctif : boucle de redirections hors connexion",
+  "resume": "Version web installable : hors connexion, ouvrir une page qui n'est pas gardée en mémoire (par exemple une ancienne version) pouvait faire boucler les redirections (adresse « app/app/app/… »). Le service worker redirige maintenant vers la vraie page d'accueil.",
+  "changements": [
+   "Hors connexion ou page disparue : redirection vers la page d'accueil à sa vraie adresse, au lieu d'afficher son contenu sous l'adresse demandée (ce qui faisait boucler ses liens relatifs).",
+   "Un fichier qui n'est ni en ligne ni en mémoire (image, script) renvoie maintenant une erreur au lieu de la page d'accueil.",
+   "Aucun changement dans l'outil lui-même : seul le service worker (sw.js) de la version web change."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "13.4",
+  "date": "2026-10-14",
+  "titre": "Licences et postes : postes inutilisés et téléphones à récupérer",
+  "resume": "L'onglet Licences et postes repère mieux les postes inutilisés : seuil d'inactivité au choix, postes inutilisés encore visés par un acheminement, téléphones de bureau à récupérer et téléphones jamais vus.",
+  "changements": [
+   "Seuil d'inactivité au choix : 30, 60, 90 ou 180 jours sans appel.",
+   "Nouveau motif « Encore dans un acheminement » : poste inutilisé ou désactivé encore visé par un menu, une file, un groupe de sonnerie, une SDA, un renvoi ou une touche BLF d'un collègue.",
+   "Nouvelle liste « Téléphones à récupérer » : téléphones de bureau (modèle, adresse MAC) rattachés à un poste jamais utilisé, inactif ou désactivé, avec export CSV.",
+   "Nouveaux motifs « Téléphone jamais vu » (adresse MAC absente des rapports de qualité d'appel) et « Aucun téléphone ».",
+   "Fiche de chaque poste : téléphones et dernière date où ils ont été vus, files et groupes, collègues qui le surveillent par BLF, « Où est-ce utilisé ? » et lien vers la fiche de départ.",
+   "Tableau par magasin et export CSV complétés (acheminements, touches BLF, téléphones)."
+  ],
+  "onglets": [
+   [
+    "Licences et postes",
+    "Postes jamais utilisés ou inactifs (seuil au choix), encore visés par un acheminement, en double ou désactivés ; téléphones à récupérer ; pic d'appels simultanés."
+   ]
+  ]
+ },
+ {
   "version": "13.3.3",
   "date": "2026-10-14",
   "titre": "Bouton « Mise à jour / Téléchargement » avec son texte",

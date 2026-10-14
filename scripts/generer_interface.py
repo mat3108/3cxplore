@@ -571,16 +571,20 @@ const CACHE = '3cxplore-%s';
 const FILES = %s;
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith('3cxplore-') && n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
+// page d'accueil : on y redirige (vraie adresse) au lieu d'afficher son contenu sous une autre adresse,
+// sinon ses liens relatifs pointent au mauvais endroit et les redirections bouclent (app/app/app/…)
+const HOME = new URL('./index.html', self.registration.scope).href;
+const home = r => r.mode === 'navigate' && r.url.split('#')[0] !== HOME ? Response.redirect(HOME, 302) : null;
 self.addEventListener('fetch', e => {
   const r = e.request;
   if(r.method !== 'GET' || new URL(r.url).origin !== self.location.origin) return;
   // réseau d'abord (dernière version), copie locale si hors ligne
   e.respondWith(fetch(r).then(res => {
       if(res.ok){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); return res; }
-      // page disparue (ancienne adresse) : afficher la dernière version plutôt qu'une erreur 404
-      if(r.mode === 'navigate' && res.status === 404) return fetch('./index.html').catch(() => caches.match('./index.html')).then(x => x || res);
+      // page disparue (ancienne adresse) : aller à la dernière version plutôt qu'afficher une erreur 404
+      if(res.status === 404) return home(r) || res;
       return res; })
-    .catch(() => caches.match(r).then(m => m || caches.match('./index.html'))));
+    .catch(() => caches.match(r).then(m => m || home(r) || Response.error())));
 });
 """ % (version, json.dumps(files))
     with open(os.path.join(BASE, "sw.js"), "w", encoding="utf-8") as f:
