@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-14.0-2563eb)
+![Version](https://img.shields.io/badge/version-15.0-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -77,7 +77,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Appels manqués** | Liste de rappel des clients sans réponse non rappelés, par magasin : tentatives, heure, cause, statut de rappel ; suivi « Traité », export CSV et impression. |
 | **Historique client** | Tous les échanges avec un numéro de téléphone : appels, parcours, issues, interlocuteurs, files, messages vocaux, enregistrements. |
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
-| **Statistiques** | Comparaison des magasins sur une période : taux de réponse, appels perdus, attente en file, heures de pointe, évolution quotidienne ; export CSV. |
+| **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
 | **Agents** | Performance par agent et par magasin sur une période : répondus, conversation moyenne, taux de réponse en file, manquées, décroché moyen, sortants ; fiche détaillée et export CSV. |
 | **Personnes indispensables** | Files, groupes et numéros qui dépendent d'une seule personne. |
 | **Effectif selon l'achalandage** | Appels, pertes et agents par créneau, et agents nécessaires. |
@@ -186,7 +186,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **14.0** | Interface en anglais (première étape) |
+| **15.0** | 3CXplore entièrement en anglais |
+| 14.x | Interface en anglais (première étape) · Interface en anglais : deuxième étape · Statistiques : carte de chaleur jour × heure enrichie |
 | 13.x | Première version publique de 3CXplore · Avis de mise à jour au démarrage · Application installable (version web) · Bouton mises à jour et installation dans le bandeau · Correctif : bouton mises à jour sans backup ouvert · … |
 <!-- VERSIONS:END -->
 

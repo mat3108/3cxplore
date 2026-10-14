@@ -1,5 +1,53 @@
 [
  {
+  "version": "15.0",
+  "date": "2026-10-14",
+  "titre": "3CXplore entièrement en anglais",
+  "resume": "Le bouton FR / EN traduit maintenant tout l'outil : le contenu des 62 onglets, leurs fiches, filtres, rapports et messages, en plus du menu et du bandeau.",
+  "changements": [
+   "Traduction anglaise du contenu de tous les onglets encore en français : configuration (postes, files, SDA, départements, horaires, jours fériés…), activité (appels, agents, qualité, parkings, enregistrements…) et système (sécurité, droits, audit, assistants nouvel employé et départ, interface, sauvegarde des réglages…).",
+   "Environ 1 800 textes et gabarits ajoutés au dictionnaire ; les données du backup (noms, numéros, départements) ne sont jamais traduites.",
+   "Recherche des gabarits indexée par mot-clé : la traduction reste rapide malgré la taille du dictionnaire.",
+   "Corrige une vingtaine de traductions de la 14.0 perdues dans la 14.1 (par exemple « Inactif après », « Modifications de la configuration »).",
+   "Le français reste la langue par défaut quand le navigateur est en français ; la documentation reste en français."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "14.1",
+  "date": "2026-10-14",
+  "titre": "Statistiques : carte de chaleur jour × heure enrichie",
+  "resume": "La carte des heures de pointe de l'onglet Statistiques devient une vraie carte de chaleur : appels entrants, appels perdus ou taux de perte, par magasin et par file d'attente, avec les pires créneaux et le détail des appels de chaque case.",
+  "changements": [
+   "Mesure au choix : appels entrants, appels perdus ou taux de perte (calculé à partir de 5 appels dans le créneau).",
+   "Filtre par file d'attente en plus du filtre par magasin ; la période suit celle de l'onglet.",
+   "Clic sur une case : liste des appels de ce créneau (date, SDA appelé, appelant, issue, durée), les 300 plus récents.",
+   "Pires créneaux en un coup d'œil (les plus chargés, le plus d'appels perdus ou le plus fort taux de perte), cliquables.",
+   "Légende de l'échelle et info-bulle de chaque case : appels entrants, perdus et part perdue.",
+   "Textes de la carte traduits en anglais.",
+   "Anglais : corrige quelques phrases où deux valeurs se suivent (pluriels, « agents connectés · déconnectés »)."
+  ],
+  "onglets": [
+   [
+    "Statistiques",
+    "Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau."
+   ]
+  ]
+ },
+ {
+  "version": "14.0.1",
+  "date": "2026-10-14",
+  "titre": "Interface en anglais : deuxième étape",
+  "resume": "Sept onglets de plus s'affichent en anglais : Recommandations, Note de santé, Priorités, Flux d'appels, Statistiques, Agents et Rapport, y compris toutes les recommandations que l'analyse peut produire.",
+  "changements": [
+   "Traduits en anglais : Recommandations (titres, détails, actions à faire, notes et observations), Note de santé, Priorités, Flux d'appels (arbres et diagrammes), Statistiques, Agents et Rapport.",
+   "Toutes les recommandations de l'analyse automatique sont traduites, même celles qui n'apparaissent pas avec le backup affiché.",
+   "Les phrases avec des nombres ou des noms (par exemple « 12 postes nominatifs sans MFA ») sont traduites par gabarits : seules les parties de texte changent, les valeurs restent celles du backup.",
+   "Jours de la semaine abrégés traduits (Lun → Mon…) dans les horaires et les heures de pointe."
+  ],
+  "onglets": []
+ },
+ {
   "version": "14.0",
   "date": "2026-10-14",
   "titre": "Interface en anglais (première étape)",
