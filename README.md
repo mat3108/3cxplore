@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-13.0-2563eb)
+![Version](https://img.shields.io/badge/version-13.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -17,6 +17,7 @@
 
 - **Aucune installation** : un seul fichier HTML à ouvrir dans le navigateur.
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
+- **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
 - **62 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
@@ -27,6 +28,8 @@
 3. Choisir un magasin dans le bandeau, ou rester sur « Tous les magasins ».
 
 Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**, qui permet de choisir ce qui est effacé.
+
+**Version web installable** : ouverte depuis son adresse web (GitHub Pages, par exemple `https://mat3108.github.io/3cxplore/`), l'interface s'installe comme une application dans Chrome ou Edge (onglet **Interface** → **Installer l'application**) : icône sur le bureau, fenêtre à part, fonctionnement hors ligne et mises à jour automatiques. Le backup reste lu uniquement dans le navigateur.
 
 ## 🧭 Ce que contient l'interface
 
@@ -113,6 +116,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ## 🔒 Confidentialité et sécurité
 
 - Le backup est **lu dans le navigateur** (lecteur ZIP intégré) et mémorisé localement (IndexedDB) ; **rien n'est envoyé sur Internet**.
+- Seule requête Internet : au démarrage (au plus une fois par jour), l'outil demande à GitHub le numéro de la dernière version publiée de 3CXplore, pour signaler une mise à jour. Aucune donnée du backup n'est transmise ; l'option se désactive dans l'onglet **Interface**.
 - Les **mots de passe, PIN, secrets et clés** sont masqués ou ignorés à la lecture.
 - **« Fermer le backup »** efface le backup, la mémoire de la session et, au choix, la référence de comparaison, les numéros de clients et les réglages.
 - Ce dépôt **ne contient aucune donnée** : les backups (`*.zip`) et les exports (`*.csv`, réglages) sont exclus par le [`.gitignore`](.gitignore).
@@ -140,7 +144,8 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 │   ├── verifier_depot.py           # contrôle du dépôt (aussi lancé par GitHub)
 │   └── verifier-firmwares.command  # mise à jour de la liste des firmwares (macOS, double-clic)
 ├── assets/
-│   └── logo.svg, logo-icone.svg
+│   └── logo.svg, logo-icone.svg, icone-192.png, icone-512.png
+├── manifest.webmanifest, sw.js     # application installable (générés)
 └── dist/                           # paquets de partage (non versionnés)
 ```
 
@@ -181,7 +186,9 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **13.0** | Première version publique de 3CXplore |
+| **13.2** | Application installable (version web) |
+| 13.1 | Avis de mise à jour au démarrage |
+| 13.0 | Première version publique de 3CXplore |
 <!-- VERSIONS:END -->
 
 L'historique complet est dans [`app/documentation.html`](app/documentation.html).

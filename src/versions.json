@@ -1,5 +1,33 @@
 [
  {
+  "version": "13.2",
+  "date": "2026-10-14",
+  "titre": "Application installable (version web)",
+  "resume": "Ouvert depuis sa version web (GitHub Pages), 3CXplore s'installe comme une application : icône sur le bureau, fenêtre à part, fonctionnement hors ligne et mises à jour automatiques. Les backups restent lus uniquement dans le navigateur.",
+  "changements": [
+   "Manifeste d'application (nom, icônes 192 et 512 px, couleurs) et service worker générés à la racine du projet par le générateur.",
+   "Service worker : copie de l'outil pour le hors ligne, récupération de la dernière version quand le réseau est disponible ; il ne voit jamais les backups, lus depuis le disque.",
+   "Onglet Interface : carte « Application » avec le bouton « Installer l'application » (Chrome, Edge), l'état « Installé », ou le lien vers la version web quand la page est ouverte depuis un fichier.",
+   "Avis de mise à jour : dans la version web, le bouton devient « Ouvrir la nouvelle version ».",
+   "Ouvert en double-clic depuis un fichier (paquet zip), rien ne change : pas de service worker ni d'installation."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "13.1",
+  "date": "2026-10-14",
+  "titre": "Avis de mise à jour au démarrage",
+  "resume": "Au démarrage, 3CXplore vérifie s'il existe une version plus récente publiée sur GitHub et affiche un bandeau avec le lien de téléchargement ; l'option se désactive dans l'onglet Interface.",
+  "changements": [
+   "Au démarrage (au plus une fois par jour), demande à GitHub le numéro de la dernière release publique de 3CXplore et le compare à la version de la page.",
+   "Bandeau sous l'en-tête quand une mise à jour existe : nom de la nouvelle version, version utilisée, bouton « Télécharger la mise à jour » et « Plus tard » (masque l'avis pour cette version).",
+   "Onglet Interface : option « Vérifier au démarrage / Ne pas vérifier » et bouton « Vérifier maintenant ».",
+   "Hors ligne ou sans réponse de GitHub en 6 secondes : rien ne s'affiche et rien n'est bloqué.",
+   "Confidentialité : c'est la seule requête Internet de l'outil ; elle ne transmet aucune donnée du backup (README et LISEZMOI mis à jour)."
+  ],
+  "onglets": []
+ },
+ {
   "version": "13.0",
   "date": "2026-10-14",
   "titre": "Première version publique de 3CXplore",

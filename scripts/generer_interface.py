@@ -552,6 +552,38 @@ def fix_paths(html, here):
     return html.replace("verifier_firmwares.command", "verifier-firmwares.command").replace("firmwares_3cx.js", "firmwares-3cx.js")
 
 
+def write_pwa(version, latest):
+    """Version web installable : manifeste d'application et service worker à la racine du site (GitHub Pages)."""
+    manifest = {"name": "3CXplore", "short_name": "3CXplore", "description": "Explorez votre 3CX en profondeur",
+                "lang": "fr", "start_url": "./index.html", "scope": "./", "display": "standalone",
+                "background_color": "#042C53", "theme_color": "#042C53",
+                "icons": [{"src": "assets/icone-192.png", "sizes": "192x192", "type": "image/png"},
+                          {"src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png"},
+                          {"src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}
+    with open(os.path.join(BASE, "manifest.webmanifest"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=1)
+    files = ["./", "./index.html", "./app/" + latest, "./app/documentation.html", "./app/firmwares-3cx.js", "./manifest.webmanifest",
+             "./assets/icone-192.png", "./assets/icone-512.png", "./assets/logo-icone.svg"]
+    sw = """// 3CXplore — service worker (généré par scripts/generer_interface.py ; ne pas modifier à la main)
+// Garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est disponible.
+// Les backups ne passent jamais par ici : ils sont lus depuis le disque, dans le navigateur.
+const CACHE = '3cxplore-%s';
+const FILES = %s;
+self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
+self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith('3cxplore-') && n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
+self.addEventListener('fetch', e => {
+  const r = e.request;
+  if(r.method !== 'GET' || new URL(r.url).origin !== self.location.origin) return;
+  // réseau d'abord (dernière version), copie locale si hors ligne
+  e.respondWith(fetch(r).then(res => { if(res.ok){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); } return res; })
+    .catch(() => caches.match(r).then(m => m || caches.match('./index.html'))));
+});
+""" % (version, json.dumps(files))
+    with open(os.path.join(BASE, "sw.js"), "w", encoding="utf-8") as f:
+        f.write(sw)
+    open(os.path.join(BASE, ".nojekyll"), "w").close()  # GitHub Pages : servir les fichiers tels quels
+
+
 def version_menu(versions, current, floating=False, here="app"):
     """Sélecteur de version + lien vers la documentation, injecté dans chaque page."""
     latest = next((v["version"] for v in versions if not v.get("retiree")), None)
@@ -592,6 +624,8 @@ def build_versions(data, D):
             html = f.read()
         here = "app" if v is active[0] else "old"
         html = fix_paths(html.replace("/*__DATA__*/null", data), here)
+        html = html.replace("__APP_VERSION__", v["version"])  # numéro de version de la page (vérification des mises à jour)
+        html = html.replace("__ROOT__", "../" if here == "app" else "../../")  # racine du site (manifeste, service worker)
         if "<!--__VERSION_MENU__-->" in html:
             html = html.replace("<!--__VERSION_MENU__-->", version_menu(versions, v["version"], here=here))
         else:
@@ -609,6 +643,7 @@ def build_versions(data, D):
         if f not in keep:
             os.remove(f)
             print("Retiré (page générée déplacée) :", os.path.relpath(f, BASE))
+    write_pwa(active[0]["version"], latest)
     with open(os.path.join(BASE, "index.html"), "w", encoding="utf-8") as f:
         f.write('<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>3CXplore</title>'
                 '<meta http-equiv="refresh" content="0; url=%s"></head><body>'
@@ -747,6 +782,8 @@ Puis, dans le Tableau de bord, choisissez un backup 3CX (.zip).
 
 Confidentialité
 - Le backup est lu entièrement dans votre navigateur : rien n'est envoyé sur Internet.
+- Seule exception, désactivable dans l'onglet Interface : au démarrage, l'outil demande
+  à GitHub le numéro de la dernière version publiée (aucune donnée du backup n'est envoyée).
 - Le backup reste mémorisé dans le navigateur jusqu'à « Fermer le backup »,
   qui permet de choisir ce qui est effacé.
 - Les fichiers exportés (CSV, PDF, réglages) vont dans Téléchargements :
@@ -774,7 +811,9 @@ def build_share(versions, active):
     page = page_name(v["version"])
     with open(os.path.join(VERSIONS_DIR, v["version"], MODELE), encoding="utf-8") as f:
         html = fix_paths(f.read().replace("/*__DATA__*/null", "null"), "app")
-    html = neutralise(html.replace("<!--__VERSION_MENU__-->", version_menu([v], v["version"])))
+    html = neutralise(html.replace("<!--__VERSION_MENU__-->", version_menu([v], v["version"])).replace("__APP_VERSION__", v["version"]))
+    # paquet de partage : ouvert depuis un fichier, pas d'application installable
+    html = html.replace('<link rel="manifest" href="__ROOT__manifest.webmanifest">', "").replace("__ROOT__", "")
     doc = neutralise(build_doc(versions, active, [v], None, linkable={v["version"]}))
     restes = sorted({w for w in A_SURVEILLER for t in (html, doc) if w in t})
     if restes:

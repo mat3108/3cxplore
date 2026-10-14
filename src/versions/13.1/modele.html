@@ -426,6 +426,7 @@ tr.sel td{background:var(--accent-soft)}
 .hxtl{border-left:2px solid var(--line);margin-left:6px;padding-left:12px}.hxe{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:5px 0;font-size:13px;border-bottom:1px dashed var(--line)}.hxd{font-size:12px;color:var(--muted)}
 @media (max-width:700px){.hxe{grid-template-columns:1fr}}
 .vright{display:inline-block;background:var(--panel2);border-radius:5px;padding:1px 6px;margin:1px 0}.vright.own{background:var(--accent-soft);color:var(--accent)}
+.updbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 16px;background:var(--accent-soft);border-bottom:1px solid var(--line);font-size:13.5px}.updbar[hidden]{display:none}
 .uiopts{display:flex;flex-wrap:wrap;gap:8px}.uiopt{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13.5px}
 .uiopt.on{border-color:var(--accent);background:var(--accent-soft)}.uiopt input{margin:0}
 .uisw{width:22px;height:16px;border-radius:4px;border:1px solid var(--line);display:inline-block}.uisw.th-light{background:#fff}.uisw.th-dark{background:#171b21}.uisw.th-auto{background:linear-gradient(135deg,#fff 50%,#171b21 50%)}
@@ -661,9 +662,10 @@ document.addEventListener('click', e => {
     <h1 class="brand"><svg class="brandlogo" viewBox="0 0 56 56" width="26" height="26" aria-hidden="true"><rect width="56" height="56" rx="14" fill="#042C53"/><text x="4" y="9.8" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="4" y="16.8" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="4" y="23.8" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="4" y="30.8" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="4" y="37.8" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="9" y="8.1" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="9" y="15.1" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="9" y="22.1" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="44" y="11.4" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="44" y="18.4" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="44" y="25.4" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="10.1" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="17.1" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="49" y="24.1" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="31.1" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><circle cx="28" cy="28" r="12" fill="#E6F1FB" stroke="#85B7EB" stroke-width="2"/><path d="M14 28 a14 14 0 0 1 28 0" stroke="#444441" stroke-width="2.5" fill="none"/><rect x="11" y="25" width="5" height="8" rx="2.5" fill="#444441"/><rect x="40" y="25" width="5" height="8" rx="2.5" fill="#444441"/><path d="M42.5 33 q0 5 -6 5" stroke="#444441" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="35.5" cy="38" r="1.6" fill="#5DCAA5"/><path d="M19 25 h18 v3 a3 3 0 0 1 -3 3 h-3 a3 3 0 0 1 -3 -3 a3 3 0 0 1 -3 3 h-3 a3 3 0 0 1 -3 -3 z" fill="#042C53"/><path d="M21 26.5 h3 M30 26.5 h3" stroke="#5DCAA5" stroke-width="1.2" stroke-linecap="round"/><path d="M25 34.5 q3 1.5 7 -0.5" stroke="#444441" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span class="brandtxt" title="3CXplore — explorez votre 3CX en profondeur">3C<span class="brandx">X</span>plore</span></h1><span class="sub" id="sub"></span><div id="gsearch" class="gsearch" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="gsq" type="search" placeholder="Rechercher : poste, MAC, SDA, nom, file…" autocomplete="off" aria-label="Recherche globale (raccourci : /)"><kbd>/</kbd><div id="gsres" class="gsres" role="listbox" hidden></div></div><span class="sp"></span>
     <button id="fwhdr" class="fwhdr" title="Vérifier les firmwares des téléphones (liste officielle 3CX)" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg><span class="lb">Vérifier les firmwares</span><span class="dot" hidden></span></button>
     <select id="segsel" aria-label="Magasin affiché" title="Filtrer l'interface par magasin" hidden></select>
-    <style>.vmenu{display:flex;gap:6px;align-items:center}.vmenu select{background:var(--panel2,#f1f3f6);color:var(--text,#1b1f24);border:1px solid var(--line,#e2e6eb);border-radius:6px;padding:4px 8px;font:inherit;font-size:13px;cursor:pointer}.vmenu a{color:var(--accent,#2563eb);font-size:13px;text-decoration:none;white-space:nowrap}.vmenu a:hover{text-decoration:underline}</style><div class="vmenu"><select aria-label="Version de l'application" onchange="location.href=this.value"><option value="visualiseur-3cx-v13.0.html" selected>Version 13.0 (actuelle)</option></select><a href="documentation.html">Documentation</a></div>
+    <!--__VERSION_MENU__-->
   </div>
 </header>
+<div id="updbar" class="updbar" role="status" hidden></div>
 <div class="layout">
   <aside id="side" aria-label="Menu principal">
     <nav id="nav"></nav>
@@ -5724,6 +5726,7 @@ V.interface = el => {
     <div class="pvgrid">${APP_NAVSTYLES.map(([k, l, d]) => `<button class="card pvcard${(A.nav || 'classique') === k ? ' on' : ''}" data-nav="${k}" type="button"><span class="nvpv nvpv-${k}"><i></i><i class="on"></i><i></i><i></i></span><b>${esc(l)}</b><span class="muted" style="font-size:12px">${esc(d)}</span></button>`).join('')}</div>
     <div class="grid two" style="margin-top:10px">
       ${opt('Groupes du menu', radios('uinf', A.navFold === 'on' ? 'on' : 'off', [['off', 'Toujours ouverts'], ['on', 'Repliables']]), 'Repliables : un clic sur « Vue d\'ensemble », « Configuration »… ouvre ou ferme le groupe (l\'onglet actif reste visible).')}
+      ${opt('Mises à jour', radios('uiupd', updOn() ? 'on' : 'off', [['on', 'Vérifier au démarrage'], ['off', 'Ne pas vérifier']]) + `<p style="margin:10px 0 0"><button class="btn" id="uiupdnow">Vérifier maintenant</button> <span class="muted" id="uiupdst" style="font-size:12.5px">Version actuelle : ${esc(APP_VERSION)}</span></p>`, 'Au démarrage (au plus une fois par jour), 3CXplore demande à GitHub le numéro de la dernière version publiée et affiche un bandeau si une mise à jour existe. C\'est la seule requête Internet de l\'outil : aucune donnée du backup n\'est envoyée.')}
       ${opt('Compteurs du menu', radios('uinc', A.navCount === 'off' ? 'off' : 'on', [['on', 'Affichés'], ['off', 'Masqués']]))}
       ${opt('Espacement du menu', radios('uins', A.navSpace === 'serre' ? 'serre' : 'confort', [['confort', 'Confortable'], ['serre', 'Serré']]))}
     </div>
@@ -5763,6 +5766,7 @@ V.interface = el => {
   W.addEventListener('change', e => {
     const t = e.target;
     if(t.name === 'uith'){ window.applyTheme(t.value === 'auto' ? '' : t.value); V.interface(el); return; }
+    if(t.name === 'uiupd'){ try{ localStorage.setItem('maj3cx', t.value); }catch(er){} if(t.value === 'off'){ const b = $('#updbar'); if(b) b.hidden = true; } V.interface(el); return; }
     if(t.name === 'uinv'){ document.body.classList.toggle('mini', t.value === 'reduit'); try{ localStorage.setItem('nav3cx', t.value === 'reduit' ? 'mini' : ''); }catch(er){} V.interface(el); return; }
     const map = {uide: 'density', uisz: 'size', uira: 'radius', uica: 'cards', uifo: 'font', uiwi: 'width', uimo: 'motion', uisc: 'scan', uinf: 'navFold', uinc: 'navCount', uins: 'navSpace'};
     if(map[t.name]) return set(map[t.name], t.value);
@@ -7055,6 +7059,41 @@ V.historique = (el, arg) => {
   $('#hxq').addEventListener('input', e => { const q = gsNorm(e.target.value), sel = $('#hxu'); if(!q) return; const o = [...sel.options].find(o => gsNorm(o.text).includes(q)); if(o && o.value !== S.u){ S.u = o.value; S.k = ''; re(); setTimeout(() => { const i = $('#hxq'); if(i){ i.value = e.target.value; i.focus(); } }, 0); } });
   $('#hxprint').addEventListener('click', () => { printHTML($('#hxsheet').outerHTML.replace('id="hxsheet"', '')); });
 };
+
+// ---------- Vérification des mises à jour (dernière release publique de 3CXplore sur GitHub) ----------
+// seule requête Internet de l'outil : elle demande à GitHub le numéro de la dernière version ; aucune donnée du backup n'est envoyée
+const UPD_REPO = 'mat3108/3cxplore', APP_VERSION = '__APP_VERSION__';
+const updCmp = (a, b) => { const x = String(a).replace(/^v/, '').split('.').map(Number), y = String(b).replace(/^v/, '').split('.').map(Number);
+  for(let i = 0; i < Math.max(x.length, y.length); i++){ const d = (x[i] || 0) - (y[i] || 0); if(d) return d; } return 0; };
+const updOn = () => { try{ return localStorage.getItem('maj3cx') !== 'off'; }catch(e){ return true; } };
+async function updCheck(force){
+  if(/^__/.test(APP_VERSION)) return {err: 'version de la page inconnue'};
+  let c = null; try{ c = JSON.parse(localStorage.getItem('maj3cx-cache') || 'null'); }catch(e){}
+  if(!force && c && c.tag && Date.now() - c.t < 864e5) return c; // au plus une vérification par jour
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 6000);
+  try{
+    const r = await fetch('https://api.github.com/repos/' + UPD_REPO + '/releases/latest', {signal: ac.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', headers: {Accept: 'application/vnd.github+json'}});
+    clearTimeout(tm); if(!r.ok) throw new Error('GitHub a répondu ' + r.status);
+    const j = await r.json(); c = {t: Date.now(), tag: j.tag_name, url: j.html_url, name: j.name};
+    try{ localStorage.setItem('maj3cx-cache', JSON.stringify(c)); }catch(e){}
+    return c;
+  }catch(e){ clearTimeout(tm); return {err: e.name === 'AbortError' ? 'pas de réponse (hors ligne ?)' : e.message}; }
+}
+function updBanner(c){
+  window.__updLast = c; const b = $('#updbar'); if(!b) return;
+  let ign = ''; try{ ign = localStorage.getItem('maj3cx-ignore') || ''; }catch(e){}
+  if(!c || c.err || !c.tag || updCmp(c.tag, APP_VERSION) <= 0 || ign === c.tag){ b.hidden = true; return; }
+  b.hidden = false;
+  b.innerHTML = `<span><b>${esc(c.name || '3CXplore ' + c.tag.replace(/^v/, ''))}</b> est disponible — vous utilisez la version ${esc(APP_VERSION)}.</span><a class="btn primary" href="${esc(c.url)}" target="_blank" rel="noopener">Télécharger la mise à jour</a><button class="btn" id="updx">Plus tard</button>`;
+  $('#updx').addEventListener('click', () => { try{ localStorage.setItem('maj3cx-ignore', c.tag); }catch(e){} b.hidden = true; });
+}
+if(!window.__updDone){ window.__updDone = true; if(updOn()) updCheck(false).then(updBanner); }
+else if(window.__updLast) updBanner(window.__updLast);
+// bouton « Vérifier maintenant » de l'onglet Interface (branché une seule fois)
+if(!window.__updWired){ window.__updWired = true;
+  document.addEventListener('click', async e => { if(!e.target.closest || !e.target.closest('#uiupdnow')) return; const st = document.getElementById('uiupdst'); if(st) st.textContent = 'Vérification…';
+    const c = await updCheck(true); updBanner(c);
+    if(st) st.textContent = c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `Mise à jour disponible : ${c.tag.replace(/^v/, '')} (vous utilisez ${APP_VERSION}).` : `Vous utilisez la dernière version (${APP_VERSION}).`; }); }
 
 // ---------- Sauvegarde complète des réglages ----------
 const SET_CATS = [
