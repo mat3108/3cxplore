@@ -85,7 +85,10 @@ def main():
         for f in sorted(set(propres)):
             if not os.path.isfile(f):
                 continue
-            texte = open(f, encoding="utf-8").read()
+            try:
+                texte = open(f, encoding="utf-8").read()
+            except UnicodeDecodeError:  # fichiers binaires (icônes PNG)
+                continue
             restes = sorted({w for w in org["a_surveiller"] if w in texte})
             if restes:
                 erreur("terme propre à l'organisation dans %s : %s" % (f, ", ".join(restes)))

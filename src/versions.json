@@ -1,5 +1,17 @@
 [
  {
+  "version": "13.3",
+  "date": "2026-10-14",
+  "titre": "Bouton mises à jour et installation dans le bandeau",
+  "resume": "Un bouton dans le bandeau du haut regroupe la vérification des mises à jour et l'installation de l'application ; une pastille signale une nouvelle version ou une installation possible.",
+  "changements": [
+   "Nouveau bouton (flèche de téléchargement) dans le bandeau du haut, avec une pastille quand une mise à jour est disponible ou que l'application peut être installée.",
+   "Menu du bouton : version utilisée et lien vers les nouveautés, « Vérifier les mises à jour » avec le résultat sur place, bouton de téléchargement ou d'ouverture de la nouvelle version, et section Application (installer, état installé, ou lien vers la version web).",
+   "Onglet Interface : les cartes Application et Mises à jour sont remplacées par le seul réglage « Vérifier au démarrage / Ne pas vérifier »."
+  ],
+  "onglets": []
+ },
+ {
   "version": "13.2",
   "date": "2026-10-14",
   "titre": "Application installable (version web)",
