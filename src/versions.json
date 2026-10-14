@@ -1,5 +1,28 @@
 [
  {
+  "version": "13.3.3",
+  "date": "2026-10-14",
+  "titre": "Bouton « Mise à jour / Téléchargement » avec son texte",
+  "resume": "Le bouton de téléchargement du bandeau du haut affiche maintenant le texte « Mise à jour / Téléchargement », comme le bouton « Vérifier les firmwares ».",
+  "changements": [
+   "Texte « Mise à jour / Téléchargement » à côté de l'icône du bouton dans le bandeau du haut ; la pastille de couleur signale toujours une mise à jour disponible ou une installation possible.",
+   "Sur les écrans étroits, le texte est masqué pour garder de la place (comme pour le bouton des firmwares) ; seule l'icône reste."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "13.3.2",
+  "date": "2026-10-14",
+  "titre": "Correctif : les anciennes adresses mènent à la dernière version",
+  "resume": "Après une mise à jour, l'adresse de la version précédente ne donne plus d'erreur « 404 / File not found » : elle redirige vers la dernière version, pour les favoris, les liens partagés et l'application installée.",
+  "changements": [
+   "À chaque version, une petite page de redirection reste à l'ancienne adresse de chaque version précédente (app/visualiseur-3cx-v….html) et ouvre la dernière version ; la version précédente reste disponible dans le menu des versions.",
+   "Application installée : si une page n'existe plus, le service worker affiche la dernière version au lieu d'une erreur 404.",
+   "Aucun changement dans l'outil lui-même."
+  ],
+  "onglets": []
+ },
+ {
   "version": "13.3.1",
   "date": "2026-10-14",
   "titre": "Correctif : bouton mises à jour sans backup ouvert",

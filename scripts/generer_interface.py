@@ -575,7 +575,11 @@ self.addEventListener('fetch', e => {
   const r = e.request;
   if(r.method !== 'GET' || new URL(r.url).origin !== self.location.origin) return;
   // réseau d'abord (dernière version), copie locale si hors ligne
-  e.respondWith(fetch(r).then(res => { if(res.ok){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); } return res; })
+  e.respondWith(fetch(r).then(res => {
+      if(res.ok){ const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); return res; }
+      // page disparue (ancienne adresse) : afficher la dernière version plutôt qu'une erreur 404
+      if(r.mode === 'navigate' && res.status === 404) return fetch('./index.html').catch(() => caches.match('./index.html')).then(x => x || res);
+      return res; })
     .catch(() => caches.match(r).then(m => m || caches.match('./index.html'))));
 });
 """ % (version, json.dumps(files))
@@ -638,7 +642,7 @@ def build_versions(data, D):
 
     latest = page_name(active[0]["version"])
     # pages générées qui ne sont plus à leur place (ex. l'ancienne dernière version restée dans app/)
-    keep = {os.path.join(APP, latest)} | {os.path.join(OLD, page_name(v["version"])) for v in active[1:]}
+    keep = {os.path.join(APP, latest)} | {os.path.join(OLD, page_name(v["version"])) for v in active[1:]} | {os.path.join(APP, page_name(v["version"])) for v in active[1:]}  # + pages de redirection
     for f in glob.glob(os.path.join(APP, "visualiseur-3cx-v*.html")) + glob.glob(os.path.join(OLD, "visualiseur-3cx-v*.html")):
         if f not in keep:
             os.remove(f)
@@ -648,6 +652,15 @@ def build_versions(data, D):
         f.write('<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>3CXplore</title>'
                 '<meta http-equiv="refresh" content="0; url=%s"></head><body>'
                 '<p>Redirection vers la <a href="%s">version la plus récente</a>…</p></body></html>' % ("app/" + latest, "app/" + latest))
+    # anciennes adresses de la dernière version (favoris, application installée) : petite page qui redirige vers la version actuelle
+    for v in active[1:]:
+        stub = os.path.join(APP, page_name(v["version"]))
+        with open(stub, "w", encoding="utf-8") as f:
+            f.write('<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>3CXplore</title>'
+                    '<meta http-equiv="refresh" content="0; url=../index.html"><script>location.replace("../index.html")</script></head><body>'
+                    '<p>Cette version a été remplacée : <a href="../index.html">ouvrir la dernière version de 3CXplore</a>. '
+                    'La version %s reste disponible dans <a href="anciennes-versions/%s">les anciennes versions</a>.</p></body></html>'
+                    % (esc_html(v["version"]), page_name(v["version"])))
 
     doc = build_doc(versions, active, versions, D)
     with open(os.path.join(APP, "documentation.html"), "w", encoding="utf-8") as f:
