@@ -9,7 +9,7 @@ Vérifie :
      scripts/local/donnees-organisation.json existe (jamais versionné), que la dernière version, la
      documentation, le README et les scripts ne contiennent aucun terme propre à l'organisation ;
   3. que versions.json est complet et que chaque version a son modèle ;
-  4. que chaque page générée existe et que ses liens (menu des versions, guide, change logs,
+  4. que chaque page générée existe et que ses liens (menu des versions, guide, changelog,
      liste des firmwares) mènent à des fichiers existants ;
   4 bis. que chaque onglet de la dernière version est expliqué dans le guide (src/guide.json) ;
   5. que le JavaScript de la dernière version est syntaxiquement correct (si Node.js est installé).
@@ -117,7 +117,7 @@ def main():
         dossier = os.path.dirname(p)
         liens = re.findall(r'<option value="([^"$]+\.html)"', html) + re.findall(r'<a class="open" href="([^"]+\.html)"', html) + \
             re.findall(r'<div class="vmenu[^"]*">.*?<a href="([^"]+)">Documentation</a>', html) + re.findall(r'<script src="([^"]*firmwares[^"]*)"', html) + \
-            re.findall(r'url=([^"]+\.html)"', html) + re.findall(r'<a class="(?:go|cl)" href="([^"#]+\.html)', html)
+            re.findall(r'url=([^"]+\.html)"', html) + re.findall(r'<a class="(?:go|cl|home)" href="([^"#]+\.html)', html)
         for lien in set(liens):
             if not os.path.isfile(os.path.normpath(os.path.join(dossier, lien))):
                 erreur("lien cassé dans %s : %s" % (p, lien))

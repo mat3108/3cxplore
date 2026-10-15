@@ -1,15 +1,47 @@
 [
  {
+  "version": "15.20.3",
+  "date": "2026-10-15",
+  "titre": "Logo : retour au tableau de bord",
+  "resume": "Un clic sur le logo 3CXplore ramène au Tableau de bord, dans l'application comme depuis le guide de l'utilisateur et le Changelog.",
+  "changements": [
+   "Application : le logo et le nom 3CXplore en haut à gauche ouvrent le Tableau de bord.",
+   "Guide de l'utilisateur et Changelog : le logo ouvre l'application directement sur le Tableau de bord."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.20.2",
+  "date": "2026-10-15",
+  "titre": "Bouton « Retour à l'accueil » dans la documentation",
+  "resume": "Le guide de l'utilisateur et le Changelog ont un bouton « ← Retour à l'accueil » en haut de la page, qui ramène à l'application 3CXplore.",
+  "changements": [
+   "Bouton « ← Retour à l'accueil » dans la barre du haut du guide de l'utilisateur (Documentation) et du Changelog ; il ouvre la dernière version de l'application (aussi dans le paquet de partage).",
+   "Le contrôle du dépôt vérifie que ce bouton mène à une page existante."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.20.1",
+  "date": "2026-10-15",
+  "titre": "Nom « Changelog »",
+  "resume": "L'entrée du bas du menu de gauche et la page d'historique des versions s'appellent maintenant « Changelog » (en un mot) au lieu de « Change logs ».",
+  "changements": [
+   "Menu de gauche (simplifié et expert), page d'historique des versions, lien du guide de l'utilisateur, paquet de partage et README : « Changelog »."
+  ],
+  "onglets": []
+ },
+ {
   "version": "15.20",
   "date": "2026-10-15",
-  "titre": "Guide de l'utilisateur et Change logs",
-  "resume": "« Documentation » dans la barre du haut ouvre maintenant un guide de l'utilisateur pour la formation : chaque menu et chaque onglet expliqués (à quoi il sert, comment l'utiliser, bon à savoir), avec une table des matières et une recherche. L'historique des versions s'appelle désormais « Change logs » et s'ouvre depuis le bas du menu de gauche.",
+  "titre": "Guide de l'utilisateur et Changelog",
+  "resume": "« Documentation » dans la barre du haut ouvre maintenant un guide de l'utilisateur pour la formation : chaque menu et chaque onglet expliqués (à quoi il sert, comment l'utiliser, bon à savoir), avec une table des matières et une recherche. L'historique des versions s'appelle désormais « Changelog » et s'ouvre depuis le bas du menu de gauche.",
   "changements": [
    "Guide de l'utilisateur : section « Premiers pas » (ouvrir un backup, magasin, menus simplifié et expert, recherche et palette, langue, exports, réglages, mises à jour, confidentialité), puis les 77 onglets dans l'ordre du menu simplifié.",
    "Pour chaque onglet : son chemin dans le menu, à quoi il sert, comment l'utiliser, un « bon à savoir » et un lien qui ouvre l'onglet dans 3CXplore.",
    "Table des matières à gauche (groupes, entrées de menu et sous-onglets), recherche instantanée dans le guide, mise en page adaptée à l'impression.",
-   "Change logs : l'historique des versions (anciennement Documentation) est dans changelog.html, accessible par l'entrée « Change logs » tout en bas du menu de gauche (menus simplifié et expert) et depuis le guide.",
-   "Le menu expert indique le nombre réel d'onglets ; le paquet de partage contient le guide et les Change logs ; le contrôle du dépôt vérifie que chaque onglet est expliqué dans le guide."
+   "Changelog : l'historique des versions (anciennement Documentation) est dans changelog.html, accessible par l'entrée « Changelog » tout en bas du menu de gauche (menus simplifié et expert) et depuis le guide.",
+   "Le menu expert indique le nombre réel d'onglets ; le paquet de partage contient le guide et le Changelog ; le contrôle du dépôt vérifie que chaque onglet est expliqué dans le guide."
   ],
   "onglets": []
  },

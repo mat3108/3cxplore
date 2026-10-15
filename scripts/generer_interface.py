@@ -7,7 +7,7 @@ Usage : python3 scripts/generer_interface.py              (depuis la racine du p
 Pour chaque version listée dans src/versions.json, le modèle src/versions/<n>/modele.html
 produit visualiseur-3cx-v<n>.html : la dernière version dans app/, les précédentes dans
 app/anciennes-versions/. Sont aussi générés app/documentation.html (guide de l'utilisateur : chaque menu expliqué),
-app/changelog.html (Change logs : une section par version)
+app/changelog.html (Changelog : une section par version)
 et index.html, qui redirige vers la version la plus récente.
 Les mots de passe, PIN, secrets et clés de licence sont exclus des pages.
 Si aucune version active n'intègre de données (cas actuel), backup_extrait/ n'est pas nécessaire.
@@ -34,7 +34,7 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # racine du
 SRC = os.path.join(BASE, "backup_extrait")
 VERSIONS_DIR = os.path.join(BASE, "src", "versions")
 VERSIONS_JSON = os.path.join(BASE, "src", "versions.json")
-DOC_TEMPLATE = os.path.join(BASE, "src", "documentation-modele.html")  # historique des versions (Change logs)
+DOC_TEMPLATE = os.path.join(BASE, "src", "documentation-modele.html")  # historique des versions (Changelog)
 GUIDE_TEMPLATE = os.path.join(BASE, "src", "guide-modele.html")  # guide de l'utilisateur (Documentation)
 GUIDE_JSON = os.path.join(BASE, "src", "guide.json")
 APP = os.path.join(BASE, "app")
@@ -706,7 +706,7 @@ def build_doc(versions, active, menu_versions, D=None, linkable=None):
                 "".join("<li>%s</li>" % esc_html(c) for c in v["changements"]), tabs))
     toc = "".join('<a href="#v%s"%s>%s <span>%s</span></a>' % (esc_html(v["version"]), ' class="off"' if v.get("retiree") else "", esc_html(v["version"]), esc_html(v["date"]) + (" · retirée" if v.get("retiree") else ""))
                   for v in versions)
-    doc = (doc.replace("<!--__VERSION_MENU__-->", version_menu(menu_versions, "doc"))
+    doc = (doc.replace("<!--__VERSION_MENU__-->", version_menu(menu_versions, "doc")).replace("<!--__HOME__-->", page_name(active[0]["version"]))
               .replace("<!--__TOC__-->", toc).replace("<!--__SECTIONS__-->", "".join(sections))
               .replace("<!--__SOURCE__-->", esc_html("%s · %s · 3CX %s · backup du %s" % (
                   D["info"]["company"], D["info"]["fqdn"], D["info"]["version"], D["info"]["date"])) if D
@@ -780,8 +780,8 @@ def build_guide(versions, active, here_page=None):
                     page, k))
             secs.append('<section class="entry" id="%s"><h3>%s</h3>%s%s</section>' % (
                 eid, esc_html(ent), ('<p class="subs">Sous-onglets : %s</p>' % esc_html(", ".join(labels[k] for k in ks))) if len(ks) > 1 else "", "".join(blocks)))
-    toc.append('<a class="cl" href="changelog.html">Change logs (historique des versions)</a>')
-    return (tpl.replace("<!--__VERSION_MENU__-->", version_menu(versions, "doc"))
+    toc.append('<a class="cl" href="changelog.html">Changelog (historique des versions)</a>')
+    return (tpl.replace("<!--__VERSION_MENU__-->", version_menu(versions, "doc")).replace("<!--__HOME__-->", page)
                .replace("<!--__TOC__-->", "".join(toc)).replace("<!--__SECTIONS__-->", "".join(secs))
                .replace("<!--__VERSION__-->", esc_html(latest)))
 
@@ -893,7 +893,7 @@ Firmwares des téléphones (Mac seulement)
 - Au premier lancement, macOS peut bloquer le fichier : clic droit > Ouvrir.
 
 Documentation : documentation.html (guide de l'utilisateur : chaque menu expliqué).
-Change logs : changelog.html (nouveautés de chaque version).
+Changelog : changelog.html (nouveautés de chaque version).
 """
 
 
