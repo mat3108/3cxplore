@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-17.1.2-2563eb)
+![Version](https://img.shields.io/badge/version-17.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **79 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **80 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -98,7 +98,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Horaires** | Contrôle des horaires configurés d'après les appels réels : anomalies, demande avant ouverture et après fermeture, jours fériés à venir manquants ; fiche détaillée par département. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
 | **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
-| **Parkings partagés** | Réglages et utilisation des parkings d'appels : reprises, retours, appels perdus en attente, parkings affichés sur les téléphones. |
+| **Parkings partagés** | Bouton « Rapport des mises en attente par employé » et lien « Rapport » pour chaque employé. |
 | **Plan des parkings** | Nombre de parkings nécessaires par magasin d'après les appels parqués en même temps. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
 | **Enregistrements** | Liste des enregistrements référencés (les fichiers audio ne font pas partie du backup). |
@@ -120,6 +120,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Visibilité et droits** | Ce qu'un utilisateur voit et peut faire sur chaque poste, selon ses rôles par département. |
 | **Matrice des droits** | Droits des rôles par département, droits propres et incohérences. |
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
+| **Fiche employé** | Bouton « Mises en attente » qui ouvre le rapport pour la même personne et la même période. |
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
 | **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
@@ -208,7 +209,10 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **17.1.2** | Visite guidée : interrupteur à l'ouverture du backup |
+| **17.3** | Recherche dans le menu |
+| 17.2.1 | Rapport des mises en attente par employé |
+| 17.2 | Fiche employé |
+| 17.1.2 | Visite guidée : interrupteur à l'ouverture du backup |
 | 17.1.1 | Rapport et fiches : affichage sans chevauchement |
 | 17.1 | Visite guidée |
 | 17.0 | Guide de l'utilisateur en anglais |

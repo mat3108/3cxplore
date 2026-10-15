@@ -1,5 +1,67 @@
 [
  {
+  "version": "17.3",
+  "date": "2026-10-15",
+  "titre": "Recherche dans le menu",
+  "resume": "Un champ « Rechercher un menu… » en haut du menu de gauche trouve un menu ou un sous-menu en tapant quelques lettres de son nom, y compris les sous-onglets réunis sous une entrée du menu simplifié.",
+  "changements": [
+   "Recherche sans tenir compte des accents ni des majuscules, en français comme en anglais ; plusieurs mots sont acceptés (par exemple « parking plan »).",
+   "Chaque résultat indique où il se trouve dans le menu (par exemple Activité › Appels) ; les résultats dont le nom commence par le texte tapé passent en premier.",
+   "Clavier : flèches pour choisir, Entrée pour ouvrir, Échap pour effacer. La recherche fonctionne aussi dans le menu complet ; elle est masquée quand le menu est réduit en icônes.",
+   "La visite guidée et le guide de l'utilisateur présentent la recherche dans le menu."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "17.2.1",
+  "date": "2026-10-15",
+  "titre": "Rapport des mises en attente par employé",
+  "resume": "Nouveau rapport imprimable des appels mis en attente (parking) par un employé, pour une période au choix : appels perdus, évolution, pires jours et heures, détail jour par jour, avec impression PDF et export Excel. Il s'ouvre depuis la Fiche employé et l'onglet Parkings partagés.",
+  "changements": [
+   "En bref et chiffres clés : appels mis en attente, appels perdus (le client a raccroché avant d'être repris), clients différents touchés, attente totale perdue.",
+   "Comment ça se passe : mises en attente sans parler au client, reprises par le même poste ou par un collègue, rappels de sonnerie refusés, clients qui raccrochent en moins de 3 minutes, attente la plus longue.",
+   "Graphiques mois par mois et semaine par semaine, % des appels perdus selon le jour et selon l'heure.",
+   "Grille des pires moments (jour × heure), les 6 pires moments, tableau par jour et par moment de la journée (matin, après-midi, soir) à comparer avec l'horaire, et ce qu'on remarque.",
+   "Annexe jour par jour : les journées avec 50 % ou plus d'appels perdus sont en rouge.",
+   "Boutons d'accès : « Mises en attente » dans la Fiche employé (même période), « Rapport des mises en attente par employé » dans Parkings partagés et lien « Rapport » pour chaque employé du tableau des mises en parking."
+  ],
+  "onglets": [
+   [
+    "Mises en attente par employé",
+    "Nouveau rapport imprimable des appels mis en attente par un employé : appels perdus, évolution, pires moments et détail jour par jour."
+   ],
+   [
+    "Fiche employé",
+    "Bouton « Mises en attente » qui ouvre le rapport pour la même personne et la même période."
+   ],
+   [
+    "Parkings partagés",
+    "Bouton « Rapport des mises en attente par employé » et lien « Rapport » pour chaque employé."
+   ]
+  ]
+ },
+ {
+  "version": "17.2",
+  "date": "2026-10-15",
+  "titre": "Fiche employé",
+  "resume": "Nouvel onglet Fiche employé (menu Employés) : tout ce que le backup sait d'une personne sur une seule page imprimable — poste et téléphones, appels, files d'attente et taux d'occupation, jour par jour et carte de chaleur, clients qui rappellent, coût des appels, ce qui dépend d'elle et ce qu'il faut corriger sur son poste — avec export Excel.",
+  "changements": [
+   "Identité et poste : courriel, cellulaire, numéro présenté, profil, téléphones (modèle, MAC, firmware), départements et rôles, files, groupes de sonnerie, messagerie, enregistrement.",
+   "Appels sur la période choisie : entrants répondus, conversation moyenne, sonneries reçues et manquées, délai de décroché médian, sortants et aboutis, internes passés et reçus, temps au téléphone, appels par jour, taux d'occupation ; graphique jour par jour et carte de chaleur jour × heure.",
+   "Files d'attente : sonneries répondues et expirées, taux de réponse, appels servis, temps connecté.",
+   "Qualité et coûts : taux de clients qui rappellent (48 h), destinations des appels sortants, coût de ses appels (tarifs de l'onglet Coût), collègues les plus en contact.",
+   "Ce qui dépend de la personne (acheminements, personne indispensable, absences prévues) et ce qu'il faut corriger sur son poste (messagerie, doublons, parkings, touches BLF, renvois externes), avec liens vers les onglets.",
+   "Impression / PDF, export Excel, période au choix ; bouton « Fiche employé » dans la fiche d'un poste ; onglet expliqué dans le guide (français et anglais).",
+   "Rapport et fiches imprimables : à l'écran, les mots et les dates des tableaux ne sont plus coupés en plein milieu (correction de la 17.1.1) ; un tableau trop large défile horizontalement, et la coupure n'a lieu qu'à l'impression, si nécessaire."
+  ],
+  "onglets": [
+   [
+    "Fiche employé",
+    "Toutes les statistiques et informations d'une personne sur une page imprimable."
+   ]
+  ]
+ },
+ {
   "version": "17.1.2",
   "date": "2026-10-15",
   "titre": "Visite guidée : interrupteur à l'ouverture du backup",

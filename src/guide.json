@@ -17,6 +17,10 @@
    "En haut du menu de gauche : « Simplifié » regroupe les onglets voisins sous une seule entrée avec des sous-onglets ; « Complet » affiche tous les onglets à plat. Ce guide suit le menu simplifié."
   ],
   [
+   "Rechercher un menu",
+   "Sous « Simplifié / Complet », le champ « Rechercher un menu… » trouve un menu ou un sous-menu en tapant quelques lettres de son nom (sans tenir compte des accents ni des majuscules), y compris les sous-onglets réunis sous une entrée du menu simplifié. Chaque résultat indique où il se trouve dans le menu. Les flèches choisissent un résultat, Entrée l'ouvre et Échap efface la recherche."
+  ],
+  [
    "Rechercher",
    "La barre de recherche (touche « / ») trouve un poste, une adresse MAC, un SDA, un nom ou une file. La palette de commandes (Ctrl+K, ou Cmd+K sur Mac) ouvre n'importe quel onglet, poste ou magasin en tapant quelques lettres."
   ],
@@ -384,6 +388,14 @@
   "comparer": {
    "sert": "Deux postes côte à côte et les changements à faire pour aligner le second sur le premier."
   },
+  "employe": {
+   "sert": "Tout ce que le backup sait d'une personne, sur une seule page imprimable : son poste et ses téléphones, ses appels (répondus, manqués, sortants, internes, délai de décroché), son travail en file d'attente et son taux d'occupation, sa carte de chaleur, la qualité du service et le coût de ses appels, ce qui dépend d'elle et ce qu'il faut corriger sur son poste.",
+   "comment": [
+    "Choisissez l'employé et la période ; la fiche s'ouvre aussi avec le bouton « Fiche employé » de la fiche d'un poste.",
+    "Imprimez-la ou enregistrez-la en PDF pour un entretien, ou exportez-la en Excel."
+   ],
+   "astuce": "La section « À corriger sur son poste » réunit les problèmes trouvés dans les autres onglets (messagerie, doublons, parkings, touches BLF, renvois externes)."
+  },
   "nouvel": {
    "sert": "La fiche de création d'un poste sur le modèle d'un collègue, avec un numéro libre et les renvois selon le statut.",
    "comment": [
@@ -447,6 +459,15 @@
   },
   "params": {
    "sert": "Les paramètres du système et du tenant 3CX (les valeurs sensibles sont masquées)."
+  },
+  "attente": {
+   "sert": "Un rapport imprimable sur les appels qu'un employé met en attente (parking) : combien sont perdus parce que le client raccroche avant d'être repris, comment ça évolue mois par mois et semaine par semaine, les jours et les heures les plus difficiles, et le détail jour par jour à comparer avec son horaire.",
+   "comment": [
+    "Ouvrez-le avec le bouton « Mises en attente » de la Fiche employé, le bouton « Rapport des mises en attente par employé » de l'onglet Parkings partagés, ou le lien « Rapport » du tableau des employés qui mettent le plus en parking.",
+    "Choisissez l'employé (la liste indique le nombre d'appels mis en attente) et la période, y compris des dates au choix.",
+    "Imprimez le rapport ou enregistrez-le en PDF ; l'export Excel donne le détail de chaque mise en attente."
+   ],
+   "astuce": "Le tableau « Par jour et par moment de la journée » se compare directement avec l'horaire : si les pertes suivent une plage horaire plutôt qu'une personne, c'est une question d'effectif ou d'organisation."
   }
  },
  "glossaire": [
@@ -833,6 +854,10 @@
     "At the top of the left menu: “Simple” groups neighbouring tabs under a single entry with sub-tabs; “Full” shows all tabs flat. This guide follows the simple menu."
    ],
    [
+    "Search a menu",
+    "Below « Simple / Full », the « Search a menu… » field finds a menu or sub-menu as you type a few letters of its name (ignoring accents and capitals), including the sub-tabs grouped under an entry of the simple menu. Each result shows where it sits in the menu. The arrow keys choose a result, Enter opens it and Esc clears the search."
+   ],
+   [
     "Search",
     "The search bar (“/” key) finds an extension, a MAC address, a DID, a name or a queue. The command palette (Ctrl+K, or Cmd+K on Mac) opens any tab, extension or store by typing a few letters."
    ],
@@ -1200,6 +1225,14 @@
    "comparer": {
     "sert": "Two extensions side by side and the changes needed to align the second with the first."
    },
+   "employe": {
+    "sert": "Everything the backup knows about a person, on a single printable page: their extension and phones, their calls (answered, missed, outbound, internal, pick-up delay), their queue work and occupancy rate, their heat map, service quality and the cost of their calls, what depends on them and what to fix on their extension.",
+    "comment": [
+     "Choose the employee and the period; the sheet also opens from the “Employee sheet” button in an extension's details.",
+     "Print it or save it as PDF for a meeting, or export it to Excel."
+    ],
+    "astuce": "The “To fix on their extension” section gathers the problems found in the other tabs (voicemail, duplicates, parkings, BLF keys, external forwards)."
+   },
    "nouvel": {
     "sert": "The sheet for creating an extension modelled on a colleague, with a free number and forwarding by status.",
     "comment": [
@@ -1263,6 +1296,15 @@
    },
    "params": {
     "sert": "3CX system and tenant parameters (sensitive values are hidden)."
+   },
+   "attente": {
+    "sert": "A printable report on the calls an employee puts on hold (parking): how many are lost because the caller hangs up before being picked up, the month-by-month and week-by-week trend, the hardest days and hours, and the day-by-day detail to compare with their schedule.",
+    "comment": [
+     "Open it with the « On hold » button of the Employee sheet, the « Hold report by employee » button of the Shared parkings tab, or the « Report » link in the table of employees who park the most calls.",
+     "Choose the employee (the list shows how many calls each one put on hold) and the period, including custom dates.",
+     "Print the report or save it as PDF; the Excel export gives the detail of every call put on hold."
+    ],
+    "astuce": "The « By day and time of day » table can be compared directly with the schedule: if losses follow a time slot rather than a person, it is a staffing or organisation issue."
    }
   },
   "glossaire": [
