@@ -5,6 +5,10 @@
    "Dans le Tableau de bord, cliquez « Choisir un backup (.zip) » ou glissez-déposez le fichier. Le traitement se fait entièrement dans votre navigateur : rien n'est envoyé sur Internet. Le backup reste mémorisé jusqu'à « Fermer le backup »."
   ],
   [
+   "Visite guidée",
+   "À la première ouverture d'un backup, une visite guidée présente l'essentiel en quelques bulles. Relancez-la avec « Visite guidée » en bas du menu de gauche, dans l'onglet Interface ou avec la palette de commandes."
+  ],
+  [
    "Choisir un magasin",
    "La liste « Tous les magasins » en haut à droite limite tous les onglets à un magasin. Revenez à « Tous les magasins » pour voir l'ensemble du système."
   ],
@@ -815,6 +819,10 @@
    [
     "Open a backup",
     "On the Dashboard, click “Choose a backup (.zip)” or drag and drop the file. Processing happens entirely in your browser: nothing is sent to the Internet. The backup is remembered until “Close the backup”."
+   ],
+   [
+    "Guided tour",
+    "The first time a backup is opened, a guided tour presents the essentials in a few bubbles. Restart it with “Guided tour” at the bottom of the left menu, in the Interface tab or with the command palette."
    ],
    [
     "Choose a store",

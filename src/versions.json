@@ -1,5 +1,18 @@
 [
  {
+  "version": "17.1",
+  "date": "2026-10-15",
+  "titre": "Visite guidée",
+  "resume": "Une visite guidée présente l'essentiel de 3CXplore en 10 bulles — magasin, menu, Priorités, recherche, aide « ? », exports, langue, guide, glossaire et changelog — en mettant chaque élément en évidence ; elle se lance d'elle-même à la première ouverture d'un backup et se relance depuis le menu de gauche.",
+  "changements": [
+   "10 étapes avec mise en évidence de l'élément présenté, boutons Précédent / Suivant / Passer, flèches du clavier et touche Échap ; sur un écran étroit, le menu s'ouvre pour les étapes qui le concernent.",
+   "Lancement automatique une seule fois par navigateur, à la première ouverture d'un backup.",
+   "Relance : « Visite guidée » en bas du menu de gauche, bouton dans l'onglet Interface, commande dans la palette (Ctrl/Cmd+K).",
+   "Visite traduite en anglais ; le guide de l'utilisateur la présente dans « Premiers pas »."
+  ],
+  "onglets": []
+ },
+ {
   "version": "17.0",
   "date": "2026-10-15",
   "titre": "Guide de l'utilisateur en anglais",
