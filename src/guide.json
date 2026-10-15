@@ -305,6 +305,15 @@
   "destinations": {
    "sert": "Les appels sortants par destination : hors province, international, services spéciaux, soirs et fins de semaine, par magasin et par poste."
   },
+  "couts": {
+   "sert": "Une estimation du coût des appels sortants d'après vos tarifs par destination : coût sur la période et par mois, par destination, par magasin, par poste et par numéro.",
+   "comment": [
+    "Ouvrez « Vos tarifs » et saisissez le prix par minute et les frais par appel de chaque destination, d'après votre facture d'opérateur (0 si la destination est incluse dans votre forfait).",
+    "Choisissez la facturation de votre opérateur (à la seconde, par 6 s ou à la minute entamée) et la période.",
+    "Exportez le coût par poste en CSV."
+   ],
+   "astuce": "Seuls les appels sortants aboutis sont comptés ; les renvois vers l'extérieur, les forfaits, les SDA et les taxes ne sont pas inclus. Comparez avec votre facture pour ajuster les tarifs."
+  },
   "internes": {
    "sert": "Les appels entre postes et entre magasins : postes très sollicités, collègues difficiles à joindre, paires fréquentes, matrice entre magasins."
   },
@@ -419,5 +428,369 @@
   "params": {
    "sert": "Les paramètres du système et du tenant 3CX (les valeurs sensibles sont masquées)."
   }
- }
+ },
+ "glossaire": [
+  {
+   "terme": "SDA",
+   "def": "Sélection directe à l'arrivée (en anglais DID) : un numéro de téléphone public qui sonne dans 3CX. Chaque SDA a une règle entrante qui décide où va l'appel.",
+   "onglets": [
+    "flux",
+    "diagramme",
+    "simulateur",
+    "controle",
+    "sdainut"
+   ],
+   "formes": [
+    "SDA",
+    "DID"
+   ]
+  },
+  {
+   "terme": "Trunk",
+   "def": "Ligne externe qui relie 3CX à un opérateur téléphonique (fournisseur SIP) ou à une passerelle. Les SDA arrivent par un trunk et les appels sortants en repartent.",
+   "onglets": [
+    "trunks",
+    "sortant"
+   ],
+   "formes": [
+    "trunk"
+   ]
+  },
+  {
+   "terme": "Fournisseur SIP et passerelle",
+   "def": "Le fournisseur SIP est l'opérateur qui transporte les appels par Internet ; une passerelle convertit une ligne téléphonique classique pour 3CX.",
+   "onglets": [
+    "trunks"
+   ],
+   "formes": [
+    "fournisseur SIP",
+    "passerelle"
+   ]
+  },
+  {
+   "terme": "Bridge",
+   "def": "Lien entre deux systèmes 3CX (par exemple deux sites) : les appels peuvent passer de l'un à l'autre.",
+   "onglets": [
+    "trunks",
+    "internes"
+   ],
+   "formes": [
+    "bridge"
+   ]
+  },
+  {
+   "terme": "Poste",
+   "def": "Un utilisateur de 3CX (en anglais extension), identifié par un numéro court ; il peut avoir un ou plusieurs téléphones et l'application 3CX.",
+   "onglets": [
+    "postes",
+    "telephones",
+    "licences"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Département",
+   "def": "Groupe 3CX qui réunit des postes, porte les horaires (ouvert, fermé, pause, fériés) et décide où vont les appels à chaque moment.",
+   "onglets": [
+    "groupes",
+    "organigramme",
+    "horaires"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "File d'attente",
+   "def": "Les appelants y attendent qu'un agent se libère, avec un message d'accueil et une musique ; les agents sonnent selon une stratégie, et l'appel déborde après un délai maximal.",
+   "onglets": [
+    "files",
+    "statsfiles",
+    "agents"
+   ],
+   "formes": [
+    "file d'attente",
+    "files d'attente"
+   ]
+  },
+  {
+   "terme": "Agent",
+   "def": "Poste membre d'une file d'attente ; il doit être connecté à la file pour recevoir ses appels.",
+   "onglets": [
+    "agents",
+    "occupation",
+    "indisp"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Standard automatique (IVR)",
+   "def": "Menu vocal (« Pour le service, faites le 1… ») : un message, puis une destination par touche, et un comportement si l'appelant ne choisit rien.",
+   "onglets": [
+    "ivr",
+    "menus"
+   ],
+   "formes": [
+    "IVR"
+   ]
+  },
+  {
+   "terme": "Groupe de sonnerie",
+   "def": "Fait sonner plusieurs postes en même temps ou à tour de rôle, sans attente ni musique ; si personne ne répond, l'appel va vers une destination de secours.",
+   "onglets": [
+    "sonnerie"
+   ],
+   "formes": [
+    "groupe de sonnerie",
+    "groupes de sonnerie"
+   ]
+  },
+  {
+   "terme": "Stratégie de sonnerie",
+   "def": "Façon de faire sonner les agents ou les membres : tous en même temps, à tour de rôle, le moins occupé, etc.",
+   "onglets": [
+    "files",
+    "sonnerie"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Débordement",
+   "def": "Destination prévue quand une file ou un groupe ne répond pas à temps : messagerie, autre file, menu, renvoi externe.",
+   "onglets": [
+    "files",
+    "pieges"
+   ],
+   "formes": [
+    "débordement"
+   ]
+  },
+  {
+   "terme": "Messagerie vocale",
+   "def": "Boîte où l'appelant laisse un message ; les messages peuvent être envoyés par courriel. Les files et groupes peuvent aussi avoir une boîte.",
+   "onglets": [
+    "messageries",
+    "audio"
+   ],
+   "formes": [
+    "messagerie vocale",
+    "boîte vocale"
+   ]
+  },
+  {
+   "terme": "Invite (message enregistré)",
+   "def": "Fichier audio joué à l'appelant : accueil d'un menu, message de fermeture, intro d'une file, musique d'attente.",
+   "onglets": [
+    "audio",
+    "ivr",
+    "files"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Profil de renvoi (statut)",
+   "def": "Le statut d'un poste (Disponible, Absent, Ne pas déranger…) et ce qui arrive à ses appels dans chaque cas : sans réponse, occupé, non connecté.",
+   "onglets": [
+    "postes",
+    "renvois"
+   ],
+   "formes": [
+    "profil de renvoi",
+    "profils de renvoi"
+   ]
+  },
+  {
+   "terme": "Renvoi externe",
+   "def": "Envoi d'un appel vers un numéro à l'extérieur de 3CX (cellulaire, autre entreprise) ; il passe par un trunk et peut coûter.",
+   "onglets": [
+    "renvois",
+    "securite"
+   ],
+   "formes": [
+    "renvoi externe",
+    "renvois externes"
+   ]
+  },
+  {
+   "terme": "Touche BLF",
+   "def": "Touche de téléphone avec un voyant qui montre si un collègue est libre, occupé ou en sonnerie ; un appui l'appelle ou reprend son appel.",
+   "onglets": [
+    "blf",
+    "blfmodele"
+   ],
+   "formes": [
+    "BLF"
+   ]
+  },
+  {
+   "terme": "Parking d'appels",
+   "def": "Mettre un appel « en parking » pour le reprendre depuis n'importe quel téléphone (touche de parking ou code).",
+   "onglets": [
+    "parkings"
+   ],
+   "formes": [
+    "parking",
+    "parkings"
+   ]
+  },
+  {
+   "terme": "Numéro présenté (Caller ID)",
+   "def": "Le numéro affiché chez la personne appelée quand un poste appelle à l'extérieur ; il devrait être un SDA du bon magasin.",
+   "onglets": [
+    "doublons",
+    "postes"
+   ],
+   "formes": [
+    "numéro présenté",
+    "Caller ID"
+   ]
+  },
+  {
+   "terme": "Règle entrante",
+   "def": "Pour un SDA, la destination des appels selon le moment : heures d'ouverture, hors heures, jours fériés.",
+   "onglets": [
+    "flux",
+    "trunks"
+   ],
+   "formes": [
+    "règle entrante",
+    "règles entrantes"
+   ]
+  },
+  {
+   "terme": "Règle sortante",
+   "def": "Choisit par quel trunk part un appel selon le numéro composé (préfixe, longueur) et peut transformer les chiffres.",
+   "onglets": [
+    "sortant"
+   ],
+   "formes": [
+    "règle sortante",
+    "règles sortantes"
+   ]
+  },
+  {
+   "terme": "Heures d'ouverture, hors heures, pause, fériés",
+   "def": "Les quatre moments d'un département : chacun a sa propre destination (menu ouvert, menu fermé, message de pause, message de férié).",
+   "onglets": [
+    "horaires",
+    "feries",
+    "groupes"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Appel abouti, perdu, abandonné",
+   "def": "Abouti : une personne a répondu. Perdu : personne n'a répondu (raccroché au menu, abandon en file, sans réponse). Abandonné : l'appelant a raccroché avant qu'on réponde.",
+   "onglets": [
+    "stats",
+    "rappels",
+    "appels"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Taux de réponse",
+   "def": "Part des appels entrants auxquels une personne a répondu (ou renvoyés à l'extérieur avec réponse).",
+   "onglets": [
+    "stats",
+    "objectifs",
+    "sante"
+   ],
+   "formes": [
+    "taux de réponse"
+   ]
+  },
+  {
+   "terme": "Taux de service",
+   "def": "Part des appels d'une file répondus en moins d'un délai cible (par exemple 20 secondes).",
+   "onglets": [
+    "files",
+    "objectifs"
+   ],
+   "formes": [
+    "taux de service"
+   ]
+  },
+  {
+   "terme": "Historique des appels (CDR)",
+   "def": "Le journal détaillé de chaque appel conservé par 3CX (Call Detail Records) : étapes, durées, qui a répondu. La plupart des statistiques en viennent.",
+   "onglets": [
+    "appels",
+    "client"
+   ],
+   "formes": [
+    "CDR"
+   ]
+  },
+  {
+   "terme": "Journal d'audit",
+   "def": "Liste des modifications faites dans la console 3CX et des connexions, avec l'auteur, l'heure, l'avant et l'après.",
+   "onglets": [
+    "audit",
+    "modifs",
+    "historique"
+   ],
+   "formes": [
+    "journal d'audit"
+   ]
+  },
+  {
+   "terme": "Firmware et gabarit",
+   "def": "Le firmware est le logiciel interne d'un téléphone ; le gabarit (template) est le modèle de configuration que 3CX envoie au téléphone (provisionnement).",
+   "onglets": [
+    "telephones"
+   ],
+   "formes": [
+    "firmware",
+    "firmwares"
+   ]
+  },
+  {
+   "terme": "Adresse MAC",
+   "def": "Identifiant unique d'un téléphone, inscrit sous l'appareil ; 3CX s'en sert pour lui envoyer sa configuration.",
+   "onglets": [
+    "telephones",
+    "postes"
+   ],
+   "formes": [
+    "MAC"
+   ]
+  },
+  {
+   "terme": "Rôle",
+   "def": "Droits d'une personne dans un département : utilisateur, gestionnaire, réceptionniste, etc. ; ils déterminent ce qu'elle voit et peut faire.",
+   "onglets": [
+    "droits",
+    "visibilite",
+    "comparer"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Appels simultanés (licence)",
+   "def": "Nombre d'appels externes en même temps : la licence 3CX V20 en fixe le maximum.",
+   "onglets": [
+    "licences"
+   ],
+   "formes": [
+    "appels simultanés"
+   ]
+  },
+  {
+   "terme": "Backup",
+   "def": "Fichier .zip de sauvegarde produit par 3CX : configuration, historique des appels, messages vocaux. 3CXplore le lit entièrement dans votre navigateur.",
+   "onglets": [
+    "dashboard",
+    "comparaison",
+    "suivi"
+   ],
+   "formes": []
+  },
+  {
+   "terme": "Code de magasin",
+   "def": "Préfixe ou code dans les noms (départements, files, postes) qui permet à 3CXplore de rattacher chaque élément à un magasin ; corrigeable dans l'onglet Magasins.",
+   "onglets": [
+    "magasins"
+   ],
+   "formes": []
+  }
+ ]
 }

@@ -1,5 +1,37 @@
 [
  {
+  "version": "15.22",
+  "date": "2026-10-15",
+  "titre": "Glossaire 3CX",
+  "resume": "Le guide de l'utilisateur a maintenant un glossaire : 33 mots de 3CX expliqués simplement (SDA, trunk, file d'attente, IVR, BLF, parking, profil de renvoi, Caller ID…), chacun avec des liens vers les onglets où il sert ; dans le guide, les termes techniques mènent au glossaire, et une entrée « Glossaire » est ajoutée en bas du menu de gauche.",
+  "changements": [
+   "Glossaire dans le guide de l'utilisateur (section et table des matières) : définition simple de chaque terme et liens « Voir » vers les onglets concernés.",
+   "Dans les explications des onglets, la première mention d'un terme technique (SDA, trunk, file d'attente, BLF, Caller ID…) est soulignée et mène à sa définition.",
+   "Entrée « Glossaire » en bas du menu de gauche, juste au-dessus de « Changelog » (menus simplifié et complet).",
+   "Recherche du guide : elle trouve aussi les termes du glossaire."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.21",
+  "date": "2026-10-15",
+  "titre": "Coût des appels sortants",
+  "resume": "Nouvel onglet Coût des appels sortants (menu Analyse) : vous saisissez vos tarifs par destination (prix par minute et frais par appel) et la facturation de votre opérateur, et l'outil estime le coût des appels sortants sur la période et par mois, par destination, magasin, poste et numéro.",
+  "changements": [
+   "Tarifs par destination, d'après l'indicatif comme dans Destinations des appels sortants : régions du Québec, Ontario, autres provinces et États-Unis, sans frais, international, services spéciaux ; prix par minute et frais par appel.",
+   "Facturation au choix : à la seconde, par tranche de 6 secondes ou à la minute entamée ; seuls les appels aboutis comptent, avec leur durée de conversation.",
+   "Coût sur la période et estimé par mois, part de l'international, coût par destination et par mois, tableaux par magasin, par poste (export CSV) et numéros les plus coûteux.",
+   "Sans tarifs saisis, l'onglet montre les minutes par destination, magasin et poste.",
+   "Tarifs gardés dans ce navigateur et inclus dans la Sauvegarde des réglages ; onglet expliqué dans le guide de l'utilisateur."
+  ],
+  "onglets": [
+   [
+    "Coût des appels sortants",
+    "Estimation du coût des appels sortants d'après vos tarifs : par destination, mois, magasin, poste et numéro."
+   ]
+  ]
+ },
+ {
   "version": "15.20.4",
   "date": "2026-10-15",
   "titre": "Menu « Complet »",

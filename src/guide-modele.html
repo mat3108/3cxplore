@@ -60,6 +60,9 @@ nav.toc a.cl{margin-top:14px;border-top:1px solid var(--line);border-radius:0;pa
 .gen{display:grid;grid-template-columns:200px 1fr;gap:8px 16px;margin:0}
 .gen dt{font-weight:650} .gen dd{margin:0}
 #q{width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);font:inherit;margin:0 0 14px}
+.gloss{display:grid;grid-template-columns:230px 1fr;gap:8px 18px;margin:6px 0 0}.gloss dt{font-weight:650;scroll-margin-top:80px}.gloss dd{margin:0}.gloss .voir{color:var(--muted);font-size:12.5px}.gloss dt:target,.gloss dt:target+dd{background:var(--accent-soft);border-radius:6px}
+a.gl{color:inherit;text-decoration:underline dotted var(--accent);text-underline-offset:3px}a.gl:hover{color:var(--accent)}
+@media (max-width:760px){.gloss{grid-template-columns:1fr}.gloss dd{margin-bottom:6px}}
 .hide{display:none!important}
 @media (max-width:760px){.wrap{grid-template-columns:1fr}.gen{grid-template-columns:1fr} nav.toc{position:static;flex-direction:column;flex-wrap:nowrap;max-height:45vh;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--panel)}}
 @media print{header,nav.toc,#q,.tab a.go{display:none!important}.wrap{display:block;padding:0}.entry{break-inside:avoid-page;border:0;padding:0 0 10px}body{background:#fff}}

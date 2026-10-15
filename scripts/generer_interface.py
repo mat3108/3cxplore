@@ -744,6 +744,26 @@ def guide_slug(s):
     return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
 
 
+def guide_links(html, gloss, limit=4):
+    """Lie au glossaire la première apparition de chaque terme technique (hors liens déjà posés), au plus « limit » termes."""
+    forms = sorted(((f, x) for x in gloss for f in x.get("formes", [])), key=lambda t: -len(t[0]))
+    used, n = set(), 0
+    for f, x in forms:
+        if n >= limit or x["terme"] in used:
+            continue
+        flags = 0 if f.isupper() else re.I
+        pat = re.compile(r"(?<![\wÀ-ÿ'])(%s)(?![\wÀ-ÿ])" % re.escape(esc_html(f)), flags)
+        parts = re.split(r"(<a [^>]*>.*?</a>)", html)
+        for i, part in enumerate(parts):
+            if part.startswith("<a ") or not pat.search(part):
+                continue
+            parts[i] = pat.sub(lambda m: '<a class="gl" href="#gl-%s" title="Voir le glossaire">%s</a>' % (guide_slug(x["terme"]), m.group(1)), part, count=1)
+            used.add(x["terme"]); n += 1
+            break
+        html = "".join(parts)
+    return html
+
+
 def build_guide(versions, active, here_page=None):
     """Page de formation : chaque menu et chaque onglet expliqués, avec une table des matières."""
     latest = active[0]["version"]
@@ -757,6 +777,7 @@ def build_guide(versions, active, here_page=None):
     manquants = [k for k in labels if k not in G["onglets"]] + [k for k in labels if k not in covered]
     if manquants:
         print("ATTENTION : onglets absents du guide (src/guide.json ou menu simplifié) :", ", ".join(sorted(set(manquants))))
+    gloss = G.get("glossaire", [])
     toc = ['<a href="#premiers-pas">Premiers pas</a>']
     secs = ['<section class="entry" id="premiers-pas"><h3>Premiers pas</h3><dl class="gen">%s</dl></section>' % "".join(
         "<dt>%s</dt><dd>%s</dd>" % (esc_html(a), esc_html(b)) for a, b in G["general"])]
@@ -774,12 +795,18 @@ def build_guide(versions, active, here_page=None):
                 o = G["onglets"].get(k, {"sert": ""})
                 path = " › ".join([grp, ent] + ([labels[k]] if len(ks) > 1 else []))
                 blocks.append('<div class="tab" id="o-%s"><h4>%s</h4><div class="path">%s</div><p>%s</p>%s%s<p><a class="go" href="%s#%s">Ouvrir l\'onglet dans 3CXplore →</a></p></div>' % (
-                    k, esc_html(labels[k]), esc_html(path), esc_html(o["sert"]),
+                    k, esc_html(labels[k]), esc_html(path), guide_links(esc_html(o["sert"]), gloss),
                     ('<div class="lbl">Comment l\'utiliser</div><ul>%s</ul>' % "".join("<li>%s</li>" % esc_html(c) for c in o["comment"])) if o.get("comment") else "",
                     ('<div class="tip"><b>Bon à savoir :</b> %s</div>' % esc_html(o["astuce"])) if o.get("astuce") else "",
                     page, k))
             secs.append('<section class="entry" id="%s"><h3>%s</h3>%s%s</section>' % (
                 eid, esc_html(ent), ('<p class="subs">Sous-onglets : %s</p>' % esc_html(", ".join(labels[k] for k in ks))) if len(ks) > 1 else "", "".join(blocks)))
+    if gloss:
+        toc.append('<span class="tg">Glossaire</span><a href="#glossaire">Termes de 3CX (%d)</a>' % len(gloss))
+        secs.append('<h2 class="grp" id="g-glossaire">Glossaire</h2><section class="entry" id="glossaire"><p class="subs">Les mots de 3CX utilisés dans l\'outil, expliqués simplement. Dans le guide, les termes soulignés en pointillé mènent ici.</p><dl class="gloss">%s</dl></section>' % "".join(
+            '<dt id="gl-%s">%s</dt><dd>%s%s</dd>' % (guide_slug(x["terme"]), esc_html(x["terme"]), esc_html(x["def"]),
+                (' <span class="voir">Voir : %s</span>' % ", ".join('<a href="#o-%s">%s</a>' % (k, esc_html(labels[k])) for k in x.get("onglets", []) if k in labels)) if x.get("onglets") else "")
+            for x in sorted(gloss, key=lambda x: guide_slug(x["terme"]))))
     toc.append('<a class="cl" href="changelog.html">Changelog (historique des versions)</a>')
     return (tpl.replace("<!--__VERSION_MENU__-->", version_menu(versions, "doc")).replace("<!--__HOME__-->", page)
                .replace("<!--__TOC__-->", "".join(toc)).replace("<!--__SECTIONS__-->", "".join(secs))

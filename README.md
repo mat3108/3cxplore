@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.20.4-2563eb)
+![Version](https://img.shields.io/badge/version-15.22-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **77 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **78 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -85,6 +85,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
 | **Provenance des appels** | Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région. |
 | **Destinations des appels sortants** | Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine. |
+| **Coût des appels sortants** | Estimation du coût des appels sortants d'après vos tarifs : par destination, mois, magasin, poste et numéro. |
 | **Appels internes** | Appels entre postes et entre magasins : postes sollicités, collègues difficiles à joindre, paires fréquentes, matrice entre magasins. |
 | **Agents** | Performance par agent et par magasin sur une période : répondus, conversation moyenne, taux de réponse en file, manquées, décroché moyen, sortants ; fiche détaillée et export CSV. |
 | **Taux d'occupation des agents** | Part du temps connecté passée en conversation, par agent, par heure et par magasin : agents débordés et peu sollicités. |
@@ -204,7 +205,9 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.20.4** | Menu « Complet » |
+| **15.22** | Glossaire 3CX |
+| 15.21 | Coût des appels sortants |
+| 15.20.4 | Menu « Complet » |
 | 15.20.3 | Logo : retour au tableau de bord |
 | 15.20.2 | Bouton « Retour à l'accueil » dans la documentation |
 | 15.20.1 | Nom « Changelog » |
