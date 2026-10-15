@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.12.1-2563eb)
+![Version](https://img.shields.io/badge/version-15.19-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **73 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **77 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -52,6 +52,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
+| **Doublons et incohérences** | Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire. |
 | **Avant / après** | Parcours des SDA comparés entre le backup de référence et le backup actuel. |
 
 ### Configuration
@@ -76,7 +77,8 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | Onglet | À quoi il sert |
 |---|---|
 | **Appels manqués** | Liste de rappel des clients sans réponse non rappelés, par magasin : tentatives, heure, cause, statut de rappel ; suivi « Traité », export CSV et impression. |
-| **Historique client** | Tous les échanges avec un numéro de téléphone : appels, parcours, issues, interlocuteurs, files, messages vocaux, enregistrements. |
+| **Clients qui rappellent** | Numéros d'exception exclus des calculs, ajout en lot et bouton « Exclure ». |
+| **Historique client** | Chaque appel de la chronologie ouvre son parcours détaillé. |
 | **Numéros importants** | Contacts clés suivis appel par appel : manqués, rappels en retard, délais, interlocuteurs ; alerte sur le tableau de bord. |
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
@@ -94,11 +96,12 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Qualité des appels** | Qualité de la voix par magasin, site, modèle de téléphone et trunk. |
 | **Horaires** | Contrôle des horaires configurés d'après les appels réels : anomalies, demande avant ouverture et après fermeture, jours fériés à venir manquants ; fiche détaillée par département. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
-| **Appels** | Historique complet filtrable par période, direction, issue et file ; fiche avec le parcours de l'appel. |
+| **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
 | **Parkings partagés** | Réglages et utilisation des parkings d'appels : reprises, retours, appels perdus en attente, parkings affichés sur les téléphones. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
 | **Enregistrements** | Liste des enregistrements référencés (les fichiers audio ne font pas partie du backup). |
 | **Messagerie & audio** | Messages vocaux, invites personnalisées (avec l'élément qui les utilise) et messages d'accueil, écoutables. |
+| **Messageries vocales** | État de chaque boîte vocale, envoi par courriel, annonce, messages conservés, consultation et acheminements qui y mènent. |
 
 ### Système
 | Onglet | À quoi il sert |
@@ -117,6 +120,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
+| **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
 | **Ouverture d'un magasin** | Ajout d'un département vide ou copié d'un département existant de n'importe quel magasin. |
 | **Historique d'un employé** | Chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle, auteurs. |
 | **Modifications** | Changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ. |
@@ -197,7 +201,14 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.12.1** | Ouverture d'un magasin : copie d'un département |
+| **15.19** | Clients qui rappellent : numéros d'exception |
+| 15.18 | Horaires : ajustements suggérés |
+| 15.17 | Clients qui rappellent |
+| 15.16 | Absences et congés |
+| 15.15 | Parcours détaillé d'un appel |
+| 15.14 | Doublons et incohérences |
+| 15.13 | Messageries vocales |
+| 15.12.1 | Ouverture d'un magasin : copie d'un département |
 | 15.12 | Numéros importants |
 | 15.11.3 | Ouverture d'un magasin : personnalisation complète |
 | 15.11.2 | Ouverture d'un magasin : diagramme du flux d'appel |

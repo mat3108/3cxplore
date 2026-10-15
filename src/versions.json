@@ -1,5 +1,142 @@
 [
  {
+  "version": "15.19",
+  "date": "2026-10-15",
+  "titre": "Clients qui rappellent : numéros d'exception",
+  "resume": "Clients qui rappellent : liste de numéros d'exception (fournisseurs, partenaires, autres sites…) jamais comptés comme clients qui rappellent, avec ajout de plusieurs numéros à la fois, bouton « Exclure » sur chaque client récurrent, et inclusion dans la Sauvegarde des réglages.",
+  "changements": [
+   "Carte « Numéros d'exception » : ajout d'un ou plusieurs numéros (un par ligne ou séparés par des virgules) avec une note ; liste avec date d'ajout, retrait un par un ou en totalité.",
+   "Bouton « Exclure » sur chaque ligne des clients les plus récurrents.",
+   "Les numéros d'exception sont exclus de tous les calculs de l'onglet (taux, magasins, files, agents, clients) ; leur nombre s'affiche avec les indicateurs.",
+   "Liste gardée dans ce navigateur et incluse dans la Sauvegarde des réglages (avec le délai et les options de l'onglet)."
+  ],
+  "onglets": [
+   [
+    "Clients qui rappellent",
+    "Numéros d'exception exclus des calculs, ajout en lot et bouton « Exclure »."
+   ]
+  ]
+ },
+ {
+  "version": "15.18",
+  "date": "2026-10-15",
+  "titre": "Horaires : ajustements suggérés",
+  "resume": "Contrôle des horaires : nouveau tableau « Ajustements suggérés » pour tous les départements — ouvrir plus tôt ou fermer plus tard (avec la nouvelle heure proposée), revoir une pause ou un jour fermé — classés par appels concernés par semaine, avec la part de ces appels perdue.",
+  "changements": [
+   "Demande comptée par demi-heure jusqu'à 2 h avant l'ouverture et après la fermeture : la suggestion propose l'heure exacte (ex. « Ouvrir à 7 h 30 au lieu de 8 h 00 ») tant que chaque demi-heure ajoutée reçoit au moins 2 appels par semaine.",
+   "Appels pendant la pause configurée et les jours fermés (3 appels par semaine ou plus).",
+   "Part des appels concernés qui ont été perdus (raccroché au menu, abandon en file, sans réponse) ; les messages laissés en messagerie ne comptent pas.",
+   "Jours identiques regroupés sur une seule ligne (ex. « lun à ven ») ; clic vers la fiche du département, dont les constats reprennent ces suggestions en tête."
+  ],
+  "onglets": [
+   [
+    "Contrôle des horaires",
+    "Ajustements d'horaires suggérés pour tous les départements, avec appels par semaine et part perdue."
+   ]
+  ]
+ },
+ {
+  "version": "15.17",
+  "date": "2026-10-15",
+  "titre": "Clients qui rappellent",
+  "resume": "Nouvel onglet Clients qui rappellent : appels servis suivis d'un nouvel appel du même client dans les 24 heures, 48 heures ou 7 jours — souvent un problème non réglé du premier coup — avec le taux par magasin, par file et par agent, et les clients les plus récurrents.",
+  "changements": [
+   "Taux de rappel : part des appels servis suivis d'un nouvel appel du même numéro dans le délai choisi (24 h, 48 h ou 7 jours), sur la période choisie.",
+   "Rappels de moins de 10 minutes comptés à part (coupure ou transfert raté probable), avec une case pour les écarter.",
+   "Taux par magasin, par file d'attente (première file de l'appel) et par agent (première personne qui a répondu), en couleur par rapport à la moyenne.",
+   "Clients les plus récurrents : nombre de rappels, appels servis, qui les a servis, dernier appel ; clic vers l'Historique client ; étoile des Numéros importants ; export CSV.",
+   "Numéros de l'entreprise exclus (SDA, cellulaires des employés, numéros présentés) ; filtre par magasin."
+  ],
+  "onglets": [
+   [
+    "Clients qui rappellent",
+    "Appels servis suivis d'un rappel du même client : taux par magasin, file et agent, clients récurrents."
+   ]
+  ]
+ },
+ {
+  "version": "15.16",
+  "date": "2026-10-15",
+  "titre": "Absences et congés",
+  "resume": "Nouvel onglet Absences et congés : vous indiquez les absences prévues d'un employé et l'outil montre les files, départements et groupes de sonnerie où il manque, ce qui reste sans personne, les jours critiques, les numéros et touches qui sonnent directement chez lui, les appels habituels à répartir et qui peut le remplacer.",
+  "changements": [
+   "Saisie d'une absence : employé, dates, note ; liste en cours, à venir et passées ; absences gardées dans ce navigateur et incluses dans la Sauvegarde des réglages.",
+   "Pour chaque absence : files, départements et groupes de sonnerie où la personne est membre, avec les autres personnes disponibles (en tenant compte des autres absents) et un constat (sans personne, aucun connecté, une seule personne).",
+   "Ce qui mène directement au poste (SDA, touches de menu, acheminements, renvois de collègues), destination sans réponse, touches BLF de collègues.",
+   "Appels habituellement répondus pendant la période (moyenne par jour de semaine sur 8 semaines) et remplaçants possibles (collègues qui partagent le plus d'éléments et sont présents).",
+   "Jours critiques sur 8 semaines : jours où une file, un département ou un groupe n'a plus personne ; frise des absences ; export CSV et impression."
+  ],
+  "onglets": [
+   [
+    "Absences et congés",
+    "Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles."
+   ]
+  ]
+ },
+ {
+  "version": "15.15",
+  "date": "2026-10-15",
+  "titre": "Parcours détaillé d'un appel",
+  "resume": "Parcours détaillé de chaque appel : en cliquant sur un appel (Appels, Historique client), sa route étape par étape — SDA, département, menu et touche choisie, file d'attente et postes qui ont sonné, réponse ou abandon — avec le moment, la durée, la raison et l'issue de chaque étape, sur une frise chronologique.",
+  "changements": [
+   "Le chargement du backup garde maintenant chaque étape de l'historique des appels (CDR) : moment, durée, décroché, motif de fin et raison de l'étape suivante.",
+   "Fiche d'un appel : frise chronologique colorée par type d'étape, puis tableau Moment / Étape / Raison / Issue.",
+   "Raisons lisibles : heures d'ouverture, hors heures, pause, jour férié, sans réponse, occupé, ne pas déranger, aucun agent disponible, transfert, interception…",
+   "Menus : touche choisie déduite de l'étape suivante, ou « aucun choix (délai) » ; files et groupes : postes qui ont sonné, qui a répondu et après combien d'attente.",
+   "Attente avant réponse ajoutée à la fiche ; les appels de l'Historique client ouvrent aussi cette fiche.",
+   "Pour un backup ouvert avec une version antérieure, rouvrir le backup pour obtenir le détail des étapes."
+  ],
+  "onglets": [
+   [
+    "Appels",
+    "Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique."
+   ],
+   [
+    "Historique client",
+    "Chaque appel de la chronologie ouvre son parcours détaillé."
+   ]
+  ]
+ },
+ {
+  "version": "15.14",
+  "date": "2026-10-15",
+  "titre": "Doublons et incohérences",
+  "resume": "Nouvel onglet Doublons et incohérences : ce qui est configuré deux fois ou de façon contradictoire — même nom, courriel, cellulaire ou téléphone sur plusieurs postes, numéro présenté d'un autre magasin, éléments portant le même nom, départements, files ou groupes jumeaux, SDA déclarés sur plusieurs trunks ou dirigés vers un autre magasin.",
+  "changements": [
+   "Postes : même nom, même courriel, même cellulaire ou même téléphone (MAC) sur plusieurs postes.",
+   "Numéro présenté (Caller ID) : SDA d'un autre magasin (le client rappelle le mauvais magasin), ou numéro qui n'est aucun SDA du serveur.",
+   "Structure : départements, files, menus et groupes portant le même nom ; éléments jumeaux (mêmes membres, mêmes horaires, même acheminement) ; membres rattachés à un autre magasin.",
+   "SDA : même numéro déclaré sur plusieurs trunks ; SDA d'un magasin dirigé vers un élément d'un autre magasin.",
+   "Trois gravités (à corriger, à vérifier, pour information), résumé par constat cliquable, filtre par magasin, export CSV."
+  ],
+  "onglets": [
+   [
+    "Doublons et incohérences",
+    "Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire."
+   ]
+  ]
+ },
+ {
+  "version": "15.13",
+  "date": "2026-10-15",
+  "titre": "Messageries vocales",
+  "resume": "Nouvel onglet Messageries vocales : chaque boîte vocale (postes, files, groupes) avec son état, l'envoi des messages par courriel, l'annonce d'accueil, les messages encore conservés, la dernière consultation et tout ce qui y mène dans l'acheminement, pour repérer les messageries désactivées mais visées, les courriels impossibles et les boîtes que personne ne consulte.",
+  "changements": [
+   "Pour chaque boîte : messagerie activée ou non, sort des messages (conservés, avis par courriel, joints au courriel, joints puis supprimés), adresse courriel, annonce personnalisée ou standard.",
+   "Messages encore conservés sur le serveur, avec l'âge du plus ancien ; dernière consultation de la messagerie depuis le poste, d'après l'historique des appels.",
+   "Tout ce qui mène à la boîte : SDA, menus, départements, files, groupes de sonnerie, renvois des collègues et renvoi du poste lui-même.",
+   "Constats : désactivée mais visée, courriel impossible (sans adresse ou sans serveur courriel), messages en attente depuis 14 jours ou plus, jamais consultée, annonce standard là où arrivent des clients.",
+   "Alerte quand aucun serveur courriel n'est configuré ; fiche détaillée au clic ; export CSV ; filtre par magasin.",
+   "Menu simplifié : nouvelle entrée « Messagerie et enregistrements » qui réunit Messageries vocales, Messagerie & audio et Enregistrements."
+  ],
+  "onglets": [
+   [
+    "Messageries vocales",
+    "État de chaque boîte vocale, envoi par courriel, annonce, messages conservés, consultation et acheminements qui y mènent."
+   ]
+  ]
+ },
+ {
   "version": "15.12.1",
   "date": "2026-10-15",
   "titre": "Ouverture d'un magasin : copie d'un département",
