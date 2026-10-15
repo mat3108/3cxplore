@@ -6,7 +6,7 @@
   ],
   [
    "Visite guidée",
-   "À la première ouverture d'un backup, une visite guidée présente l'essentiel en quelques bulles. Relancez-la avec « Visite guidée » en bas du menu de gauche, dans l'onglet Interface ou avec la palette de commandes."
+   "La visite guidée présente l'essentiel en quelques bulles. Lancez-la avec « Visite guidée » en bas du menu de gauche, dans l'onglet Interface ou avec la palette de commandes. Pour qu'elle se lance à chaque ouverture d'un backup, activez l'interrupteur « Visite guidée à l'ouverture du backup » sous le bouton « Choisir un backup » (désactivé par défaut)."
   ],
   [
    "Choisir un magasin",
@@ -822,7 +822,7 @@
    ],
    [
     "Guided tour",
-    "The first time a backup is opened, a guided tour presents the essentials in a few bubbles. Restart it with “Guided tour” at the bottom of the left menu, in the Interface tab or with the command palette."
+    "The guided tour presents the essentials in a few bubbles. Start it with “Guided tour” at the bottom of the left menu, in the Interface tab or with the command palette. To start it every time a backup is opened, turn on the “Guided tour when a backup is opened” switch under the “Choose a backup” button (off by default)."
    ],
    [
     "Choose a store",

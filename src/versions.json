@@ -1,5 +1,17 @@
 [
  {
+  "version": "17.1.2",
+  "date": "2026-10-15",
+  "titre": "Visite guidée : interrupteur à l'ouverture du backup",
+  "resume": "La visite guidée ne se lance plus d'elle-même : un interrupteur « Visite guidée à l'ouverture du backup », désactivé par défaut, permet de la lancer à chaque import d'un backup.",
+  "changements": [
+   "Interrupteur « Visite guidée à l'ouverture du backup » sous le bouton « Choisir un backup » (sans backup ouvert et dans la carte du backup affiché) et dans l'onglet Interface ; désactivé par défaut, choix mémorisé dans ce navigateur.",
+   "Activé : la visite se lance à chaque import d'un backup, mais pas au simple rechargement de la page. Désactivé : elle ne se lance jamais d'elle-même.",
+   "La visite reste disponible à tout moment avec « Visite guidée » en bas du menu de gauche, le bouton de l'onglet Interface et la palette de commandes ; guide de l'utilisateur mis à jour."
+  ],
+  "onglets": []
+ },
+ {
   "version": "17.1.1",
   "date": "2026-10-15",
   "titre": "Rapport et fiches : affichage sans chevauchement",
