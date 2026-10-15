@@ -130,6 +130,13 @@ def main():
                 manque = [k for k in cles if k not in g]
                 if manque:
                     erreur("guide de l'utilisateur %s (src/guide.json) : onglets non expliqués : %s" % (nom, ", ".join(manque)))
+            # un onglet absent du menu doit indiquer après quel onglet il est expliqué (« apres »)
+            menu_src = t[t.index("const NAV_GROUPS"):t.index("const TAB_BY")] if "const TAB_BY" in t else ""
+            for k in cles:
+                if menu_src and "'%s'" % k not in menu_src:
+                    for nom, g in (("français", G.get("onglets", {})), ("anglais", (G.get("en") or {}).get("onglets", {}))):
+                        if not (g.get(k) or {}).get("apres"):
+                            erreur("guide de l'utilisateur %s : l'onglet %s n'est dans aucun menu ; indiquer « apres » dans src/guide.json" % (nom, k))
     if os.path.isfile("index.html") and ("app/visualiseur-3cx-v%s.html" % actives[0]["version"]) not in open("index.html", encoding="utf-8").read():
         erreur("index.html ne mène pas à la dernière version (%s)" % actives[0]["version"])
 

@@ -1,5 +1,16 @@
 [
  {
+  "version": "17.3.1",
+  "date": "2026-10-15",
+  "titre": "Guide : rapport des mises en attente",
+  "resume": "Le guide de l'utilisateur (français et anglais) explique maintenant le rapport des mises en attente par employé, placé juste après Parkings partagés ; le bouton « ? » du rapport mène à cette section.",
+  "changements": [
+   "Guide de l'utilisateur : section « Mises en attente par employé » dans Activité › Appels, après Parkings partagés, avec sa table des matières.",
+   "Les onglets ouverts seulement par un bouton (sans entrée dans le menu) sont maintenant placés dans le guide après l'onglet voisin indiqué, et le contrôle du dépôt vérifie qu'aucun n'est oublié."
+  ],
+  "onglets": []
+ },
+ {
   "version": "17.3",
   "date": "2026-10-15",
   "titre": "Recherche dans le menu",

@@ -807,6 +807,13 @@ def build_guide(versions, active, here_page=None, lang="fr"):
         tr = en_labels(latest)
         labels = {k: tr.get(v, v) for k, v in labels.items()}
         menu = [(tr.get(g, g), [(tr.get(e, e), ks) for e, ks in es]) for g, es in menu]
+    # onglets ouverts seulement par un bouton (sans entrée dans le menu) : placés juste après l'onglet indiqué par « apres » dans src/guide.json
+    for k, o in G["onglets"].items():
+        if k in labels and o.get("apres") and not any(k in ks for _, es in menu for _, ks in es):
+            for _, es in menu:
+                for _, ks in es:
+                    if o["apres"] in ks:
+                        ks.insert(ks.index(o["apres"]) + 1, k)
     covered = {k for _, es in menu for _, ks in es for k in ks}
     manquants = [k for k in labels if k not in G["onglets"]] + [k for k in labels if k not in covered]  # G est la version de la langue
     if manquants:

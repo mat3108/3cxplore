@@ -467,7 +467,8 @@
     "Choisissez l'employé (la liste indique le nombre d'appels mis en attente) et la période, y compris des dates au choix.",
     "Imprimez le rapport ou enregistrez-le en PDF ; l'export Excel donne le détail de chaque mise en attente."
    ],
-   "astuce": "Le tableau « Par jour et par moment de la journée » se compare directement avec l'horaire : si les pertes suivent une plage horaire plutôt qu'une personne, c'est une question d'effectif ou d'organisation."
+   "astuce": "Le tableau « Par jour et par moment de la journée » se compare directement avec l'horaire : si les pertes suivent une plage horaire plutôt qu'une personne, c'est une question d'effectif ou d'organisation.",
+   "apres": "parkings"
   }
  },
  "glossaire": [
@@ -1304,7 +1305,8 @@
      "Choose the employee (the list shows how many calls each one put on hold) and the period, including custom dates.",
      "Print the report or save it as PDF; the Excel export gives the detail of every call put on hold."
     ],
-    "astuce": "The « By day and time of day » table can be compared directly with the schedule: if losses follow a time slot rather than a person, it is a staffing or organisation issue."
+    "astuce": "The « By day and time of day » table can be compared directly with the schedule: if losses follow a time slot rather than a person, it is a staffing or organisation issue.",
+    "apres": "parkings"
    }
   },
   "glossaire": [
