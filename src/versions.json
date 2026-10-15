@@ -1,5 +1,19 @@
 [
  {
+  "version": "17.1.1",
+  "date": "2026-10-15",
+  "titre": "Rapport et fiches : affichage sans chevauchement",
+  "resume": "Rapport et fiches imprimables : la page de garde ne recouvre plus la barre du haut et le titre « Synthèse » ne chevauche plus ses lignes d'information ; les tableaux ne débordent plus de la page à l'impression ou en PDF (en-têtes longs sur plusieurs lignes, texte un peu plus compact à l'impression).",
+  "changements": [
+   "Page de garde du Rapport, de la Fiche magasin, des fiches Nouvel employé, Départ, Modèle de touches, Historique d'un employé et Horaire recommandé : elle reprenait le style de la barre du haut de l'application (collée en haut au défilement et hauteur fixe) — elle recouvrait la barre du haut et le titre « Synthèse » passait par-dessus ses lignes d'information ; elle a maintenant sa propre hauteur et défile avec la page.",
+   "Tableaux Évolution, Horaires et jours fériés, Files d'attente et Performance des agents : ils dépassaient la largeur d'une page A4 (jusqu'à 1 050 px pour 720) à cause de leurs en-têtes sur une seule ligne.",
+   "Fiches imprimables (Fiche magasin, Nouvel employé, Départ…) : en-têtes de tableaux sur plusieurs lignes et plus de zone à défilement horizontal, qui coupait une partie du tableau à l'impression (ex. Files d'attente de la Fiche magasin).",
+   "En-têtes de colonnes sur plusieurs lignes, cellules coupées au besoin (sauf les chiffres), police et marges un peu réduites à l'impression.",
+   "Vérifié sur tous les magasins : aucun chevauchement ni débordement à l'écran et en largeur de page A4."
+  ],
+  "onglets": []
+ },
+ {
   "version": "17.1",
   "date": "2026-10-15",
   "titre": "Visite guidée",
