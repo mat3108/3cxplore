@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide de l'utilisateur · 3CXplore</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20128%20128%22%20width=%2264%22%20height=%2264%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22lgbF%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%232563eb%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%230d9488%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%22128%22%20height=%22128%22%20rx=%2230%22%20fill=%22url%28%23lgbF%29%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%225%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Cpath%20d=%22M64%2046h14%22/%3E%3Cpath%20d=%22M78%2046c8%200%208-19%2016-19h4%22/%3E%3Cpath%20d=%22M78%2046h20%22/%3E%3Cpath%20d=%22M78%2046c8%200%208%2019%2016%2019h4%22/%3E%3C/g%3E%3Ccircle%20cx=%2264%22%20cy=%2246%22%20r=%226%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%22104%22%20cy=%2227%22%20r=%227.5%22%20fill=%22%23fff%22/%3E%3Ccircle%20cx=%22104%22%20cy=%2246%22%20r=%227.5%22%20fill=%22%23fff%22%20fill-opacity=%22.85%22/%3E%3Ccircle%20cx=%22104%22%20cy=%2265%22%20r=%227.5%22%20fill=%22%23fff%22%20fill-opacity=%22.7%22/%3E%3Cpath%20transform=%22translate%28-6%208%29%20scale%281.08%29%22%20d=%22M30.5%2033.5c3.2-3.2%208.4-3.2%2011.6%200l7%207c2.6%202.6%203%206.6.9%209.6l-3.6%205.2c3.6%207.4%209.4%2013.2%2016.8%2016.8l5.2-3.6c3-2.1%207-1.7%209.6.9l7%207c3.2%203.2%203.2%208.4%200%2011.6l-4.4%204.4c-4.6%204.6-11.7%205.6-17.4%202.4-14.6-8.2-26.7-20.3-34.9-34.9-3.2-5.7-2.2-12.8%202.4-17.4z%22%20fill=%22%23fff%22/%3E%3C/svg%3E">
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--panel2:#f1f3f6;--text:#1b1f24;--muted:#5f6b7a;--line:#e2e6eb;--accent:#2563eb;--accent-soft:#e6eefc;--ok:#15803d;--ok-soft:#e3f4e8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--panel:#171b21;--panel2:#1e232a;--text:#e6e9ee;--muted:#95a0ae;--line:#2a3039;--accent:#6b9cff;--accent-soft:#1d2a44;--ok:#4ade80;--ok-soft:#173023}}
+:root[data-theme="dark"]{--bg:#0f1216;--panel:#171b21;--panel2:#1e232a;--text:#e6e9ee;--muted:#95a0ae;--line:#2a3039;--accent:#6b9cff;--accent-soft:#1d2a44;--ok:#4ade80;--ok-soft:#173023}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:12px;padding:10px 20px;max-width:1100px;margin:0 auto}
+.top h1{font-size:16px;margin:0;font-weight:650}
+.top .sp{flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 20px 60px;display:grid;grid-template-columns:180px 1fr;gap:28px}
+nav.toc{position:sticky;top:70px;align-self:start;display:flex;flex-direction:column;gap:2px}
+nav.toc b{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+nav.toc a{color:var(--text);text-decoration:none;padding:5px 8px;border-radius:6px;font-weight:550}
+nav.toc a span{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px}
+nav.toc a:hover{background:var(--panel2)}
+h2{font-size:22px;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 20px}
+.ver{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:18px;scroll-margin-top:70px}
+.vh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.vh h3{margin:0;font-size:18px}
+.vh .date{color:var(--muted);font-size:13px}
+.vh .open{margin-left:auto;color:var(--accent);text-decoration:none;font-size:13.5px}
+.badge{background:var(--ok-soft);color:var(--ok);border-radius:9px;padding:1px 8px;font-size:12px;font-weight:600;vertical-align:2px}
+.vh span.open{color:var(--muted);font-size:12.5px}
+.badge.off{background:var(--panel2);color:var(--muted)} nav.toc a.off{color:var(--muted)} .ver:has(.badge.off){opacity:.75}
+.titre{font-weight:600;margin:8px 0 2px}
+h4{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:16px 0 6px}
+ul{margin:0;padding-left:20px} li{margin:3px 0}
+dl.tabs{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;margin:0}
+dl.tabs dt{font-weight:600} dl.tabs dd{margin:0;color:var(--text)}
+.howto{background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:13.5px}
+.howto code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr;padding:16px}.top{padding:10px 16px} nav.toc{position:static;flex-direction:row;flex-wrap:wrap} dl.tabs{grid-template-columns:1fr}}
+.wrap{grid-template-columns:230px 1fr}
+nav.toc{max-height:calc(100vh - 90px);overflow:auto;gap:0}
+nav.toc .tg{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:650;margin:12px 0 3px;padding:0 8px}
+nav.toc a{font-weight:500;font-size:13.5px;padding:3px 8px}
+nav.toc a.sub{padding-left:20px;font-size:12.5px;color:var(--muted)}
+nav.toc a.cl{margin-top:14px;border-top:1px solid var(--line);border-radius:0;padding-top:10px}
+.grp{margin:26px 0 8px;font-size:21px;scroll-margin-top:70px}
+.entry{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin-bottom:16px;scroll-margin-top:70px}
+.entry>h3{margin:0 0 2px;font-size:17.5px}
+.entry>.subs{color:var(--muted);font-size:13px;margin:0 0 6px}
+.tab{border-top:1px solid var(--line);padding:12px 0 4px;scroll-margin-top:70px}
+.entry>.tab:first-of-type{border-top:0}
+.tab h4{margin:0 0 2px;font-size:15px;text-transform:none;letter-spacing:0;color:var(--text)}
+.tab .path{color:var(--muted);font-size:12px;margin-bottom:6px}
+.tab p{margin:4px 0}
+.tab .lbl{font-weight:650;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:8px}
+.tab .tip{background:var(--accent-soft);border-radius:8px;padding:7px 12px;margin:8px 0 4px;font-size:13.5px}
+.tab a.go{font-size:13px;color:var(--accent);text-decoration:none}
+.gen{display:grid;grid-template-columns:200px 1fr;gap:8px 16px;margin:0}
+.gen dt{font-weight:650} .gen dd{margin:0}
+#q{width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);font:inherit;margin:0 0 14px}
+.hide{display:none!important}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}.gen{grid-template-columns:1fr} nav.toc{position:static;flex-direction:column;flex-wrap:nowrap;max-height:45vh;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--panel)}}
+@media print{header,nav.toc,#q,.tab a.go{display:none!important}.wrap{display:block;padding:0}.entry{break-inside:avoid-page;border:0;padding:0 0 10px}body{background:#fff}}
+</style>
+<script>try{ const t = localStorage.getItem('theme3cx'); if(t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }catch(e){}</script>
+</head>
+<body>
+<header><div class="top"><h1 style="display:flex;align-items:center;gap:8px"><svg class="brandlogo" style="border-radius:7px;flex:none" viewBox="0 0 56 56" width="26" height="26" aria-hidden="true"><rect width="56" height="56" rx="14" fill="#042C53"/><text x="4" y="9.8" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="4" y="16.8" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="4" y="23.8" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="4" y="30.8" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="4" y="37.8" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="9" y="8.1" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="9" y="15.1" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="9" y="22.1" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="44" y="11.4" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="44" y="18.4" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="44" y="25.4" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="10.1" fill="#85B7EB" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="17.1" fill="#378ADD" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><text x="49" y="24.1" fill="#185FA5" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">1</text><text x="49" y="31.1" fill="#0C447C" font-size="6" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">0</text><circle cx="28" cy="28" r="12" fill="#E6F1FB" stroke="#85B7EB" stroke-width="2"/><path d="M14 28 a14 14 0 0 1 28 0" stroke="#444441" stroke-width="2.5" fill="none"/><rect x="11" y="25" width="5" height="8" rx="2.5" fill="#444441"/><rect x="40" y="25" width="5" height="8" rx="2.5" fill="#444441"/><path d="M42.5 33 q0 5 -6 5" stroke="#444441" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="35.5" cy="38" r="1.6" fill="#5DCAA5"/><path d="M19 25 h18 v3 a3 3 0 0 1 -3 3 h-3 a3 3 0 0 1 -3 -3 a3 3 0 0 1 -3 3 h-3 a3 3 0 0 1 -3 -3 z" fill="#042C53"/><path d="M21 26.5 h3 M30 26.5 h3" stroke="#5DCAA5" stroke-width="1.2" stroke-linecap="round"/><path d="M25 34.5 q3 1.5 7 -0.5" stroke="#444441" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>3CXplore · Guide de l'utilisateur</span></h1><span class="sp"></span><!--__VERSION_MENU__--></div></header>
+<div class="wrap">
+  <nav class="toc" aria-label="Table des matières"><b>Table des matières</b><!--__TOC__--></nav>
+  <main>
+    <h2>Guide de l'utilisateur</h2>
+    <p class="lead">Formation à 3CXplore, version <!--__VERSION__--> : à quoi sert chaque menu et comment l'utiliser. Les menus suivent l'ordre du menu simplifié ; le menu expert présente les mêmes onglets à plat.</p>
+    <input id="q" type="search" placeholder="Rechercher dans le guide (ex. horaires, absence, messagerie)…" aria-label="Rechercher dans le guide">
+    <!--__SECTIONS__-->
+  </main>
+</div>
+<script>
+// recherche : n'affiche que les onglets (et leurs entrées de menu) qui contiennent tous les mots tapés
+(() => { const q = document.getElementById('q'), norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  q.addEventListener('input', () => { const w = norm(q.value).split(/\s+/).filter(Boolean), has = el => w.every(x => norm(el.textContent).includes(x));
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('hide', !has(t)));
+    document.querySelectorAll('.entry').forEach(e => e.classList.toggle('hide', !!e.querySelector('.tab') && !e.querySelector('.tab:not(.hide)') || !e.querySelector('.tab') && w.length > 0 && !has(e)));
+    document.querySelectorAll('.grp').forEach(h => { let n = h.nextElementSibling, any = false; while(n && !n.classList.contains('grp')){ if(!n.classList.contains('hide')) any = true; n = n.nextElementSibling; } h.classList.toggle('hide', !any); }); }); })();
+</script>
+</body>
+</html>

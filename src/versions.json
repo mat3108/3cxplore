@@ -1,5 +1,19 @@
 [
  {
+  "version": "15.20",
+  "date": "2026-10-15",
+  "titre": "Guide de l'utilisateur et Change logs",
+  "resume": "« Documentation » dans la barre du haut ouvre maintenant un guide de l'utilisateur pour la formation : chaque menu et chaque onglet expliqués (à quoi il sert, comment l'utiliser, bon à savoir), avec une table des matières et une recherche. L'historique des versions s'appelle désormais « Change logs » et s'ouvre depuis le bas du menu de gauche.",
+  "changements": [
+   "Guide de l'utilisateur : section « Premiers pas » (ouvrir un backup, magasin, menus simplifié et expert, recherche et palette, langue, exports, réglages, mises à jour, confidentialité), puis les 77 onglets dans l'ordre du menu simplifié.",
+   "Pour chaque onglet : son chemin dans le menu, à quoi il sert, comment l'utiliser, un « bon à savoir » et un lien qui ouvre l'onglet dans 3CXplore.",
+   "Table des matières à gauche (groupes, entrées de menu et sous-onglets), recherche instantanée dans le guide, mise en page adaptée à l'impression.",
+   "Change logs : l'historique des versions (anciennement Documentation) est dans changelog.html, accessible par l'entrée « Change logs » tout en bas du menu de gauche (menus simplifié et expert) et depuis le guide.",
+   "Le menu expert indique le nombre réel d'onglets ; le paquet de partage contient le guide et les Change logs ; le contrôle du dépôt vérifie que chaque onglet est expliqué dans le guide."
+  ],
+  "onglets": []
+ },
+ {
   "version": "15.19",
   "date": "2026-10-15",
   "titre": "Clients qui rappellent : numéros d'exception",

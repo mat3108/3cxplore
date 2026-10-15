@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.19-2563eb)
+![Version](https://img.shields.io/badge/version-15.20-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -147,12 +147,15 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ├── .github/workflows/              # contrôle automatique à chaque envoi sur GitHub
 ├── app/                            # ce qu'on ouvre dans le navigateur (généré)
 │   ├── visualiseur-3cx-vX.Y.html   # dernière version
-│   ├── documentation.html          # nouveautés de chaque version
+│   ├── documentation.html          # guide de l'utilisateur : chaque menu expliqué
+│   ├── changelog.html              # Change logs : nouveautés de chaque version
 │   ├── firmwares-3cx.js            # liste des firmwares recommandés par 3CX
 │   └── anciennes-versions/         # versions précédentes (quand il y en a)
 ├── src/                            # sources
 │   ├── versions.json               # liste des versions (titre, résumé, changements, onglets)
-│   ├── documentation-modele.html
+│   ├── documentation-modele.html   # modèle des Change logs
+│   ├── guide-modele.html           # modèle du guide de l'utilisateur
+│   ├── guide.json                  # contenu du guide (un bloc par onglet)
 │   └── versions/X.Y/modele.html    # modèle de chaque version
 ├── scripts/
 │   ├── generer_interface.py        # générateur des pages, du README et du paquet de partage
@@ -170,7 +173,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 python3 scripts/generer_interface.py
 ```
 
-Le générateur écrit la dernière version dans `app/` et les précédentes dans `app/anciennes-versions/`, injecte le menu des versions dans chaque page, produit `app/documentation.html`, fait pointer `index.html` vers la dernière version et met à jour ce README (tableau des versions, onglets, badge).
+Le générateur écrit la dernière version dans `app/` et les précédentes dans `app/anciennes-versions/`, injecte le menu des versions dans chaque page, produit le guide de l'utilisateur `app/documentation.html` et les Change logs `app/changelog.html`, fait pointer `index.html` vers la dernière version et met à jour ce README (tableau des versions, onglets, badge).
 
 **Préparer un paquet à partager** avec des collègues :
 
@@ -178,14 +181,14 @@ Le générateur écrit la dernière version dans `app/` et les précédentes dan
 python3 scripts/generer_interface.py --partage
 ```
 
-Crée `dist/visualiseur-3cx-v<version>.zip` : seulement la dernière version, sa documentation, les fichiers des firmwares et un `LISEZMOI.txt`. Le menu ne propose que cette version (pas de liens morts). Si le fichier local `scripts/local/donnees-organisation.json` existe (jamais versionné), ses termes propres à votre organisation sont remplacés par des exemples neutres. Le zip n'est jamais ajouté au dépôt (`.gitignore`).
+Crée `dist/visualiseur-3cx-v<version>.zip` : seulement la dernière version, le guide de l'utilisateur, les Change logs, les fichiers des firmwares et un `LISEZMOI.txt`. Le menu ne propose que cette version (pas de liens morts). Si le fichier local `scripts/local/donnees-organisation.json` existe (jamais versionné), ses termes propres à votre organisation sont remplacés par des exemples neutres. Le zip n'est jamais ajouté au dépôt (`.gitignore`).
 
 ## ✅ Contrôle automatique
 
 À chaque envoi sur GitHub, le contrôle **« Contrôle du dépôt »** (onglet *Actions* du dépôt) :
 - régénère les pages et vérifie qu'elles correspondent aux sources envoyées ;
 - vérifie qu'**aucun backup, export, enregistrement ou secret** n'est entré dans le dépôt ;
-- vérifie que toutes les pages existent et que leurs liens (versions, documentation, firmwares) fonctionnent ;
+- vérifie que toutes les pages existent et que leurs liens (versions, guide, Change logs, firmwares) fonctionnent, et que chaque onglet est expliqué dans le guide ;
 - vérifie la syntaxe JavaScript de la dernière version.
 
 En cas d'échec, GitHub envoie un courriel. Le même contrôle se lance à la main :
@@ -201,7 +204,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.19** | Clients qui rappellent : numéros d'exception |
+| **15.20** | Guide de l'utilisateur et Change logs |
+| 15.19 | Clients qui rappellent : numéros d'exception |
 | 15.18 | Horaires : ajustements suggérés |
 | 15.17 | Clients qui rappellent |
 | 15.16 | Absences et congés |
@@ -230,7 +234,7 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 | 13.x | Première version publique de 3CXplore · Avis de mise à jour au démarrage · Application installable (version web) · Bouton mises à jour et installation dans le bandeau · Correctif : bouton mises à jour sans backup ouvert · … |
 <!-- VERSIONS:END -->
 
-L'historique complet est dans [`app/documentation.html`](app/documentation.html).
+L'historique complet est dans les Change logs : [`app/changelog.html`](app/changelog.html). Le guide de l'utilisateur (chaque menu expliqué) est dans [`app/documentation.html`](app/documentation.html).
 
 ## 💻 Compatibilité
 

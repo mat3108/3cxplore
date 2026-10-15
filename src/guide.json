@@ -1,0 +1,423 @@
+{
+ "general": [
+  [
+   "Ouvrir un backup",
+   "Dans le Tableau de bord, cliquez « Choisir un backup (.zip) » ou glissez-déposez le fichier. Le traitement se fait entièrement dans votre navigateur : rien n'est envoyé sur Internet. Le backup reste mémorisé jusqu'à « Fermer le backup »."
+  ],
+  [
+   "Choisir un magasin",
+   "La liste « Tous les magasins » en haut à droite limite tous les onglets à un magasin. Revenez à « Tous les magasins » pour voir l'ensemble du système."
+  ],
+  [
+   "Menu simplifié ou expert",
+   "En haut du menu de gauche : « Simplifié » regroupe les onglets voisins sous une seule entrée avec des sous-onglets ; « Expert » affiche tous les onglets à plat. Ce guide suit le menu simplifié."
+  ],
+  [
+   "Rechercher",
+   "La barre de recherche (touche « / ») trouve un poste, une adresse MAC, un SDA, un nom ou une file. La palette de commandes (Ctrl+K, ou Cmd+K sur Mac) ouvre n'importe quel onglet, poste ou magasin en tapant quelques lettres."
+  ],
+  [
+   "Langue",
+   "Le bouton FR / EN de la barre du haut passe l'interface en anglais ou en français."
+  ],
+  [
+   "Exporter et imprimer",
+   "La plupart des tableaux ont un bouton « Exporter (CSV) » (ouvrable dans Excel) ; les fiches et rapports s'impriment ou s'enregistrent en PDF. Les fichiers exportés vont dans Téléchargements : supprimez-les quand vous n'en avez plus besoin."
+  ],
+  [
+   "Réglages personnels",
+   "Vos notes, statuts, objectifs, contacts importants, absences et préférences restent dans votre navigateur. Exportez-les avec « Sauvegarde des réglages » pour les retrouver ailleurs."
+  ],
+  [
+   "Mises à jour",
+   "Le bouton de téléchargement de la barre du haut indique si une nouvelle version de 3CXplore est disponible. L'historique des versions est dans « Change logs », tout en bas du menu de gauche."
+  ],
+  [
+   "Confidentialité",
+   "Ne partagez jamais le fichier .zip du backup : il contient les appels, les enregistrements, les messages vocaux et des identifiants du système. Les mots de passe, codes et clés sont masqués dans l'outil."
+  ]
+ ],
+ "onglets": {
+  "dashboard": {
+   "sert": "Le point de départ : les chiffres clés du système ou du magasin choisi, l'issue des appels entrants, le volume par jour et par heure, les postes et numéros les plus actifs, et les informations du serveur.",
+   "comment": [
+    "Choisissez d'abord un backup (.zip) : c'est ici qu'il s'ouvre et qu'on peut en changer.",
+    "Regardez l'issue des appels entrants (répondus, perdus, messagerie, renvoyés) pour repérer d'un coup d'œil un problème de service.",
+    "Cliquez sur un poste ou un numéro pour ouvrir sa fiche."
+   ],
+   "astuce": "Un bandeau signale les numéros importants en retard et les nouveautés du backup par rapport au précédent."
+  },
+  "priorites": {
+   "sert": "Tous les problèmes détectés dans les autres onglets, réunis en une seule liste et classés selon le nombre d'appels touchés, puis par gravité.",
+   "comment": [
+    "Commencez la journée ici : les premières lignes sont celles qui coûtent le plus d'appels.",
+    "Chaque ligne mène à l'onglet qui explique le problème en détail."
+   ],
+   "astuce": "Utilisez le filtre de magasin pour préparer une rencontre avec un gérant."
+  },
+  "reco": {
+   "sert": "Analyse automatique de la configuration et de l'activité, classée Critique, À corriger et Observation, avec les éléments concernés et la recommandation.",
+   "comment": [
+    "Lisez d'abord les recommandations Critiques.",
+    "Donnez un statut à chaque recommandation (à faire, en cours, fait, ignoré) et ajoutez vos notes.",
+    "Ajoutez vos propres observations, puis exportez en CSV ou imprimez la liste."
+   ],
+   "astuce": "Les statuts et notes restent dans votre navigateur et font partie de la Sauvegarde des réglages."
+  },
+  "sante": {
+   "sert": "Une note sur 100 par magasin, qui résume le service (réponse, attente, pertes), la configuration, la sécurité et l'état des téléphones.",
+   "comment": [
+    "Comparez les magasins entre eux et ouvrez le détail pour voir ce qui fait perdre des points."
+   ],
+   "astuce": "La note évolue d'un backup à l'autre : suivez-la dans l'onglet Suivi."
+  },
+  "rapport": {
+   "sert": "Un rapport imprimable ou en PDF, pour un magasin ou tout le système : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes et téléphones à mettre à jour.",
+   "comment": [
+    "Choisissez le magasin et cochez les sections voulues.",
+    "Imprimez, ou enregistrez en PDF depuis la fenêtre d'impression."
+   ]
+  },
+  "fichemag": {
+   "sert": "Le résumé d'un magasin sur une page : appels, numéros (SDA), horaires, files d'attente, parkings et problèmes à corriger.",
+   "comment": [
+    "Choisissez le magasin, puis imprimez la fiche pour le gérant."
+   ]
+  },
+  "actions": {
+   "sert": "La liste des tâches à faire dans la console 3CX, classées par moment (tout de suite, cette semaine, quand possible), avec le chemin dans la console, l'impact et les éléments exacts.",
+   "comment": [
+    "Cochez chaque tâche une fois faite ; copiez les adresses MAC en un clic.",
+    "Imprimez la liste pour la personne qui fera les changements."
+   ]
+  },
+  "postes": {
+   "sert": "La liste des utilisateurs (postes), avec des filtres par département, statut et appareil. La fiche d'un poste montre ses coordonnées, son compte Microsoft 365, ses téléphones, ses files, ses profils de renvoi, son message d'accueil et ses messages vocaux.",
+   "comment": [
+    "Cherchez un poste par numéro, nom ou adresse MAC.",
+    "Cliquez sur un poste pour ouvrir sa fiche complète."
+   ]
+  },
+  "telephones": {
+   "sert": "L'inventaire des téléphones : modèle, adresse MAC, firmware actuel et recommandé, magasin, gabarit, et l'état de mise à jour de chaque appareil.",
+   "comment": [
+    "Filtrez les téléphones à mettre à jour.",
+    "Exportez la liste en CSV pour planifier les mises à jour."
+   ],
+   "astuce": "Le bouton Firmwares de la barre du haut vérifie la liste officielle des firmwares 3CX."
+  },
+  "blf": {
+   "sert": "Les touches programmées des téléphones : BLF (voyant d'un collègue), parkings, numéros rapides, touches à corriger, et qui surveille qui.",
+   "comment": [
+    "Repérez les touches qui visent un poste supprimé ou désactivé.",
+    "Vérifiez qu'un nouvel employé apparaît bien sur les téléphones de ses collègues."
+   ]
+  },
+  "blfmodele": {
+   "sert": "Le modèle de touches d'un département et, pour chaque téléphone, la liste des touches à ajouter ou à retirer pour s'y conformer.",
+   "comment": [
+    "Choisissez le département, puis imprimez la fiche de chaque téléphone."
+   ]
+  },
+  "licences": {
+   "sert": "Les postes inutilisés, inactifs, en double ou de test, ceux encore visés par un acheminement, les téléphones à récupérer, et le pic d'appels simultanés utile pour la licence 3CX.",
+   "comment": [
+    "Réglez le seuil d'inactivité, puis exportez la liste en CSV avant de faire le ménage."
+   ],
+   "astuce": "La licence 3CX V20 dépend du nombre d'appels simultanés : comparez le pic à votre licence."
+  },
+  "groupes": {
+   "sert": "Les départements (groupes 3CX) : horaires par jour, acheminement ouvert, fermé, pause et fériés avec les messages écoutables, l'arbre d'acheminement, les membres et leurs rôles.",
+   "comment": [
+    "Ouvrez un département pour voir où vont ses appels à chaque moment de la journée."
+   ]
+  },
+  "organigramme": {
+   "sert": "L'arbre de chaque magasin : départements, files, groupes de sonnerie et menus, puis leurs membres.",
+   "comment": [
+    "Utilisez la recherche pour retrouver une personne dans l'arbre, puis imprimez-le."
+   ]
+  },
+  "ivr": {
+   "sert": "Les standards automatiques (menus IVR) : message, touches et destinations, comportement quand l'appelant ne choisit rien, et l'arbre d'acheminement.",
+   "comment": [
+    "Écoutez le message et vérifiez que chaque touche mène au bon endroit."
+   ]
+  },
+  "sonnerie": {
+   "sert": "Les groupes de sonnerie : stratégie (tous en même temps ou à tour de rôle), membres et destination quand personne ne répond."
+  },
+  "feries": {
+   "sert": "Les jours fériés configurés ou manquants pour chaque département, et la liste des dates à saisir dans la console 3CX.",
+   "comment": [
+    "Indiquez les fériés que l'entreprise n'observe pas : ils ne seront plus signalés."
+   ]
+  },
+  "horaires": {
+   "sert": "Le contrôle des horaires configurés d'après les appels réels : appels au menu fermé pendant l'ouverture, demande avant l'ouverture et après la fermeture, appels pendant la pause, fériés à venir manquants. Le tableau « Ajustements suggérés » propose les changements d'heures.",
+   "comment": [
+    "Commencez par le tableau des ajustements suggérés : il propose l'heure exacte (ex. ouvrir à 7 h 00 au lieu de 7 h 30) et la part des appels perdus.",
+    "Cliquez sur un département pour voir sa grille semaine × demi-heure."
+   ]
+  },
+  "ouvmag": {
+   "sert": "Un assistant pour créer un nouveau magasin dans 3CX à partir d'un magasin modèle : liste à cocher, numérotation proposée et diagramme du flux d'appel, le tout personnalisable.",
+   "comment": [
+    "Choisissez le magasin modèle, puis le code et le nom du nouveau magasin.",
+    "Le bouton Personnaliser permet de modifier les départements, menus, files, groupes, SDA, horaires et fériés ; un département peut être ajouté vide ou copié d'un autre magasin.",
+    "Exportez le plan pour le reprendre plus tard."
+   ]
+  },
+  "flux": {
+   "sert": "Chaque numéro entrant (SDA) avec sa règle et l'arbre d'acheminement complet : département, menu touche par touche, files, agents, pour les heures d'ouverture et hors heures."
+  },
+  "diagramme": {
+   "sert": "Le diagramme du flux d'appel complet d'un SDA, avec zoom, export SVG et impression.",
+   "comment": [
+    "Choisissez le SDA dans la liste ; zoomez avec Ctrl (ou Cmd) et la molette."
+   ]
+  },
+  "simulateur": {
+   "sert": "Ce qui arrive à un appel entrant sur un SDA, un jour et à une heure donnés : chaque étape et l'issue.",
+   "comment": [
+    "Testez par exemple un samedi à 18 h ou un jour férié avant de modifier des horaires."
+   ]
+  },
+  "controle": {
+   "sert": "La simulation de tous les SDA à des moments clés (ouverture, midi, soir, fin de semaine, férié), avec les problèmes regroupés par cause."
+  },
+  "sdainut": {
+   "sert": "Les SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible.",
+   "comment": [
+    "Indiquez le coût mensuel d'un SDA pour estimer l'économie."
+   ],
+   "astuce": "Vérifiez avant de résilier : un numéro peut servir à une publicité saisonnière ou de secours."
+  },
+  "pieges": {
+   "sert": "Les pièges d'acheminement : boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA dirigés vers une messagerie."
+  },
+  "doublons": {
+   "sert": "Ce qui est configuré deux fois ou de façon contradictoire : même nom, courriel, cellulaire ou téléphone sur plusieurs postes, numéro présenté d'un autre magasin, éléments jumeaux, SDA en double ou dirigés vers un autre magasin.",
+   "comment": [
+    "Cliquez sur un constat du résumé pour filtrer le détail."
+   ],
+   "astuce": "« Membre d'un autre magasin » est souvent voulu (personnel partagé) : à vérifier seulement s'il surprend."
+  },
+  "numerotation": {
+   "sert": "Le plan de numérotation : plages de numéros par magasin, numéros libres et postes hors plage.",
+   "comment": [
+    "Trouvez ici un numéro libre pour un nouvel employé ou un nouveau service."
+   ]
+  },
+  "trunks": {
+   "sert": "Les lignes externes (trunks) avec leurs SDA et règles entrantes, et les passerelles, fournisseurs SIP et bridges."
+  },
+  "sortant": {
+   "sert": "Les règles sortantes par ordre de priorité : préfixes, longueurs de numéro, routes et transformation des chiffres.",
+   "comment": [
+    "Vérifiez la règle du 911 et les appels internationaux."
+   ]
+  },
+  "annuaire": {
+   "sert": "Les contacts de l'entreprise et des départements."
+  },
+  "appels": {
+   "sert": "L'historique complet des appels, filtrable par période, direction, issue et file. La fiche d'un appel montre son parcours détaillé étape par étape sur une frise.",
+   "comment": [
+    "Cliquez sur un appel pour voir chaque étape : SDA, département, menu et touche choisie, file et postes qui ont sonné, réponse ou abandon, avec le moment et la durée."
+   ],
+   "astuce": "Pour un backup ouvert avec une version antérieure à la 15.15, rouvrez le backup pour obtenir le détail des étapes."
+  },
+  "rappels": {
+   "sert": "La liste des clients qui ont appelé sans obtenir de réponse et qui n'ont pas été rappelés, par magasin : tentatives, heure, cause et statut de rappel.",
+   "comment": [
+    "Rappelez les clients de la liste, puis cochez « Traité ».",
+    "Imprimez la liste pour l'équipe ou exportez-la en CSV."
+   ]
+  },
+  "rappellent": {
+   "sert": "Les appels servis suivis d'un nouvel appel du même client peu après (24 h, 48 h ou 7 jours) : souvent un problème non réglé du premier coup. Taux par magasin, file et agent, et clients les plus récurrents.",
+   "comment": [
+    "Comparez les taux entre magasins, files et agents plutôt que de viser zéro.",
+    "Ajoutez les fournisseurs, partenaires ou autres sites dans les numéros d'exception (ou cliquez « Exclure » sur une ligne)."
+   ],
+   "astuce": "Les rappels de moins de 10 minutes et les appelants très fréquents sont écartés par défaut ; deux cases permettent de les inclure."
+  },
+  "client": {
+   "sert": "Tout ce qui concerne un numéro de téléphone : appels entrants et sortants dans tous les magasins, qui a répondu, où l'appel a été perdu, passages en file, messages vocaux et enregistrements.",
+   "comment": [
+    "Saisissez le numéro dans n'importe quel format.",
+    "Cliquez sur un appel de la chronologie pour voir son parcours détaillé."
+   ]
+  },
+  "vip": {
+   "sert": "Vos contacts clés (gros clients, fournisseurs, siège, partenaires) suivis appel par appel : appels manqués, rappels en retard selon un objectif par catégorie, délai de réponse, interlocuteurs.",
+   "comment": [
+    "Ajoutez un contact à la main, depuis l'annuaire, par import CSV, ou avec l'étoile ☆ dans les listes d'appels.",
+    "Fixez un objectif de rappel par catégorie."
+   ],
+   "astuce": "Une alerte apparaît sur le tableau de bord et dans Priorités quand un contact important attend un rappel."
+  },
+  "receptions": {
+   "sert": "Les postes de réception : appels présentés, répondus et perdus, mises en parking, appels simultanés et heures de surcharge."
+  },
+  "delai": {
+   "sert": "Le temps d'attente du client avant qu'une personne décroche : médiane, 90 % des appels, objectif, répartition, par heure, par magasin et par personne."
+  },
+  "parkings": {
+   "sert": "Les parkings d'appels : réglages, reprises, retours, appels perdus en attente et parkings affichés sur les téléphones."
+  },
+  "files": {
+   "sert": "Les files d'attente : stratégie, délais, message d'accueil et musique d'attente, agents et gestionnaires, et statistiques (taux de service, attente, abandons, appels sans agent, heures)."
+  },
+  "statsfiles": {
+   "sert": "Chaque passage d'un appel dans une file : attente, conversation, résultat et agent."
+  },
+  "agents": {
+   "sert": "La performance de chaque agent sur une période : appels répondus, conversation moyenne, taux de réponse en file, appels manqués, délai de décroché, appels sortants.",
+   "comment": [
+    "Cliquez sur un agent pour sa fiche détaillée ; exportez le tableau en CSV."
+   ]
+  },
+  "occupation": {
+   "sert": "La part du temps connecté passée en conversation, par agent, par heure et par magasin : agents débordés et agents peu sollicités.",
+   "astuce": "Un agent connecté toute la journée a souvent un taux bas : regardez aussi la colonne des heures chargées."
+  },
+  "prevision": {
+   "sert": "Les appels entrants attendus sur les 7 prochains jours, par jour et par heure, avec une fourchette, la tendance et les jours fériés.",
+   "astuce": "C'est un ordre de grandeur : une promotion, une panne ou la météo changent le volume réel."
+  },
+  "effectif": {
+   "sert": "Pour chaque créneau : appels, pertes, agents connectés et agents nécessaires pour atteindre l'objectif."
+  },
+  "indisp": {
+   "sert": "Les files, groupes et numéros qui reposent sur une seule personne, et ce qui se passe si elle est absente."
+  },
+  "stats": {
+   "sert": "La comparaison des magasins sur une période : taux de réponse, appels perdus, attente en file, heures de pointe, évolution quotidienne, et une carte de chaleur jour × heure.",
+   "comment": [
+    "Choisissez la période (elle est partagée avec plusieurs onglets) et exportez en CSV."
+   ]
+  },
+  "provenance": {
+   "sert": "Les appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents."
+  },
+  "destinations": {
+   "sert": "Les appels sortants par destination : hors province, international, services spéciaux, soirs et fins de semaine, par magasin et par poste."
+  },
+  "internes": {
+   "sert": "Les appels entre postes et entre magasins : postes très sollicités, collègues difficiles à joindre, paires fréquentes, matrice entre magasins."
+  },
+  "classement": {
+   "sert": "Le classement des magasins sur la réponse, les abandons, l'attente et les heures de pointe."
+  },
+  "cmpmag": {
+   "sert": "La configuration de deux magasins ou plus côte à côte (horaires, menus, files, délais, stratégies, postes), écarts surlignés."
+  },
+  "courts": {
+   "sert": "Les appels répondus de quelques secondes et les rappels dans les 2 minutes : souvent des coupures, par type, ligne, heure et poste."
+  },
+  "qualite": {
+   "sert": "La qualité de la voix par magasin, site, modèle de téléphone et trunk."
+  },
+  "menus": {
+   "sert": "Les choix des appelants dans chaque menu : touches, raccrochages, délais sans choix, devenir des appels par choix et points de perte."
+  },
+  "messageries": {
+   "sert": "Chaque boîte vocale (postes, files, groupes) : activée ou non, envoi des messages par courriel, annonce, messages encore conservés, dernière consultation et tout ce qui y mène.",
+   "comment": [
+    "Corrigez d'abord les boîtes « Désactivée mais visée » et « Courriel impossible »."
+   ],
+   "astuce": "Le backup ne dit pas si un message a été écouté : « Jamais consultée » se base sur les appels du poste vers la messagerie."
+  },
+  "audio": {
+   "sert": "Les messages vocaux, les messages des menus et des files (avec l'élément qui les utilise) et les messages d'accueil, tous écoutables."
+  },
+  "enreg": {
+   "sert": "La liste des enregistrements d'appels référencés.",
+   "astuce": "Les fichiers audio des enregistrements ne font pas toujours partie du backup."
+  },
+  "securite": {
+   "sert": "Les points de sécurité : droits d'administration, double authentification, renvois externes, appels internationaux, connexions et changements sensibles."
+  },
+  "renvois": {
+   "sert": "Les renvois vers des numéros externes : statuts concernés, appels renvoyés, anciens employés, cellulaires de collègues, numéros inconnus."
+  },
+  "suspects": {
+   "sert": "Le démarchage et les robots : rafales d'appels, numéros qui appellent plusieurs SDA, appels très courts ou de nuit répétés, appels masqués."
+  },
+  "visibilite": {
+   "sert": "Ce qu'un utilisateur voit et peut faire sur chaque poste, selon ses rôles dans les départements."
+  },
+  "droits": {
+   "sert": "Les droits de chaque rôle par département, les droits propres et les incohérences."
+  },
+  "comparer": {
+   "sert": "Deux postes côte à côte et les changements à faire pour aligner le second sur le premier."
+  },
+  "nouvel": {
+   "sert": "La fiche de création d'un poste sur le modèle d'un collègue, avec un numéro libre et les renvois selon le statut.",
+   "comment": [
+    "Choisissez le magasin et le collègue modèle, saisissez le nom et le courriel, puis imprimez la fiche."
+   ]
+  },
+  "depart": {
+   "sert": "La fiche de départ d'un employé : tout ce qui pointe vers son poste et ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif."
+  },
+  "absences": {
+   "sert": "Les absences prévues (vacances, congés, formation) : files, départements et groupes où la personne manque, ce qui reste sans personne, jours critiques, appels à répartir et remplaçants possibles.",
+   "comment": [
+    "Choisissez l'employé et les dates, puis cliquez Ajouter.",
+    "Regardez les jours critiques : une file ou un département n'y a plus personne."
+   ],
+   "astuce": "Les absences restent dans votre navigateur et font partie de la Sauvegarde des réglages."
+  },
+  "historique": {
+   "sert": "La chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle et auteurs."
+  },
+  "suivi": {
+   "sert": "L'évolution des indicateurs d'un backup à l'autre (service, problèmes, téléphones, parc), pour le système ou un magasin.",
+   "comment": [
+    "Ajoutez d'anciens backups pour remonter dans le temps ; exportez ou importez l'historique."
+   ]
+  },
+  "comparaison": {
+   "sert": "Les différences entre le backup actuel et un backup de référence : ajouts, suppressions et modifications champ par champ.",
+   "comment": [
+    "Choisissez un backup de référence plus ancien (ou plus récent)."
+   ]
+  },
+  "avantapres": {
+   "sert": "Le parcours de chaque SDA comparé entre le backup de référence et le backup actuel : améliorés, dégradés, changés."
+  },
+  "modifs": {
+   "sert": "Les changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ."
+  },
+  "audit": {
+   "sert": "Le journal d'audit de 3CX : modifications de configuration et connexions, avec l'avant et l'après de chaque champ."
+  },
+  "objectifs": {
+   "sert": "Les cibles de qualité de service (taux de réponse, pertes, attente) par défaut et par magasin, avec la valeur actuelle et l'atteinte.",
+   "astuce": "Ces objectifs servent dans Statistiques, Agents, Suivi et Rapport."
+  },
+  "magasins": {
+   "sert": "Les codes de magasin détectés et l'attribution de chaque département, file, menu, groupe et poste à un magasin, avec correction manuelle.",
+   "comment": [
+    "Donnez un nom à chaque code, marquez les codes communs, corrigez les attributions erronées."
+   ],
+   "astuce": "Tous les filtres par magasin de l'outil reposent sur cet onglet."
+  },
+  "interface": {
+   "sert": "L'apparence de l'outil : thèmes prêts à l'emploi, couleur, densité, taille du texte, coins, cartes, police, largeur, menu, onglet d'accueil et animations."
+  },
+  "reglages": {
+   "sert": "L'export et l'import en un seul fichier de tous les réglages saisis dans l'outil (magasins, objectifs, suivi, notes, tâches, contacts importants, absences, préférences).",
+   "comment": [
+    "Exportez vos réglages avant de changer d'ordinateur ou de navigateur, puis importez-les sur le nouveau."
+   ]
+  },
+  "params": {
+   "sert": "Les paramètres du système et du tenant 3CX (les valeurs sensibles sont masquées)."
+  }
+ }
+}

@@ -9,8 +9,9 @@ Vérifie :
      scripts/local/donnees-organisation.json existe (jamais versionné), que la dernière version, la
      documentation, le README et les scripts ne contiennent aucun terme propre à l'organisation ;
   3. que versions.json est complet et que chaque version a son modèle ;
-  4. que chaque page générée existe et que ses liens (menu des versions, documentation,
+  4. que chaque page générée existe et que ses liens (menu des versions, guide, change logs,
      liste des firmwares) mènent à des fichiers existants ;
+  4 bis. que chaque onglet de la dernière version est expliqué dans le guide (src/guide.json) ;
   5. que le JavaScript de la dernière version est syntaxiquement correct (si Node.js est installé).
 Code de sortie 1 au moindre problème.
 """
@@ -79,8 +80,8 @@ def main():
     if org.get("a_surveiller"):
         cle0 = lambda v: [int(x) for x in v["version"].split(".")]
         der = sorted([v for v in versions if not v.get("retiree")], key=cle0, reverse=True)[0]["version"]
-        propres = ["src/versions/%s/modele.html" % der, "app/visualiseur-3cx-v%s.html" % der, "app/documentation.html", "app/firmwares-3cx.js",
-                   "src/versions.json", "src/documentation-modele.html", "README.md", "index.html", ".gitignore", ".github/workflows/verification.yml"] + \
+        propres = ["src/versions/%s/modele.html" % der, "app/visualiseur-3cx-v%s.html" % der, "app/documentation.html", "app/changelog.html", "app/firmwares-3cx.js",
+                   "src/versions.json", "src/documentation-modele.html", "src/guide-modele.html", "src/guide.json", "README.md", "index.html", ".gitignore", ".github/workflows/verification.yml"] + \
                   [f for f in fichiers if f.startswith("scripts/")] + [f for f in fichiers if f.startswith("assets/")]
         for f in sorted(set(propres)):
             if not os.path.isfile(f):
@@ -107,7 +108,7 @@ def main():
 
     # 4) pages générées et liens
     pages = ["app/visualiseur-3cx-v%s.html" % actives[0]["version"]] + \
-            ["app/anciennes-versions/visualiseur-3cx-v%s.html" % v["version"] for v in actives[1:]] + ["app/documentation.html", "index.html"]
+            ["app/anciennes-versions/visualiseur-3cx-v%s.html" % v["version"] for v in actives[1:]] + ["app/documentation.html", "app/changelog.html", "index.html"]
     for p in pages:
         if not os.path.isfile(p):
             erreur("page absente : %s" % p)
@@ -116,10 +117,18 @@ def main():
         dossier = os.path.dirname(p)
         liens = re.findall(r'<option value="([^"$]+\.html)"', html) + re.findall(r'<a class="open" href="([^"]+\.html)"', html) + \
             re.findall(r'<div class="vmenu[^"]*">.*?<a href="([^"]+)">Documentation</a>', html) + re.findall(r'<script src="([^"]*firmwares[^"]*)"', html) + \
-            re.findall(r'url=([^"]+\.html)"', html)
+            re.findall(r'url=([^"]+\.html)"', html) + re.findall(r'<a class="(?:go|cl)" href="([^"#]+\.html)', html)
         for lien in set(liens):
             if not os.path.isfile(os.path.normpath(os.path.join(dossier, lien))):
                 erreur("lien cassé dans %s : %s" % (p, lien))
+    if os.path.isfile("src/guide.json"):
+        t = open("src/versions/%s/modele.html" % actives[0]["version"], encoding="utf-8").read()
+        if "const TABS = [" in t and "const NAV_GROUPS" in t:
+            cles = re.findall(r"\['(\w+)','", t[t.index("const TABS = ["):t.index("const NAV_GROUPS")])
+            g = json.load(open("src/guide.json", encoding="utf-8")).get("onglets", {})
+            manque = [k for k in cles if k not in g]
+            if manque:
+                erreur("guide de l'utilisateur (src/guide.json) : onglets non expliqués : %s" % ", ".join(manque))
     if os.path.isfile("index.html") and ("app/visualiseur-3cx-v%s.html" % actives[0]["version"]) not in open("index.html", encoding="utf-8").read():
         erreur("index.html ne mène pas à la dernière version (%s)" % actives[0]["version"])
 

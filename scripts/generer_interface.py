@@ -6,7 +6,8 @@ Usage : python3 scripts/generer_interface.py              (depuis la racine du p
 
 Pour chaque version listée dans src/versions.json, le modèle src/versions/<n>/modele.html
 produit visualiseur-3cx-v<n>.html : la dernière version dans app/, les précédentes dans
-app/anciennes-versions/. Sont aussi générés app/documentation.html (une section par version)
+app/anciennes-versions/. Sont aussi générés app/documentation.html (guide de l'utilisateur : chaque menu expliqué),
+app/changelog.html (Change logs : une section par version)
 et index.html, qui redirige vers la version la plus récente.
 Les mots de passe, PIN, secrets et clés de licence sont exclus des pages.
 Si aucune version active n'intègre de données (cas actuel), backup_extrait/ n'est pas nécessaire.
@@ -23,6 +24,7 @@ import os
 import re
 import sys
 import stat
+import unicodedata
 import xml.etree.ElementTree as ET
 import zipfile
 from collections import Counter, defaultdict
@@ -32,7 +34,9 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # racine du
 SRC = os.path.join(BASE, "backup_extrait")
 VERSIONS_DIR = os.path.join(BASE, "src", "versions")
 VERSIONS_JSON = os.path.join(BASE, "src", "versions.json")
-DOC_TEMPLATE = os.path.join(BASE, "src", "documentation-modele.html")
+DOC_TEMPLATE = os.path.join(BASE, "src", "documentation-modele.html")  # historique des versions (Change logs)
+GUIDE_TEMPLATE = os.path.join(BASE, "src", "guide-modele.html")  # guide de l'utilisateur (Documentation)
+GUIDE_JSON = os.path.join(BASE, "src", "guide.json")
 APP = os.path.join(BASE, "app")
 OLD = os.path.join(APP, "anciennes-versions")
 DIST = os.path.join(BASE, "dist")
@@ -562,7 +566,7 @@ def write_pwa(version, latest):
                           {"src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}
     with open(os.path.join(BASE, "manifest.webmanifest"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
-    files = ["./", "./index.html", "./app/" + latest, "./app/documentation.html", "./app/firmwares-3cx.js", "./manifest.webmanifest",
+    files = ["./", "./index.html", "./app/" + latest, "./app/documentation.html", "./app/changelog.html", "./app/firmwares-3cx.js", "./manifest.webmanifest",
              "./assets/icone-192.png", "./assets/icone-512.png", "./assets/logo-icone.svg"]
     sw = """// 3CXplore — service worker (généré par scripts/generer_interface.py ; ne pas modifier à la main)
 // Garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est disponible.
@@ -667,9 +671,12 @@ def build_versions(data, D):
                     % (esc_html(v["version"]), page_name(v["version"])))
 
     doc = build_doc(versions, active, versions, D)
-    with open(os.path.join(APP, "documentation.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(APP, "changelog.html"), "w", encoding="utf-8") as f:
         f.write(doc)
-    print("OK -> app/documentation.html ; index.html -> app/" + latest)
+    guide = build_guide(versions, active)
+    with open(os.path.join(APP, "documentation.html"), "w", encoding="utf-8") as f:
+        f.write(guide)
+    print("OK -> app/documentation.html (guide) ; app/changelog.html ; index.html -> app/" + latest)
     update_readme(active)
     if "--partage" in sys.argv:
         build_share(versions, active)
@@ -705,6 +712,78 @@ def build_doc(versions, active, menu_versions, D=None, linkable=None):
                   D["info"]["company"], D["info"]["fqdn"], D["info"]["version"], D["info"]["date"])) if D
                   else "le backup .zip choisi dans l'interface (aucune donnée n'est intégrée aux pages)"))
     return doc
+
+
+# ---------- Guide de l'utilisateur (Documentation) ----------
+
+def menu_structure(latest):
+    """Menu simplifié de la dernière version : [(groupe, [(entrée, [clés d'onglets])])] et libellés des onglets."""
+    with open(os.path.join(VERSIONS_DIR, latest, MODELE), encoding="utf-8") as f:
+        t = f.read()
+    tabs = t[t.index("const TABS = ["):t.index("const NAV_GROUPS")]
+    labels = {k: l.replace("\\'", "'") for k, l in re.findall(r"\['(\w+)','((?:[^'\\]|\\.)*)'", tabs)}
+    sets_src = t[t.index("const NAV_SETS = {"):t.index("const NAV2 = [")]
+    sets = {k: (l.replace("\\'", "'"), re.findall(r"'(\w+)'", ks)) for k, l, ks in re.findall(r"(\w+): \['((?:[^'\\]|\\.)*)', '\w+', \[([^\]]*)\]\]", sets_src)}
+    nav2 = t[t.index("const NAV2 = ["):]
+    nav2 = nav2[:nav2.index("];")]
+    out = []
+    for g1, g2, items in re.findall(r"\[\s*(?:\"([^\"]+)\"|'([^']+)')\s*,\s*\[([^\]]*)\]\s*\]", nav2):
+        entries = []
+        for it in re.findall(r"'(@?\w+)'", items):
+            if it[0] == "@" and it[1:] in sets:
+                l, ks = sets[it[1:]]
+                entries.append((l, [k for k in ks if k in labels]))
+            elif it in labels:
+                entries.append((labels[it], [it]))
+        out.append((g1 or g2, entries))
+    return out, labels
+
+
+def guide_slug(s):
+    s = unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def build_guide(versions, active, here_page=None):
+    """Page de formation : chaque menu et chaque onglet expliqués, avec une table des matières."""
+    latest = active[0]["version"]
+    page = here_page or page_name(latest)
+    with open(GUIDE_TEMPLATE, encoding="utf-8") as f:
+        tpl = f.read()
+    with open(GUIDE_JSON, encoding="utf-8") as f:
+        G = json.load(f)
+    menu, labels = menu_structure(latest)
+    covered = {k for _, es in menu for _, ks in es for k in ks}
+    manquants = [k for k in labels if k not in G["onglets"]] + [k for k in labels if k not in covered]
+    if manquants:
+        print("ATTENTION : onglets absents du guide (src/guide.json ou menu simplifié) :", ", ".join(sorted(set(manquants))))
+    toc = ['<a href="#premiers-pas">Premiers pas</a>']
+    secs = ['<section class="entry" id="premiers-pas"><h3>Premiers pas</h3><dl class="gen">%s</dl></section>' % "".join(
+        "<dt>%s</dt><dd>%s</dd>" % (esc_html(a), esc_html(b)) for a, b in G["general"])]
+    for grp, entries in menu:
+        gid = "g-" + guide_slug(grp)
+        toc.append('<span class="tg">%s</span>' % esc_html(grp))
+        secs.append('<h2 class="grp" id="%s">%s</h2>' % (gid, esc_html(grp)))
+        for ent, ks in entries:
+            eid = "m-" + guide_slug(ent)
+            toc.append('<a href="#%s">%s</a>' % (eid, esc_html(ent)))
+            if len(ks) > 1:
+                toc += ['<a class="sub" href="#o-%s">%s</a>' % (k, esc_html(labels[k])) for k in ks]
+            blocks = []
+            for k in ks:
+                o = G["onglets"].get(k, {"sert": ""})
+                path = " › ".join([grp, ent] + ([labels[k]] if len(ks) > 1 else []))
+                blocks.append('<div class="tab" id="o-%s"><h4>%s</h4><div class="path">%s</div><p>%s</p>%s%s<p><a class="go" href="%s#%s">Ouvrir l\'onglet dans 3CXplore →</a></p></div>' % (
+                    k, esc_html(labels[k]), esc_html(path), esc_html(o["sert"]),
+                    ('<div class="lbl">Comment l\'utiliser</div><ul>%s</ul>' % "".join("<li>%s</li>" % esc_html(c) for c in o["comment"])) if o.get("comment") else "",
+                    ('<div class="tip"><b>Bon à savoir :</b> %s</div>' % esc_html(o["astuce"])) if o.get("astuce") else "",
+                    page, k))
+            secs.append('<section class="entry" id="%s"><h3>%s</h3>%s%s</section>' % (
+                eid, esc_html(ent), ('<p class="subs">Sous-onglets : %s</p>' % esc_html(", ".join(labels[k] for k in ks))) if len(ks) > 1 else "", "".join(blocks)))
+    toc.append('<a class="cl" href="changelog.html">Change logs (historique des versions)</a>')
+    return (tpl.replace("<!--__VERSION_MENU__-->", version_menu(versions, "doc"))
+               .replace("<!--__TOC__-->", "".join(toc)).replace("<!--__SECTIONS__-->", "".join(secs))
+               .replace("<!--__VERSION__-->", esc_html(latest)))
 
 
 # ---------- README : tableau des versions, onglets et badge ----------
@@ -813,7 +892,8 @@ Firmwares des téléphones (Mac seulement)
   des firmwares 3CX dans firmwares-3cx.js, puis rechargez la page.
 - Au premier lancement, macOS peut bloquer le fichier : clic droit > Ouvrir.
 
-Documentation : documentation.html (nouveautés de chaque version).
+Documentation : documentation.html (guide de l'utilisateur : chaque menu expliqué).
+Change logs : changelog.html (nouveautés de chaque version).
 """
 
 
@@ -832,7 +912,8 @@ def build_share(versions, active):
     # paquet de partage : ouvert depuis un fichier, pas d'application installable
     html = html.replace('<link rel="manifest" href="__ROOT__manifest.webmanifest">', "").replace("__ROOT__", "")
     doc = neutralise(build_doc(versions, active, [v], None, linkable={v["version"]}))
-    restes = sorted({w for w in A_SURVEILLER for t in (html, doc) if w in t})
+    guide = neutralise(build_guide([v], [v], page))
+    restes = sorted({w for w in A_SURVEILLER for t in (html, doc, guide) if w in t})
     if restes:
         print("ATTENTION : termes propres au client encore présents dans le paquet :", ", ".join(restes))
     folder = "visualiseur-3cx-v%s/" % v["version"]
@@ -840,7 +921,8 @@ def build_share(versions, active):
     out = os.path.join(DIST, "visualiseur-3cx-v%s.zip" % v["version"])
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr(folder + page, html)
-        z.writestr(folder + "documentation.html", doc)
+        z.writestr(folder + "documentation.html", guide)
+        z.writestr(folder + "changelog.html", doc)
         z.writestr(folder + "LISEZMOI.txt", LISEZMOI % {"v": v["version"], "u": "=" * (19 + len(v["version"])), "page": page})
         for name, src in (("firmwares-3cx.js", os.path.join(APP, "firmwares-3cx.js")), ("verifier-firmwares.command", os.path.join(BASE, "scripts", "verifier-firmwares.command"))):
             if not os.path.exists(src):
