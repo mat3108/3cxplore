@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.20.3-2563eb)
+![Version](https://img.shields.io/badge/version-15.20.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -204,7 +204,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.20.3** | Logo : retour au tableau de bord |
+| **15.20.4** | Menu « Complet » |
+| 15.20.3 | Logo : retour au tableau de bord |
 | 15.20.2 | Bouton « Retour à l'accueil » dans la documentation |
 | 15.20.1 | Nom « Changelog » |
 | 15.20 | Guide de l'utilisateur et Changelog |

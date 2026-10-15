@@ -1,5 +1,16 @@
 [
  {
+  "version": "15.20.4",
+  "date": "2026-10-15",
+  "titre": "Menu « Complet »",
+  "resume": "Le choix du menu de gauche propose maintenant « Simplifié » et « Complet » (anciennement « Expert ») ; le menu complet affiche tous les onglets à plat.",
+  "changements": [
+   "Bouton « Expert » du menu de gauche renommé « Complet » (en anglais : « Full »), avec son infobulle.",
+   "Guide de l'utilisateur mis à jour (section Premiers pas et introduction)."
+  ],
+  "onglets": []
+ },
+ {
   "version": "15.20.3",
   "date": "2026-10-15",
   "titre": "Logo : retour au tableau de bord",
