@@ -1,5 +1,66 @@
 [
  {
+  "version": "17.0",
+  "date": "2026-10-15",
+  "titre": "Guide de l'utilisateur en anglais",
+  "resume": "Le guide de l'utilisateur existe maintenant en anglais (documentation-en.html) : premiers pas, les 79 onglets et le glossaire de 33 termes. Quand l'interface est en anglais, le lien « Documentation », le bouton « ? » de chaque onglet et l'entrée « Glossaire » ouvrent le guide anglais ; chaque guide a un lien vers l'autre langue.",
+  "changements": [
+   "Guide anglais complet : Getting started, les 79 onglets (à quoi il sert, comment l'utiliser, bon à savoir), Glossary avec liens vers les onglets, recherche, impression ; noms des menus et des onglets tels qu'affichés dans l'interface anglaise.",
+   "Liens dans la langue de l'interface : « Documentation » (barre du haut), bouton « ? » des onglets et « Glossaire » (menu de gauche).",
+   "Lien « English version » / « Version française » en tête de la table des matières de chaque guide.",
+   "Guide français complété : Plan des parkings (nombre nécessaire, usagers en problème, export pour corriger), Parkings partagés et Ouverture d'un magasin (parkings proposés).",
+   "Paquet de partage avec les deux guides ; le contrôle du dépôt vérifie que chaque onglet est expliqué en français et en anglais."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "16.5",
+  "date": "2026-10-15",
+  "titre": "Ouverture d'un magasin : parkings partagés",
+  "resume": "L'assistant d'ouverture d'un magasin propose maintenant de vrais parkings partagés libres (SP…) pour le nouveau magasin — autant que le magasin modèle — et ajoute à la liste à cocher les touches de parking à programmer sur les téléphones ; un bouton les inscrit au Plan des parkings.",
+  "changements": [
+   "Nombre de parkings par défaut : celui du magasin modèle dans le Plan des parkings, sinon les parkings affichés sur ses téléphones.",
+   "Parkings proposés parmi ceux qu'aucun téléphone, aucun magasin du Plan des parkings ni appel récent (90 jours) n'utilise, en bloc continu si possible ; s'il n'y en a pas assez, les numéros à créer dans 3CX sont indiqués.",
+   "Liste à cocher : parkings réservés, parkings à créer, touches de parking à programmer sur chaque téléphone, ajout au Plan des parkings ; numérotation : parkings partagés SP… au lieu de numéros de service.",
+   "Bouton « Ajouter au Plan des parkings » : réserve ces parkings au nouveau magasin dans l'onglet Plan des parkings."
+  ],
+  "onglets": [
+   [
+    "Ouverture d'un magasin",
+    "Parkings partagés libres proposés et touches de parking à programmer, liés au Plan des parkings."
+   ]
+  ]
+ },
+ {
+  "version": "16.4",
+  "date": "2026-10-15",
+  "titre": "Plan des parkings : nombre de parkings nécessaires",
+  "resume": "Plan des parkings : nouvelle section « Nombre de parkings nécessaires » — pour chaque magasin, le nombre maximal d'appels parqués en même temps sur 90 jours, le pic habituel, les jours où tous les parkings étaient occupés, l'heure de pointe et le nombre recommandé, comparés aux parkings prévus ; les magasins qui en manquent apparaissent aussi dans les problèmes selon le plan.",
+  "changements": [
+   "Par magasin (employés qui parquent les appels, 90 derniers jours) : pic simultané et sa date, pic habituel (95 % des jours), jours saturés, heure de pointe, nombre recommandé (pic + 1 de marge).",
+   "Constat : manque de parkings (avec le nombre à ajouter), suffisant, plus que nécessaire, pas de plan ; sans plan, la comparaison se fait avec les parkings réellement utilisés.",
+   "Nouveau constat « Parkings saturés aux heures de pointe » dans les problèmes selon le plan."
+  ],
+  "onglets": [
+   [
+    "Plan des parkings",
+    "Nombre de parkings nécessaires par magasin d'après les appels parqués en même temps."
+   ]
+  ]
+ },
+ {
+  "version": "16.3",
+  "date": "2026-10-15",
+  "titre": "Aide contextuelle « ? » sur chaque onglet",
+  "resume": "Chaque onglet a maintenant un bouton « ? » à côté de son titre : il ouvre directement la section de cet onglet dans le guide de l'utilisateur, dans un nouvel onglet du navigateur.",
+  "changements": [
+   "Bouton « ? » à côté du titre des 79 onglets, vers la section correspondante du guide (à quoi il sert, comment l'utiliser, bon à savoir).",
+   "Le guide s'ouvre dans un nouvel onglet du navigateur : la page de 3CXplore reste ouverte ; le bouton n'apparaît pas à l'impression.",
+   "Guide : « Premiers pas » présente le bouton « ? »."
+  ],
+  "onglets": []
+ },
+ {
   "version": "16.2",
   "date": "2026-10-15",
   "titre": "Plan des parkings : tableau des usagers en problème",

@@ -17,8 +17,12 @@
    "La barre de recherche (touche « / ») trouve un poste, une adresse MAC, un SDA, un nom ou une file. La palette de commandes (Ctrl+K, ou Cmd+K sur Mac) ouvre n'importe quel onglet, poste ou magasin en tapant quelques lettres."
   ],
   [
+   "Aide sur un onglet",
+   "Le bouton « ? » à côté du titre de chaque onglet ouvre directement l'explication de cet onglet dans ce guide."
+  ],
+  [
    "Langue",
-   "Le bouton FR / EN de la barre du haut passe l'interface en anglais ou en français."
+   "Le bouton FR / EN de la barre du haut passe l'interface en anglais ou en français. Le guide s'ouvre dans la même langue (version anglaise : documentation-en.html)."
   ],
   [
    "Exporter et imprimer",
@@ -165,6 +169,7 @@
    "comment": [
     "Choisissez le magasin modèle, puis le code et le nom du nouveau magasin.",
     "Le bouton Personnaliser permet de modifier les départements, menus, files, groupes, SDA, horaires et fériés ; un département peut être ajouté vide ou copié d'un autre magasin.",
+    "Les parkings partagés proposés sont libres (aucun téléphone ni magasin ne les utilise) ; le bouton « Ajouter au Plan des parkings » les réserve au nouveau magasin.",
     "Exportez le plan pour le reprendre plus tard."
    ]
   },
@@ -265,14 +270,16 @@
    "sert": "Le temps d'attente du client avant qu'une personne décroche : médiane, 90 % des appels, objectif, répartition, par heure, par magasin et par personne."
   },
   "parkings": {
-   "sert": "Les parkings d'appels : réglages, reprises, retours, appels perdus en attente et parkings affichés sur les téléphones."
+   "sert": "Les parkings d'appels : réglages, reprises, retours, appels perdus en attente et parkings affichés sur les téléphones.",
+   "astuce": "Pour attribuer les parkings à chaque magasin et corriger les touches des téléphones, utilisez l'onglet Plan des parkings."
   },
   "pkplan": {
    "sert": "Le plan des parkings partagés par magasin : vous attribuez à chaque magasin ses parkings (SP0, SP1…), et l'outil liste ce qui ne respecte pas le plan sur les téléphones et dans les appels parqués.",
    "comment": [
     "Cliquez « Proposer un plan d'après l'usage actuel » pour partir de la situation réelle, puis corrigez les parkings de chaque magasin (format SP10-SP14, SP20).",
-    "Lisez les problèmes selon le plan : parkings prévus pour deux magasins ou inexistants, touches d'un autre magasin ou hors plan, touches manquantes, appels parqués sur le parking d'un autre magasin.",
-    "Imprimez la fiche des touches à ajouter ou retirer sur chaque téléphone."
+    "Vérifiez le nombre de parkings nécessaires : pic d'appels parqués en même temps, jours saturés et nombre recommandé par magasin.",
+    "Lisez les usagers en problème : leurs touches de parking en couleur (parking du magasin, d'un autre magasin, hors plan, à ajouter) et ce qu'il faut faire.",
+    "Cliquez « Exporter pour corriger » : un fichier Excel avec, pour chaque usager, les touches à retirer et à ajouter et une colonne « Fait »."
    ],
    "astuce": "Un employé qui voit le parking d'un autre magasin peut reprendre l'appel d'un client qui ne le concerne pas : corrigez d'abord ces touches."
   },
@@ -802,5 +809,852 @@
    ],
    "formes": []
   }
- ]
+ ],
+ "en": {
+  "general": [
+   [
+    "Open a backup",
+    "On the Dashboard, click “Choose a backup (.zip)” or drag and drop the file. Processing happens entirely in your browser: nothing is sent to the Internet. The backup is remembered until “Close the backup”."
+   ],
+   [
+    "Choose a store",
+    "The “All stores” list at the top right limits every tab to one store. Go back to “All stores” to see the whole system."
+   ],
+   [
+    "Simple or full menu",
+    "At the top of the left menu: “Simple” groups neighbouring tabs under a single entry with sub-tabs; “Full” shows all tabs flat. This guide follows the simple menu."
+   ],
+   [
+    "Search",
+    "The search bar (“/” key) finds an extension, a MAC address, a DID, a name or a queue. The command palette (Ctrl+K, or Cmd+K on Mac) opens any tab, extension or store by typing a few letters."
+   ],
+   [
+    "Help on a tab",
+    "The “?” button next to each tab's title opens that tab's explanation in this guide."
+   ],
+   [
+    "Language",
+    "The FR / EN button in the top bar switches the interface between English and French; the guide opens in the same language."
+   ],
+   [
+    "Export and print",
+    "Most tables have an “Export (CSV)” button (opens in Excel); sheets and reports can be printed or saved as PDF. Exported files go to Downloads: delete them when you no longer need them."
+   ],
+   [
+    "Personal settings",
+    "Your notes, statuses, goals, important contacts, absences and preferences stay in your browser. Export them with “Settings backup” to find them elsewhere."
+   ],
+   [
+    "Updates",
+    "The download button in the top bar shows whether a new version of 3CXplore is available. The version history is in “Changelog”, at the very bottom of the left menu."
+   ],
+   [
+    "Privacy",
+    "Never share the backup .zip file: it contains calls, recordings, voicemails and system credentials. Passwords, PINs and keys are hidden in the tool."
+   ]
+  ],
+  "onglets": {
+   "dashboard": {
+    "sert": "The starting point: key figures for the system or the selected store, the outcome of inbound calls, volume by day and by hour, the most active extensions and numbers, and server information.",
+    "comment": [
+     "First choose a backup (.zip): this is where it is opened and where you can change it.",
+     "Look at the outcome of inbound calls (answered, lost, voicemail, forwarded) to spot a service problem at a glance.",
+     "Click an extension or a number to open its details."
+    ],
+    "astuce": "A banner flags important numbers waiting for a call-back and what is new in the backup compared with the previous one."
+   },
+   "priorites": {
+    "sert": "All problems found in the other tabs, in a single list ranked by the number of calls affected, then by severity.",
+    "comment": [
+     "Start your day here: the first rows are the ones that cost the most calls.",
+     "Each row leads to the tab that explains the problem in detail."
+    ],
+    "astuce": "Use the store filter to prepare a meeting with a store manager."
+   },
+   "reco": {
+    "sert": "Automatic analysis of the configuration and activity, ranked Critical, To fix and Observation, with the elements involved and the recommendation.",
+    "comment": [
+     "Read the Critical recommendations first.",
+     "Give each recommendation a status (to do, in progress, done, ignored) and add your notes.",
+     "Add your own observations, then export to CSV or print the list."
+    ],
+    "astuce": "Statuses and notes stay in your browser and are part of the Settings backup."
+   },
+   "sante": {
+    "sert": "A score out of 100 per store, summarising service (answer, wait, losses), configuration, security and the state of the phones.",
+    "comment": [
+     "Compare stores with each other and open the details to see what loses points."
+    ],
+    "astuce": "The score changes from one backup to the next: follow it in the Tracking tab."
+   },
+   "rapport": {
+    "sert": "A printable or PDF report for a store or the whole system: summary, recommendations, DIDs and diagrams, hours, queues, agents, extensions and phones to update.",
+    "comment": [
+     "Choose the store and tick the sections you want.",
+     "Print, or save as PDF from the print window."
+    ]
+   },
+   "fichemag": {
+    "sert": "A one-page summary of a store: calls, numbers (DIDs), hours, queues, parkings and problems to fix.",
+    "comment": [
+     "Choose the store, then print the sheet for the manager."
+    ]
+   },
+   "actions": {
+    "sert": "The list of tasks to do in the 3CX console, ranked by timing (right away, this week, when possible), with the path in the console, the impact and the exact elements.",
+    "comment": [
+     "Tick each task once done; copy MAC addresses in one click.",
+     "Print the list for the person who will make the changes."
+    ]
+   },
+   "postes": {
+    "sert": "The list of users (extensions), with filters by department, status and device. An extension's details show its contact information, Microsoft 365 account, phones, queues, forwarding profiles, greeting and voicemails.",
+    "comment": [
+     "Search for an extension by number, name or MAC address.",
+     "Click an extension to open its full details."
+    ]
+   },
+   "telephones": {
+    "sert": "The phone inventory: model, MAC address, current and recommended firmware, store, template, and the update status of each device.",
+    "comment": [
+     "Filter the phones to update.",
+     "Export the list to CSV to plan the updates."
+    ],
+    "astuce": "The Firmwares button in the top bar checks the official 3CX firmware list."
+   },
+   "blf": {
+    "sert": "The keys programmed on the phones: BLF (a colleague's light), parkings, speed dials, keys to fix, and who watches whom.",
+    "comment": [
+     "Spot keys pointing to a deleted or disabled extension.",
+     "Check that a new employee appears on their colleagues' phones."
+    ]
+   },
+   "blfmodele": {
+    "sert": "A department's key template and, for each phone, the list of keys to add or remove to match it.",
+    "comment": [
+     "Choose the department, then print the sheet for each phone."
+    ]
+   },
+   "licences": {
+    "sert": "Unused, inactive, duplicate or test extensions, those still used in a routing, phones to recover, and the peak of simultaneous calls useful for the 3CX licence.",
+    "comment": [
+     "Set the inactivity threshold, then export the list to CSV before cleaning up."
+    ],
+    "astuce": "The 3CX V20 licence depends on the number of simultaneous calls: compare the peak with your licence."
+   },
+   "groupes": {
+    "sert": "Departments (3CX groups): hours per day, open, closed, break and holiday routing with playable messages, the routing tree, members and their roles.",
+    "comment": [
+     "Open a department to see where its calls go at each time of day."
+    ]
+   },
+   "organigramme": {
+    "sert": "Each store's tree: departments, queues, ring groups and menus, then their members.",
+    "comment": [
+     "Use the search to find a person in the tree, then print it."
+    ]
+   },
+   "ivr": {
+    "sert": "Auto attendants (IVR menus): message, keys and destinations, what happens when the caller chooses nothing, and the routing tree.",
+    "comment": [
+     "Listen to the message and check that each key leads to the right place."
+    ]
+   },
+   "sonnerie": {
+    "sert": "Ring groups: strategy (all at once or in turn), members and destination when nobody answers."
+   },
+   "feries": {
+    "sert": "Holidays configured or missing for each department, and the list of dates to enter in the 3CX console.",
+    "comment": [
+     "Mark the holidays the company does not observe: they will no longer be flagged."
+    ]
+   },
+   "horaires": {
+    "sert": "Checks the configured hours against real calls: calls to the closed menu during opening hours, demand before opening and after closing, calls during the break, missing upcoming holidays. The “Suggested adjustments” table proposes hour changes.",
+    "comment": [
+     "Start with the suggested adjustments table: it proposes the exact time (e.g. open at 7:00 instead of 7:30) and the share of lost calls.",
+     "Click a department to see its week × half-hour grid."
+    ]
+   },
+   "ouvmag": {
+    "sert": "A wizard to create a new store in 3CX from a model store: checklist, proposed numbering and call-flow diagram, all customisable.",
+    "comment": [
+     "Choose the model store, then the code and name of the new store.",
+     "The Customise button lets you change departments, menus, queues, groups, DIDs, hours and holidays; a department can be added empty or copied from another store.",
+     "The proposed shared parkings are free (no phone or store uses them); the “Add to the Parking plan” button reserves them for the new store.",
+     "Export the plan to pick it up later."
+    ]
+   },
+   "flux": {
+    "sert": "Each inbound number (DID) with its rule and the full routing tree: department, menu key by key, queues, agents, for office hours and out of hours."
+   },
+   "diagramme": {
+    "sert": "The full call-flow diagram of a DID, with zoom, SVG export and printing.",
+    "comment": [
+     "Choose the DID in the list; zoom with Ctrl (or Cmd) and the mouse wheel."
+    ]
+   },
+   "simulateur": {
+    "sert": "What happens to an inbound call on a DID on a given day and time: each step and the outcome.",
+    "comment": [
+     "Test for example a Saturday at 6 pm or a holiday before changing hours."
+    ]
+   },
+   "controle": {
+    "sert": "Simulation of all DIDs at key moments (opening, noon, evening, weekend, holiday), with problems grouped by cause."
+   },
+   "sdainut": {
+    "sert": "DIDs never called, not called for a long time or very rarely called, by trunk, with the possible savings.",
+    "comment": [
+     "Enter the monthly cost of a DID to estimate the savings."
+    ],
+    "astuce": "Check before cancelling: a number may be used for a seasonal advertisement or as a backup."
+   },
+   "pieges": {
+    "sert": "Routing traps: loops, missing or disabled destinations, queues, groups and menus with no way out, DIDs sent to a voicemail."
+   },
+   "doublons": {
+    "sert": "What is configured twice or in a contradictory way: same name, email, mobile or phone on several extensions, caller ID of another store, twin elements, duplicate DIDs or DIDs routed to another store.",
+    "comment": [
+     "Click a finding in the summary to filter the details."
+    ],
+    "astuce": "“Member from another store” is often intended (shared staff): check it only if it is surprising."
+   },
+   "numerotation": {
+    "sert": "The numbering plan: number ranges per store, free numbers and extensions outside their range.",
+    "comment": [
+     "Find a free number here for a new employee or a new service."
+    ]
+   },
+   "trunks": {
+    "sert": "External lines (trunks) with their DIDs and inbound rules, and gateways, SIP providers and bridges."
+   },
+   "sortant": {
+    "sert": "Outbound rules in order of priority: prefixes, number lengths, routes and digit transformation.",
+    "comment": [
+     "Check the 911 rule and international calls."
+    ]
+   },
+   "annuaire": {
+    "sert": "Company and department contacts."
+   },
+   "appels": {
+    "sert": "The full call history, filtered by period, direction, outcome and queue. A call's details show its step-by-step path on a timeline.",
+    "comment": [
+     "Click a call to see each step: DID, department, menu and key chosen, queue and extensions that rang, answer or abandonment, with time and duration."
+    ],
+    "astuce": "For a backup opened with a version older than 15.15, reopen the backup to get the step details."
+   },
+   "rappels": {
+    "sert": "The list of customers who called without getting an answer and were not called back, by store: attempts, time, cause and call-back status.",
+    "comment": [
+     "Call back the customers on the list, then tick “Handled”.",
+     "Print the list for the team or export it to CSV."
+    ]
+   },
+   "rappellent": {
+    "sert": "Served calls followed by a new call from the same customer shortly after (24 h, 48 h or 7 days): often a problem not solved the first time. Rate by store, queue and agent, and the most recurring customers.",
+    "comment": [
+     "Compare rates between stores, queues and agents rather than aiming for zero.",
+     "Add suppliers, partners or other sites to the exception numbers (or click “Exclude” on a row)."
+    ],
+    "astuce": "Call-backs under 10 minutes and very frequent callers are left out by default; two boxes let you include them."
+   },
+   "client": {
+    "sert": "Everything about a phone number: inbound and outbound calls in all stores, who answered, where the call was lost, queue passages, voicemails and recordings.",
+    "comment": [
+     "Enter the number in any format.",
+     "Click a call in the timeline to see its detailed path."
+    ]
+   },
+   "vip": {
+    "sert": "Your key contacts (large customers, suppliers, head office, partners) tracked call by call: missed calls, overdue call-backs against a goal per category, answer delay, who they speak to.",
+    "comment": [
+     "Add a contact by hand, from the phonebook, by CSV import, or with the ☆ star in call lists.",
+     "Set a call-back goal per category."
+    ],
+    "astuce": "An alert appears on the dashboard and in Priorities when an important contact is waiting for a call-back."
+   },
+   "receptions": {
+    "sert": "Reception extensions: calls presented, answered and lost, parked calls, simultaneous calls and overload hours."
+   },
+   "delai": {
+    "sert": "How long the customer waits before a person picks up: median, 90 % of calls, goal, distribution, by hour, by store and by person."
+   },
+   "parkings": {
+    "sert": "Call parkings: settings, pick-ups, returns, calls lost while parked and parkings shown on the phones.",
+    "astuce": "To assign parkings to each store and fix the phones' keys, use the Parking plan tab."
+   },
+   "pkplan": {
+    "sert": "The plan of shared parkings by store: you assign each store its parkings (SP0, SP1…), and the tool lists what does not follow the plan on the phones and in parked calls.",
+    "comment": [
+     "Click “Propose a plan from current use” to start from the real situation, then correct each store's parkings (format SP10-SP14, SP20).",
+     "Check the number of parkings needed: peak of calls parked at the same time, saturated days and recommended number per store.",
+     "Read the users with problems: their parking keys in colour (store parking, another store's parking, outside the plan, to add) and what to do.",
+     "Click “Export to fix”: an Excel file with, for each user, the keys to remove and to add and a “Done” column."
+    ],
+    "astuce": "An employee who sees another store's parking can pick up the call of a customer who is not theirs: fix these keys first."
+   },
+   "files": {
+    "sert": "Queues: strategy, timeouts, greeting and music on hold, agents and managers, and statistics (service level, wait, abandons, calls with no agent, hours)."
+   },
+   "statsfiles": {
+    "sert": "Each passage of a call through a queue: wait, talk, outcome and agent."
+   },
+   "agents": {
+    "sert": "Each agent's performance over a period: answered calls, average talk, queue answer rate, missed calls, pick-up delay, outbound calls.",
+    "comment": [
+     "Click an agent for detailed figures; export the table to CSV."
+    ]
+   },
+   "occupation": {
+    "sert": "The share of logged-in time spent talking, by agent, by hour and by store: overloaded and under-used agents.",
+    "astuce": "An agent logged in all day often has a low rate: also look at the busy-hours column."
+   },
+   "prevision": {
+    "sert": "Inbound calls expected over the next 7 days, by day and by hour, with a range, the trend and holidays.",
+    "astuce": "It is an order of magnitude: a promotion, an outage or the weather change the real volume."
+   },
+   "effectif": {
+    "sert": "For each time slot: calls, losses, logged-in agents and agents needed to reach the goal."
+   },
+   "indisp": {
+    "sert": "Queues, groups and numbers that rely on a single person, and what happens if they are absent."
+   },
+   "stats": {
+    "sert": "Comparison of stores over a period: answer rate, lost calls, queue wait, peak hours, daily trend, and a day × hour heat map.",
+    "comment": [
+     "Choose the period (it is shared with several tabs) and export to CSV."
+    ]
+   },
+   "provenance": {
+    "sert": "Inbound calls by caller region (area code), by store: shares, lost calls by region, frequent area codes."
+   },
+   "destinations": {
+    "sert": "Outbound calls by destination: out of province, international, special services, evenings and weekends, by store and by extension."
+   },
+   "couts": {
+    "sert": "An estimate of the cost of outbound calls based on your rates per destination: cost over the period and per month, by destination, store, extension and number.",
+    "comment": [
+     "Open “Your rates” and enter the price per minute and the fee per call for each destination, from your carrier invoice (0 if the destination is included in your plan).",
+     "Choose your carrier's billing (per second, per 6 s or per started minute) and the period.",
+     "Export the cost per extension to CSV."
+    ],
+    "astuce": "Only connected outbound calls are counted; external forwards, plans, DIDs and taxes are not included. Compare with your invoice to adjust the rates."
+   },
+   "internes": {
+    "sert": "Calls between extensions and between stores: very busy extensions, colleagues hard to reach, frequent pairs, matrix between stores."
+   },
+   "classement": {
+    "sert": "Ranking of stores on answer, abandons, wait and peak hours."
+   },
+   "cmpmag": {
+    "sert": "The configuration of two or more stores side by side (hours, menus, queues, timeouts, strategies, extensions), with differences highlighted."
+   },
+   "courts": {
+    "sert": "Answered calls of a few seconds and call-backs within 2 minutes: often dropped calls, by type, line, hour and extension."
+   },
+   "qualite": {
+    "sert": "Voice quality by store, site, phone model and trunk."
+   },
+   "menus": {
+    "sert": "Callers' choices in each menu: keys, hang-ups, timeouts with no choice, what happens to calls for each choice and where they are lost."
+   },
+   "messageries": {
+    "sert": "Each voicemail box (extensions, queues, groups): enabled or not, messages sent by email, greeting, messages still kept, last check and everything that leads to it.",
+    "comment": [
+     "Fix the “Disabled but targeted” and “Email impossible” boxes first."
+    ],
+    "astuce": "The backup does not say whether a message was listened to: “Never checked” is based on the extension's calls to voicemail."
+   },
+   "audio": {
+    "sert": "Voicemails, menu and queue messages (with the element that uses them) and greetings, all playable."
+   },
+   "enreg": {
+    "sert": "The list of referenced call recordings.",
+    "astuce": "The recording audio files are not always part of the backup."
+   },
+   "securite": {
+    "sert": "Security points: administration rights, two-factor authentication, external forwards, international calls, logins and sensitive changes."
+   },
+   "renvois": {
+    "sert": "Forwards to external numbers: statuses involved, forwarded calls, former employees, colleagues' mobiles, unknown numbers."
+   },
+   "suspects": {
+    "sert": "Telemarketing and robots: bursts of calls, numbers calling several DIDs, repeated very short or night calls, hidden numbers."
+   },
+   "visibilite": {
+    "sert": "What a user sees and can do on each extension, according to their roles in the departments."
+   },
+   "droits": {
+    "sert": "The rights of each role by department, own rights and inconsistencies."
+   },
+   "comparer": {
+    "sert": "Two extensions side by side and the changes needed to align the second with the first."
+   },
+   "nouvel": {
+    "sert": "The sheet for creating an extension modelled on a colleague, with a free number and forwarding by status.",
+    "comment": [
+     "Choose the store and the model colleague, enter the name and email, then print the sheet."
+    ]
+   },
+   "depart": {
+    "sert": "An employee's departure sheet: everything that points to their extension and what to remove or hand over, with an optional replacement."
+   },
+   "absences": {
+    "sert": "Planned absences (vacation, leave, training): queues, departments and groups where the person is missing, what is left with nobody, critical days, calls to share out and possible replacements.",
+    "comment": [
+     "Choose the employee and the dates, then click Add.",
+     "Look at the critical days: a queue or department has nobody left."
+    ],
+    "astuce": "Absences stay in your browser and are part of the Settings backup."
+   },
+   "historique": {
+    "sert": "An extension's timeline from the audit log: changes, additions and removals, role changes and who made them."
+   },
+   "suivi": {
+    "sert": "How the indicators change from one backup to the next (service, problems, phones, fleet), for the system or a store.",
+    "comment": [
+     "Add older backups to go back in time; export or import the history."
+    ]
+   },
+   "comparaison": {
+    "sert": "Differences between the current backup and a reference backup: additions, deletions and field-by-field changes.",
+    "comment": [
+     "Choose an older (or newer) reference backup."
+    ]
+   },
+   "avantapres": {
+    "sert": "The path of each DID compared between the reference backup and the current backup: improved, worse, changed."
+   },
+   "modifs": {
+    "sert": "A store's configuration changes over a period, with the before and after of each field."
+   },
+   "audit": {
+    "sert": "The 3CX audit log: configuration changes and logins, with the before and after of each field."
+   },
+   "objectifs": {
+    "sert": "Service-level targets (answer rate, losses, wait) by default and per store, with the current value and whether it is met.",
+    "astuce": "These goals are used in Statistics, Agents, Tracking and Report."
+   },
+   "magasins": {
+    "sert": "The store codes detected and the assignment of each department, queue, menu, group and extension to a store, with manual correction.",
+    "comment": [
+     "Give each code a name, mark shared codes, fix wrong assignments."
+    ],
+    "astuce": "All of the tool's store filters rely on this tab."
+   },
+   "interface": {
+    "sert": "The look of the tool: ready-made themes, colour, density, text size, corners, cards, font, width, menu, home tab and animations."
+   },
+   "reglages": {
+    "sert": "Export and import in a single file of all the settings entered in the tool (stores, goals, tracking, notes, tasks, important contacts, absences, preferences).",
+    "comment": [
+     "Export your settings before changing computer or browser, then import them on the new one."
+    ]
+   },
+   "params": {
+    "sert": "3CX system and tenant parameters (sensitive values are hidden)."
+   }
+  },
+  "glossaire": [
+   {
+    "terme": "DID",
+    "def": "Direct inward dialling number (in French SDA): a public phone number that rings in 3CX. Each DID has an inbound rule that decides where the call goes.",
+    "onglets": [
+     "flux",
+     "diagramme",
+     "simulateur",
+     "controle",
+     "sdainut"
+    ],
+    "formes": [
+     "DID",
+     "DIDs"
+    ],
+    "fr": "SDA"
+   },
+   {
+    "terme": "Trunk",
+    "def": "External line that connects 3CX to a telephone carrier (SIP provider) or a gateway. DIDs arrive through a trunk and outbound calls leave through it.",
+    "onglets": [
+     "trunks",
+     "sortant"
+    ],
+    "formes": [
+     "trunk",
+     "trunks"
+    ],
+    "fr": "Trunk"
+   },
+   {
+    "terme": "SIP provider and gateway",
+    "def": "The SIP provider is the carrier that carries calls over the Internet; a gateway converts a traditional phone line for 3CX.",
+    "onglets": [
+     "trunks"
+    ],
+    "formes": [
+     "SIP provider",
+     "gateway"
+    ],
+    "fr": "Fournisseur SIP et passerelle"
+   },
+   {
+    "terme": "Bridge",
+    "def": "Link between two 3CX systems (for example two sites): calls can pass from one to the other.",
+    "onglets": [
+     "trunks",
+     "internes"
+    ],
+    "formes": [
+     "bridge"
+    ],
+    "fr": "Bridge"
+   },
+   {
+    "terme": "Extension",
+    "def": "A 3CX user, identified by a short number; it can have one or more phones and the 3CX app.",
+    "onglets": [
+     "postes",
+     "telephones",
+     "licences"
+    ],
+    "formes": [],
+    "fr": "Poste"
+   },
+   {
+    "terme": "Department",
+    "def": "3CX group that brings extensions together, holds the hours (open, closed, break, holidays) and decides where calls go at each moment.",
+    "onglets": [
+     "groupes",
+     "organigramme",
+     "horaires"
+    ],
+    "formes": [],
+    "fr": "Département"
+   },
+   {
+    "terme": "Queue",
+    "def": "Callers wait there for an agent to become free, with a greeting and music; agents ring according to a strategy, and the call overflows after a maximum wait.",
+    "onglets": [
+     "files",
+     "statsfiles",
+     "agents"
+    ],
+    "formes": [
+     "queue",
+     "queues"
+    ],
+    "fr": "File d'attente"
+   },
+   {
+    "terme": "Agent",
+    "def": "Extension that is a member of a queue; it must be logged into the queue to receive its calls.",
+    "onglets": [
+     "agents",
+     "occupation",
+     "indisp"
+    ],
+    "formes": [],
+    "fr": "Agent"
+   },
+   {
+    "terme": "Auto attendant (IVR)",
+    "def": "Voice menu (“For service, press 1…”): a message, then a destination per key, and what happens if the caller chooses nothing.",
+    "onglets": [
+     "ivr",
+     "menus"
+    ],
+    "formes": [
+     "IVR"
+    ],
+    "fr": "Standard automatique (IVR)"
+   },
+   {
+    "terme": "Ring group",
+    "def": "Rings several extensions at once or in turn, with no waiting or music; if nobody answers, the call goes to a fallback destination.",
+    "onglets": [
+     "sonnerie"
+    ],
+    "formes": [
+     "ring group",
+     "ring groups"
+    ],
+    "fr": "Groupe de sonnerie"
+   },
+   {
+    "terme": "Ring strategy",
+    "def": "How agents or members are rung: all at once, in turn, least busy, etc.",
+    "onglets": [
+     "files",
+     "sonnerie"
+    ],
+    "formes": [],
+    "fr": "Stratégie de sonnerie"
+   },
+   {
+    "terme": "Overflow",
+    "def": "Destination used when a queue or group does not answer in time: voicemail, another queue, a menu, an external forward.",
+    "onglets": [
+     "files",
+     "pieges"
+    ],
+    "formes": [
+     "overflow"
+    ],
+    "fr": "Débordement"
+   },
+   {
+    "terme": "Voicemail",
+    "def": "Box where the caller leaves a message; messages can be sent by email. Queues and groups can also have a box.",
+    "onglets": [
+     "messageries",
+     "audio"
+    ],
+    "formes": [
+     "voicemail box",
+     "voicemail"
+    ],
+    "fr": "Messagerie vocale"
+   },
+   {
+    "terme": "Prompt (recorded message)",
+    "def": "Audio file played to the caller: menu greeting, closed message, queue intro, music on hold.",
+    "onglets": [
+     "audio",
+     "ivr",
+     "files"
+    ],
+    "formes": [],
+    "fr": "Invite (message enregistré)"
+   },
+   {
+    "terme": "Forwarding profile (status)",
+    "def": "An extension's status (Available, Away, Do not disturb…) and what happens to its calls in each case: no answer, busy, not registered.",
+    "onglets": [
+     "postes",
+     "renvois"
+    ],
+    "formes": [
+     "forwarding profile",
+     "forwarding profiles"
+    ],
+    "fr": "Profil de renvoi (statut)"
+   },
+   {
+    "terme": "External forward",
+    "def": "Sending a call to a number outside 3CX (mobile, another company); it goes through a trunk and may cost money.",
+    "onglets": [
+     "renvois",
+     "securite"
+    ],
+    "formes": [
+     "external forward",
+     "external forwards"
+    ],
+    "fr": "Renvoi externe"
+   },
+   {
+    "terme": "BLF key",
+    "def": "Phone key with a light that shows whether a colleague is free, busy or ringing; pressing it calls them or picks up their call.",
+    "onglets": [
+     "blf",
+     "blfmodele"
+    ],
+    "formes": [
+     "BLF"
+    ],
+    "fr": "Touche BLF"
+   },
+   {
+    "terme": "Call parking",
+    "def": "Putting a call “on park” to pick it up from any phone (parking key or code).",
+    "onglets": [
+     "parkings",
+     "pkplan"
+    ],
+    "formes": [
+     "parking",
+     "parkings"
+    ],
+    "fr": "Parking d'appels"
+   },
+   {
+    "terme": "Caller ID",
+    "def": "The number shown to the person called when an extension calls outside; it should be a DID of the right store.",
+    "onglets": [
+     "doublons",
+     "postes"
+    ],
+    "formes": [
+     "caller ID",
+     "Caller ID"
+    ],
+    "fr": "Numéro présenté (Caller ID)"
+   },
+   {
+    "terme": "Inbound rule",
+    "def": "For a DID, where calls go depending on the moment: office hours, out of hours, holidays.",
+    "onglets": [
+     "flux",
+     "trunks"
+    ],
+    "formes": [
+     "inbound rule",
+     "inbound rules"
+    ],
+    "fr": "Règle entrante"
+   },
+   {
+    "terme": "Outbound rule",
+    "def": "Chooses which trunk a call leaves by, based on the number dialled (prefix, length), and can transform the digits.",
+    "onglets": [
+     "sortant"
+    ],
+    "formes": [
+     "outbound rule",
+     "outbound rules"
+    ],
+    "fr": "Règle sortante"
+   },
+   {
+    "terme": "Office hours, out of hours, break, holidays",
+    "def": "A department's four moments: each has its own destination (open menu, closed menu, break message, holiday message).",
+    "onglets": [
+     "horaires",
+     "feries",
+     "groupes"
+    ],
+    "formes": [],
+    "fr": "Heures d'ouverture, hors heures, pause, fériés"
+   },
+   {
+    "terme": "Connected, lost, abandoned call",
+    "def": "Connected: a person answered. Lost: nobody answered (hung up in the menu, abandoned in a queue, no answer). Abandoned: the caller hung up before being answered.",
+    "onglets": [
+     "stats",
+     "rappels",
+     "appels"
+    ],
+    "formes": [],
+    "fr": "Appel abouti, perdu, abandonné"
+   },
+   {
+    "terme": "Answer rate",
+    "def": "Share of inbound calls answered by a person (or forwarded outside and answered).",
+    "onglets": [
+     "stats",
+     "objectifs",
+     "sante"
+    ],
+    "formes": [
+     "answer rate"
+    ],
+    "fr": "Taux de réponse"
+   },
+   {
+    "terme": "Service level",
+    "def": "Share of a queue's calls answered within a target time (for example 20 seconds).",
+    "onglets": [
+     "files",
+     "objectifs"
+    ],
+    "formes": [
+     "service level"
+    ],
+    "fr": "Taux de service"
+   },
+   {
+    "terme": "Call history (CDR)",
+    "def": "The detailed record of each call kept by 3CX (Call Detail Records): steps, durations, who answered. Most statistics come from it.",
+    "onglets": [
+     "appels",
+     "client"
+    ],
+    "formes": [
+     "CDR"
+    ],
+    "fr": "Historique des appels (CDR)"
+   },
+   {
+    "terme": "Audit log",
+    "def": "List of changes made in the 3CX console and of logins, with the author, the time, the before and the after.",
+    "onglets": [
+     "audit",
+     "modifs",
+     "historique"
+    ],
+    "formes": [
+     "audit log"
+    ],
+    "fr": "Journal d'audit"
+   },
+   {
+    "terme": "Firmware and template",
+    "def": "Firmware is a phone's internal software; the template is the configuration model 3CX sends to the phone (provisioning).",
+    "onglets": [
+     "telephones"
+    ],
+    "formes": [
+     "firmware",
+     "firmwares"
+    ],
+    "fr": "Firmware et gabarit"
+   },
+   {
+    "terme": "MAC address",
+    "def": "A phone's unique identifier, written under the device; 3CX uses it to send the phone its configuration.",
+    "onglets": [
+     "telephones",
+     "postes"
+    ],
+    "formes": [
+     "MAC"
+    ],
+    "fr": "Adresse MAC"
+   },
+   {
+    "terme": "Role",
+    "def": "A person's rights in a department: user, manager, receptionist, etc.; they decide what the person sees and can do.",
+    "onglets": [
+     "droits",
+     "visibilite",
+     "comparer"
+    ],
+    "formes": [],
+    "fr": "Rôle"
+   },
+   {
+    "terme": "Simultaneous calls (licence)",
+    "def": "Number of external calls at the same time: the 3CX V20 licence sets the maximum.",
+    "onglets": [
+     "licences"
+    ],
+    "formes": [
+     "simultaneous calls"
+    ],
+    "fr": "Appels simultanés (licence)"
+   },
+   {
+    "terme": "Backup",
+    "def": "Backup .zip file produced by 3CX: configuration, call history, voicemails. 3CXplore reads it entirely in your browser.",
+    "onglets": [
+     "dashboard",
+     "comparaison",
+     "suivi"
+    ],
+    "formes": [],
+    "fr": "Backup"
+   },
+   {
+    "terme": "Store code",
+    "def": "Prefix or code in names (departments, queues, extensions) that lets 3CXplore attach each element to a store; can be corrected in the Stores tab.",
+    "onglets": [
+     "magasins"
+    ],
+    "formes": [],
+    "fr": "Code de magasin"
+   }
+  ]
+ }
 }

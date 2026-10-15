@@ -36,6 +36,7 @@ VERSIONS_DIR = os.path.join(BASE, "src", "versions")
 VERSIONS_JSON = os.path.join(BASE, "src", "versions.json")
 DOC_TEMPLATE = os.path.join(BASE, "src", "documentation-modele.html")  # historique des versions (Changelog)
 GUIDE_TEMPLATE = os.path.join(BASE, "src", "guide-modele.html")  # guide de l'utilisateur (Documentation)
+GUIDE_TEMPLATE_EN = os.path.join(BASE, "src", "guide-modele-en.html")  # le même guide en anglais
 GUIDE_JSON = os.path.join(BASE, "src", "guide.json")
 APP = os.path.join(BASE, "app")
 OLD = os.path.join(APP, "anciennes-versions")
@@ -566,7 +567,7 @@ def write_pwa(version, latest):
                           {"src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}
     with open(os.path.join(BASE, "manifest.webmanifest"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
-    files = ["./", "./index.html", "./app/" + latest, "./app/documentation.html", "./app/changelog.html", "./app/firmwares-3cx.js", "./manifest.webmanifest",
+    files = ["./", "./index.html", "./app/" + latest, "./app/documentation.html", "./app/documentation-en.html", "./app/changelog.html", "./app/firmwares-3cx.js", "./manifest.webmanifest",
              "./assets/icone-192.png", "./assets/icone-512.png", "./assets/logo-icone.svg"]
     sw = """// 3CXplore — service worker (généré par scripts/generer_interface.py ; ne pas modifier à la main)
 // Garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est disponible.
@@ -615,7 +616,10 @@ def version_menu(versions, current, floating=False, here="app"):
         style += (".vmenu.float{position:fixed;top:8px;right:60px;z-index:30;background:var(--panel,#fff);"
                   "padding:4px 8px;border:1px solid var(--line,#e2e6eb);border-radius:8px}")
     return ('<style>%s</style><div class="vmenu%s"><select aria-label="Version de l\'application" '
-            'onchange="location.href=this.value">%s%s</select><a href="%s">Documentation</a></div>') % (
+            'onchange="location.href=this.value">%s%s</select><a href="%s">Documentation</a></div>'
+            # interface en anglais : le lien ouvre le guide anglais
+            '<script>(()=>{const a=document.currentScript.previousElementSibling.querySelector("a");'
+            'if(a&&document.documentElement.lang==="en")a.href=a.getAttribute("href").replace(/documentation\\.html$/,"documentation-en.html");})()</script>') % (
         style, " float" if floating else "", opts,
         '<option value="documentation.html"%s hidden>Documentation</option>' % doc_sel if current == "doc" else "", doc)
 
@@ -673,10 +677,10 @@ def build_versions(data, D):
     doc = build_doc(versions, active, versions, D)
     with open(os.path.join(APP, "changelog.html"), "w", encoding="utf-8") as f:
         f.write(doc)
-    guide = build_guide(versions, active)
-    with open(os.path.join(APP, "documentation.html"), "w", encoding="utf-8") as f:
-        f.write(guide)
-    print("OK -> app/documentation.html (guide) ; app/changelog.html ; index.html -> app/" + latest)
+    for lang, name in (("fr", "documentation.html"), ("en", "documentation-en.html")):
+        with open(os.path.join(APP, name), "w", encoding="utf-8") as f:
+            f.write(build_guide(versions, active, lang=lang))
+    print("OK -> app/documentation.html et documentation-en.html (guide) ; app/changelog.html ; index.html -> app/" + latest)
     update_readme(active)
     if "--partage" in sys.argv:
         build_share(versions, active)
@@ -739,12 +743,36 @@ def menu_structure(latest):
     return out, labels
 
 
+def en_labels(latest):
+    """Dictionnaire français -> anglais de l'interface (const EN) de la dernière version."""
+    with open(os.path.join(VERSIONS_DIR, latest, MODELE), encoding="utf-8") as f:
+        t = f.read()
+    a = t.find("const EN = {")
+    if a < 0:
+        return {}
+    b = t.index("\n};", a)
+    out = {}
+    for m in re.finditer(r'"((?:[^"\\]|\\.)*)":\s*"((?:[^"\\]|\\.)*)"', t[a:b]):
+        out[json.loads('"%s"' % m.group(1))] = json.loads('"%s"' % m.group(2))
+    return out
+
+
+GUIDE_TXT = {
+    "fr": {"start": "Premiers pas", "subs": "Sous-onglets : %s", "how": "Comment l'utiliser", "tip": "Bon à savoir :", "open": "Ouvrir l'onglet dans 3CXplore →",
+           "gl": "Glossaire", "gltoc": "Termes de 3CX (%d)", "glintro": "Les mots de 3CX utilisés dans l'outil, expliqués simplement. Dans le guide, les termes soulignés en pointillé mènent ici.",
+           "see": "Voir : %s", "cl": "Changelog (historique des versions)", "gltitle": "Voir le glossaire", "other": ("documentation-en.html", "English version")},
+    "en": {"start": "Getting started", "subs": "Sub-tabs: %s", "how": "How to use it", "tip": "Good to know:", "open": "Open the tab in 3CXplore →",
+           "gl": "Glossary", "gltoc": "3CX terms (%d)", "glintro": "The 3CX words used in the tool, explained simply. In the guide, terms underlined with dots lead here.",
+           "see": "See: %s", "cl": "Changelog (version history)", "gltitle": "See the glossary", "other": ("documentation.html", "Version française")},
+}
+
+
 def guide_slug(s):
     s = unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
 
 
-def guide_links(html, gloss, limit=4):
+def guide_links(html, gloss, limit=4, title="Voir le glossaire"):
     """Lie au glossaire la première apparition de chaque terme technique (hors liens déjà posés), au plus « limit » termes."""
     forms = sorted(((f, x) for x in gloss for f in x.get("formes", [])), key=lambda t: -len(t[0]))
     used, n = set(), 0
@@ -757,30 +785,36 @@ def guide_links(html, gloss, limit=4):
         for i, part in enumerate(parts):
             if part.startswith("<a ") or not pat.search(part):
                 continue
-            parts[i] = pat.sub(lambda m: '<a class="gl" href="#gl-%s" title="Voir le glossaire">%s</a>' % (guide_slug(x["terme"]), m.group(1)), part, count=1)
+            parts[i] = pat.sub(lambda m: '<a class="gl" href="#gl-%s" title="%s">%s</a>' % (guide_slug(x["terme"]), title, m.group(1)), part, count=1)
             used.add(x["terme"]); n += 1
             break
         html = "".join(parts)
     return html
 
 
-def build_guide(versions, active, here_page=None):
+def build_guide(versions, active, here_page=None, lang="fr"):
     """Page de formation : chaque menu et chaque onglet expliqués, avec une table des matières."""
     latest = active[0]["version"]
     page = here_page or page_name(latest)
-    with open(GUIDE_TEMPLATE, encoding="utf-8") as f:
+    with open(GUIDE_TEMPLATE_EN if lang == "en" else GUIDE_TEMPLATE, encoding="utf-8") as f:
         tpl = f.read()
     with open(GUIDE_JSON, encoding="utf-8") as f:
         G = json.load(f)
+    TX = GUIDE_TXT[lang]
     menu, labels = menu_structure(latest)
+    if lang == "en":
+        G = G.get("en") or G
+        tr = en_labels(latest)
+        labels = {k: tr.get(v, v) for k, v in labels.items()}
+        menu = [(tr.get(g, g), [(tr.get(e, e), ks) for e, ks in es]) for g, es in menu]
     covered = {k for _, es in menu for _, ks in es for k in ks}
-    manquants = [k for k in labels if k not in G["onglets"]] + [k for k in labels if k not in covered]
+    manquants = [k for k in labels if k not in G["onglets"]] + [k for k in labels if k not in covered]  # G est la version de la langue
     if manquants:
         print("ATTENTION : onglets absents du guide (src/guide.json ou menu simplifié) :", ", ".join(sorted(set(manquants))))
     gloss = G.get("glossaire", [])
-    toc = ['<a href="#premiers-pas">Premiers pas</a>']
-    secs = ['<section class="entry" id="premiers-pas"><h3>Premiers pas</h3><dl class="gen">%s</dl></section>' % "".join(
-        "<dt>%s</dt><dd>%s</dd>" % (esc_html(a), esc_html(b)) for a, b in G["general"])]
+    toc = ['<a href="%s">%s</a>' % TX["other"], '<a href="#premiers-pas">%s</a>' % TX["start"]]
+    secs = ['<section class="entry" id="premiers-pas"><h3>%s</h3><dl class="gen">%s</dl></section>' % (TX["start"], "".join(
+        "<dt>%s</dt><dd>%s</dd>" % (esc_html(a), esc_html(b)) for a, b in G["general"]))]
     for grp, entries in menu:
         gid = "g-" + guide_slug(grp)
         toc.append('<span class="tg">%s</span>' % esc_html(grp))
@@ -794,20 +828,20 @@ def build_guide(versions, active, here_page=None):
             for k in ks:
                 o = G["onglets"].get(k, {"sert": ""})
                 path = " › ".join([grp, ent] + ([labels[k]] if len(ks) > 1 else []))
-                blocks.append('<div class="tab" id="o-%s"><h4>%s</h4><div class="path">%s</div><p>%s</p>%s%s<p><a class="go" href="%s#%s">Ouvrir l\'onglet dans 3CXplore →</a></p></div>' % (
-                    k, esc_html(labels[k]), esc_html(path), guide_links(esc_html(o["sert"]), gloss),
-                    ('<div class="lbl">Comment l\'utiliser</div><ul>%s</ul>' % "".join("<li>%s</li>" % esc_html(c) for c in o["comment"])) if o.get("comment") else "",
-                    ('<div class="tip"><b>Bon à savoir :</b> %s</div>' % esc_html(o["astuce"])) if o.get("astuce") else "",
-                    page, k))
+                blocks.append('<div class="tab" id="o-%s"><h4>%s</h4><div class="path">%s</div><p>%s</p>%s%s<p><a class="go" href="%s#%s">%s</a></p></div>' % (
+                    k, esc_html(labels[k]), esc_html(path), guide_links(esc_html(o["sert"]), gloss, title=TX["gltitle"]),
+                    ('<div class="lbl">%s</div><ul>%s</ul>' % (TX["how"], "".join("<li>%s</li>" % esc_html(c) for c in o["comment"]))) if o.get("comment") else "",
+                    ('<div class="tip"><b>%s</b> %s</div>' % (TX["tip"], esc_html(o["astuce"]))) if o.get("astuce") else "",
+                    page, k, TX["open"]))
             secs.append('<section class="entry" id="%s"><h3>%s</h3>%s%s</section>' % (
-                eid, esc_html(ent), ('<p class="subs">Sous-onglets : %s</p>' % esc_html(", ".join(labels[k] for k in ks))) if len(ks) > 1 else "", "".join(blocks)))
+                eid, esc_html(ent), ('<p class="subs">%s</p>' % esc_html(TX["subs"] % ", ".join(labels[k] for k in ks))) if len(ks) > 1 else "", "".join(blocks)))
     if gloss:
-        toc.append('<span class="tg">Glossaire</span><a href="#glossaire">Termes de 3CX (%d)</a>' % len(gloss))
-        secs.append('<h2 class="grp" id="g-glossaire">Glossaire</h2><section class="entry" id="glossaire"><p class="subs">Les mots de 3CX utilisés dans l\'outil, expliqués simplement. Dans le guide, les termes soulignés en pointillé mènent ici.</p><dl class="gloss">%s</dl></section>' % "".join(
+        toc.append('<span class="tg">%s</span><a href="#glossaire">%s</a>' % (TX["gl"], TX["gltoc"] % len(gloss)))
+        secs.append('<h2 class="grp" id="g-glossaire">%s</h2><section class="entry" id="glossaire"><p class="subs">%s</p><dl class="gloss">%s</dl></section>' % (TX["gl"], TX["glintro"], "".join(
             '<dt id="gl-%s">%s</dt><dd>%s%s</dd>' % (guide_slug(x["terme"]), esc_html(x["terme"]), esc_html(x["def"]),
-                (' <span class="voir">Voir : %s</span>' % ", ".join('<a href="#o-%s">%s</a>' % (k, esc_html(labels[k])) for k in x.get("onglets", []) if k in labels)) if x.get("onglets") else "")
-            for x in sorted(gloss, key=lambda x: guide_slug(x["terme"]))))
-    toc.append('<a class="cl" href="changelog.html">Changelog (historique des versions)</a>')
+                (' <span class="voir">%s</span>' % (TX["see"] % ", ".join('<a href="#o-%s">%s</a>' % (k, esc_html(labels[k])) for k in x.get("onglets", []) if k in labels))) if x.get("onglets") else "")
+            for x in sorted(gloss, key=lambda x: guide_slug(x["terme"])))))
+    toc.append('<a class="cl" href="changelog.html">%s</a>' % TX["cl"])
     return (tpl.replace("<!--__VERSION_MENU__-->", version_menu(versions, "doc")).replace("<!--__HOME__-->", page)
                .replace("<!--__TOC__-->", "".join(toc)).replace("<!--__SECTIONS__-->", "".join(secs))
                .replace("<!--__VERSION__-->", esc_html(latest)))
@@ -919,7 +953,7 @@ Firmwares des téléphones (Mac seulement)
   des firmwares 3CX dans firmwares-3cx.js, puis rechargez la page.
 - Au premier lancement, macOS peut bloquer le fichier : clic droit > Ouvrir.
 
-Documentation : documentation.html (guide de l'utilisateur : chaque menu expliqué).
+Documentation : documentation.html (guide de l'utilisateur : chaque menu expliqué ; en anglais : documentation-en.html).
 Changelog : changelog.html (nouveautés de chaque version).
 """
 
@@ -940,6 +974,7 @@ def build_share(versions, active):
     html = html.replace('<link rel="manifest" href="__ROOT__manifest.webmanifest">', "").replace("__ROOT__", "")
     doc = neutralise(build_doc(versions, active, [v], None, linkable={v["version"]}))
     guide = neutralise(build_guide([v], [v], page))
+    guide_en = neutralise(build_guide([v], [v], page, lang="en"))
     restes = sorted({w for w in A_SURVEILLER for t in (html, doc, guide) if w in t})
     if restes:
         print("ATTENTION : termes propres au client encore présents dans le paquet :", ", ".join(restes))
@@ -949,6 +984,7 @@ def build_share(versions, active):
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr(folder + page, html)
         z.writestr(folder + "documentation.html", guide)
+        z.writestr(folder + "documentation-en.html", guide_en)
         z.writestr(folder + "changelog.html", doc)
         z.writestr(folder + "LISEZMOI.txt", LISEZMOI % {"v": v["version"], "u": "=" * (19 + len(v["version"])), "page": page})
         for name, src in (("firmwares-3cx.js", os.path.join(APP, "firmwares-3cx.js")), ("verifier-firmwares.command", os.path.join(BASE, "scripts", "verifier-firmwares.command"))):

@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-16.2-2563eb)
+![Version](https://img.shields.io/badge/version-17.0-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -99,7 +99,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
 | **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
 | **Parkings partagés** | Réglages et utilisation des parkings d'appels : reprises, retours, appels perdus en attente, parkings affichés sur les téléphones. |
-| **Plan des parkings** | Tableau visuel des usagers en problème avec leurs touches de parking en couleur. |
+| **Plan des parkings** | Nombre de parkings nécessaires par magasin d'après les appels parqués en même temps. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
 | **Enregistrements** | Liste des enregistrements référencés (les fichiers audio ne font pas partie du backup). |
 | **Messagerie & audio** | Messages vocaux, invites personnalisées (avec l'élément qui les utilise) et messages d'accueil, écoutables. |
@@ -123,7 +123,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
 | **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
-| **Ouverture d'un magasin** | Ajout d'un département vide ou copié d'un département existant de n'importe quel magasin. |
+| **Ouverture d'un magasin** | Parkings partagés libres proposés et touches de parking à programmer, liés au Plan des parkings. |
 | **Historique d'un employé** | Chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle, auteurs. |
 | **Modifications** | Changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ. |
 | **Journal d'audit** | Modifications de configuration et connexions, avec l'avant/après de chaque champ modifié. |
@@ -150,6 +150,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ├── app/                            # ce qu'on ouvre dans le navigateur (généré)
 │   ├── visualiseur-3cx-vX.Y.html   # dernière version
 │   ├── documentation.html          # guide de l'utilisateur : chaque menu expliqué
+│   ├── documentation-en.html       # le même guide en anglais
 │   ├── changelog.html              # Changelog : nouveautés de chaque version
 │   ├── firmwares-3cx.js            # liste des firmwares recommandés par 3CX
 │   └── anciennes-versions/         # versions précédentes (quand il y en a)
@@ -157,7 +158,8 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 │   ├── versions.json               # liste des versions (titre, résumé, changements, onglets)
 │   ├── documentation-modele.html   # modèle du Changelog
 │   ├── guide-modele.html           # modèle du guide de l'utilisateur
-│   ├── guide.json                  # contenu du guide (un bloc par onglet)
+│   ├── guide-modele-en.html        # modèle du guide en anglais
+│   ├── guide.json                  # contenu du guide (un bloc par onglet, français et anglais)
 │   └── versions/X.Y/modele.html    # modèle de chaque version
 ├── scripts/
 │   ├── generer_interface.py        # générateur des pages, du README et du paquet de partage
@@ -206,9 +208,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **16.2** | Plan des parkings : tableau des usagers en problème |
-| 16.1 | Plan des parkings : export pour corriger les usagers |
-| 16.0 | Plan des parkings par magasin |
+| **17.0** | Guide de l'utilisateur en anglais |
+| 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |
 | 15.x | 3CXplore entièrement en anglais · Menu épuré : 22 entrées au lieu de 62 · Choix du menu : simplifié ou expert · Provenance des appels par indicatif régional · Délai avant réponse · … |
 | 14.x | Interface en anglais (première étape) · Interface en anglais : deuxième étape · Statistiques : carte de chaleur jour × heure enrichie |
 | 13.x | Première version publique de 3CXplore · Avis de mise à jour au démarrage · Application installable (version web) · Bouton mises à jour et installation dans le bandeau · Correctif : bouton mises à jour sans backup ouvert · … |
