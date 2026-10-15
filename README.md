@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.1.1-2563eb)
+![Version](https://img.shields.io/badge/version-15.11.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **62 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **72 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -50,6 +50,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Flux d'appel (diagramme)** | Diagramme du callflow complet d'un SDA choisi dans la liste du système, avec zoom, export SVG et impression. |
 | **Simulateur d'appel** | Parcours et issue d'un appel entrant sur un SDA à un jour et une heure donnés. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
+| **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
 | **Avant / après** | Parcours des SDA comparés entre le backup de référence et le backup actuel. |
 
@@ -77,11 +78,18 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Appels manqués** | Liste de rappel des clients sans réponse non rappelés, par magasin : tentatives, heure, cause, statut de rappel ; suivi « Traité », export CSV et impression. |
 | **Historique client** | Tous les échanges avec un numéro de téléphone : appels, parcours, issues, interlocuteurs, files, messages vocaux, enregistrements. |
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
+| **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
+| **Provenance des appels** | Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région. |
+| **Destinations des appels sortants** | Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine. |
+| **Appels internes** | Appels entre postes et entre magasins : postes sollicités, collègues difficiles à joindre, paires fréquentes, matrice entre magasins. |
 | **Agents** | Performance par agent et par magasin sur une période : répondus, conversation moyenne, taux de réponse en file, manquées, décroché moyen, sortants ; fiche détaillée et export CSV. |
+| **Taux d'occupation des agents** | Part du temps connecté passée en conversation, par agent, par heure et par magasin : agents débordés et peu sollicités. |
 | **Personnes indispensables** | Files, groupes et numéros qui dépendent d'une seule personne. |
+| **Prévision du volume** | Appels entrants attendus sur 7 jours, par jour et par heure, avec fourchette, tendance et jours fériés. |
 | **Effectif selon l'achalandage** | Appels, pertes et agents par créneau, et agents nécessaires. |
 | **Classement des magasins** | Comparaison des magasins sur la réponse, les abandons, l'attente et les heures de pointe. |
+| **Appels très courts** | Appels répondus de quelques secondes et rappels dans les 2 minutes (coupures probables), par type, ligne, heure et poste. |
 | **Qualité des appels** | Qualité de la voix par magasin, site, modèle de téléphone et trunk. |
 | **Horaires** | Contrôle des horaires configurés d'après les appels réels : anomalies, demande avant ouverture et après fermeture, jours fériés à venir manquants ; fiche détaillée par département. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
@@ -102,11 +110,13 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Interface** | Thèmes prêts à l'emploi, couleur, densité, texte, coins, cartes, police, largeur, menu, onglet d'accueil et animations. |
 | **Sécurité** | Droits d'administration, double authentification, renvois externes, appels internationaux, connexions et changements sensibles. |
 | **Renvois externes** | Renvois vers des numéros externes : statuts, appels renvoyés, anciens employés, cellulaires de collègues, numéros inconnus. |
+| **Appels suspects** | Démarchage et robots : rafales, plusieurs SDA appelés, appels très courts ou de nuit répétés, appels masqués par heure. |
 | **Visibilité et droits** | Ce qu'un utilisateur voit et peut faire sur chaque poste, selon ses rôles par département. |
 | **Matrice des droits** | Droits des rôles par département, droits propres et incohérences. |
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
+| **Ouverture d'un magasin** | Liste de contrôle, numérotation et diagramme pour créer un magasin dans 3CX à partir d'un magasin modèle, entièrement personnalisable. |
 | **Historique d'un employé** | Chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle, auteurs. |
 | **Modifications** | Changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ. |
 | **Journal d'audit** | Modifications de configuration et connexions, avec l'avant/après de chaque champ modifié. |
@@ -186,7 +196,20 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.1.1** | Choix du menu : simplifié ou expert |
+| **15.11.3** | Ouverture d'un magasin : personnalisation complète |
+| 15.11.2 | Ouverture d'un magasin : diagramme du flux d'appel |
+| 15.11.1 | Ouverture d'un magasin : horaires personnalisables |
+| 15.11 | Taux d'occupation des agents |
+| 15.10 | Ouverture d'un magasin |
+| 15.9 | SDA inutilisés |
+| 15.8 | Appels suspects |
+| 15.7 | Appels internes |
+| 15.6 | Prévision du volume |
+| 15.5 | Appels très courts |
+| 15.4 | Destinations des appels sortants |
+| 15.3 | Délai avant réponse |
+| 15.2 | Provenance des appels par indicatif régional |
+| 15.1.1 | Choix du menu : simplifié ou expert |
 | 15.1 | Menu épuré : 22 entrées au lieu de 62 |
 | 15.0 | 3CXplore entièrement en anglais |
 | 14.x | Interface en anglais (première étape) · Interface en anglais : deuxième étape · Statistiques : carte de chaleur jour × heure enrichie |

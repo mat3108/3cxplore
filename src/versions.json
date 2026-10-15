@@ -1,5 +1,247 @@
 [
  {
+  "version": "15.11.3",
+  "date": "2026-10-14",
+  "titre": "Ouverture d'un magasin : personnalisation complète",
+  "resume": "L'assistant Ouverture d'un magasin part toujours d'un magasin modèle, mais le bouton « Personnaliser le nouveau magasin » permet maintenant de tout modifier : départements, horaires et pauses, menus et touches, files, groupes, SDA, jours fériés, postes, téléphones, parkings et appels sortants. Liste à cocher, numérotation proposée, diagramme et résumé des différences suivent ces choix.",
+  "changements": [
+   "Départements : ajouter, retirer, renommer ; heures d'ouverture et pause sur deux plages ; destinations pendant les heures, hors heures, fériés et pause ; messages.",
+   "Menus IVR : nom, message, touches (ajouter, retirer, changer la destination), action sans choix et touche invalide.",
+   "Files d'attente et groupes de sonnerie : nom, stratégie, délais, débordement, message d'accueil, annonce de la position, nombre d'agents ou de membres prévus.",
+   "SDA : numéros, trunk, destination pendant et hors des heures ; jours fériés à garder ou à ajouter ; postes, téléphones par modèle, touches BLF, parkings ; Caller ID et trunk des appels sortants.",
+   "Destinations au choix parmi les éléments du nouveau magasin, les éléments communs, la messagerie, un numéro externe ou raccrocher ; un élément retiré est enlevé des destinations qui le visaient.",
+   "Numérotation proposée : numéros libres pour les postes, menus, files, groupes et parkings, vérifiés dans le plan de numérotation.",
+   "Résumé des différences avec le magasin modèle, liste à cocher et diagramme du flux d'appel construits à partir du paramétrage.",
+   "Exporter et importer le paramétrage (fichier JSON) pour reprendre plus tard ou réutiliser une ouverture ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Ouverture d'un magasin",
+    "Liste de contrôle, numérotation et diagramme pour créer un magasin dans 3CX à partir d'un magasin modèle, entièrement personnalisable."
+   ]
+  ]
+ },
+ {
+  "version": "15.11.2",
+  "date": "2026-10-14",
+  "titre": "Ouverture d'un magasin : diagramme du flux d'appel",
+  "resume": "L'assistant Ouverture d'un magasin affiche le diagramme du flux d'appel du nouveau magasin : le parcours d'un appel sur un SDA du modèle, transposé avec les noms adaptés, les horaires personnalisés et les agents à définir ; il s'imprime avec la liste et se télécharge en SVG.",
+  "changements": [
+   "Nouvelle section « Diagramme du flux d'appel » dans la fiche d'ouverture : choix du SDA du magasin modèle (les plus appelés d'abord).",
+   "Boîtes adaptées au nouveau magasin : noms avec le nouveau code, « remplace » l'élément du modèle, horaires personnalisés dans les départements, agents des files et groupes à définir, postes à créer.",
+   "Le diagramme s'imprime avec la liste à cocher (PDF), se télécharge en SVG et se règle avec les boutons de zoom (−, Ajuster, +).",
+   "Anglais : les types de boîtes des diagrammes (DÉPARTEMENT, FILE D'ATTENTE…) sont traduits, ici et dans l'onglet Flux d'appel (diagramme).",
+   "Traduit en anglais."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.11.1",
+  "date": "2026-10-14",
+  "titre": "Ouverture d'un magasin : horaires personnalisables",
+  "resume": "Dans l'assistant Ouverture d'un magasin, un bouton « Personnaliser les horaires » permet de modifier les heures d'ouverture de chaque département du nouveau magasin (jusqu'à deux plages par jour) ; la liste à cocher reprend ces horaires.",
+  "changements": [
+   "Bouton « Personnaliser les horaires » : pour chaque département, jours ouverts et heures, avec une deuxième plage possible (pause du midi).",
+   "Les horaires partent de ceux du magasin modèle ; « Appliquer à tous les départements » et « Horaires du modèle » pour aller vite.",
+   "La liste à cocher affiche les horaires personnalisés (mention « personnalisées »).",
+   "Anglais : les horaires et les phrases du type « A · B » sont maintenant traduits des deux côtés.",
+   "Traduit en anglais."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "15.11",
+  "date": "2026-10-14",
+  "titre": "Taux d'occupation des agents",
+  "resume": "Nouvel onglet Taux d'occupation des agents (groupe Files et agents) : part du temps connecté aux files que chaque agent passe en conversation, pour repérer les agents débordés (85 % et plus) et ceux connectés mais peu sollicités, par heure et par magasin.",
+  "changements": [
+   "Temps connecté reconstitué à partir du journal des connexions aux files ; temps en conversation de tous les appels de l'agent (files, directs, sortants, internes) pendant qu'il est connecté.",
+   "Heures comptées au choix : heures d'affaires (7 h–20 h, lundi au samedi) ou toute la journée ; période au choix.",
+   "Part des heures passée connecté par agent et nombre d'agents toujours connectés (90 % des heures ou plus), avec un avis quand plus du quart reste connecté en permanence.",
+   "Indicateurs : occupation moyenne, agents débordés, agents peu sollicités, temps connecté et en conversation.",
+   "Occupation par heure de la journée et par magasin ; tableau par agent avec filtre par niveau.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Taux d'occupation des agents",
+    "Part du temps connecté passée en conversation, par agent, par heure et par magasin : agents débordés et peu sollicités."
+   ]
+  ]
+ },
+ {
+  "version": "15.10",
+  "date": "2026-10-14",
+  "titre": "Ouverture d'un magasin",
+  "resume": "Nouvel assistant Ouverture d'un magasin (groupe Structure) : à partir d'un magasin modèle, liste de contrôle imprimable de tout ce qu'il faut créer dans la console 3CX pour un nouveau magasin, avec les noms adaptés au nouveau code.",
+  "changements": [
+   "Choix du magasin modèle, du code et du nom du nouveau magasin ; les noms des éléments sont adaptés (code et nom du modèle remplacés).",
+   "Départements avec heures d'ouverture, acheminement pendant et hors des heures, fériés, pause et messages à enregistrer.",
+   "Menus IVR (touches, délai sans choix), files d'attente (stratégie, délais, débordement, agents), groupes de sonnerie, SDA et règles entrantes.",
+   "Jours fériés à venir à saisir, postes et téléphones du modèle (avec renvoi vers les assistants Nouvel employé et Modèle de touches) et vérifications après la mise en service.",
+   "Liste à cocher, imprimable en PDF et copiable ; rien n'est envoyé ni modifié ; traduite en anglais.",
+   "Correctif : la barre de sous-onglets et le bandeau du magasin filtré ne disparaissent plus quand un onglet se redessine (changement de période, de seuil ou de filtre)."
+  ],
+  "onglets": [
+   [
+    "Ouverture d'un magasin",
+    "Liste de contrôle pour créer un magasin dans 3CX à partir d'un magasin modèle : départements, menus, files, groupes, SDA, fériés, postes."
+   ]
+  ]
+ },
+ {
+  "version": "15.9",
+  "date": "2026-10-14",
+  "titre": "SDA inutilisés",
+  "resume": "Nouvel onglet SDA inutilisés (groupe Acheminement) : numéros entrants jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk et par magasin, avec l'économie possible si l'on indique le coût mensuel d'un SDA.",
+  "changements": [
+   "Constat pour chaque SDA : jamais appelé, plus appelé depuis 30 à 180 jours (au choix), très peu appelé (moins de 1, 5 ou 10 appels par mois), utilisé.",
+   "Appels sur tout l'historique, moyenne par mois, dernier appel, destination de l'appel et trunk.",
+   "Économie possible : nombre de SDA inutilisés ou peu utilisés × coût mensuel saisi (mémorisé dans le navigateur).",
+   "Tableau par trunk ; clic sur un SDA : son diagramme de flux ; export CSV.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "SDA inutilisés",
+    "SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible."
+   ]
+  ]
+ },
+ {
+  "version": "15.8",
+  "date": "2026-10-14",
+  "titre": "Appels suspects",
+  "resume": "Nouvel onglet Appels suspects (groupe Sécurité et droits) : numéros qui ressemblent à du démarchage ou à un robot (rafales, plusieurs SDA appelés en moins d'une heure, appels très courts répétés, appels de nuit répétés) et appels masqués par heure.",
+  "changements": [
+   "Quatre signaux par numéro : rafale (5 appels en 15 min), plusieurs SDA en moins d'une heure, appels très courts répétés, appels de nuit répétés ; période au choix.",
+   "Liste des numéros suspects avec appels, SDA et magasins appelés, durée médiane, part répondue et signaux ; filtre par signal.",
+   "Appels masqués : nombre, part et répartition par heure.",
+   "Fiche d'un numéro : ses appels (SDA, issue, durée) ; rappel de la liste des numéros bloqués de 3CX ; export CSV.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Appels suspects",
+    "Démarchage et robots : rafales, plusieurs SDA appelés, appels très courts ou de nuit répétés, appels masqués par heure."
+   ]
+  ]
+ },
+ {
+  "version": "15.7",
+  "date": "2026-10-14",
+  "titre": "Appels internes",
+  "resume": "Nouvel onglet Appels internes (groupe Analyse) : qui appelle qui dans l'entreprise, postes très sollicités par les collègues, collègues difficiles à joindre, paires les plus fréquentes et appels entre magasins.",
+  "changements": [
+   "Indicateurs : appels internes, part répondue, part entre deux magasins, postes qui appellent, conversation moyenne ; période au choix.",
+   "Répartition par type de destination (postes, files, groupes de sonnerie, menus) et paires appelant → appelé les plus fréquentes.",
+   "Matrice des appels entre magasins.",
+   "Postes les plus sollicités par les collègues (avec part répondue, collègues et magasins différents) et postes qui appellent le plus.",
+   "Suit le filtre de magasin (appels passés ou reçus par ses postes) ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Appels internes",
+    "Appels entre postes et entre magasins : postes sollicités, collègues difficiles à joindre, paires fréquentes, matrice entre magasins."
+   ]
+  ]
+ },
+ {
+  "version": "15.6",
+  "date": "2026-10-14",
+  "titre": "Prévision du volume",
+  "resume": "Nouvel onglet Prévision du volume (groupe Files et agents) : appels entrants attendus pour les 7 jours suivant la fin de l'historique, jour par jour et heure par heure, d'après les semaines précédentes, la tendance récente et les jours fériés à venir.",
+  "changements": [
+   "Prévision jour par jour avec la fourchette observée (plus bas et plus haut du même jour de semaine) et grille heure par heure.",
+   "Calcul sur les 4, 8 ou 12 dernières semaines, les plus récentes comptant davantage ; correction par la tendance (limitée à ±20 %).",
+   "Jours fériés à venir repérés et réduits selon les fériés observés dans l'historique.",
+   "Indicateurs : appels attendus sur 7 jours, écart avec les 7 derniers jours, jour le plus chargé, heure de pointe, tendance.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Prévision du volume",
+    "Appels entrants attendus sur 7 jours, par jour et par heure, avec fourchette, tendance et jours fériés."
+   ]
+  ]
+ },
+ {
+  "version": "15.5",
+  "date": "2026-10-14",
+  "titre": "Appels très courts",
+  "resume": "Nouvel onglet Appels très courts (groupe Analyse) : appels répondus de quelques secondes, signe de coupures, de problèmes de ligne ou de téléphone, avec les rappels dans les 2 minutes (coupures probables), par type d'appel, par ligne, par heure et par poste.",
+  "changements": [
+   "Appels répondus dont la conversation dure moins du seuil choisi (3, 5 ou 10 s) ; période au choix.",
+   "Rappel dans les 2 minutes : le même correspondant rappelle ou est rappelé juste après, signe fort d'une coupure.",
+   "Répartition par type d'appel (entrants, sortants, internes), par ligne pour les appels entrants et par heure.",
+   "Tableau par poste avec la part d'appels très courts et les rappels ; clic sur un poste : liste de ses appels très courts.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Appels très courts",
+    "Appels répondus de quelques secondes et rappels dans les 2 minutes (coupures probables), par type, ligne, heure et poste."
+   ]
+  ]
+ },
+ {
+  "version": "15.4",
+  "date": "2026-10-14",
+  "titre": "Destinations des appels sortants",
+  "resume": "Nouvel onglet Destinations des appels sortants (groupe Analyse) : où appellent les postes (régions, hors Québec, international, services spéciaux), qui appelle le plus à l'extérieur, les numéros les plus appelés et les appels passés le soir, la nuit ou la fin de semaine.",
+  "changements": [
+   "Répartition des appels sortants par destination, d'après l'indicatif du numéro composé, avec services spéciaux (911, 411…) et numéros incomplets ; période au choix.",
+   "Indicateurs : appels sortants, part aboutie, numéros différents, vers le Québec, hors Québec et international, soirs, nuits et fins de semaine.",
+   "Numéros les plus appelés et tableau par magasin (part de chaque destination).",
+   "Tableau par poste : appels, part aboutie, durée totale, numéros, hors Québec, soirs/nuits/fins de semaine.",
+   "Clic sur une destination : numéros composés et postes qui les ont appelés ; export CSV ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Destinations des appels sortants",
+    "Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine."
+   ]
+  ]
+ },
+ {
+  "version": "15.3",
+  "date": "2026-10-14",
+  "titre": "Délai avant réponse",
+  "resume": "Nouvel onglet Délai avant réponse (groupe Appels) : combien de temps un client attend avant qu'une personne décroche, de l'arrivée de l'appel jusqu'à la réponse (menu, file et sonnerie compris), par magasin, par heure et par personne qui répond.",
+  "changements": [
+   "Délai médian, délai sous lequel 90 % des appels sont répondus, part des appels répondus sous l'objectif (10, 20, 30 ou 60 s), attente la plus longue ; période au choix.",
+   "Répartition des délais (moins de 10 s à plus de 5 min) et délai médian par heure de la journée.",
+   "Tableau par magasin (avec l'heure la plus lente) et par personne qui a décroché en premier.",
+   "Mesure exacte : le chargement du backup note maintenant l'instant du premier décroché par un poste ; pour un backup chargé avec une version précédente, le délai est estimé et l'onglet invite à rouvrir le fichier .zip.",
+   "Suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Délai avant réponse",
+    "Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne."
+   ]
+  ]
+ },
+ {
+  "version": "15.2",
+  "date": "2026-10-14",
+  "titre": "Provenance des appels par indicatif régional",
+  "resume": "Nouvel onglet Provenance des appels (groupe Analyse) : d'où viennent les appels entrants selon l'indicatif de l'appelant (Montréal, couronne, Québec et Est, Ouest et Nord, Ontario, autres, international, masqués), par magasin, avec les appels perdus par région et les indicatifs les plus fréquents.",
+  "changements": [
+   "Répartition des appels entrants par région d'appel, d'après l'indicatif du numéro de l'appelant ; période au choix (7, 30, 90 jours ou tout l'historique).",
+   "Tableau par magasin : part des appels venant de chaque région, en couleur.",
+   "Appels perdus selon la provenance (% perdus par région) et indicatifs les plus fréquents (appels, numéros différents, % perdus).",
+   "Clic sur une région : ses numéros les plus fréquents (appels, perdus, dernier appel).",
+   "Export CSV par magasin, région et indicatif ; suit le filtre de magasin ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Provenance des appels",
+    "Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région."
+   ]
+  ]
+ },
+ {
   "version": "15.1.1",
   "date": "2026-10-14",
   "titre": "Choix du menu : simplifié ou expert",
