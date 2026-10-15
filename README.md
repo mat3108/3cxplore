@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.22-2563eb)
+![Version](https://img.shields.io/badge/version-16.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **78 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **79 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -99,6 +99,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
 | **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
 | **Parkings partagés** | Réglages et utilisation des parkings d'appels : reprises, retours, appels perdus en attente, parkings affichés sur les téléphones. |
+| **Plan des parkings** | Tableau visuel des usagers en problème avec leurs touches de parking en couleur. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
 | **Enregistrements** | Liste des enregistrements référencés (les fichiers audio ne font pas partie du backup). |
 | **Messagerie & audio** | Messages vocaux, invites personnalisées (avec l'élément qui les utilise) et messages d'accueil, écoutables. |
@@ -205,38 +206,10 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.22** | Glossaire 3CX |
-| 15.21 | Coût des appels sortants |
-| 15.20.4 | Menu « Complet » |
-| 15.20.3 | Logo : retour au tableau de bord |
-| 15.20.2 | Bouton « Retour à l'accueil » dans la documentation |
-| 15.20.1 | Nom « Changelog » |
-| 15.20 | Guide de l'utilisateur et Changelog |
-| 15.19 | Clients qui rappellent : numéros d'exception |
-| 15.18 | Horaires : ajustements suggérés |
-| 15.17 | Clients qui rappellent |
-| 15.16 | Absences et congés |
-| 15.15 | Parcours détaillé d'un appel |
-| 15.14 | Doublons et incohérences |
-| 15.13 | Messageries vocales |
-| 15.12.1 | Ouverture d'un magasin : copie d'un département |
-| 15.12 | Numéros importants |
-| 15.11.3 | Ouverture d'un magasin : personnalisation complète |
-| 15.11.2 | Ouverture d'un magasin : diagramme du flux d'appel |
-| 15.11.1 | Ouverture d'un magasin : horaires personnalisables |
-| 15.11 | Taux d'occupation des agents |
-| 15.10 | Ouverture d'un magasin |
-| 15.9 | SDA inutilisés |
-| 15.8 | Appels suspects |
-| 15.7 | Appels internes |
-| 15.6 | Prévision du volume |
-| 15.5 | Appels très courts |
-| 15.4 | Destinations des appels sortants |
-| 15.3 | Délai avant réponse |
-| 15.2 | Provenance des appels par indicatif régional |
-| 15.1.1 | Choix du menu : simplifié ou expert |
-| 15.1 | Menu épuré : 22 entrées au lieu de 62 |
-| 15.0 | 3CXplore entièrement en anglais |
+| **16.2** | Plan des parkings : tableau des usagers en problème |
+| 16.1 | Plan des parkings : export pour corriger les usagers |
+| 16.0 | Plan des parkings par magasin |
+| 15.x | 3CXplore entièrement en anglais · Menu épuré : 22 entrées au lieu de 62 · Choix du menu : simplifié ou expert · Provenance des appels par indicatif régional · Délai avant réponse · … |
 | 14.x | Interface en anglais (première étape) · Interface en anglais : deuxième étape · Statistiques : carte de chaleur jour × heure enrichie |
 | 13.x | Première version publique de 3CXplore · Avis de mise à jour au démarrage · Application installable (version web) · Bouton mises à jour et installation dans le bandeau · Correctif : bouton mises à jour sans backup ouvert · … |
 <!-- VERSIONS:END -->

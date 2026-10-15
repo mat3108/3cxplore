@@ -267,6 +267,15 @@
   "parkings": {
    "sert": "Les parkings d'appels : réglages, reprises, retours, appels perdus en attente et parkings affichés sur les téléphones."
   },
+  "pkplan": {
+   "sert": "Le plan des parkings partagés par magasin : vous attribuez à chaque magasin ses parkings (SP0, SP1…), et l'outil liste ce qui ne respecte pas le plan sur les téléphones et dans les appels parqués.",
+   "comment": [
+    "Cliquez « Proposer un plan d'après l'usage actuel » pour partir de la situation réelle, puis corrigez les parkings de chaque magasin (format SP10-SP14, SP20).",
+    "Lisez les problèmes selon le plan : parkings prévus pour deux magasins ou inexistants, touches d'un autre magasin ou hors plan, touches manquantes, appels parqués sur le parking d'un autre magasin.",
+    "Imprimez la fiche des touches à ajouter ou retirer sur chaque téléphone."
+   ],
+   "astuce": "Un employé qui voit le parking d'un autre magasin peut reprendre l'appel d'un client qui ne le concerne pas : corrigez d'abord ces touches."
+  },
   "files": {
    "sert": "Les files d'attente : stratégie, délais, message d'accueil et musique d'attente, agents et gestionnaires, et statistiques (taux de service, attente, abandons, appels sans agent, heures)."
   },
@@ -624,7 +633,8 @@
    "terme": "Parking d'appels",
    "def": "Mettre un appel « en parking » pour le reprendre depuis n'importe quel téléphone (touche de parking ou code).",
    "onglets": [
-    "parkings"
+    "parkings",
+    "pkplan"
    ],
    "formes": [
     "parking",

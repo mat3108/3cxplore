@@ -1,5 +1,72 @@
 [
  {
+  "version": "16.2",
+  "date": "2026-10-15",
+  "titre": "Plan des parkings : tableau des usagers en problème",
+  "resume": "Plan des parkings : nouveau tableau « Usagers en problème » — une ligne par usager avec son avatar, son magasin, son téléphone, ses touches de parking en couleur (parking du magasin, d'un autre magasin, hors plan, à ajouter, avec la position de chaque touche) et ce qu'il faut faire ; résumé cliquable par magasin, filtres, recherche et impression.",
+  "changements": [
+   "Résumé par magasin (barres cliquables) et nombre d'usagers par type de problème.",
+   "Touches de parking en pastilles colorées : vert = parking du magasin, rouge = parking d'un autre magasin (avec son magasin), gris = hors plan, pointillé = à ajouter ; le petit chiffre est la position de la touche sur le téléphone.",
+   "Colonne « À faire » : touches à retirer, à ajouter (avec positions libres suggérées), à vérifier, et appels parqués chez un autre magasin.",
+   "Filtres par magasin et par problème, recherche, tri ; clic sur un usager pour ouvrir sa fiche ; impression de la liste."
+  ],
+  "onglets": [
+   [
+    "Plan des parkings",
+    "Tableau visuel des usagers en problème avec leurs touches de parking en couleur."
+   ]
+  ]
+ },
+ {
+  "version": "16.1",
+  "date": "2026-10-15",
+  "titre": "Plan des parkings : export pour corriger les usagers",
+  "resume": "Plan des parkings : bouton « Exporter pour corriger » qui produit un fichier Excel avec une ligne par usager en problème — téléphones (modèle et MAC), touches de parking actuelles avec leur position, touches à retirer, hors plan, à ajouter, positions libres suggérées, appels parqués chez un autre magasin et colonne « Fait » — plus un résumé par magasin, la liste des problèmes et le plan.",
+  "changements": [
+   "Feuille « Corrections par usager » : poste, nom, magasin, courriel, téléphones, touches actuelles (« touche 5 : SP1 »), à retirer (avec le magasin propriétaire), hors plan, à ajouter, positions libres suggérées, appels parqués sur le parking d'un autre magasin (90 jours), problèmes et colonne « Fait ».",
+   "Feuilles « Par magasin » (usagers à corriger, touches à retirer, à ajouter, hors plan), « Problèmes » et « Plan ».",
+   "Indicateur « Usagers en problème » ; l'export respecte le filtre de magasin."
+  ],
+  "onglets": [
+   [
+    "Plan des parkings",
+    "Export Excel pour corriger les usagers en problème, touche par touche."
+   ]
+  ]
+ },
+ {
+  "version": "16.0",
+  "date": "2026-10-15",
+  "titre": "Plan des parkings par magasin",
+  "resume": "Nouvel onglet Plan des parkings : vous attribuez à chaque magasin ses parkings partagés (avec une proposition automatique d'après l'usage actuel), et l'outil liste ce qui pose problème selon ce plan — touches de parking d'un autre magasin ou hors plan, touches manquantes, parkings prévus pour deux magasins ou inexistants, appels parqués sur le parking d'un autre magasin — avec la fiche des touches à modifier par téléphone.",
+  "changements": [
+   "Plan par magasin : parkings prévus (format SP10-SP14, SP20), nombre, téléphones qui ont des touches de parking, parkings réellement utilisés sur 90 jours ; liste des parkings non attribués.",
+   "Proposition automatique : chaque parking est attribué au magasin qui l'utilise le plus (touches des téléphones et appels parqués).",
+   "Problèmes selon le plan, par gravité : parking prévu pour plusieurs magasins, parking prévu qui n'existe pas dans 3CX, touche d'un parking d'un autre magasin (à corriger) ; appels parqués sur un parking d'un autre magasin, touche d'un parking hors plan, touches manquantes, aucun téléphone ne montre les parkings du magasin (à vérifier) ; parking utilisé mais non attribué, magasin sans parkings prévus (pour information).",
+   "Fiche imprimable des touches de parking à ajouter ou retirer sur chaque téléphone ; export CSV des problèmes ; filtre par magasin.",
+   "Plan gardé dans ce navigateur et inclus dans la Sauvegarde des réglages ; onglet expliqué dans le guide de l'utilisateur."
+  ],
+  "onglets": [
+   [
+    "Plan des parkings",
+    "Parkings attribués à chaque magasin, problèmes selon le plan et touches à modifier par téléphone."
+   ]
+  ]
+ },
+ {
+  "version": "15.23",
+  "date": "2026-10-15",
+  "titre": "« Dates au choix » dans tous les choix de période",
+  "resume": "Partout où l'on choisit une période, la liste propose maintenant « Dates au choix » : deux calendriers (du / au) apparaissent pour analyser n'importe quel intervalle de l'historique du backup.",
+  "changements": [
+   "« Dates au choix » ajouté à Fiche magasin, Réceptions, Provenance des appels, Délai avant réponse, Destinations des appels sortants, Appels très courts, Appels internes, Appels suspects, Taux d'occupation des agents, Numéros importants, Clients qui rappellent, Coût des appels sortants et Rapport (Statistiques, Agents, Horaires, Appels manqués, Menus IVR et Modifications l'avaient déjà).",
+   "Les calendriers sont limités aux dates présentes dans l'historique du backup ; la période choisie est mémorisée comme les autres.",
+   "Les calculs tiennent compte de la date de fin (auparavant, seule la date de début limitait l'analyse) ; le libellé « du … au … » affiche la période exacte.",
+   "Clients qui rappellent et Rapport partagent la période des Statistiques, dates au choix comprises."
+  ],
+  "onglets": []
+ },
+ {
   "version": "15.22",
   "date": "2026-10-15",
   "titre": "Glossaire 3CX",
