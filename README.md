@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-15.11.3-2563eb)
+![Version](https://img.shields.io/badge/version-15.12.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **72 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **73 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -77,6 +77,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 |---|---|
 | **Appels manqués** | Liste de rappel des clients sans réponse non rappelés, par magasin : tentatives, heure, cause, statut de rappel ; suivi « Traité », export CSV et impression. |
 | **Historique client** | Tous les échanges avec un numéro de téléphone : appels, parcours, issues, interlocuteurs, files, messages vocaux, enregistrements. |
+| **Numéros importants** | Contacts clés suivis appel par appel : manqués, rappels en retard, délais, interlocuteurs ; alerte sur le tableau de bord. |
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
@@ -116,7 +117,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
-| **Ouverture d'un magasin** | Liste de contrôle, numérotation et diagramme pour créer un magasin dans 3CX à partir d'un magasin modèle, entièrement personnalisable. |
+| **Ouverture d'un magasin** | Ajout d'un département vide ou copié d'un département existant de n'importe quel magasin. |
 | **Historique d'un employé** | Chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle, auteurs. |
 | **Modifications** | Changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ. |
 | **Journal d'audit** | Modifications de configuration et connexions, avec l'avant/après de chaque champ modifié. |
@@ -196,7 +197,9 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **15.11.3** | Ouverture d'un magasin : personnalisation complète |
+| **15.12.1** | Ouverture d'un magasin : copie d'un département |
+| 15.12 | Numéros importants |
+| 15.11.3 | Ouverture d'un magasin : personnalisation complète |
 | 15.11.2 | Ouverture d'un magasin : diagramme du flux d'appel |
 | 15.11.1 | Ouverture d'un magasin : horaires personnalisables |
 | 15.11 | Taux d'occupation des agents |

@@ -1,5 +1,43 @@
 [
  {
+  "version": "15.12.1",
+  "date": "2026-10-15",
+  "titre": "Ouverture d'un magasin : copie d'un département",
+  "resume": "Dans l'assistant d'ouverture d'un magasin, « Ajouter un département » propose un département vide ou la copie d'un département existant de n'importe quel magasin, avec ses horaires, sa pause, ses destinations et ses messages.",
+  "changements": [
+   "Liste « Ajouter un département » : vide, ou copie d'un département existant, regroupés par magasin (et Commun).",
+   "La copie reprend les horaires, la pause, les quatre destinations (heures d'ouverture, fermeture, fériés, pause) et les messages ; le nom est adapté au nouveau magasin (code et nom du magasin d'origine remplacés).",
+   "Une destination vers un élément du magasin modèle pointe vers son équivalent dans le nouveau magasin ; une destination vers un autre magasin est indiquée « (magasin, existant) ».",
+   "La liste à cocher indique l'origine : « Créer « … » (copie de 1234) ».",
+   "Traduction anglaise des nouveaux libellés."
+  ],
+  "onglets": [
+   [
+    "Ouverture d'un magasin",
+    "Ajout d'un département vide ou copié d'un département existant de n'importe quel magasin."
+   ]
+  ]
+ },
+ {
+  "version": "15.12",
+  "date": "2026-10-15",
+  "titre": "Numéros importants",
+  "resume": "Nouvel onglet Numéros importants (groupe Appels) : vos contacts clés (gros clients, fournisseurs, siège, partenaires) suivis appel par appel — appels manqués, rappels en retard selon un objectif par catégorie, délai de réponse, qui leur parle — avec une alerte sur le tableau de bord et dans Priorités.",
+  "changements": [
+   "Contacts avec nom, un ou plusieurs numéros, catégorie, magasin et note ; ajout à la main, avec l'étoile ☆ dans Appels, Appels manqués, Historique client, Provenance et Appels suspects, depuis l'annuaire 3CX ou par un fichier CSV.",
+   "Pour chaque contact : appels reçus, part répondue, appels manqués, manqués non rappelés (avec l'ancienneté), délai de réponse et de rappel, dernier appel, interlocuteur principal ; fiche avec l'historique des appels et les rappels.",
+   "Objectif de rappel par catégorie (par exemple 2 h pour un client important) : les appels non rappelés à temps sont signalés « en retard ».",
+   "Encadré d'alerte sur le tableau de bord et dans Priorités quand des appels de numéros importants ne sont pas rappelés.",
+   "Export CSV et impression de la liste des rappels à faire ; liste gardée seulement dans ce navigateur, incluse dans la Sauvegarde des réglages et effacée avec les données conservées ; traduit en anglais."
+  ],
+  "onglets": [
+   [
+    "Numéros importants",
+    "Contacts clés suivis appel par appel : manqués, rappels en retard, délais, interlocuteurs ; alerte sur le tableau de bord."
+   ]
+  ]
+ },
+ {
   "version": "15.11.3",
   "date": "2026-10-14",
   "titre": "Ouverture d'un magasin : personnalisation complète",
