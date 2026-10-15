@@ -1,5 +1,35 @@
 [
  {
+  "version": "17.4",
+  "date": "2026-10-15",
+  "titre": "Rapport de département",
+  "resume": "Nouvel onglet Rapport de département (menu Analyse) : toutes les statistiques des appels qui passent par un département, pour une période au choix, sur une page imprimable en PDF et exportable en Excel.",
+  "changements": [
+   "En bref et chiffres clés : appels reçus, répondus, perdus, messagerie, clients différents, délai avant réponse, et comparaison avec la période précédente.",
+   "Heures d'ouverture et hors heures : appels et résultat par moment (ouvert, fermé, pause, fériés), appels hors heures selon le jour et l'heure, appels juste avant l'ouverture et après la fermeture, ajustements d'horaire suggérés.",
+   "Quand les clients appellent : % perdus mois par mois, semaine par semaine, selon le jour et l'heure, grille jour × heure, pires moments et tableau matin / après-midi / soir.",
+   "Où vont les appels : SDA d'arrivée, choix aux menus vocaux, files d'attente du département, étape où les appels sont perdus.",
+   "Qui répond : appels répondus et part de chaque employé, conversation moyenne, délai de décroché, sonneries sans réponse, mises en attente perdues, personnes indispensables et absences.",
+   "Les clients : clients qui rappellent dans les 48 h, appels perdus non rappelés (liste à rappeler), clients qui appellent le plus, numéros importants.",
+   "Appels sortants des membres, destinations et coût estimé ; À corriger (acheminement, horaires, fériés, membres désactivés, messageries, doublons, files, renvois externes) ; annexe jour par jour.",
+   "Accès : menu Analyse, bouton « Rapport du département » dans la fiche d'un département, lien « Rapport » dans l'onglet Horaires (ligne et détail) et dans la Fiche magasin."
+  ],
+  "onglets": [
+   [
+    "Rapport de département",
+    "Nouveau rapport imprimable de toutes les statistiques des appels d'un département."
+   ],
+   [
+    "Horaires",
+    "Lien « Rapport » sur chaque département et dans son détail."
+   ],
+   [
+    "Fiche magasin",
+    "Lien « Rapport du département » pour chaque département du magasin."
+   ]
+  ]
+ },
+ {
   "version": "17.3.1",
   "date": "2026-10-15",
   "titre": "Guide : rapport des mises en attente",

@@ -469,6 +469,15 @@
    ],
    "astuce": "Le tableau « Par jour et par moment de la journée » se compare directement avec l'horaire : si les pertes suivent une plage horaire plutôt qu'une personne, c'est une question d'effectif ou d'organisation.",
    "apres": "parkings"
+  },
+  "deptrap": {
+   "sert": "Le rapport le plus complet des appels qui passent par un département, sur une page imprimable : appels reçus, répondus, en messagerie et perdus, comparaison avec la période précédente, heures d'ouverture et hors heures, moments de la semaine, parcours des appels (SDA, menus vocaux, files), employés qui répondent, clients qui rappellent ou à rappeler, appels sortants des membres et ce qu'il faut corriger.",
+   "comment": [
+    "Choisissez le département (la liste indique le nombre d'appels) et la période, y compris des dates au choix.",
+    "Il s'ouvre aussi avec le bouton « Rapport du département » de la fiche d'un département, le lien « Rapport » de l'onglet Horaires et la Fiche magasin.",
+    "Imprimez-le ou enregistrez-le en PDF ; l'export Excel donne aussi la liste de chaque appel, les clients à rappeler et le détail par employé."
+   ],
+   "astuce": "La section « Heures d'ouverture et hors heures » montre ce que deviennent les appels reçus pendant la fermeture (messagerie, perdus, répondus quand même) et à quelle heure ils arrivent."
   }
  },
  "glossaire": [
@@ -1307,6 +1316,15 @@
     ],
     "astuce": "The « By day and time of day » table can be compared directly with the schedule: if losses follow a time slot rather than a person, it is a staffing or organisation issue.",
     "apres": "parkings"
+   },
+   "deptrap": {
+    "sert": "The most complete report on the calls that go through a department, on a printable page: calls received, answered, sent to voicemail and lost, comparison with the previous period, office hours and out of hours, times of the week, call routes (DIDs, voice menus, queues), employees who answer, callers who call back or need a callback, outbound calls by members and what to fix.",
+    "comment": [
+     "Choose the department (the list shows the number of calls) and the period, including custom dates.",
+     "It also opens with the « Department report » button of a department's sheet, the « Report » link of the Hours tab and the Store sheet.",
+     "Print it or save it as PDF; the Excel export also gives the list of every call, the callers to call back and the detail by employee."
+    ],
+    "astuce": "The « Office hours and out of hours » section shows what happens to the calls received while closed (voicemail, lost, answered anyway) and at what time they arrive."
    }
   },
   "glossaire": [

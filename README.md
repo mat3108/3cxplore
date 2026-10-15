@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-17.3.1-2563eb)
+![Version](https://img.shields.io/badge/version-17.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **80 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **81 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -43,7 +43,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Recommandations** | Analyse automatique de la configuration et de l'activité, classée Critique / À corriger / Observation, avec éléments concernés, recommandation, statut et notes personnelles ; ajout d'observations manuelles ; export CSV et impression. |
 | **Actions console** | Liste de tâches à faire dans la console 3CX, classées par moment, avec chemin, impact, éléments exacts, copie des MAC, suivi et impression. |
 | **Rapport** | Rapport imprimable / PDF par magasin : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes, téléphones à mettre à jour. |
-| **Fiche magasin** | Résumé imprimable d'un magasin : appels, SDA, horaires, files, parkings et problèmes à corriger. |
+| **Fiche magasin** | Lien « Rapport du département » pour chaque département du magasin. |
 | **Suivi** | Évolution des indicateurs d'un backup à l'autre (service, problèmes, téléphones, parc), par système ou par magasin ; ajout d'anciens backups, export / import de l'historique. |
 | **Comparaison** | Différences entre le backup actuel et un backup de référence : ajouts, suppressions, modifications champ par champ et journal d'audit de la période ; export CSV. |
 | **Flux d'appels** | Chaque numéro (DID) avec sa règle entrante et l'arbre d'acheminement complet : département → standard IVR (touche par touche) → files d'attente → agents, pour les heures d'ouverture et hors heures. |
@@ -83,6 +83,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
+| **Rapport de département** | Nouveau rapport imprimable de toutes les statistiques des appels d'un département. |
 | **Provenance des appels** | Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région. |
 | **Destinations des appels sortants** | Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine. |
 | **Coût des appels sortants** | Estimation du coût des appels sortants d'après vos tarifs : par destination, mois, magasin, poste et numéro. |
@@ -95,7 +96,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Classement des magasins** | Comparaison des magasins sur la réponse, les abandons, l'attente et les heures de pointe. |
 | **Appels très courts** | Appels répondus de quelques secondes et rappels dans les 2 minutes (coupures probables), par type, ligne, heure et poste. |
 | **Qualité des appels** | Qualité de la voix par magasin, site, modèle de téléphone et trunk. |
-| **Horaires** | Contrôle des horaires configurés d'après les appels réels : anomalies, demande avant ouverture et après fermeture, jours fériés à venir manquants ; fiche détaillée par département. |
+| **Horaires** | Lien « Rapport » sur chaque département et dans son détail. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
 | **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
 | **Parkings partagés** | Bouton « Rapport des mises en attente par employé » et lien « Rapport » pour chaque employé. |
@@ -209,7 +210,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **17.3.1** | Guide : rapport des mises en attente |
+| **17.4** | Rapport de département |
+| 17.3.1 | Guide : rapport des mises en attente |
 | 17.3 | Recherche dans le menu |
 | 17.2.1 | Rapport des mises en attente par employé |
 | 17.2 | Fiche employé |
