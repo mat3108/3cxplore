@@ -1,0 +1,46 @@
+# 3CXplore: tools and tasks.  `mise tasks` lists them;  `mise run <task>` (or `mise <task>`) runs one.
+[tools]
+node = "24"
+
+[tasks.install]
+description = "Install the build tools (Vite) from package-lock.json"
+run = "npm ci --no-audit --no-fund"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/.package-lock.json"]
+
+[tasks.dev]
+description = "Edit with live reload: serves src/app/ at http://localhost:5173 (the page reloads on save)"
+depends = ["install"]
+run = "npx vite"
+
+[tasks.build]
+description = "Build every page: app/visualiseur-3cx-v<latest>.html, old versions, guide, changelog, README"
+depends = ["install"]
+run = "node scripts/generate.mjs"
+
+[tasks.check]
+description = "Check the repository: forbidden files, secrets, versions, links, guide, JavaScript"
+depends = ["install"]
+run = "node scripts/check.mjs"
+
+[tasks.preview]
+description = "Serve the built site at http://localhost:4173 (index.html opens the latest version)"
+run = "npx vite preview --outDir \"$PWD\" --port 4173 --strictPort"
+
+[tasks.package]
+description = "Build the share package dist/visualiseur-3cx-v<latest>.zip (latest version only)"
+depends = ["install"]
+run = "node scripts/generate.mjs --package"
+
+[tasks.firmwares]
+description = "Download the official 3CX phone firmware list into app/firmwares-3cx.js (macOS)"
+run = "bash scripts/verifier-firmwares.command < /dev/null"
+
+[tasks.ci]
+description = "What GitHub runs: build, fail if the committed pages differ from the sources, check"
+depends = ["install"]
+run = [
+  "node scripts/generate.mjs",
+  "git status --short; test -z \"$(git status --porcelain)\" || (echo '::error::Generated pages do not match the sources: run mise run build and commit the result.' && exit 1)",
+  "node scripts/check.mjs",
+]

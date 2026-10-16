@@ -1,0 +1,26 @@
+/* ---------- Finition « moderne et raffinée » ---------- */
+html.raffine body{font-family:"Inter","SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;letter-spacing:-.006em;-webkit-font-smoothing:antialiased}
+html.raffine header{background:color-mix(in srgb,var(--panel) 80%,transparent)!important;backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px)}
+html.raffine .card{border-radius:12px;border-color:color-mix(in srgb,var(--line) 75%,transparent);box-shadow:0 1px 2px rgba(15,23,42,.04),0 6px 18px -8px rgba(15,23,42,.12)}
+html.raffine[data-theme="dark"] .card{box-shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6)}
+@media (prefers-color-scheme:dark){html.raffine:not([data-theme="light"]) .card{box-shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6)}}
+html.raffine .kpi,html.raffine .hsmini,html.raffine .pvcard,html.raffine .prio,html.raffine .rkp{transition:transform .15s ease,box-shadow .15s ease}
+html.raffine .kpi:hover,html.raffine .hsmini:hover,html.raffine .pvcard:hover,html.raffine .prio:hover,html.raffine .rkp:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(15,23,42,.05),0 12px 24px -10px rgba(15,23,42,.18)}
+html.raffine h2{font-weight:650;letter-spacing:-.022em;font-size:21px}
+html.raffine h3{font-weight:600;letter-spacing:-.012em}
+html.raffine .lead{font-size:14.5px;line-height:1.55}
+html.raffine .kpi .v{font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+html.raffine .kpi .l{font-size:12px;letter-spacing:.01em}
+html.raffine th{font-weight:550;color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+html.raffine th,html.raffine td{border-bottom-color:color-mix(in srgb,var(--line) 65%,transparent)}
+html.raffine tbody tr{transition:background .12s}html.raffine tbody tr:hover td{background:color-mix(in srgb,var(--accent-soft) 55%,transparent)}
+html.raffine .num{font-variant-numeric:tabular-nums}
+html.raffine .btn{border-radius:8px;font-weight:550;box-shadow:0 1px 1px rgba(15,23,42,.05);transition:background .12s,box-shadow .12s,transform .12s}
+html.raffine .btn:active{transform:translateY(1px)}
+html.raffine .btn.primary{color:var(--on-accent,#fff);box-shadow:0 1px 2px color-mix(in srgb,var(--accent) 35%,transparent),inset 0 1px 0 rgba(255,255,255,.15)}
+html.raffine .pill{border-radius:999px;font-weight:550}
+html.raffine #nav a{border-radius:8px}html.raffine #nav a.on{font-weight:600}
+html.raffine input,html.raffine select{border-radius:8px}
+html.raffine input:focus,html.raffine select:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
+html.raffine.serif-titles h2,html.raffine.serif-titles h3,html.raffine.serif-titles .top h1,html.raffine.serif-titles .kpi .v{font-family:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,serif;letter-spacing:0;font-weight:600}
+html.raffine .report .card{box-shadow:none}

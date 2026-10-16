@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-18.2.37-2563eb)
+![Version](https://img.shields.io/badge/version-19.0-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **81 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **83 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -78,6 +78,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 |---|---|
 | **Appels manqués** | Liste de rappel des clients sans réponse non rappelés, par magasin : tentatives, heure, cause, statut de rappel ; suivi « Traité », export CSV et impression. |
 | **Clients qui rappellent** | Numéros d'exception exclus des calculs, ajout en lot et bouton « Exclure ». |
+| **Fiche numéro** | Nouvel onglet : tout sur un numéro (SDA, client, employé) sur une page. |
 | **Historique client** | Chaque appel de la chronologie ouvre son parcours détaillé. |
 | **Numéros importants** | Contacts clés suivis appel par appel : manqués, rappels en retard, délais, interlocuteurs ; alerte sur le tableau de bord. |
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
@@ -122,6 +123,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Matrice des droits** | Droits des rôles par département, droits propres et incohérences. |
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Fiche employé** | Bouton « Mises en attente » qui ouvre le rapport pour la même personne et la même période. |
+| **Corrections par usager** | Nouvel onglet : corrections à faire sur le poste de chaque employé. |
 | **Nouvel employé** | Fiche de création d'un poste sur le modèle d'un collègue, maintenant avec les renvois d'appel selon le statut. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
 | **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
@@ -147,155 +149,79 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ```
 .
 ├── index.html                      # ouvre la dernière version
-├── README.md
+├── README.md, README.en.md         # ce fichier, en français et en anglais
+├── mise.toml                       # outils (Node) et tâches : mise run dev / build / check / package
+├── package.json, vite.config.js    # Vite : construction de la page à partir de src/app/
 ├── .github/workflows/              # contrôle automatique à chaque envoi sur GitHub
 ├── app/                            # ce qu'on ouvre dans le navigateur (généré)
-│   ├── visualiseur-3cx-vX.Y.html   # dernière version
+│   ├── visualiseur-3cx-vX.Y.html   # dernière version : une seule page HTML autonome
 │   ├── documentation.html          # guide de l'utilisateur : chaque menu expliqué
 │   ├── documentation-en.html       # le même guide en anglais
 │   ├── changelog.html              # Changelog : nouveautés de chaque version
 │   ├── firmwares-3cx.js            # liste des firmwares recommandés par 3CX
-│   └── anciennes-versions/         # versions précédentes (quand il y en a)
+│   └── anciennes-versions/         # toutes les versions précédentes
 ├── src/                            # sources
+│   ├── app/                        # code de la dernière version (depuis 19.0) — voir src/app/README.md
+│   │   ├── index.html              # la page : structure HTML, styles et scripts inclus
+│   │   ├── css/                    # styles (base, side-menu, modern-finish, geek-themes)
+│   │   └── js/                     # i18n/, appearance.js, updates.js, loader/ (lecture du backup),
+│   │       └── app/                #   application : core/, tabs/ (un fichier par onglet), ui/
 │   ├── versions.json               # liste des versions (titre, résumé, changements, onglets)
 │   ├── documentation-modele.html   # modèle du Changelog
 │   ├── guide-modele.html           # modèle du guide de l'utilisateur
 │   ├── guide-modele-en.html        # modèle du guide en anglais
 │   ├── guide.json                  # contenu du guide (un bloc par onglet, français et anglais)
-│   └── versions/X.Y/modele.html    # modèle de chaque version
+│   └── versions/X.Y/modele.html    # modèle figé des versions jusqu'à 18.4
 ├── scripts/
-│   ├── generer_interface.py        # générateur des pages, du README et du paquet de partage
-│   ├── verifier_depot.py           # contrôle du dépôt (aussi lancé par GitHub)
+│   ├── generate.mjs                # générateur des pages, du guide, du Changelog, du README et du paquet de partage
+│   ├── check.mjs                   # contrôle du dépôt (aussi lancé par GitHub)
+│   ├── vite-inline-scripts.mjs     # extension Vite : insère les scripts de src/app/ dans la page
 │   └── verifier-firmwares.command  # mise à jour de la liste des firmwares (macOS, double-clic)
 ├── assets/
 │   └── logo.svg, logo-icone.svg, icone-192.png, icone-512.png
 ├── manifest.webmanifest, sw.js     # application installable (générés)
-└── dist/                           # paquets de partage (non versionnés)
+└── build/, dist/, node_modules/    # construction, paquets de partage, outils (non versionnés)
 ```
 
-**Régénérer les pages** après une modification d'un modèle ou de `src/versions.json` (depuis la racine du projet) :
+## 🧑‍💻 Développement
 
-```bash
-python3 scripts/generer_interface.py
-```
+Prérequis : [mise](https://mise.jdx.dev) (il installe la bonne version de Node). Toutes les commandes se lancent depuis la racine du projet ; `mise tasks` les liste.
 
-Le générateur écrit la dernière version dans `app/` et les précédentes dans `app/anciennes-versions/`, injecte le menu des versions dans chaque page, produit le guide de l'utilisateur `app/documentation.html` et le Changelog `app/changelog.html`, fait pointer `index.html` vers la dernière version et met à jour ce README (tableau des versions, onglets, badge).
+| Commande | Ce qu'elle fait |
+|---|---|
+| `mise run dev` | Édition : sert `src/app/` sur http://localhost:5173 ; la page se recharge à chaque enregistrement. |
+| `mise run build` | Construit toutes les pages (dernière version, anciennes versions, guide, Changelog, README). |
+| `mise run check` | Contrôle du dépôt (le même que sur GitHub). |
+| `mise run preview` | Sert le site construit sur http://localhost:4173. |
+| `mise run package` | Crée le paquet de partage `dist/visualiseur-3cx-v<version>.zip`. |
+| `mise run firmwares` | Télécharge la liste officielle des firmwares 3CX dans `app/firmwares-3cx.js` (macOS). |
+| `mise run ci` | Ce que lance GitHub : construction, comparaison avec les pages envoyées, contrôle. |
 
-**Préparer un paquet à partager** avec des collègues :
+**Code source (depuis 19.0)** : le code est réparti dans `src/app/` (environ 120 fichiers : un par onglet, plus le noyau, la langue, le chargement du backup et les styles). **Vite** construit une **seule page HTML autonome** : les styles sont réunis par `@import`, et les scripts (`<script inline src="…">`, `//#include …`) sont insérés à leur place, sans rien ajouter. Voir [`src/app/README.md`](src/app/README.md).
 
-```bash
-python3 scripts/generer_interface.py --partage
-```
+Le générateur (`mise run build`) écrit la dernière version dans `app/` et les précédentes dans `app/anciennes-versions/`, injecte le menu des versions dans chaque page, produit le guide de l'utilisateur `app/documentation.html` et le Changelog `app/changelog.html`, fait pointer `index.html` vers la dernière version et met à jour les README (tableau des versions, onglets, badge). Les versions à partir de 19.0 qui ne sont plus la dernière sont reconstruites depuis leur étiquette git `v<version>`.
 
-Crée `dist/visualiseur-3cx-v<version>.zip` : seulement la dernière version, le guide de l'utilisateur, le Changelog, les fichiers des firmwares et un `LISEZMOI.txt`. Le menu ne propose que cette version (pas de liens morts). Si le fichier local `scripts/local/donnees-organisation.json` existe (jamais versionné), ses termes propres à votre organisation sont remplacés par des exemples neutres. Le zip n'est jamais ajouté au dépôt (`.gitignore`).
+Le **paquet de partage** (`mise run package`) contient seulement la dernière version, le guide de l'utilisateur, le Changelog, les fichiers des firmwares et un `LISEZMOI.txt` / `README.txt`. Le menu ne propose que cette version (pas de liens morts) et les exemples propres au client sont remplacés par des exemples neutres. Le zip n'est jamais ajouté au dépôt (`.gitignore`).
 
 ## ✅ Contrôle automatique
 
-À chaque envoi sur GitHub, le contrôle **« Contrôle du dépôt »** (onglet *Actions* du dépôt) :
-- régénère les pages et vérifie qu'elles correspondent aux sources envoyées ;
+À chaque envoi sur GitHub, le contrôle **« Contrôle du dépôt »** (onglet *Actions* du dépôt) lance `mise run ci` :
+- construit les pages avec Vite et vérifie qu'elles correspondent aux sources envoyées ;
 - vérifie qu'**aucun backup, export, enregistrement ou secret** n'est entré dans le dépôt ;
-- vérifie que toutes les pages existent et que leurs liens (versions, guide, Changelog, firmwares) fonctionnent, et que chaque onglet est expliqué dans le guide ;
+- vérifie que toutes les pages existent et que leurs liens (versions, guide, Changelog, firmwares) fonctionnent, que chaque onglet est expliqué dans le guide et que chaque fichier de `src/app/` est utilisé ;
 - vérifie la syntaxe JavaScript de la dernière version.
 
-En cas d'échec, GitHub envoie un courriel. Le même contrôle se lance à la main :
-
-```bash
-python3 scripts/verifier_depot.py
-```
+En cas d'échec, GitHub envoie un courriel. Le même contrôle se lance à la main : `mise run check`.
 
 ## 🔢 Versions
 
-Chaque changement est une nouvelle version : un modèle dans `src/versions/<version>/` et une entrée en tête de `src/versions.json`, puis `python3 scripts/generer_interface.py`. Les versions précédentes restent accessibles depuis le menu en haut à droite de l'interface.
+Chaque changement est une nouvelle version : une modification de `src/app/` (jusqu'à 18.4 : un modèle dans `src/versions/<version>/`) et une entrée en tête de `src/versions.json`, puis `mise run build`. Les versions précédentes restent accessibles depuis le menu en haut à droite de l'interface.
 
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **18.2.37** | Fuseau horaire lu dans le backup |
-| 18.2.36 | Départements et Fiche magasin : plus de plantage sur un horaire incomplet |
-| 18.2.35 | « Où est-ce utilisé ? » : texte des références protégé |
-| 18.2.34 | Clients qui rappellent : numéros de l'entreprise reconnus avec un magasin choisi |
-| 18.2.33 | Parkings : tous les clients perdus en parking sont listés |
-| 18.2.32 | Exports CSV : une valeur ne peut plus devenir une formule dans Excel |
-| 18.2.31 | Suivi dans le temps : fichier importé vérifié |
-| 18.2.30 | Files d'attente : appels par heure à l'heure du système 3CX |
-| 18.2.29 | Recommandations : enregistrements présents ou non dans le backup |
-| 18.2.28 | Statistiques et Rapport : définition des appels perdus complète |
-| 18.2.27 | Rapports de département et des mises en attente : jour de semaine calculé sans dépendre du fuseau |
-| 18.2.26 | Rapport de département : sonneries comptées comme dans la Fiche employé |
-| 18.2.25 | Rapport de département : menus communs pris en compte avec un magasin choisi |
-| 18.2.24 | Ouverture d'un magasin : SDA du magasin modèle même avec un autre magasin choisi |
-| 18.2.23 | Doublons : retrait d'un contrôle qui ne pouvait jamais se déclencher |
-| 18.2.22 | Doublons : numéro présenté d'un autre magasin reconnu avec un magasin choisi |
-| 18.2.21 | Fermer et rouvrir un backup : les boutons ne réagissent plus en double |
-| 18.2.20 | Tableau de bord : nombre d'appels cohérent avec un magasin choisi |
-| 18.2.19 | Ouverture d'un magasin : date du jour dans le fuseau du système 3CX |
-| 18.2.18 | Taux d'occupation : date de début du journal des connexions dans le fuseau du système 3CX |
-| 18.2.17 | Actions console : fériés des 7 prochains jours dans le fuseau du système 3CX |
-| 18.2.16 | Suivi et Note de santé : modèle hors liste distingué d'une version inconnue |
-| 18.2.15 | Comparaison : éléments supprimés comptés dans le bon magasin |
-| 18.2.14 | Dates de backup affichées sans ambiguïté : Comparaison, Suivi et export Excel |
-| 18.2.13 | Agents connectés : Organigramme, Départ d'un employé, références et Effectif |
-| 18.2.12 | Parcours détaillé d'un appel : étape « Messagerie vocale » nommée |
-| 18.2.11 | Appels très courts : les fax reçus ne sont plus comptés |
-| 18.2.10 | Délai avant réponse : les fax reçus ne sont plus comptés |
-| 18.2.9 | Numéros importants : mêmes règles de rappel qu'Appels manqués |
-| 18.2.8 | Appels manqués : un numéro commun peut être rappelé par n'importe quel magasin |
-| 18.2.7 | Historique d'un client : « rappelé » seulement par le magasin qui l'a manqué |
-| 18.2.6 | Classement, Priorités et export Excel : objectif d'attente de chaque magasin |
-| 18.2.5 | Avant / après : les deux backups simulés de la même façon |
-| 18.2.4 | Simulateur d'appel : plus de plantage sans historique des connexions |
-| 18.2.3 | Actions console : plus de chiffre propre à un autre système |
-| 18.2.2 | Messages vocaux : date affichée à l'heure du système 3CX |
-| 18.2.1 | Messageries vocales : heure des messages lue en UTC (correction de la 18.1.46) |
-| 18.1.47 | Priorités : le total des appels touchés est présenté comme une somme |
-| 18.1.46 | Messageries vocales : âge des messages dans le fuseau du système 3CX |
-| 18.1.45 | Renvois externes : un poste qui répond à des appels transférés n'est plus « inactif » |
-| 18.1.44 | Comparaison : compteurs limités au magasin choisi |
-| 18.1.43 | Jours fériés récurrents qui chevauchent le Nouvel An |
-| 18.1.42 | Suivi dans le temps : téléphones comptés comme dans l'onglet Téléphones |
-| 18.1.41 | Avant / après : les numéros retirés restent visibles avec un magasin choisi |
-| 18.1.40 | Nouvel employé et Départ : la fiche copiée n'a plus de codes HTML |
-| 18.1.39 | Jours fériés : tous les fériés passés de l'historique |
-| 18.1.38 | Absences et congés : appels habituels calculés sur l'historique disponible |
-| 18.1.37 | Taux d'occupation : occupation par heure sans les agents écartés |
-| 18.1.36 | Parcours détaillé d'un appel : plus de variables globales |
-| 18.1.35 | Recommandations : éléments joignables par les heures d'un département plus signalés « jamais atteints » |
-| 18.1.34 | Journal d'audit : mots de passe masqués aussi dans les réglages imbriqués |
-| 18.1.33 | Date du backup affichée sans ambiguïté |
-| 18.1.32 | Dates au choix inversées : prises dans le bon ordre partout |
-| 18.1.31 | Ouverture d'un magasin : postes à 3 chiffres bien numérotés |
-| 18.1.30 | Numéros importants : l'étoile fonctionne après un changement de magasin ou de backup |
-| 18.1.29 | Nouveau menu (bêta) : l'interrupteur fonctionne après un changement de magasin |
-| 18.1.28 | Agents connectés : même règle dans tous les onglets |
-| 18.1.27 | Note de santé et Contrôle des SDA : même résultat pour un même numéro |
-| 18.1.26 | Simulateur : un poste désactivé ne sonne pas |
-| 18.1.25 | Simulateur : un groupe de sonnerie sans membre ne fait sonner personne |
-| 18.1.24 | Taux d'occupation et Numéros importants : périodes en jours du système 3CX |
-| 18.1.23 | Jours fériés à venir : « aujourd'hui » dans le fuseau du système 3CX |
-| 18.1.22 | Changement d'heure : les jours de passage à l'heure d'été et d'hiver commencent à minuit |
-| 18.1.21 | Licences : pic d'appels simultanés par jour du système 3CX |
-| 18.1.20 | Réceptions : carte jour × heure dans le fuseau du système 3CX |
-| 18.1.19 | Fiche magasin : heure de pointe dans le fuseau du système 3CX |
-| 18.1.18 | Parkings partagés : heures et dates dans le fuseau du système 3CX |
-| 18.1.17 | Tableau de bord et Recommandations : chaque appel compté dans un seul magasin |
-| 18.1.16 | Recommandations : même taux d'appels perdus que les Statistiques |
-| 18.1.15 | Fiche employé : même taux d'occupation que l'onglet Taux d'occupation |
-| 18.1.14 | Destinations et coûts : numéros composés avec un préfixe |
-| 18.1.13 | Prévision du volume : la tendance récente est de nouveau appliquée |
-| 18.1.12 | Appels manqués : tentatives comptées depuis le dernier rappel |
-| 18.1.11 | Appels manqués : un message laissé n'est plus « servi » |
-| 18.1.10 | Appels manqués : une tentative de rappel sans réponse n'est plus un rappel |
-| 18.1.9 | Appels manqués : un client n'est « rappelé » que par le magasin qui l'a manqué |
-| 18.1.8 | Effectif, Classement et Priorités : période limitée aux dates du backup |
-| 18.1.7 | Horaires : plus de fausses alertes avec un backup lu par une ancienne version |
-| 18.1.6 | Horaires : un appel n'est plus compté deux fois dans le même département |
-| 18.1.5 | Horaires : appels « par semaine » calculés sur toute la période |
-| 18.1.4 | Fax reçus : plus comptés comme des appels perdus |
-| 18.1.3 | Appels internes vers une file ou un menu : plus comptés comme répondus |
-| 18.1.2 | Messagerie vocale des files et groupes : plus comptée comme un abandon |
-| 18.1.1 | Messagerie vocale des employés : plus comptée comme un appel répondu |
-| 18.1 | Diagramme en portrait (lettre) |
-| 18.0 | Nouveau menu (bêta) |
+| **19.0** | Code source en modules, construit avec Vite |
+| 18.x | Nouveau menu (bêta) · Diagramme en portrait (lettre) · Messagerie vocale des employés : plus comptée comme un appel répondu · Messagerie vocale des files et groupes : plus comptée comme un abandon · Appels internes vers une file ou un menu : plus comptés comme répondus · … |
 | 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |
 | 15.x | 3CXplore entièrement en anglais · Menu épuré : 22 entrées au lieu de 62 · Choix du menu : simplifié ou expert · Provenance des appels par indicatif régional · Délai avant réponse · … |
@@ -309,7 +235,7 @@ L'historique complet est dans le Changelog : [`app/changelog.html`](app/changelo
 
 - **Navigateurs** : Chrome et Edge recommandés (lecture ZIP via `DecompressionStream`).
 - **3CX** : backups V20 (`*Db.xml` et tables `DbTables/*.csv`).
-- **Vérification des firmwares** : `scripts/verifier-firmwares.command` fonctionne sur macOS (Python 3) ; au premier lancement, clic droit > Ouvrir.
+- **Vérification des firmwares** : `scripts/verifier-firmwares.command` fonctionne sur macOS, sans rien installer ; au premier lancement, clic droit > Ouvrir.
 
 ---
 

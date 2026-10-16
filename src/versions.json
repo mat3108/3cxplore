@@ -1,5 +1,57 @@
 [
  {
+  "version": "19.0",
+  "date": "2026-10-16",
+  "titre": "Code source en modules, construit avec Vite",
+  "resume": "Le code de 3CXplore n'est plus un seul fichier de 1,7 Mo : il est réparti en environ 120 fichiers (un par onglet, plus le noyau, la langue, le chargement du backup et les styles) et Vite le construit en une seule page HTML autonome. L'interface est exactement la même.",
+  "changements": [
+   "Sources dans src/app/ (noms en anglais) : index.html (structure de la page), css/ (styles), js/i18n/ (traduction anglaise), js/loader/ (lecture du backup : ZIP, CSV, XML, construction des données), js/app/core/, js/app/tabs/ (un fichier par onglet) et js/app/ui/ (menus, recherche, palette de commandes, visite guidée, sauvegarde des réglages).",
+   "Construction avec Vite : les styles sont réunis et les scripts insérés à leur place, sans rien ajouter ; les scripts de la page sont identiques à ceux de 18.4 (seul le numéro de version change).",
+   "Tâches mise : mise run dev (édition avec rechargement automatique), build, check, preview, package (paquet de partage), firmwares ; le générateur et le contrôle du dépôt sont réécrits en JavaScript (Node), sans Python.",
+   "Contrôle sur GitHub : construit les pages avec Vite (mise run ci) et vérifie qu'elles correspondent à celles envoyées ; vérifie aussi que chaque fichier de src/app/ est utilisé.",
+   "Les nouvelles versions ne copient plus tout le modèle : à partir de 19.0, une ancienne version est reconstruite depuis son étiquette git v<n> ; les modèles jusqu'à 18.4 restent figés dans src/versions/.",
+   "verifier-firmwares.command n'a plus besoin de Python : il utilise seulement ce que contient chaque Mac (curl et JavaScript pour l'automatisation).",
+   "README en anglais (README.en.md) et guide des sources en anglais et en français (src/app/README.md, LISEZMOI.md)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.4",
+  "date": "2026-10-16",
+  "titre": "Corrections par usager",
+  "resume": "Nouvel onglet Corrections par usager (Employés) : ce qu'il faut corriger sur le poste de chaque employé, avec ce qu'il faut faire, à cocher et à imprimer pour le technicien.",
+  "changements": [
+   "Pour chaque employé du magasin : poste désactivé, messagerie vocale, doublons, parkings, touches BLF vers un poste inexistant ou désactivé, renvois externes, avec la gravité et ce qu'il faut faire.",
+   "Même liste que « À corriger sur son poste » de la Fiche employé (calcul commun).",
+   "Case « Fait » mémorisée pour ce backup (incluse dans la Sauvegarde des réglages), filtre par sujet, recherche d'un employé, option pour masquer ce qui est fait.",
+   "Impression / PDF (une page par employé au choix) et export Excel."
+  ],
+  "onglets": [
+   [
+    "Corrections par usager",
+    "Nouvel onglet : corrections à faire sur le poste de chaque employé."
+   ]
+  ]
+ },
+ {
+  "version": "18.3",
+  "date": "2026-10-16",
+  "titre": "Fiche numéro",
+  "resume": "Nouvel onglet Fiche numéro (Appels) : tout ce que le backup sait d'un numéro sur une page — numéro entrant (SDA) du système, client, poste ou cellulaire d'un employé.",
+  "changements": [
+   "Reconnaissance du numéro saisi dans n'importe quel format : SDA du système, poste ou autre élément, cellulaire ou numéro présenté d'un employé, client.",
+   "SDA : magasin, trunk, règle entrante et destinations (ouvert, hors heures, fériés), appels reçus, répondus, messagerie, perdus, appelants différents, délai avant réponse, heure de pointe, mois par mois, qui répond et clients à rappeler sur ce numéro ; liens vers le diagramme et le simulateur.",
+   "Client : nom dans l'annuaire, numéro important, magasins contactés, appels reçus et passés, temps de conversation, appels manqués et statut de rappel par magasin, lien vers l'historique complet.",
+   "La recherche du bandeau propose la Fiche numéro quand on tape un numéro de téléphone."
+  ],
+  "onglets": [
+   [
+    "Fiche numéro",
+    "Nouvel onglet : tout sur un numéro (SDA, client, employé) sur une page."
+   ]
+  ]
+ },
+ {
   "version": "18.2.37",
   "date": "2026-10-16",
   "titre": "Fuseau horaire lu dans le backup",

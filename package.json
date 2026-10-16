@@ -1,0 +1,18 @@
+{
+  "name": "3cxplore",
+  "private": true,
+  "type": "module",
+  "description": "3CXplore: explore a 3CX V20 system from its backup, entirely in the browser.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/generate.mjs",
+    "check": "node scripts/check.mjs",
+    "package": "node scripts/generate.mjs --package"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3",
+    "vite": "^8.3.4",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}

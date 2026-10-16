@@ -16,3 +16,7 @@ dist/
 
 # Termes propres à l'organisation (neutralisation, contrôles) : uniquement en local
 scripts/local/
+
+# Outils de construction (Vite) et pages intermédiaires
+node_modules/
+build/

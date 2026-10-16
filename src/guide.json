@@ -483,6 +483,25 @@
     "Imprimez-le ou enregistrez-le en PDF ; l'export Excel donne aussi la liste de chaque appel, les clients à rappeler et le détail par employé."
    ],
    "astuce": "La section « Heures d'ouverture et hors heures » montre ce que deviennent les appels reçus pendant la fermeture (messagerie, perdus, répondus quand même) et à quelle heure ils arrivent."
+  },
+  "numero": {
+   "sert": "Tout ce que le backup sait d'un numéro, sur une seule page : s'il s'agit d'un numéro entrant (SDA) du système, d'un client, d'un poste ou du cellulaire d'un employé, avec ses appels, qui répond, les appels perdus et les rappels.",
+   "comment": [
+    "Saisissez le numéro dans n'importe quel format ((555) 123-4567, 5551234567, +1…) ou un numéro de poste, puis choisissez la période.",
+    "Pour un SDA : magasin, trunk, règle entrante et destinations, appels reçus, répondus, en messagerie et perdus, qui répond et les clients à rappeler sur ce numéro, avec des liens vers le diagramme et le simulateur.",
+    "Pour un client : nom dans l'annuaire, numéro important, magasins contactés, appels reçus et passés, appels manqués et leur rappel par magasin, et un lien vers l'historique complet.",
+    "La recherche du bandeau (touche « / ») propose aussi la Fiche numéro quand on tape un numéro de téléphone."
+   ],
+   "astuce": "Depuis la liste des clients à rappeler d'un SDA, un clic sur un numéro ouvre directement la fiche de ce client."
+  },
+  "corrections": {
+   "sert": "Ce qu'il faut corriger sur le poste de chaque employé, avec ce qu'il faut faire : poste désactivé, messagerie vocale, doublons, parkings, touches BLF et renvois externes. La liste est la même que dans la Fiche employé.",
+   "comment": [
+    "Les employés sont classés par nombre de corrections importantes ; filtrez par sujet ou cherchez un employé.",
+    "Cochez « Fait » au fur et à mesure : l'état est gardé pour ce backup (et inclus dans la Sauvegarde des réglages).",
+    "Imprimez la liste pour le technicien (une page par employé si vous le souhaitez) ou exportez-la en Excel."
+   ],
+   "astuce": "Au prochain backup, la liste est recalculée : une correction faite dans la console disparaît d'elle-même."
   }
  },
  "glossaire": [
@@ -1335,6 +1354,25 @@
      "Print it or save it as PDF; the Excel export also gives the list of every call, the callers to call back and the detail by employee."
     ],
     "astuce": "The « Office hours and out of hours » section shows what happens to the calls received while closed (voicemail, lost, answered anyway) and at what time they arrive."
+   },
+   "numero": {
+    "sert": "Everything the backup knows about a number, on a single page: whether it is an inbound number (DID) of the system, a caller, an extension or an employee's cell phone, with its calls, who answers, lost calls and callbacks.",
+    "comment": [
+     "Type the number in any format ((555) 123-4567, 5551234567, +1…) or an extension number, then choose the period.",
+     "For a DID: store, trunk, inbound rule and destinations, calls received, answered, sent to voicemail and lost, who answers and the callers to call back on this number, with links to the diagram and the simulator.",
+     "For a caller: name in the phonebook, important number, stores contacted, calls received and made, missed calls and their callback by store, and a link to the full history.",
+     "The header search (« / » key) also offers the Number sheet when you type a phone number."
+    ],
+    "astuce": "From the list of callers to call back for a DID, clicking a number opens that caller's sheet directly."
+   },
+   "corrections": {
+    "sert": "What needs fixing on each employee's extension, with what to do: disabled extension, voicemail, duplicates, parkings, BLF keys and external forwards. The list is the same as in the Employee sheet.",
+    "comment": [
+     "Employees are ranked by number of important fixes; filter by topic or search for an employee.",
+     "Tick « Done » as you go: the state is kept for this backup (and included in the Settings backup).",
+     "Print the list for the technician (one page per employee if you wish) or export it to Excel."
+    ],
+    "astuce": "With the next backup, the list is recalculated: a fix made in the console disappears by itself."
    }
   },
   "glossaire": [

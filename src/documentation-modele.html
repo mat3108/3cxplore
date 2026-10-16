@@ -51,7 +51,7 @@ dl.tabs dt{font-weight:600} dl.tabs dd{margin:0;color:var(--text)}
   <main>
     <h2>Changelog — historique des versions</h2>
     <p class="lead">Source des données : <!--__SOURCE__--></p>
-    <div class="howto">Chaque version est conservée dans <code>versions/&lt;numéro&gt;/template.html</code> et décrite dans <code>versions/versions.json</code>. Pour regénérer toutes les versions avec un nouveau backup : remplacer le contenu de <code>backup_extrait/</code> puis lancer <code>python3 generer_interface.py</code>.</div>
+    <div class="howto">Chaque version est décrite dans <code>src/versions.json</code>. Le code de la dernière version est dans <code>src/app/</code> (les versions jusqu'à 18.4 sont figées dans <code>src/versions/&lt;numéro&gt;/modele.html</code>) ; <code>mise run build</code> reconstruit toutes les pages.</div>
     <!--__SECTIONS__-->
   </main>
 </div>
