@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-17.4-2563eb)
+![Version](https://img.shields.io/badge/version-17.4.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -48,7 +48,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparaison** | Différences entre le backup actuel et un backup de référence : ajouts, suppressions, modifications champ par champ et journal d'audit de la période ; export CSV. |
 | **Flux d'appels** | Chaque numéro (DID) avec sa règle entrante et l'arbre d'acheminement complet : département → standard IVR (touche par touche) → files d'attente → agents, pour les heures d'ouverture et hors heures. |
 | **Flux d'appel (diagramme)** | Diagramme du callflow complet d'un SDA choisi dans la liste du système, avec zoom, export SVG et impression. |
-| **Simulateur d'appel** | Parcours et issue d'un appel entrant sur un SDA à un jour et une heure donnés. |
+| **Simulateur d'appel** | Heures du département propriétaire d'une file, d'un menu ou d'un groupe de sonnerie. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
@@ -210,7 +210,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **17.4** | Rapport de département |
+| **17.4.1** | Simulateur : heures du département d'une file ou d'un menu |
+| 17.4 | Rapport de département |
 | 17.3.1 | Guide : rapport des mises en attente |
 | 17.3 | Recherche dans le menu |
 | 17.2.1 | Rapport des mises en attente par employé |

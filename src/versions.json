@@ -1,5 +1,28 @@
 [
  {
+  "version": "17.4.1",
+  "date": "2026-10-15",
+  "titre": "Simulateur : heures du département d'une file ou d'un menu",
+  "resume": "Le simulateur d'appel, le diagramme et le flux d'appel appliquent maintenant les heures du département auquel appartient chaque file, menu ou groupe de sonnerie, comme le fait 3CX quand un menu envoie l'appel directement vers une file d'un autre département.",
+  "changements": [
+   "Simulateur : une file, un menu ou un groupe de sonnerie atteint sans passer par son département suit les heures de ce département. Fermé ou férié : destination « en dehors des heures » de l'élément (ou suite normale s'il est réglé pour continuer). Pause : destination « pause » du département, ou suite normale, selon ce que montrent les appels réels ; sans historique, le comportement est indiqué comme non confirmé.",
+   "Exemple : menu ouvert d'un magasin, option 2 vers la file du Service à 18 h, pendant la pause du département Service : l'appel part vers la file SOS, comme dans la réalité.",
+   "Diagramme de flux et arbre d'acheminement : chaque file ou menu concerné affiche ses destinations « Fermé (département) » et « Pause (département) ».",
+   "Vérifié sur les appels réels du backup : hors heures, la destination propre à la file ou au menu correspond à 296 appels sur 301.",
+   "Simulateur : une touche mémorisée qui n'existe plus dans un menu ne bloque plus le simulateur (elle est traitée comme « sans choix »)."
+  ],
+  "onglets": [
+   [
+    "Simulateur d'appel",
+    "Heures du département propriétaire d'une file, d'un menu ou d'un groupe de sonnerie."
+   ],
+   [
+    "Diagramme de flux",
+    "Destinations « Fermé » et « Pause » du département sur les files et menus."
+   ]
+  ]
+ },
+ {
   "version": "17.4",
   "date": "2026-10-15",
   "titre": "Rapport de département",
