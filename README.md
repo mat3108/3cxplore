@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-18.0-2563eb)
+![Version](https://img.shields.io/badge/version-18.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -47,7 +47,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Suivi** | Évolution des indicateurs d'un backup à l'autre (service, problèmes, téléphones, parc), par système ou par magasin ; ajout d'anciens backups, export / import de l'historique. |
 | **Comparaison** | Différences entre le backup actuel et un backup de référence : ajouts, suppressions, modifications champ par champ et journal d'audit de la période ; export CSV. |
 | **Flux d'appels** | Chaque numéro (DID) avec sa règle entrante et l'arbre d'acheminement complet : département → standard IVR (touche par touche) → files d'attente → agents, pour les heures d'ouverture et hors heures. |
-| **Flux d'appel (diagramme)** | Diagramme du callflow complet d'un SDA choisi dans la liste du système, avec zoom, export SVG et impression. |
+| **Flux d'appel (diagramme)** | Interrupteur « Portrait (lettre) » et impression PDF au format lettre. |
 | **Simulateur d'appel** | Heures du département propriétaire d'une file, d'un menu ou d'un groupe de sonnerie. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
@@ -210,7 +210,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **18.0** | Nouveau menu (bêta) |
+| **18.1** | Diagramme en portrait (lettre) |
+| 18.0 | Nouveau menu (bêta) |
 | 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |
 | 15.x | 3CXplore entièrement en anglais · Menu épuré : 22 entrées au lieu de 62 · Choix du menu : simplifié ou expert · Provenance des appels par indicatif régional · Délai avant réponse · … |

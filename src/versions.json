@@ -1,5 +1,26 @@
 [
  {
+  "version": "18.1",
+  "date": "2026-10-16",
+  "titre": "Diagramme en portrait (lettre)",
+  "resume": "Flux d'appel (diagramme) : un interrupteur « Portrait (lettre) » affiche le parcours de haut en bas, lisible sur une page lettre, à imprimer ou à enregistrer en PDF pour l'envoyer par courriel.",
+  "changements": [
+   "Interrupteur « Portrait (lettre) » dans la barre du diagramme, mémorisé dans le navigateur.",
+   "Parcours de haut en bas : une boîte par élément (SDA, règle entrante, départements, menus, files avec leurs agents, groupes, postes, messagerie, numéros externes), nettement décalée selon le niveau, avec des traits verticaux qui relient les éléments d'un même niveau, avec le choix ou le moment sur la flèche (touche, ouvert / fermé, pause, délai).",
+   "Sur les flèches « Pause » et « Fermé » d'une file ou d'un menu : les heures du département (par exemple « Pause (KS Service : Lun–Jeu 17:00–20:00, Ven 14:30–20:00) ») ; la boîte d'un département affiche aussi les heures de la pause.",
+   "Quand plusieurs cas mènent au même élément, la flèche les relie par « ou » (par exemple « Délai max (210s) ou Pause (KS Service : …) ») : ce sont des situations différentes, pas une condition unique.",
+   "Chaque file affiche son attente maximale (par exemple « Attente max. 30 min ») et, quand aucune destination n'est définie si personne ne répond, « Sans réponse : fin de l'appel ».",
+   "Chaque élément est numéroté et affiché une seule fois ; un élément déjà affiché est rappelé par « voir plus haut, n° … ».",
+   "« Imprimer / PDF » : page lettre en portrait avec titre, magasin, trunk, règle entrante, date, légende et note de lecture ; un long parcours continue sur la page suivante sans couper une boîte."
+  ],
+  "onglets": [
+   [
+    "Flux d'appel (diagramme)",
+    "Interrupteur « Portrait (lettre) » et impression PDF au format lettre."
+   ]
+  ]
+ },
+ {
   "version": "18.0",
   "date": "2026-10-16",
   "titre": "Nouveau menu (bêta)",

@@ -191,7 +191,8 @@
   "diagramme": {
    "sert": "Le diagramme du flux d'appel complet d'un SDA, avec zoom, export SVG et impression.",
    "comment": [
-    "Choisissez le SDA dans la liste ; zoomez avec Ctrl (ou Cmd) et la molette."
+    "Choisissez le SDA dans la liste ; zoomez avec Ctrl (ou Cmd) et la molette.",
+    "Activez « Portrait (lettre) » pour afficher le parcours de haut en bas, puis « Imprimer / PDF » : une page lettre en portrait, à enregistrer en PDF et à joindre à un courriel."
    ]
   },
   "simulateur": {
@@ -1042,7 +1043,8 @@
    "diagramme": {
     "sert": "The full call-flow diagram of a DID, with zoom, SVG export and printing.",
     "comment": [
-     "Choose the DID in the list; zoom with Ctrl (or Cmd) and the mouse wheel."
+     "Choose the DID in the list; zoom with Ctrl (or Cmd) and the mouse wheel.",
+     "Turn on « Portrait (letter) » to show the route from top to bottom, then « Print / PDF »: a portrait letter page, to save as PDF and attach to an email."
     ]
    },
    "simulateur": {
