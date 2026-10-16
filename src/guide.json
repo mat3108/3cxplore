@@ -17,6 +17,10 @@
    "En haut du menu de gauche : « Simplifié » regroupe les onglets voisins sous une seule entrée avec des sous-onglets ; « Complet » affiche tous les onglets à plat. Ce guide suit le menu simplifié."
   ],
   [
+   "Nouveau menu (bêta)",
+   "Sous « Simplifié / Complet », l'interrupteur « Nouveau menu (bêta) » propose un menu simplifié organisé par question : Au quotidien (Tableau de bord, À corriger, Nos appels, Nos équipes, Mon magasin), Analyser (Statistiques, Comparer, Parcours des appels) et Technique (postes, lignes, messagerie, sécurité, historique des changements, réglages). Il est désactivé par défaut : le menu habituel ne change pas, et on peut revenir à tout moment. Ce guide suit le menu habituel ; la recherche dans le menu trouve chaque onglet dans les deux menus."
+  ],
+  [
    "Rechercher un menu",
    "Sous « Simplifié / Complet », le champ « Rechercher un menu… » trouve un menu ou un sous-menu en tapant quelques lettres de son nom (sans tenir compte des accents ni des majuscules), y compris les sous-onglets réunis sous une entrée du menu simplifié. Chaque résultat indique où il se trouve dans le menu. Les flèches choisissent un résultat, Entrée l'ouvre et Échap efface la recherche."
   ],
@@ -862,6 +866,10 @@
    [
     "Simple or full menu",
     "At the top of the left menu: “Simple” groups neighbouring tabs under a single entry with sub-tabs; “Full” shows all tabs flat. This guide follows the simple menu."
+   ],
+   [
+    "New menu (beta)",
+    "Below « Simple / Full », the « New menu (beta) » switch offers a simple menu organised by question: Day to day (Dashboard, To fix, Our calls, Our teams, My store), Analyse (Statistics, Compare, Call routes) and Technical (extensions, lines, voicemail, security, change history, settings). It is off by default: the usual menu does not change, and you can switch back at any time. This guide follows the usual menu; the menu search finds every tab in both menus."
    ],
    [
     "Search a menu",

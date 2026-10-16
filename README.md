@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-17.4.1-2563eb)
+![Version](https://img.shields.io/badge/version-18.0-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -210,16 +210,8 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **17.4.1** | Simulateur : heures du département d'une file ou d'un menu |
-| 17.4 | Rapport de département |
-| 17.3.1 | Guide : rapport des mises en attente |
-| 17.3 | Recherche dans le menu |
-| 17.2.1 | Rapport des mises en attente par employé |
-| 17.2 | Fiche employé |
-| 17.1.2 | Visite guidée : interrupteur à l'ouverture du backup |
-| 17.1.1 | Rapport et fiches : affichage sans chevauchement |
-| 17.1 | Visite guidée |
-| 17.0 | Guide de l'utilisateur en anglais |
+| **18.0** | Nouveau menu (bêta) |
+| 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |
 | 15.x | 3CXplore entièrement en anglais · Menu épuré : 22 entrées au lieu de 62 · Choix du menu : simplifié ou expert · Provenance des appels par indicatif régional · Délai avant réponse · … |
 | 14.x | Interface en anglais (première étape) · Interface en anglais : deuxième étape · Statistiques : carte de chaleur jour × heure enrichie |

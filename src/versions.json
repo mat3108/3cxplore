@@ -1,5 +1,17 @@
 [
  {
+  "version": "18.0",
+  "date": "2026-10-16",
+  "titre": "Nouveau menu (bêta)",
+  "resume": "Un nouveau menu simplifié, organisé selon ce qu'on cherche, est proposé en bêta : l'interrupteur « Nouveau menu (bêta) » sous Simplifié / Complet l'active. Il est désactivé par défaut, pour que chacun continue avec le menu habituel.",
+  "changements": [
+   "Nouveau menu (bêta), en trois groupes : Au quotidien (Tableau de bord ; À corriger : priorités, recommandations, note de santé, actions console, pièges, doublons, contrôle des SDA, SDA inutilisés ; Nos appels ; Nos équipes ; Mon magasin), Analyser (Statistiques ; Comparer : classement, magasins, suivi, comparaisons de backups ; Parcours des appels : simulateur, diagramme, flux, départements, menus, groupes, files) et Technique (postes et téléphones, lignes et numéros, messagerie et enregistrements, sécurité et droits, historique des changements, réglages).",
+   "Interrupteur « Nouveau menu (bêta) » sous Simplifié / Complet, désactivé par défaut et mémorisé dans le navigateur ; on revient à l'ancien menu à tout moment.",
+   "Le menu habituel, le menu complet, les adresses des onglets et la recherche dans le menu ne changent pas ; la visite guidée et le guide de l'utilisateur présentent le nouveau menu."
+  ],
+  "onglets": []
+ },
+ {
   "version": "17.4.1",
   "date": "2026-10-15",
   "titre": "Simulateur : heures du département d'une file ou d'un menu",
