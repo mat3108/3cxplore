@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-18.1-2563eb)
+![Version](https://img.shields.io/badge/version-18.2.37-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -210,7 +210,91 @@ Chaque changement est une nouvelle version : un modèle dans `src/versions/<vers
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **18.1** | Diagramme en portrait (lettre) |
+| **18.2.37** | Fuseau horaire lu dans le backup |
+| 18.2.36 | Départements et Fiche magasin : plus de plantage sur un horaire incomplet |
+| 18.2.35 | « Où est-ce utilisé ? » : texte des références protégé |
+| 18.2.34 | Clients qui rappellent : numéros de l'entreprise reconnus avec un magasin choisi |
+| 18.2.33 | Parkings : tous les clients perdus en parking sont listés |
+| 18.2.32 | Exports CSV : une valeur ne peut plus devenir une formule dans Excel |
+| 18.2.31 | Suivi dans le temps : fichier importé vérifié |
+| 18.2.30 | Files d'attente : appels par heure à l'heure du système 3CX |
+| 18.2.29 | Recommandations : enregistrements présents ou non dans le backup |
+| 18.2.28 | Statistiques et Rapport : définition des appels perdus complète |
+| 18.2.27 | Rapports de département et des mises en attente : jour de semaine calculé sans dépendre du fuseau |
+| 18.2.26 | Rapport de département : sonneries comptées comme dans la Fiche employé |
+| 18.2.25 | Rapport de département : menus communs pris en compte avec un magasin choisi |
+| 18.2.24 | Ouverture d'un magasin : SDA du magasin modèle même avec un autre magasin choisi |
+| 18.2.23 | Doublons : retrait d'un contrôle qui ne pouvait jamais se déclencher |
+| 18.2.22 | Doublons : numéro présenté d'un autre magasin reconnu avec un magasin choisi |
+| 18.2.21 | Fermer et rouvrir un backup : les boutons ne réagissent plus en double |
+| 18.2.20 | Tableau de bord : nombre d'appels cohérent avec un magasin choisi |
+| 18.2.19 | Ouverture d'un magasin : date du jour dans le fuseau du système 3CX |
+| 18.2.18 | Taux d'occupation : date de début du journal des connexions dans le fuseau du système 3CX |
+| 18.2.17 | Actions console : fériés des 7 prochains jours dans le fuseau du système 3CX |
+| 18.2.16 | Suivi et Note de santé : modèle hors liste distingué d'une version inconnue |
+| 18.2.15 | Comparaison : éléments supprimés comptés dans le bon magasin |
+| 18.2.14 | Dates de backup affichées sans ambiguïté : Comparaison, Suivi et export Excel |
+| 18.2.13 | Agents connectés : Organigramme, Départ d'un employé, références et Effectif |
+| 18.2.12 | Parcours détaillé d'un appel : étape « Messagerie vocale » nommée |
+| 18.2.11 | Appels très courts : les fax reçus ne sont plus comptés |
+| 18.2.10 | Délai avant réponse : les fax reçus ne sont plus comptés |
+| 18.2.9 | Numéros importants : mêmes règles de rappel qu'Appels manqués |
+| 18.2.8 | Appels manqués : un numéro commun peut être rappelé par n'importe quel magasin |
+| 18.2.7 | Historique d'un client : « rappelé » seulement par le magasin qui l'a manqué |
+| 18.2.6 | Classement, Priorités et export Excel : objectif d'attente de chaque magasin |
+| 18.2.5 | Avant / après : les deux backups simulés de la même façon |
+| 18.2.4 | Simulateur d'appel : plus de plantage sans historique des connexions |
+| 18.2.3 | Actions console : plus de chiffre propre à un autre système |
+| 18.2.2 | Messages vocaux : date affichée à l'heure du système 3CX |
+| 18.2.1 | Messageries vocales : heure des messages lue en UTC (correction de la 18.1.46) |
+| 18.1.47 | Priorités : le total des appels touchés est présenté comme une somme |
+| 18.1.46 | Messageries vocales : âge des messages dans le fuseau du système 3CX |
+| 18.1.45 | Renvois externes : un poste qui répond à des appels transférés n'est plus « inactif » |
+| 18.1.44 | Comparaison : compteurs limités au magasin choisi |
+| 18.1.43 | Jours fériés récurrents qui chevauchent le Nouvel An |
+| 18.1.42 | Suivi dans le temps : téléphones comptés comme dans l'onglet Téléphones |
+| 18.1.41 | Avant / après : les numéros retirés restent visibles avec un magasin choisi |
+| 18.1.40 | Nouvel employé et Départ : la fiche copiée n'a plus de codes HTML |
+| 18.1.39 | Jours fériés : tous les fériés passés de l'historique |
+| 18.1.38 | Absences et congés : appels habituels calculés sur l'historique disponible |
+| 18.1.37 | Taux d'occupation : occupation par heure sans les agents écartés |
+| 18.1.36 | Parcours détaillé d'un appel : plus de variables globales |
+| 18.1.35 | Recommandations : éléments joignables par les heures d'un département plus signalés « jamais atteints » |
+| 18.1.34 | Journal d'audit : mots de passe masqués aussi dans les réglages imbriqués |
+| 18.1.33 | Date du backup affichée sans ambiguïté |
+| 18.1.32 | Dates au choix inversées : prises dans le bon ordre partout |
+| 18.1.31 | Ouverture d'un magasin : postes à 3 chiffres bien numérotés |
+| 18.1.30 | Numéros importants : l'étoile fonctionne après un changement de magasin ou de backup |
+| 18.1.29 | Nouveau menu (bêta) : l'interrupteur fonctionne après un changement de magasin |
+| 18.1.28 | Agents connectés : même règle dans tous les onglets |
+| 18.1.27 | Note de santé et Contrôle des SDA : même résultat pour un même numéro |
+| 18.1.26 | Simulateur : un poste désactivé ne sonne pas |
+| 18.1.25 | Simulateur : un groupe de sonnerie sans membre ne fait sonner personne |
+| 18.1.24 | Taux d'occupation et Numéros importants : périodes en jours du système 3CX |
+| 18.1.23 | Jours fériés à venir : « aujourd'hui » dans le fuseau du système 3CX |
+| 18.1.22 | Changement d'heure : les jours de passage à l'heure d'été et d'hiver commencent à minuit |
+| 18.1.21 | Licences : pic d'appels simultanés par jour du système 3CX |
+| 18.1.20 | Réceptions : carte jour × heure dans le fuseau du système 3CX |
+| 18.1.19 | Fiche magasin : heure de pointe dans le fuseau du système 3CX |
+| 18.1.18 | Parkings partagés : heures et dates dans le fuseau du système 3CX |
+| 18.1.17 | Tableau de bord et Recommandations : chaque appel compté dans un seul magasin |
+| 18.1.16 | Recommandations : même taux d'appels perdus que les Statistiques |
+| 18.1.15 | Fiche employé : même taux d'occupation que l'onglet Taux d'occupation |
+| 18.1.14 | Destinations et coûts : numéros composés avec un préfixe |
+| 18.1.13 | Prévision du volume : la tendance récente est de nouveau appliquée |
+| 18.1.12 | Appels manqués : tentatives comptées depuis le dernier rappel |
+| 18.1.11 | Appels manqués : un message laissé n'est plus « servi » |
+| 18.1.10 | Appels manqués : une tentative de rappel sans réponse n'est plus un rappel |
+| 18.1.9 | Appels manqués : un client n'est « rappelé » que par le magasin qui l'a manqué |
+| 18.1.8 | Effectif, Classement et Priorités : période limitée aux dates du backup |
+| 18.1.7 | Horaires : plus de fausses alertes avec un backup lu par une ancienne version |
+| 18.1.6 | Horaires : un appel n'est plus compté deux fois dans le même département |
+| 18.1.5 | Horaires : appels « par semaine » calculés sur toute la période |
+| 18.1.4 | Fax reçus : plus comptés comme des appels perdus |
+| 18.1.3 | Appels internes vers une file ou un menu : plus comptés comme répondus |
+| 18.1.2 | Messagerie vocale des files et groupes : plus comptée comme un abandon |
+| 18.1.1 | Messagerie vocale des employés : plus comptée comme un appel répondu |
+| 18.1 | Diagramme en portrait (lettre) |
 | 18.0 | Nouveau menu (bêta) |
 | 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |

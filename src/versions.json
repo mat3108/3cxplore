@@ -1,5 +1,864 @@
 [
  {
+  "version": "18.2.37",
+  "date": "2026-10-16",
+  "titre": "Fuseau horaire lu dans le backup",
+  "resume": "Le fuseau horaire était fixé à celui de Montréal (America/Toronto) : pour un système 3CX situé dans un autre fuseau, toutes les heures de l'outil étaient décalées. Il est maintenant lu dans la configuration du système 3CX.",
+  "changements": [
+   "Le fuseau vient du réglage « fuseau horaire » du système 3CX (par exemple « -5 Canada (Montreal, Ottawa, Quebec) »), traduit en fuseau officiel avec l'heure d'été et d'hiver ; si la ville n'est pas reconnue, l'écart d'heures indiqué par 3CX est utilisé ; sans indication, Montréal reste le fuseau par défaut.",
+   "Les fuseaux des modèles de téléphones ne sont pas utilisés (ce sont des réglages par défaut des téléphones, pas ceux du système).",
+   "Le fuseau utilisé et sa provenance sont affichés dans les informations du système (Tableau de bord).",
+   "Pour un backup déjà ouvert, le fuseau s'applique tout de suite ; rouvrir le backup l'applique aussi aux sonneries des agents par jour."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.36",
+  "date": "2026-10-16",
+  "titre": "Départements et Fiche magasin : plus de plantage sur un horaire incomplet",
+  "resume": "Un jour d'horaire inattendu (nom de jour inconnu) ou une pause sans liste de jours faisaient planter l'onglet Départements ou la Fiche magasin.",
+  "changements": [
+   "Ces valeurs incomplètes sont ignorées et les onglets s'affichent normalement."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.35",
+  "date": "2026-10-16",
+  "titre": "« Où est-ce utilisé ? » : texte des références protégé",
+  "resume": "Le texte des références (touche de menu, SDA…) était inséré dans la page sans protection : une valeur particulière dans le backup aurait pu y injecter du code HTML.",
+  "changements": [
+   "Le texte des références est protégé avant l'affichage (fiches des postes, Fiche employé, Licences)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.34",
+  "date": "2026-10-16",
+  "titre": "Clients qui rappellent : numéros de l'entreprise reconnus avec un magasin choisi",
+  "resume": "Avec un magasin choisi, les SDA des autres magasins n'étaient pas reconnus comme des numéros de l'entreprise : un appel d'un autre magasin pouvait être compté comme un client qui rappelle (Clients qui rappellent, Fiche employé, Rapport de département).",
+  "changements": [
+   "Tous les SDA du système sont exclus des clients, quel que soit le magasin affiché."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.33",
+  "date": "2026-10-16",
+  "titre": "Parkings : tous les clients perdus en parking sont listés",
+  "resume": "La section « Appels perdus en parking » ne gardait que les clients dont le dernier appel perdu avait eu lieu en parking : un client perdu en parking puis perdu à nouveau ailleurs disparaissait de « Clients concernés » et « À rappeler ».",
+  "changements": [
+   "Un client est listé dès qu'un de ses appels perdus non réglés a eu lieu en parking."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.32",
+  "date": "2026-10-16",
+  "titre": "Exports CSV : une valeur ne peut plus devenir une formule dans Excel",
+  "resume": "Dans les exports CSV, une valeur venue du backup qui commence par « = », « + », « - » ou « @ » (par exemple le nom affiché d'un appelant) pouvait être exécutée comme une formule à l'ouverture du fichier dans Excel.",
+  "changements": [
+   "Ces valeurs sont précédées d'une apostrophe dans tous les exports CSV (les nombres et numéros de téléphone ne changent pas)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.31",
+  "date": "2026-10-16",
+  "titre": "Suivi dans le temps : fichier importé vérifié",
+  "resume": "Un fichier de suivi importé n'était pas vérifié : une valeur qui n'est pas un nombre pouvait s'afficher telle quelle (y compris du code HTML), et un point sans période faisait planter le tableau.",
+  "changements": [
+   "À l'import, seules les valeurs numériques sont gardées et la période manquante est remplacée par une période vide ; l'affichage des valeurs en pourcentage est protégé."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.30",
+  "date": "2026-10-16",
+  "titre": "Files d'attente : appels par heure à l'heure du système 3CX",
+  "resume": "La fiche d'une file d'attente montrait les appels par heure en heure UTC, alors que tous les autres graphiques par heure sont à l'heure du système 3CX.",
+  "changements": [
+   "Les appels par heure d'une file sont comptés à l'heure du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.29",
+  "date": "2026-10-16",
+  "titre": "Recommandations : enregistrements présents ou non dans le backup",
+  "resume": "La recommandation sur les enregistrements disait toujours que les fichiers audio n'étaient pas dans le backup, même quand ils y étaient.",
+  "changements": [
+   "Le texte indique combien de fichiers d'enregistrement sont inclus dans le backup, ou qu'ils n'y sont pas."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.28",
+  "date": "2026-10-16",
+  "titre": "Statistiques et Rapport : définition des appels perdus complète",
+  "resume": "La note sous les Statistiques et dans le Rapport décrivait les appels perdus sans mentionner « raccroché en parking », pourtant compté.",
+  "changements": [
+   "La note mentionne aussi les clients qui raccrochent pendant qu'ils sont en attente (parking)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.27",
+  "date": "2026-10-16",
+  "titre": "Rapports de département et des mises en attente : jour de semaine calculé sans dépendre du fuseau",
+  "resume": "Le jour de semaine d'une date était obtenu à partir de 16 h UTC : pour un système 3CX situé à l'est de UTC+8, il tombait le lendemain (semaines et jours décalés d'un jour).",
+  "changements": [
+   "Le jour de semaine d'une date est calculé directement à partir de la date, quel que soit le fuseau du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.26",
+  "date": "2026-10-16",
+  "titre": "Rapport de département : sonneries comptées comme dans la Fiche employé",
+  "resume": "Le Rapport de département excluait du total les sonneries arrêtées parce qu'un collègue avait répondu, alors que la Fiche employé les compte : le pourcentage de sonneries sans réponse d'une même personne différait entre les deux.",
+  "changements": [
+   "Le total des sonneries compte aussi les sonneries arrêtées ; les sonneries sans réponse excluent toujours celles arrêtées parce qu'un collègue a répondu, comme dans la Fiche employé."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.25",
+  "date": "2026-10-16",
+  "titre": "Rapport de département : menus communs pris en compte avec un magasin choisi",
+  "resume": "Avec un magasin choisi, la section « Où vont les appels » du Rapport de département ignorait les menus vocaux communs (sans magasin) traversés après le département.",
+  "changements": [
+   "Tous les menus vocaux du système sont analysés, quel que soit le magasin affiché."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.24",
+  "date": "2026-10-16",
+  "titre": "Ouverture d'un magasin : SDA du magasin modèle même avec un autre magasin choisi",
+  "resume": "Quand un magasin était choisi dans le bandeau et qu'on prenait un autre magasin comme modèle, l'assistant Ouverture d'un magasin ne trouvait aucun SDA du modèle : pas de liste de numéros ni de diagramme du flux d'appel.",
+  "changements": [
+   "Les SDA du magasin modèle sont pris dans tout le système, quel que soit le magasin affiché."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.23",
+  "date": "2026-10-16",
+  "titre": "Doublons : retrait d'un contrôle qui ne pouvait jamais se déclencher",
+  "resume": "Le contrôle « SDA dirigé vers un autre magasin » comparait le magasin d'un SDA avec celui de sa destination, alors que le magasin d'un SDA est justement déduit de sa destination : il ne signalait jamais rien et laissait croire que tout avait été vérifié.",
+  "changements": [
+   "Le contrôle est retiré ; les SDA dirigés vers un autre magasin restent visibles dans l'onglet Contrôle des SDA et dans le diagramme."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.22",
+  "date": "2026-10-16",
+  "titre": "Doublons : numéro présenté d'un autre magasin reconnu avec un magasin choisi",
+  "resume": "Avec un magasin choisi, un poste qui présentait le SDA d'un autre magasin était signalé « numéro présenté inconnu du serveur » (information) au lieu de « numéro présenté d'un autre magasin » (à vérifier), parce que seuls les SDA du magasin affiché étaient pris en compte. L'erreur se retrouvait dans la Fiche employé et le Rapport de département.",
+  "changements": [
+   "Tous les SDA du système servent à reconnaître le numéro présenté par un poste, quel que soit le magasin affiché."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.21",
+  "date": "2026-10-16",
+  "titre": "Fermer et rouvrir un backup : les boutons ne réagissent plus en double",
+  "resume": "Fermer le backup effaçait aussi les repères des écouteurs déjà branchés : à l'ouverture suivante, ils étaient branchés une deuxième fois. L'étoile des Numéros importants ajoutait puis retirait aussitôt le numéro (rien ne changeait) ; d'autres boutons s'exécutaient deux fois.",
+  "changements": [
+   "Les repères des écouteurs branchés une seule fois sont conservés quand on ferme le backup : chaque clic n'agit qu'une fois."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.20",
+  "date": "2026-10-16",
+  "titre": "Tableau de bord : nombre d'appels cohérent avec un magasin choisi",
+  "resume": "Avec un magasin choisi, le bandeau « Affichage limité au magasin » comptait tous les appels qui touchent le magasin, alors que le Tableau de bord (18.1.17) compte chaque appel dans un seul magasin ; les SDA les plus appelés comptaient aussi les appels attribués à d'autres magasins.",
+  "changements": [
+   "Le bandeau compte les appels attribués au magasin, comme le Tableau de bord ; le nombre d'appels d'un SDA (Tableau de bord, Flux d'appels, diagramme) est celui de tous les appels reçus sur ce numéro."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.19",
+  "date": "2026-10-16",
+  "titre": "Ouverture d'un magasin : date du jour dans le fuseau du système 3CX",
+  "resume": "L'assistant Ouverture d'un magasin prenait la date du jour en UTC (un jour d'avance en soirée) pour les jours fériés à prévoir.",
+  "changements": [
+   "La date du jour est prise dans le fuseau du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.18",
+  "date": "2026-10-16",
+  "titre": "Taux d'occupation : date de début du journal des connexions dans le fuseau du système 3CX",
+  "resume": "L'avertissement « le journal des connexions commence le … » de Taux d'occupation des agents donnait la date en UTC (un jour d'avance en soirée).",
+  "changements": [
+   "La date est donnée dans le fuseau du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.17",
+  "date": "2026-10-16",
+  "titre": "Actions console : fériés des 7 prochains jours dans le fuseau du système 3CX",
+  "resume": "Dans Actions console, « aujourd'hui » et la limite des 7 prochains jours (jours fériés à configurer) étaient pris dans le fuseau horaire de l'ordinateur.",
+  "changements": [
+   "Ces dates sont prises dans le fuseau du système 3CX, comme dans l'onglet Horaires (18.1.23)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.16",
+  "date": "2026-10-16",
+  "titre": "Suivi et Note de santé : modèle hors liste distingué d'une version inconnue",
+  "resume": "Depuis la 18.1.42, un téléphone dont le modèle n'a pas de firmware de référence était compté « version inconnue » dans le Suivi, la Note de santé et le Rapport, alors que l'onglet Téléphones le classe « hors liste » sans le compter comme un problème.",
+  "changements": [
+   "Ces téléphones sont comptés à part (hors liste) : ils ne sont plus dans « Téléphones de version inconnue » et ne pénalisent plus la Note de santé, comme dans l'onglet Téléphones."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.15",
+  "date": "2026-10-16",
+  "titre": "Comparaison : éléments supprimés comptés dans le bon magasin",
+  "resume": "Avec un magasin choisi, les compteurs de la Comparaison (18.1.44) ne comptaient pas, dans le backup de référence, les postes, files, départements et SDA supprimés depuis : le tableau pouvait afficher « 10 → 10 » alors que la liste annonçait un poste supprimé.",
+  "changements": [
+   "Un élément qui n'existe plus est rattaché au magasin d'après le préfixe de son nom (et, pour un SDA, d'après la destination de sa règle), comme dans la liste des changements."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.14",
+  "date": "2026-10-16",
+  "titre": "Dates de backup affichées sans ambiguïté : Comparaison, Suivi et export Excel",
+  "resume": "La 18.1.33 avait corrigé l'affichage de la date du backup, mais la Comparaison (backup de référence), le tableau du Suivi dans le temps et la feuille Résumé de l'export Excel montraient encore la date brute de 3CX (mois/jour/année).",
+  "changements": [
+   "Ces trois endroits affichent la date au format année-mois-jour avec l'heure du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.13",
+  "date": "2026-10-16",
+  "titre": "Agents connectés : Organigramme, Départ d'un employé, références et Effectif",
+  "resume": "La 18.1.28 avait unifié la règle « agent connecté » dans plusieurs onglets, mais l'Organigramme affichait encore « Déconnecté » pour un agent compté connecté, et Départ d'un employé, les références inverses et l'Effectif utilisaient encore l'ancienne règle stricte.",
+  "changements": [
+   "Un agent dont l'état est inconnu (backup lu par une ancienne version) est compté connecté partout : pastilles de l'Organigramme, autres agents dans Départ d'un employé, « Où est-ce utilisé ? » et agents connectés de l'Effectif."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.12",
+  "date": "2026-10-16",
+  "titre": "Parcours détaillé d'un appel : étape « Messagerie vocale » nommée",
+  "resume": "Les étapes de messagerie vocale reconnues depuis la 18.1.1 apparaissaient avec l'étiquette anglaise « voicemail » et en gris dans le parcours détaillé d'un appel.",
+  "changements": [
+   "L'étape s'appelle « Messagerie vocale » et a la même couleur que la console de messagerie."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.11",
+  "date": "2026-10-16",
+  "titre": "Appels très courts : les fax reçus ne sont plus comptés",
+  "resume": "Depuis la 18.1.4, chaque fax reçu (sans temps de conversation) apparaissait comme un appel très court, et les nouvelles tentatives d'envoi comme des rappels en moins de 2 minutes.",
+  "changements": [
+   "Seuls les appels répondus par un poste sont analysés : les fax reçus sont ignorés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.10",
+  "date": "2026-10-16",
+  "titre": "Délai avant réponse : les fax reçus ne sont plus comptés",
+  "resume": "Depuis que les fax reçus comptent comme répondus (18.1.4), l'onglet Délai avant réponse les prenait pour des appels répondus par une personne : le délai estimé était la durée complète du fax et un faux bandeau « chargé avec une version précédente » pouvait s'afficher.",
+  "changements": [
+   "Seuls les appels répondus par un poste sont mesurés : les fax reçus sont ignorés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.9",
+  "date": "2026-10-16",
+  "titre": "Numéros importants : mêmes règles de rappel qu'Appels manqués",
+  "resume": "Pour un contact important, n'importe quel appel sortant (même sans réponse, même d'un autre magasin) comptait comme un rappel de son appel manqué.",
+  "changements": [
+   "Un appel manqué d'un contact important n'est réglé que par un appel sortant abouti ou un appel servi ; si le contact est rattaché à un magasin, ce doit être ce magasin. Délai de rappel et rappels en retard corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.8",
+  "date": "2026-10-16",
+  "titre": "Appels manqués : un numéro commun peut être rappelé par n'importe quel magasin",
+  "resume": "Depuis la 18.1.9, un appel perdu sur un numéro commun (menu partagé, numéro sans magasin) ou vers un autre site ne pouvait plus jamais être marqué « Rappelé », puisque les rappels viennent toujours d'un magasin.",
+  "changements": [
+   "Pour un appel manqué attribué à « Commun » ou à un autre site, un rappel ou un appel servi de n'importe quel magasin règle l'appel ; pour un magasin, il faut toujours le même magasin."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.7",
+  "date": "2026-10-16",
+  "titre": "Historique d'un client : « rappelé » seulement par le magasin qui l'a manqué",
+  "resume": "L'Historique d'un client considérait le client « rappelé ou servi ensuite » dès qu'un magasin quelconque l'avait rappelé ou servi, alors qu'Appels manqués exige le même magasin (18.1.9) : les deux onglets pouvaient se contredire.",
+  "changements": [
+   "Le dernier appel manqué n'est considéré réglé que par un rappel abouti ou un appel servi du même magasin (ou de n'importe quel magasin pour un numéro commun), comme dans Appels manqués."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.6",
+  "date": "2026-10-16",
+  "titre": "Classement, Priorités et export Excel : objectif d'attente de chaque magasin",
+  "resume": "Le Classement des magasins, les Priorités et l'export Excel calculaient les créneaux sous-dotés avec l'objectif d'attente du magasin choisi dans le bandeau (ou celui par défaut), et non celui de chaque magasin.",
+  "changements": [
+   "Chaque magasin (et chaque file) est évalué avec son propre objectif d'attente défini dans l'onglet Objectifs : heures de pointe bien couvertes, abandons aux heures chargées et créneaux sous-dotés corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.5",
+  "date": "2026-10-16",
+  "titre": "Avant / après : les deux backups simulés de la même façon",
+  "resume": "L'onglet Avant / après simulait le backup actuel avec l'historique des pauses des départements, mais pas le backup de référence : un SDA pouvait être signalé « modifié » alors que sa configuration n'avait pas changé.",
+  "changements": [
+   "Les deux backups sont simulés de la même façon (configuration seulement) : seuls les vrais changements de configuration sont signalés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.4",
+  "date": "2026-10-16",
+  "titre": "Simulateur d'appel : plus de plantage sans historique des connexions",
+  "resume": "Quand le backup ne contenait aucun changement de connexion des agents aux files, l'onglet Simulateur d'appel ne s'affichait pas (erreur).",
+  "changements": [
+   "Sans historique des connexions, le simulateur indique « état au moment du backup » et s'affiche normalement."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.3",
+  "date": "2026-10-16",
+  "titre": "Actions console : plus de chiffre propre à un autre système",
+  "resume": "Le rappel sur les firmwares effacés de l'onglet Actions console affichait un nombre fixe (« constaté 41 fois dans le journal d'audit ») qui venait d'un système en particulier, quel que soit le backup ouvert.",
+  "changements": [
+   "Le rappel indique le nombre réel de firmwares effacés constatés dans le journal d'audit du backup ouvert, ou rien s'il n'y en a pas."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.2",
+  "date": "2026-10-16",
+  "titre": "Messages vocaux : date affichée à l'heure du système 3CX",
+  "resume": "Dans la fiche d'un poste et l'Historique d'un client, la date des messages vocaux était affichée en heure UTC (4 ou 5 heures d'avance) alors que le reste de l'outil affiche l'heure du système 3CX.",
+  "changements": [
+   "La date d'un message vocal est affichée à l'heure du système 3CX, comme celle des appels."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.2.1",
+  "date": "2026-10-16",
+  "titre": "Messageries vocales : heure des messages lue en UTC (correction de la 18.1.46)",
+  "resume": "La 18.1.46 lisait l'heure des messages vocaux comme une heure locale du système 3CX, alors que 3CX l'écrit en UTC dans le nom du fichier : l'âge des messages était décalé de 4 ou 5 heures.",
+  "changements": [
+   "L'heure d'un message vocal est lue en UTC, comme les heures des appels (vérifié : le message est enregistré quelques secondes après le début de l'appel correspondant).",
+   "Âge du plus ancien message et alerte « messages en attente depuis plus de 14 jours » corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.47",
+  "date": "2026-10-16",
+  "titre": "Priorités : le total des appels touchés est présenté comme une somme",
+  "resume": "Le chiffre « Appels touchés par mois (estimation) » additionnait les appels de chaque problème, alors qu'un même appel perdu peut compter dans plusieurs problèmes (numéro, menu, rappels, effectif) : il pouvait laisser croire à plus d'appels perdus qu'en réalité.",
+  "changements": [
+   "Le chiffre s'intitule « Somme des appels touchés par mois » et une note précise qu'un même appel peut compter dans plusieurs problèmes ; le nombre réel d'appels perdus est dans les Statistiques."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.46",
+  "date": "2026-10-16",
+  "titre": "Messageries vocales : âge des messages dans le fuseau du système 3CX",
+  "resume": "L'âge des messages en attente était calculé en lisant l'heure du message dans le fuseau horaire de l'ordinateur.",
+  "changements": [
+   "L'heure d'un message vocal est lue dans le fuseau du système 3CX (âge du plus ancien message et alerte « messages en attente depuis plus de 14 jours »)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.45",
+  "date": "2026-10-16",
+  "titre": "Renvois externes : un poste qui répond à des appels transférés n'est plus « inactif »",
+  "resume": "L'audit des renvois externes ne voyait l'activité d'un poste que par le dernier qui avait répondu ou par ses appels sortants : un poste qui répondait puis transférait ses appels pouvait être signalé « poste inactif ».",
+  "changements": [
+   "Tous les postes qui ont répondu pendant un appel comptent comme actifs, comme dans Licences et postes."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.44",
+  "date": "2026-10-16",
+  "titre": "Comparaison : compteurs limités au magasin choisi",
+  "resume": "Avec un magasin choisi, l'onglet Comparaison filtrait la liste des changements mais pas le tableau des compteurs (postes, téléphones, files, départements, SDA, appels), qui restait celui de tout le système.",
+  "changements": [
+   "Avec un magasin choisi, les compteurs des deux backups sont ceux du magasin."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.43",
+  "date": "2026-10-16",
+  "titre": "Jours fériés récurrents qui chevauchent le Nouvel An",
+  "resume": "Un jour férié récurrent configuré du 31 décembre au 2 janvier (par exemple) n'était jamais reconnu : le simulateur, les horaires et le suivi considéraient le département ouvert.",
+  "changements": [
+   "Une période récurrente qui passe d'une année à l'autre est reconnue (fin de décembre et début de janvier)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.42",
+  "date": "2026-10-16",
+  "titre": "Suivi dans le temps : téléphones comptés comme dans l'onglet Téléphones",
+  "resume": "Le suivi dans le temps comptait comme « à jour » les téléphones sans firmware de référence, ignorait le firmware du serveur et sautait certains appareils : le nombre de téléphones à jour différait de l'onglet Téléphones.",
+  "changements": [
+   "Même référence que l'onglet Téléphones (firmware recommandé par 3CX, sinon celui du serveur) ; un modèle sans référence est compté « version inconnue » ; tous les téléphones sont comptés.",
+   "Les points du suivi déjà enregistrés gardent leurs valeurs ; l'écart peut se voir au prochain point."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.41",
+  "date": "2026-10-16",
+  "titre": "Avant / après : les numéros retirés restent visibles avec un magasin choisi",
+  "resume": "Avec un magasin choisi, l'onglet Avant / après cachait les SDA qui n'existent plus que dans le backup de référence (numéros retirés).",
+  "changements": [
+   "Un numéro retiré est rattaché au magasin d'après la destination de sa règle entrante dans le backup de référence : il reste affiché pour ce magasin."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.40",
+  "date": "2026-10-16",
+  "titre": "Nouvel employé et Départ : la fiche copiée n'a plus de codes HTML",
+  "resume": "Le bouton « Copier » des assistants Nouvel employé et Départ d'un employé laissait des codes comme « &amp; » ou « &#39; » dans le texte copié.",
+  "changements": [
+   "Le texte copié est converti en texte simple (accents, apostrophes et esperluettes corrects)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.39",
+  "date": "2026-10-16",
+  "titre": "Jours fériés : tous les fériés passés de l'historique",
+  "resume": "Le tableau des jours fériés passés de l'assistant Jours fériés ne regardait que la première et la dernière année de l'historique : avec trois années ou plus, les fériés des années du milieu manquaient.",
+  "changements": [
+   "Les fériés de chaque année couverte par l'historique sont analysés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.38",
+  "date": "2026-10-16",
+  "titre": "Absences et congés : appels habituels calculés sur l'historique disponible",
+  "resume": "Les « appels habituels » d'un employé absent étaient toujours divisés par 8 semaines, même quand le backup contenait moins de 8 semaines d'historique : ils étaient sous-estimés.",
+  "changements": [
+   "La moyenne par jour de semaine est calculée sur le nombre réel de semaines d'historique (au plus 8)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.37",
+  "date": "2026-10-16",
+  "titre": "Taux d'occupation : occupation par heure sans les agents écartés",
+  "resume": "Dans « Occupation par heure », le temps de connexion des agents connectés moins d'une heure sur la période était compté, mais pas leurs conversations : les taux par heure sortaient un peu bas.",
+  "changements": [
+   "Les agents écartés (moins d'une heure de connexion) ne sont plus comptés dans l'occupation par heure."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.36",
+  "date": "2026-10-16",
+  "titre": "Parcours détaillé d'un appel : plus de variables globales",
+  "resume": "La barre du parcours détaillé d'un appel créait des variables globales (l, w, a) qui pouvaient en écraser d'autres dans la page.",
+  "changements": [
+   "Les variables de la barre du parcours sont locales : aucun effet sur le reste de l'interface."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.35",
+  "date": "2026-10-16",
+  "titre": "Recommandations : éléments joignables par les heures d'un département plus signalés « jamais atteints »",
+  "resume": "Un élément atteint seulement par la destination « fermé » d'une file ou d'un menu, ou par la pause du département d'une file, était signalé « jamais atteint depuis un SDA » ou « sans agent et non utilisé ».",
+  "changements": [
+   "La recherche des éléments joignables suit aussi les destinations « en dehors des heures » des files et des menus et la pause de leur département, comme le diagramme et le simulateur."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.34",
+  "date": "2026-10-16",
+  "titre": "Journal d'audit : mots de passe masqués aussi dans les réglages imbriqués",
+  "resume": "Le journal d'audit masquait les mots de passe, clés et jetons seulement au premier niveau : un mot de passe placé à l'intérieur d'un réglage (par exemple les identifiants d'un trunk) pouvait s'afficher en clair. Rouvrez le backup pour appliquer la correction.",
+  "changements": [
+   "Les valeurs dont le nom désigne un mot de passe, un code, une clé, un jeton ou un secret sont masquées à tous les niveaux du journal d'audit (onglets Modifications, Journal d'audit, Comparaison)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.33",
+  "date": "2026-10-16",
+  "titre": "Date du backup affichée sans ambiguïté",
+  "resume": "La date du backup était affichée telle que 3CX l'écrit (mois/jour/année, par exemple « 10/11/2026 2:36:00 a.m. »), ce qui se lit comme le 10 novembre au lieu du 11 octobre.",
+  "changements": [
+   "La date du backup est affichée au format année-mois-jour avec l'heure du système 3CX (par exemple « 2026-10-11 02 h 36 ») : Tableau de bord, Rapport, Comparaison, diagramme en portrait."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.32",
+  "date": "2026-10-16",
+  "titre": "Dates au choix inversées : prises dans le bon ordre partout",
+  "resume": "Dans Statistiques, Agents, Horaires, Rapport, Menus IVR et Clients qui rappellent, une période « Dates au choix » saisie à l'envers (fin avant début) donnait des résultats vides.",
+  "changements": [
+   "Les deux dates sont remises dans l'ordre, comme dans les autres onglets."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.31",
+  "date": "2026-10-16",
+  "titre": "Ouverture d'un magasin : postes à 3 chiffres bien numérotés",
+  "resume": "Pour un magasin modèle aux postes à 3 chiffres, la numérotation proposée du nouveau magasin commençait à 0 au lieu d'une centaine libre.",
+  "changements": [
+   "La recherche d'une centaine libre pour des postes à 3 chiffres commence à 100 quand le point de départ dépasse 999."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.30",
+  "date": "2026-10-16",
+  "titre": "Numéros importants : l'étoile fonctionne après un changement de magasin ou de backup",
+  "resume": "Après un changement de magasin ou l'ouverture d'un autre backup, l'étoile ☆ ajoutait le numéro avec l'ancien magasin, ou dans la liste de l'ancien système.",
+  "changements": [
+   "L'étoile utilise toujours le magasin et le système affichés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.29",
+  "date": "2026-10-16",
+  "titre": "Nouveau menu (bêta) : l'interrupteur fonctionne après un changement de magasin",
+  "resume": "Après avoir choisi un autre magasin, l'interrupteur « Nouveau menu (bêta) » se cochait sans changer le menu jusqu'au rechargement de la page.",
+  "changements": [
+   "L'interrupteur applique toujours le menu de l'affichage en cours, même après un changement de magasin ou de backup."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.28",
+  "date": "2026-10-16",
+  "titre": "Agents connectés : même règle dans tous les onglets",
+  "resume": "« Agent connecté » ne voulait pas dire la même chose partout : Pièges d'acheminement et Fiche magasin exigeaient l'état « connecté », alors que les autres onglets acceptaient aussi un état inconnu (backup lu par une ancienne version).",
+  "changements": [
+   "Pièges d'acheminement, Fiche magasin, Organigramme et Absences et congés appliquent la même règle que le Simulateur, Personnes indispensables et la Note de santé : une file n'est plus signalée « aucun agent connecté » quand l'état des agents est simplement inconnu."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.27",
+  "date": "2026-10-16",
+  "titre": "Note de santé et Contrôle des SDA : même résultat pour un même numéro",
+  "resume": "La Note de santé simulait toujours la pause d'un département comme si l'appel partait vers la destination « pause », alors que le Contrôle des SDA suivait ce que montrent les appels réels : les deux onglets pouvaient se contredire.",
+  "changements": [
+   "La Note de santé utilise aussi l'historique des appels pour les pauses des départements : un SDA « avec appel perdu » est le même dans les deux onglets."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.26",
+  "date": "2026-10-16",
+  "titre": "Simulateur : un poste désactivé ne sonne pas",
+  "resume": "Le simulateur disait « le poste sonne » pour un poste désactivé, alors que l'onglet Pièges d'acheminement le signale comme une destination qui n'aboutit pas.",
+  "changements": [
+   "Un poste désactivé est signalé dans le parcours et l'appel est compté comme perdu (Simulateur, Contrôle des SDA, Note de santé), comme dans Pièges d'acheminement."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.25",
+  "date": "2026-10-16",
+  "titre": "Simulateur : un groupe de sonnerie sans membre ne fait sonner personne",
+  "resume": "Le simulateur d'appel (et le Contrôle des SDA, la Note de santé) disait « un employé peut répondre » pour un groupe de sonnerie sans aucun membre.",
+  "changements": [
+   "Un groupe de sonnerie sans membre est signalé « Aucun membre » : l'appel passe directement à la destination « sans réponse » du groupe, ou est perdu s'il n'y en a pas."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.24",
+  "date": "2026-10-16",
+  "titre": "Taux d'occupation et Numéros importants : périodes en jours du système 3CX",
+  "resume": "Le premier jour affiché des périodes de Taux d'occupation des agents et de Numéros importants était pris en heure UTC (un jour d'avance en soirée).",
+  "changements": [
+   "Le premier jour de la période est donné dans le fuseau du système 3CX, comme le dernier."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.23",
+  "date": "2026-10-16",
+  "titre": "Jours fériés à venir : « aujourd'hui » dans le fuseau du système 3CX",
+  "resume": "La liste des jours fériés à venir non configurés (Horaires, Recommandations) prenait la date du jour dans le fuseau horaire de l'ordinateur.",
+  "changements": [
+   "La date du jour et la limite des 90 prochains jours sont prises dans le fuseau du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.22",
+  "date": "2026-10-16",
+  "titre": "Changement d'heure : les jours de passage à l'heure d'été et d'hiver commencent à minuit",
+  "resume": "Les jours de changement d'heure, le début de journée était décalé d'une heure (la première heure manquait ou une heure de la veille était comptée) dans les périodes « Dates au choix », la Fiche employé, Taux d'occupation et Numéros importants.",
+  "changements": [
+   "Le début d'une journée est calculé à minuit dans le fuseau du système 3CX, y compris les jours de changement d'heure."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.21",
+  "date": "2026-10-16",
+  "titre": "Licences : pic d'appels simultanés par jour du système 3CX",
+  "resume": "Dans Licences et postes, le pic quotidien d'appels simultanés était regroupé par jour UTC (la soirée comptait pour le lendemain).",
+  "changements": [
+   "Les pics d'appels simultanés sont regroupés par jour dans le fuseau du système 3CX (valeur haute des jours chargés corrigée)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.20",
+  "date": "2026-10-16",
+  "titre": "Réceptions : carte jour × heure dans le fuseau du système 3CX",
+  "resume": "La carte de chaleur jour × heure de l'onglet Réceptions utilisait le fuseau horaire de l'ordinateur.",
+  "changements": [
+   "Jour de semaine et heure de chaque appel dans le fuseau du système 3CX.",
+   "Avant, ces heures et ces dates suivaient le fuseau horaire de l'ordinateur : elles étaient décalées pour quelqu'un qui consulte l'outil depuis un autre fuseau que celui du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.19",
+  "date": "2026-10-16",
+  "titre": "Fiche magasin : heure de pointe dans le fuseau du système 3CX",
+  "resume": "L'heure de pointe de la Fiche magasin était calculée dans le fuseau horaire de l'ordinateur.",
+  "changements": [
+   "L'heure de pointe est calculée dans le fuseau du système 3CX, comme dans les Statistiques et le Rapport.",
+   "Avant, ces heures et ces dates suivaient le fuseau horaire de l'ordinateur : elles étaient décalées pour quelqu'un qui consulte l'outil depuis un autre fuseau que celui du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.18",
+  "date": "2026-10-16",
+  "titre": "Parkings partagés : heures et dates dans le fuseau du système 3CX",
+  "resume": "L'onglet Parkings partagés affichait les mises en parking par heure et les dates dans le fuseau horaire de l'ordinateur au lieu de celui du système 3CX.",
+  "changements": [
+   "Mises en parking par heure, dates de première et dernière utilisation, attentes les plus longues, appels perdus en parking : heures et dates dans le fuseau du système 3CX (de même pour les dates de l'audit des renvois externes).",
+   "Avant, ces heures et ces dates suivaient le fuseau horaire de l'ordinateur : elles étaient décalées pour quelqu'un qui consulte l'outil depuis un autre fuseau que celui du système 3CX."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.17",
+  "date": "2026-10-16",
+  "titre": "Tableau de bord et Recommandations : chaque appel compté dans un seul magasin",
+  "resume": "Avec un magasin choisi, le Tableau de bord et les Recommandations comptaient aussi les appels d'autres magasins qui avaient seulement traversé le magasin (transfert, poste du magasin qui répond) : les chiffres différaient des Statistiques.",
+  "changements": [
+   "Avec un magasin choisi, les compteurs du Tableau de bord (appels, répondus, volume par jour et par heure, agents) et des Recommandations sur les appels attribuent chaque appel à un seul magasin, comme les Statistiques, la Fiche magasin et le Rapport.",
+   "L'onglet Appels montre toujours tous les appels qui touchent le magasin."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.16",
+  "date": "2026-10-16",
+  "titre": "Recommandations : même taux d'appels perdus que les Statistiques",
+  "resume": "La recommandation « appels entrants qui n'aboutissent pas » divisait par tous les appels entrants, y compris ceux transférés vers un autre 3CX (bridge) : le pourcentage différait de celui des Statistiques et du Rapport.",
+  "changements": [
+   "Le pourcentage d'appels perdus des Recommandations exclut les appels transférés vers un autre 3CX, comme les Statistiques, la Fiche magasin et le Rapport."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.15",
+  "date": "2026-10-16",
+  "titre": "Fiche employé : même taux d'occupation que l'onglet Taux d'occupation",
+  "resume": "Le taux d'occupation de la Fiche employé ne se calculait pas comme dans l'onglet Taux d'occupation des agents (connexion en cours au début du journal oubliée, appels hors connexion comptés) et sortait trop haut.",
+  "changements": [
+   "La Fiche employé utilise maintenant le même calcul que l'onglet Taux d'occupation : connexions reconstituées de la même façon, seuls les appels commencés pendant la connexion comptent (files, appels directs, sortants, internes), et le même choix heures d'affaires / toute la journée."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.14",
+  "date": "2026-10-16",
+  "titre": "Destinations et coûts : numéros composés avec un préfixe",
+  "resume": "Un numéro composé avec un préfixe de sortie (par exemple 9 ou 0 suivi des 10 chiffres) n'était classé dans aucune destination et coûtait toujours 0 $.",
+  "changements": [
+   "Ces numéros sont classés d'après leurs 10 derniers chiffres (indicatif régional) : ils apparaissent dans Destinations des appels sortants et sont comptés dans Coût des appels sortants, Fiche employé et Rapport de département."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.13",
+  "date": "2026-10-16",
+  "titre": "Prévision du volume : la tendance récente est de nouveau appliquée",
+  "resume": "Avec l'historique « 4 semaines », la tendance récente (4 dernières semaines contre les 4 précédentes) n'était jamais calculée et restait à +0 %, même avec un an d'historique.",
+  "changements": [
+   "La durée d'historique disponible est calculée d'après les appels réellement présents dans le backup, quel que soit le nombre de semaines choisi : la correction de tendance s'applique dès qu'il y a 8 semaines d'historique."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.12",
+  "date": "2026-10-16",
+  "titre": "Appels manqués : tentatives comptées depuis le dernier rappel",
+  "resume": "La colonne « Tentatives » comptait tous les appels perdus du client dans tout l'historique, y compris ceux déjà réglés par un rappel plus ancien.",
+  "changements": [
+   "Tentatives et « premier appel perdu » ne comptent plus que les appels perdus depuis le dernier rappel ou le dernier appel servi du même magasin."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.11",
+  "date": "2026-10-16",
+  "titre": "Appels manqués : un message laissé n'est plus « servi »",
+  "resume": "Quand un client rappelait et laissait un message vocal, il était marqué « A rappelé et a été servi » ; l'onglet Historique d'un client le considérait, lui, comme pas encore rappelé.",
+  "changements": [
+   "Un nouvel appel qui finit en messagerie vocale ne règle plus l'appel manqué : le client reste à rappeler, comme dans Historique d'un client."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.10",
+  "date": "2026-10-16",
+  "titre": "Appels manqués : une tentative de rappel sans réponse n'est plus un rappel",
+  "resume": "Un appel sortant vers le client resté sans réponse (boîte vocale du client, pas de réponse) suffisait pour marquer le client « Rappelé ».",
+  "changements": [
+   "Seul un appel sortant abouti (le client a répondu) compte comme un rappel, dans Appels manqués comme dans Historique d'un client : une tentative sans réponse laisse le client « Non rappelé »."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.9",
+  "date": "2026-10-16",
+  "titre": "Appels manqués : un client n'est « rappelé » que par le magasin qui l'a manqué",
+  "resume": "Un client manqué par un magasin était marqué « Rappelé » dès qu'un autre magasin l'appelait (ou qu'il était servi par un autre magasin), même pour un tout autre sujet.",
+  "changements": [
+   "Le rappel (appel sortant) et le nouvel appel servi doivent venir du même magasin que l'appel manqué pour que le client soit marqué « Rappelé » ou « A rappelé et a été servi ».",
+   "Corrigés : Appels manqués, Fiche magasin et Rapport de département (clients non rappelés), Priorités, Numéros importants."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.8",
+  "date": "2026-10-16",
+  "titre": "Effectif, Classement et Priorités : période limitée aux dates du backup",
+  "resume": "Quand l'historique du backup était plus court que la période choisie (par exemple 8 semaines), les jours sans données étaient comptés : appels par heure, effectif nécessaire, appels servis par agent et abandons par mois sortaient trop bas, et des magasins étaient marqués « trop peu d'appels » à tort.",
+  "changements": [
+   "Effectif selon l'achalandage : la période commence au plus tôt au premier appel en file du backup.",
+   "Classement des magasins : la période commence au plus tôt au premier appel du backup (seuil « trop peu d'appels » et appels servis par agent corrigés).",
+   "Priorités : les abandons aux heures chargées sont ramenés à un mois d'après le nombre réel de jours analysés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.7",
+  "date": "2026-10-16",
+  "titre": "Horaires : plus de fausses alertes avec un backup lu par une ancienne version",
+  "resume": "Quand le backup avait été lu par une version antérieure (pauses et jours fériés non mémorisés), les appels passés par la pause ou un férié étaient signalés « fermé pendant l'ouverture » et tous les fériés à venir étaient signalés manquants.",
+  "changements": [
+   "Sans le détail des pauses et des fériés, ces appels ne sont plus signalés comme des anomalies et les fériés à venir ne sont plus marqués manquants (le bandeau invite toujours à rouvrir le backup)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.6",
+  "date": "2026-10-16",
+  "titre": "Horaires : un appel n'est plus compté deux fois dans le même département",
+  "resume": "Un appel qui repassait par le même département (option de menu qui revient au département, transfert de retour) était compté deux fois dans l'onglet Horaires.",
+  "changements": [
+   "Chaque appel n'est compté qu'une fois par département : nombre d'appels, branche prise, grille par demi-heure et anomalies « fermé pendant l'ouverture » corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.5",
+  "date": "2026-10-16",
+  "titre": "Horaires : appels « par semaine » calculés sur toute la période",
+  "resume": "Dans l'onglet Horaires et le Rapport de département, les moyennes « par semaine » ne comptaient que les jours où il y avait eu des appels, ce qui les gonflait (jusqu'à 40 % de trop) et pouvait suggérer à tort d'ouvrir un jour fermé.",
+  "changements": [
+   "Le nombre de semaines est maintenant celui de la période choisie (limitée aux dates couvertes par le backup), et non le nombre de jours avec des appels.",
+   "Corrigés : appels avant l'ouverture et après la fermeture par semaine, ajustements d'horaire suggérés (onglet Horaires, Recommandations, Rapport et Rapport de département)."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.4",
+  "date": "2026-10-16",
+  "titre": "Fax reçus : plus comptés comme des appels perdus",
+  "resume": "Un fax reçu sur une ligne entrante était compté comme un appel non répondu ou raccroché au menu : il est maintenant compté comme répondu (reçu par le télécopieur). Rouvrez le backup pour appliquer la correction.",
+  "changements": [
+   "Une étape « fax » décrochée est une réponse : le fax reçu n'est plus un appel perdu et n'apparaît plus dans les appels manqués à rappeler.",
+   "Taux de réponse et appels perdus corrigés pour les numéros qui reçoivent des fax."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.3",
+  "date": "2026-10-16",
+  "titre": "Appels internes vers une file ou un menu : plus comptés comme répondus",
+  "resume": "Un appel interne vers une file d'attente, un menu ou un script était compté comme répondu dès que 3CX jouait un message, même si personne ne répondait. Rouvrez le backup pour appliquer la correction.",
+  "changements": [
+   "Pour un appel interne, seul un poste, une messagerie ou une ligne externe qui décroche compte comme une réponse : un appel interne vers une file, un menu ou un script sans réponse est maintenant un abandon en file, un raccroché au menu ou un appel non répondu, et le temps passé dans le menu n'est plus du temps de conversation.",
+   "Onglet Appels internes et statistiques des appels internes corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.2",
+  "date": "2026-10-16",
+  "titre": "Messagerie vocale des files et groupes : plus comptée comme un abandon",
+  "resume": "Un message laissé dans la messagerie d'une file d'attente ou d'un groupe de sonnerie était compté comme un abandon en file (appel perdu) : il est maintenant compté en « Messagerie ». Rouvrez le backup pour appliquer la correction.",
+  "changements": [
+   "Les étapes « messagerie vocale » d'une file ou d'un groupe de sonnerie sont reconnues : l'appel n'est plus un abandon en file ni un appel perdu, et il n'apparaît plus dans les appels manqués à rappeler.",
+   "Taux de perte, abandons en file, Statistiques, Fiche magasin, Rapport et Rapport de département corrigés."
+  ],
+  "onglets": []
+ },
+ {
+  "version": "18.1.1",
+  "date": "2026-10-16",
+  "titre": "Messagerie vocale des employés : plus comptée comme un appel répondu",
+  "resume": "Un message laissé dans la messagerie vocale d'un employé était compté comme un appel répondu par cet employé : il est maintenant compté en « Messagerie ». Rouvrez le backup pour appliquer la correction.",
+  "changements": [
+   "Le chargement du backup reconnaît les étapes « messagerie vocale » de 3CX (type d'entité voicemail) : un message laissé dans la boîte d'un employé n'est plus un appel répondu, n'est plus attribué à l'employé et sa durée n'est plus du temps de conversation.",
+   "Les taux de réponse, la colonne « Messagerie », les statistiques par employé (Agents, Fiche employé, Rapport de département) et les sonneries sans réponse sont corrigés.",
+   "Un bandeau demande de rouvrir le backup quand les appels ont été lus par une version précédente.",
+   "Messageries vocales : la dernière consultation d'une boîte compte seulement les appels vers la console de messagerie, et non les messages laissés à un collègue."
+  ],
+  "onglets": []
+ },
+ {
   "version": "18.1",
   "date": "2026-10-16",
   "titre": "Diagramme en portrait (lettre)",
