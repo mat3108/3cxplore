@@ -186,6 +186,12 @@ function analyse(){
     `Comparaison avec la liste officielle 3CX du ${FW_REF.date}.`,
     'Lancer « Mettre à jour le firmware » depuis la console 3CX, de préférence hors des heures d\'ouverture.',
     phOld.map(r => ({html: `${dnLink(r.ext)} <span class="muted">— ${esc(r.model)} ${esc(fwVersion(r.fw))} → ${esc(r.rec)}</span>`, text: `${r.ext} ${r.user} : ${r.model} ${r.fw} -> ${r.rec}`})));
+  // 19.0.1 : téléphones dans une autre langue que le français
+  const phLng = ph.filter(r => phLangBad(r.lang));
+  if(phLng.length) add('ph-lang', 'fix', 'Téléphones', `${phLng.length} téléphone${phLng.length>1?'s':''} dans une autre langue que le français`,
+    'La langue de l\'affichage du téléphone (menus, touches, messages) n\'est pas le français.',
+    'Dans la console 3CX → Téléphones, ouvrir le téléphone, choisir la langue Français, enregistrer puis reprovisionner le téléphone.',
+    phLng.map(r => ({html: `${dnLink(r.ext)} <span class="muted">— ${esc(r.model)} · </span><span class="phlang-bad">${esc(phLang(r.lang))}</span>`, text: `${r.ext} ${r.user} : ${r.model} en ${phLang(r.lang)}`})));
   const phProb = ph.filter(r => r.st === 'prob');
   if(phProb.length) add('fw-prob', 'obs', 'Téléphones', `${phProb.length} téléphone${phProb.length>1?'s':''} probablement à jour mais dont le firmware a été effacé`,
     'Le firmware recommandé leur avait été assigné, puis il a été effacé lors d\'une modification du téléphone dans la console. Ils l\'ont très probablement installé, mais 3CX ne le réinstallera plus en cas de réinitialisation.',

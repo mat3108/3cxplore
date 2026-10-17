@@ -1,5 +1,18 @@
 [
  {
+  "version": "19.0.1",
+  "date": "2026-10-16",
+  "titre": "Langue des téléphones",
+  "resume": "L'onglet Téléphones affiche la langue de chaque téléphone ; un téléphone dans une autre langue que le français est signalé en rouge et devient un problème détecté.",
+  "changements": [
+   "Téléphones : nouvelle colonne « Langue » (réglage de langue du provisionnement 3CX), aussi dans la fiche du téléphone et l'export CSV ; filtre « Toutes les langues » (dont « Autre que le français »).",
+   "Une langue autre que le français est en rouge et la ligne du téléphone est surlignée ; carte « Langue autre que le français » en haut de l'onglet.",
+   "Nouveau problème détecté « téléphones dans une autre langue que le français » (Recommandations, Priorités, Note de santé…), avec la marche à suivre dans la console 3CX.",
+   "Corrections par usager et Fiche employé : le téléphone dans une autre langue apparaît dans ce qu'il faut corriger sur le poste."
+  ],
+  "onglets": []
+ },
+ {
   "version": "19.0",
   "date": "2026-10-16",
   "titre": "Code source en modules, construit avec Vite",

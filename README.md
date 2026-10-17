@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.0-2563eb)
+![Version](https://img.shields.io/badge/version-19.0.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -220,7 +220,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.0** | Code source en modules, construit avec Vite |
+| **19.0.1** | Langue des téléphones |
+| 19.0 | Code source en modules, construit avec Vite |
 | 18.x | Nouveau menu (bêta) · Diagramme en portrait (lettre) · Messagerie vocale des employés : plus comptée comme un appel répondu · Messagerie vocale des files et groupes : plus comptée comme un abandon · Appels internes vers une file ou un menu : plus comptés comme répondus · … |
 | 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |

@@ -26,6 +26,12 @@ const serverFor = model => { const r = recFor(model); const pre = r ? fwPrefix(r
 
 const PH_ST = {old:{l:'À mettre à jour', c:'bad'}, unk:{l:'Inconnu', c:'warn'}, prob:{l:'Probablement à jour', c:'acc'}, okv:{l:'À jour (vérifié)', c:'ok'}, ok:{l:'À jour', c:'ok'}, new:{l:'Plus récent que 3CX', c:'acc'}, nt:{l:'Modèle hors liste 3CX', c:''}};
 const PH_ORDER = ['old', 'unk', 'prob', 'new', 'nt', 'okv', 'ok'];
+// 19.0.1 : langue du téléphone (réglage PhoneLanguage du provisionnement 3CX) ; toute autre langue que le français est un problème
+const PH_LANGS = {French: 'Français', English: 'Anglais', Spanish: 'Espagnol', German: 'Allemand', Italian: 'Italien', Portuguese: 'Portugais', Dutch: 'Néerlandais', Russian: 'Russe',
+  Polish: 'Polonais', Turkish: 'Turc', Greek: 'Grec', Czech: 'Tchèque', Swedish: 'Suédois', Danish: 'Danois', Norwegian: 'Norvégien', Finnish: 'Finnois', Hungarian: 'Hongrois', Arabic: 'Arabe', Chinese: 'Chinois', Japanese: 'Japonais'};
+const phLang = l => PH_LANGS[l] || l || '';
+const phLangBad = l => !!l && !/^fr/i.test(l);
+const phLangHTML = l => !l ? '<span class="muted" title="Langue non indiquée dans le backup">—</span>' : phLangBad(l) ? `<span class="phlang-bad" title="Langue autre que le français">${esc(phLang(l))}</span>` : esc(phLang(l));
 const HAS_EVIDENCE = Array.isArray(FULL.fwErased) && Array.isArray(FULL.phoneUA);
 const UA_BY = {}; (FULL.phoneUA || []).forEach(u => UA_BY[u[0]] = u);       // dernière version vue par MAC
 const ERASED_BY = {}; (FULL.fwErased || []).forEach(e => ERASED_BY[e[0]] = e); // dernier effacement par MAC
@@ -48,7 +54,7 @@ function phoneRows(){
       const c = cmp(fwVersion(er[1])); st = !target ? 'nt' : c < 0 ? 'old' : 'prob';
       why = `Firmware ${fwVersion(er[1])} assigné, puis effacé le ${fmtD(er[2])} par ${er[3]} (modification du téléphone)`;
     } else { st = 'unk'; why = 'Aucun firmware assigné et aucune version observée'; }
-    rows.push({ext: e.number, user: (e.first + ' ' + e.last).trim(), model: d.model || d.template, mac: d.mac, fw: d.firmware,
+    rows.push({ext: e.number, user: (e.first + ' ' + e.last).trim(), model: d.model || d.template, mac: d.mac, fw: d.firmware, lang: d.lang || '',
       srv, rec: rec ? rec.version : '', st, why, ua, er, template: d.template, seg: SEGOF[e.number]});
   }));
   return rows;
@@ -56,7 +62,7 @@ function phoneRows(){
 function showPhone(r){
   openDrawer(`${esc(r.ext)} ${esc(r.user)} — ${esc(r.model)}`, kv([
     ['État', `<span class="pill ${PH_ST[r.st].c}">${PH_ST[r.st].l}</span>`], ['Explication', esc(r.why)],
-    ['MAC', `<span class="mono">${esc(macFmt(r.mac))}</span>`], ['Firmware assigné', r.fw ? `<span class="mono">${esc(r.fw)}</span>` : '—'],
+    ['MAC', `<span class="mono">${esc(macFmt(r.mac))}</span>`], ['Langue', phLangHTML(r.lang)], ['Firmware assigné', r.fw ? `<span class="mono">${esc(r.fw)}</span>` : '—'],
     ['Version vue sur le téléphone', r.ua ? `<span class="mono">${esc(r.ua[2])}</span> le ${fmtD(r.ua[3])}` : '—'],
     ['Firmware effacé', r.er ? `<span class="mono">${esc(r.er[1])}</span> le ${fmtD(r.er[2])} par ${esc(r.er[3])}` : '—'],
     ['Recommandé par 3CX', r.rec ? `<span class="mono">${esc(r.rec)}</span>` : '—'], ['Sur le serveur', r.srv ? `<span class="mono">${esc(r.srv)}</span>` : 'aucun'],
@@ -128,14 +134,14 @@ function openFwCheck(){
 }
 
 V.telephones = el => {
-  const rows = phoneRows(), n = s => rows.filter(r => r.st === s).length, mods = modelRows(rows);
+  const rows = phoneRows(), n = s => rows.filter(r => r.st === s).length, mods = modelRows(rows), nLang = rows.filter(r => phLangBad(r.lang)).length;
   const age = Math.round((Date.now() - Date.parse(FW_REF.date)) / 86400000);
   el.innerHTML = `<div id="pwrap"><h2>Téléphones</h2>
   <p class="lead">Inventaire des téléphones provisionnés et état de leur firmware, comparé à la version recommandée par 3CX pour chaque modèle. Sans firmware assigné, l'état est déduit de deux indices : la version annoncée par le téléphone dans les rapports de qualité d'appel (« À jour (vérifié) ») et un firmware assigné puis effacé par une modification (« Probablement à jour »). Cliquez sur un téléphone pour le détail. Le firmware affiché pour un téléphone est celui que 3CX lui a assigné ; vide si aucun n'est assigné (téléphone jamais mis à jour par 3CX, ou firmware effacé lors d'une modification du téléphone dans la console).</p>
   <div class="card fwref"><div><div class="bkt">Référence 3CX</div><b>Liste du ${esc(FW_REF.date)}</b> <span class="muted">· ${esc(FW_SRC_FR[FW_REF.source] || FW_REF.source)} · ${FW_REF.list.length} modèles${age > 30 ? ` · <span style="color:var(--warn)">datée de ${age} jours</span>` : ''}</span></div>
     <button class="btn primary" id="fwcheck">Vérifier en ligne</button></div>
   ${HAS_EVIDENCE ? '' : '<p class="segbar">Ce backup a été chargé avec une version antérieure de l\'interface : les indices « version vue » et « firmware effacé » ne sont pas disponibles. Rechargez le .zip pour les obtenir.</p>'}
-  <div class="grid kpis">${[['Téléphones', rows.length, ''], ['À mettre à jour', n('old'), 'bad'], ['Inconnu', n('unk'), 'warn'], ['Probablement à jour', n('prob'), ''], ['À jour', n('ok') + n('okv'), 'ok'], ['Modèles sans firmware sur le serveur', mods.filter(m => m.st === 'missing' || m.st === 'srvold').length, 'bad']]
+  <div class="grid kpis">${[['Téléphones', rows.length, ''], ['À mettre à jour', n('old'), 'bad'], ['Inconnu', n('unk'), 'warn'], ['Probablement à jour', n('prob'), ''], ['À jour', n('ok') + n('okv'), 'ok'], ['Langue autre que le français', nLang, nLang ? 'bad' : 'ok'], ['Modèles sans firmware sur le serveur', mods.filter(m => m.st === 'missing' || m.st === 'srvold').length, 'bad']]
     .map(([l, v, c]) => `<div class="card kpi ph ${c}"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('')}</div>
   ${!Array.isArray(FULL.firmwares) ? '<p class="segbar">Ce backup a été chargé avec une version antérieure de l\'interface : les firmwares présents sur le serveur ne sont pas connus. Rechargez le .zip avec « Choisir un backup » pour vérifier le serveur.</p>' : ''}
   <h3>Par modèle</h3>
@@ -154,11 +160,13 @@ V.telephones = el => {
   $('#fwcheck').addEventListener('click', openFwCheck);
   table($('#pt'), {
     rows, pageSize: 60, sort: [6, 1],
-    search: r => [r.ext, r.user, r.model, r.mac, macFmt(r.mac), r.fw, r.template, segName(r.seg)].join(' '),
+    search: r => [r.ext, r.user, r.model, r.mac, macFmt(r.mac), r.fw, r.template, segName(r.seg), phLang(r.lang)].join(' '),
+    rowCls: r => phLangBad(r.lang) ? 'phlang-row' : '',
     filters: [
       {label: 'Tous les états', options: [['todo', 'À mettre à jour ou inconnu'], ['uptodate', 'À jour (assigné ou vérifié)'], ...PH_ORDER.map(k => [k, PH_ST[k].l])], test: (r, v) => v === 'todo' ? (r.st === 'old' || r.st === 'unk') : v === 'uptodate' ? (r.st === 'ok' || r.st === 'okv') : r.st === v},
       {label: 'Tous les modèles', options: [...new Set(rows.map(r => r.model))].sort().map(m => [m, m]), test: (r, v) => r.model === v},
       {label: 'Tous les gabarits', options: [...new Set(rows.map(r => r.template))].sort().map(m => [m, m]), test: (r, v) => r.template === v},
+      {label: 'Toutes les langues', options: [['autre', 'Autre que le français'], ...[...new Set(rows.map(r => r.lang).filter(Boolean))].sort().map(l => [l, phLang(l)]), ['-', 'Non indiquée']], test: (r, v) => v === 'autre' ? phLangBad(r.lang) : v === '-' ? !r.lang : r.lang === v},
     ],
     cols: [
       {h: 'Poste', v: r => r.ext, f: r => dnLink(r.ext, true)},
@@ -168,6 +176,7 @@ V.telephones = el => {
       {h: 'Version vue', v: r => r.ua ? r.ua[2] : '', f: r => r.ua ? `<span class="mono" title="Annoncée le ${esc(fmtD(r.ua[3]))}">${esc(r.ua[2])}</span>` : '<span class="muted">—</span>'},
       {h: 'Recommandé 3CX', v: r => r.rec, f: r => r.rec ? `<span class="mono">${esc(r.rec)}</span>` : '<span class="muted">—</span>'},
       {h: 'État', v: r => PH_ORDER.indexOf(r.st), f: r => `<span class="pill ${PH_ST[r.st].c}" title="${esc(r.why)}">${PH_ST[r.st].l}</span>`},
+      {h: 'Langue', v: r => phLang(r.lang), f: r => phLangHTML(r.lang)},
       {h: 'Magasin', v: r => segShort(r.seg), cls: 'muted'},
       {h: 'Gabarit', v: r => r.template, cls: 'muted'},
     ],
@@ -177,8 +186,8 @@ V.telephones = el => {
   $('#pt .bar').insertAdjacentHTML('beforeend', '<button class="btn" id="pexp" style="margin-left:auto">Exporter (CSV)</button>');
   $('#pexp').addEventListener('click', () => {
     const q = v => '"' + csvSafe(v) + '"';
-    const out = [['Poste', 'Utilisateur', 'Magasin', 'Modèle', 'MAC', 'Firmware assigné', 'Version vue', 'Vue le', 'Firmware effacé', 'Effacé le', 'Effacé par', 'Sur le serveur', 'Recommandé 3CX', 'État', 'Explication', 'Gabarit']]
-      .concat(rows.map(r => [r.ext, r.user, segShort(r.seg), r.model, macFmt(r.mac), r.fw, r.ua?.[2] || '', r.ua ? fmtD(r.ua[3]) : '', r.er?.[1] || '', r.er ? fmtD(r.er[2]) : '', r.er?.[3] || '', r.srv, r.rec, PH_ST[r.st].l, r.why, r.template]));
+    const out = [['Poste', 'Utilisateur', 'Magasin', 'Modèle', 'MAC', 'Langue', 'Firmware assigné', 'Version vue', 'Vue le', 'Firmware effacé', 'Effacé le', 'Effacé par', 'Sur le serveur', 'Recommandé 3CX', 'État', 'Explication', 'Gabarit']]
+      .concat(rows.map(r => [r.ext, r.user, segShort(r.seg), r.model, macFmt(r.mac), phLang(r.lang), r.fw, r.ua?.[2] || '', r.ua ? fmtD(r.ua[3]) : '', r.er?.[1] || '', r.er ? fmtD(r.er[2]) : '', r.er?.[3] || '', r.srv, r.rec, PH_ST[r.st].l, r.why, r.template]));
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['﻿' + out.map(r => r.map(q).join(';')).join('\r\n')], {type: 'text/csv;charset=utf-8'}));
     a.download = 'telephones-3cx.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);

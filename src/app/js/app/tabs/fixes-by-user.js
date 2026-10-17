@@ -24,6 +24,7 @@ function empIssues(E, X){
   (E.blfs || []).filter(b => b.type === 'BLF' && b.v && (!DN[b.v] || (EXT_BY[b.v] && !EXT_BY[b.v].enabled))).forEach(b => add('Touches BLF', `Touche ${b.no} vers ${b.v} ${DN[b.v] ? '(poste désactivé)' : '(poste inexistant)'}`, 'warn', '#blf', 'Retirer la touche, ou la faire pointer vers un poste actif.'));
   const ext = []; E.profiles.forEach(p => p.routes.forEach(([k, d]) => { if(d.to === 'External' && d.ext) ext.push(`${FWD_ST && FWD_ST[p.name] || p.name} → ${phone(d.ext) || d.ext}`); }));
   if(ext.length) add('Renvois externes', [...new Set(ext)].slice(0, 4).join(' · '), '', '#renvois', "Vérifier avec l'employé que ce renvoi vers l'extérieur est voulu.");
+  E.devices.filter(d => phLangBad(d.lang)).forEach(d => add('Téléphone', `${d.model || d.template || 'Téléphone'} en ${phLang(d.lang)}`, 'bad', '#telephones', 'Dans la console 3CX → Téléphones, choisir la langue Français pour ce téléphone, enregistrer puis reprovisionner.'));
   if(!E.enabled) out.unshift({id: 'Poste|Poste désactivé', cat: 'Poste', text: 'Poste désactivé', sev: 'bad', href: '#postes', fix: 'Réactiver le poste, ou le retirer des départements, files et touches qui le visent.'});
   return out;
 }
