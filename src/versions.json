@@ -1,5 +1,15 @@
 [
  {
+  "version": "19.0.2",
+  "date": "2026-10-16",
+  "titre": "Catégories du menu soulignées",
+  "resume": "Les catégories du menu latéral (Vue d'ensemble, Configuration, Activité, Système…) sont soulignées, pour mieux les distinguer des onglets.",
+  "changements": [
+   "Menu latéral : les titres de catégories sont soulignés d'un trait fin, dans tous les thèmes et dans les menus simplifié, complet et nouveau."
+  ],
+  "onglets": []
+ },
+ {
   "version": "19.0.1",
   "date": "2026-10-16",
   "titre": "Langue des téléphones",

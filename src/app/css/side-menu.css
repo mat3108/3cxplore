@@ -64,3 +64,5 @@ html.nav-degrade #nav a.on{background:color-mix(in srgb,var(--panel) 65%,transpa
 .nvpv-sombre{background:#14171c;border-color:#14171c}.nvpv-sombre i{background:#22262d}.nvpv-sombre i.on{background:color-mix(in srgb,var(--accent) 45%,#14171c);box-shadow:none}
 .nvpv-ilot{margin:3px;border-radius:12px;box-shadow:0 6px 14px -6px rgba(0,0,0,.4)}
 .nvpv-degrade{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 30%,var(--panel)),var(--panel))}.nvpv-degrade i.on{background:rgba(255,255,255,.55);box-shadow:none}
+/* 19.0.2 : catégories du menu soulignées */
+#nav .ng{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
