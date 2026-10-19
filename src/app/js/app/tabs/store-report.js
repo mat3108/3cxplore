@@ -60,8 +60,8 @@ V.rapport = el => {
   const base = st.inc - st.bridge, rate = base ? (st.ans + st.fwd) / base : null, peak = st.inc ? st.hours.indexOf(Math.max(...st.hours)) : null;
   const qmeta = FULL.queueCalls.map(r => localParts(r[0])[0]);
   const qset = new Set(D.queues.map(q => q.number));
-  const qs = {}; FULL.queueCalls.forEach((r, i) => { if(qmeta[i] < from || qmeta[i] > to || !qset.has(r[1])) return; const x = qs[r[1]] ||= {n: 0, served: 0, wait: 0, ab: 0}; x.n++; if(r[6]){ x.served++; x.wait += r[4]; } else x.ab++; });
-  const qTot = Object.values(qs).reduce((a, x) => ({n: a.n + x.n, served: a.served + x.served, wait: a.wait + x.wait}), {n: 0, served: 0, wait: 0});
+  const qs = {}; FULL.queueCalls.forEach((r, i) => { if(qmeta[i] < from || qmeta[i] > to || !qset.has(r[1])) return; const x = qs[r[1]] ||= {n: 0, served: 0, wait: 0, ab: 0, waitAb: 0}; x.n++; if(r[6]){ x.served++; x.wait += r[4]; } else { x.ab++; x.waitAb += r[4]; } });
+  const qTot = Object.values(qs).reduce((a, x) => ({n: a.n + x.n, served: a.served + x.served, wait: a.wait + x.wait, ab: a.ab + x.ab, waitAb: a.waitAb + x.waitAb}), {n: 0, served: 0, wait: 0, ab: 0, waitAb: 0});
   const F = analyse(), nCrit = F.filter(f => f.sev === 'crit').length, nFix = F.filter(f => f.sev === 'fix').length;
   const ph = phoneRows(), phTodo = ph.filter(r => r.st === 'old' || r.st === 'unk');
   const H = from ? hoursAnalysis(from, to) : [];
@@ -89,18 +89,18 @@ V.rapport = el => {
   </header>
   ${sect('synthese', 'Synthèse', `
     <div class="rpkpis">${[['Postes', D.extensions.length], ['Téléphones', ph.length], ['SDA', allDIDs.length], ["Files d'attente", D.queues.length],
-      ['Appels entrants', nf(st.inc)], ['Taux de réponse', pc(rate)], ['Appels perdus', `${nf(st.lost)} (${pc(base ? st.lost / base : null)})`], ['Attente moy. en file', qTot.served ? dur(Math.round(qTot.wait / qTot.served)) : '–'],
+      ['Appels entrants', nf(st.inc)], ['Taux de réponse', pc(rate)], ['Appels perdus', `${nf(st.lost)} (${pc(base ? st.lost / base : null)})`], ['Attente moy. en file (servis)', qTot.served ? dur(Math.round(qTot.wait / qTot.served)) : '–'],
       ['Heure de pointe', peak == null ? '–' : peak + ' h'], ['Appels sortants', nf(st.out)], ['Points critiques', nCrit], ['Points à corriger', nFix]]
       .map(([l, v]) => `<div><b>${v}</b><span>${l}</span></div>`).join('')}</div>
     ${(() => { const v = {rate: rate == null ? null : rate * 100, lostRate: base ? 100 * st.lost / base : null, wait: qTot.served ? qTot.wait / qTot.served : null};
       const lines = Object.keys(v).filter(k => objFor(S, k) != null && v[k] != null).map(k => `<li>${esc(OBJ_META[k].l)} : ${OBJ_META[k].u === '%' ? Math.round(v[k]) + ' %' : dur(Math.round(v[k]))} — ${esc(objTxt(S, k))} : <b class="${objOk(S, k, v[k]) ? 'rpok' : 'rpko'}">${objOk(S, k, v[k]) ? 'atteint ✓' : 'non atteint ✗'}</b></li>`);
       return lines.length ? `<h3>Objectifs</h3><ul class="rpobj">${lines.join('')}</ul>` : ''; })()}
-    <p class="rpnote">Taux de réponse : appels entrants répondus (localement ou par renvoi externe) sur les appels entrants hors transferts vers un autre 3CX. Appels perdus : abandon en file, raccroché au menu, renvoi sans réponse, non répondu, raccroché en parking.</p>`)}
+    <p class="rpnote">Taux de réponse : appels entrants répondus (localement ou par renvoi externe) sur les appels entrants hors transferts vers un autre 3CX. Appels perdus : abandon en file, raccroché au menu, renvoi sans réponse, non répondu, raccroché en parking. <span>Attente moyenne en file : appels servis par un agent seulement${qTot.ab ? ` ; les appels non servis ont attendu ${dur(Math.round(qTot.waitAb / qTot.ab))} en moyenne avant de quitter la file` : ''}.</span></p>`)}
   ${sect('sante', 'Note de santé', (() => { try{ const r = healthScores().rows.find(x => x.seg === (S || '')); return r ? hsCard(r, true) : '<p>Note non disponible.</p>'; }catch(e){ return ''; } })())}
   ${sect('suivi', 'Évolution (suivi dans le temps)', (() => {
     const pts = suiviLoad(FULL.info.fqdn).filter(p => p.m[S || '']);
     if(!pts.length) return '<p>Aucun point de suivi enregistré pour l\'instant.</p>';
-    const k = S || '', ks = [['rate', 'Taux de réponse', '%'], ['lostRate', 'Appels perdus', '%'], ['wait', 'Attente moy. en file', 's'], ['qRate', 'Réponse en file (agents)', '%'], ['phUnk', 'Téléphones de version inconnue', ''], ['unrouted', 'SDA non acheminés', '']];
+    const k = S || '', ks = [['rate', 'Taux de réponse', '%'], ['lostRate', 'Appels perdus', '%'], ['wait', 'Attente moy. en file (servis)', 's'], ['qRate', 'Réponse en file (agents)', '%'], ['phUnk', 'Téléphones de version inconnue', ''], ['unrouted', 'SDA non acheminés', '']];
     const fv = (v, u) => v == null ? '–' : u === '%' ? String(v).replace('.', ',') + ' %' : u === 's' ? dur(v) : nf(v);
     const W = 640, H = 150, pad = 30, vals = pts.map(p => p.m[k].rate), ob = objFor(S, 'rate'), nums = vals.filter(v => v != null).concat(ob != null ? [ob] : []);
     const mx = Math.min(100, Math.max(...nums, 1) + 5), mn = Math.max(0, Math.min(...nums) - 5), X = i => pts.length === 1 ? W / 2 : pad + i * (W - 2 * pad) / (pts.length - 1), Y = v => H - 18 - (H - 36) * (v - mn) / (mx - mn || 1);
@@ -118,8 +118,8 @@ V.rapport = el => {
   ${sect('horaires', 'Horaires et jours fériés', T(['Département', 'Horaires', 'Pauses', 'Fermé pendant l\'ouverture', 'Avant ouverture /sem.', 'Après fermeture /sem.', 'Fériés à venir non configurés'], H.map(r => `<tr><td>${esc(r.g.number + ' ' + r.g.name)}</td>
       <td>${hoursSummary(r.g.hours).map(esc).join('<br>')}</td><td>${r.g.breakTime?.days?.length ? hoursSummary(r.g.breakTime).map(esc).join('<br>') : '—'}</td><td class="num">${r.closedWhileOpen.length}</td>
       <td class="num">${(r.before.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td class="num">${(r.after.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td>${r.missingHol.map(([n, d]) => esc(n) + ' (' + d + ')').join(', ') || '—'}</td></tr>`)))}
-  ${sect('files', "Files d'attente", T(['File', 'Stratégie', 'Agents', 'Appels (période)', 'Servis', 'Attente moy.', 'Débordement'], D.queues.slice().sort((a, b) => (qs[b.number]?.n || 0) - (qs[a.number]?.n || 0)).map(q => { const x = qs[q.number] || {n: 0, served: 0, wait: 0};
-      return `<tr><td>${esc(q.number + ' ' + q.name)}</td><td>${esc(q.strategy)}</td><td class="num">${q.members.length}</td><td class="num">${nf(x.n)}</td><td class="num">${x.n ? pc(x.served / x.n) : '–'}</td><td class="num">${x.served ? dur(Math.round(x.wait / x.served)) : '–'}</td><td>${esc(cmpDest(q.dest))}</td></tr>`; })))}
+  ${sect('files', "Files d'attente", T(['File', 'Stratégie', 'Agents', 'Appels (période)', 'Servis', 'Attente moy. (servis)', 'Attente avant abandon', 'Débordement'], D.queues.slice().sort((a, b) => (qs[b.number]?.n || 0) - (qs[a.number]?.n || 0)).map(q => { const x = qs[q.number] || {n: 0, served: 0, wait: 0, ab: 0, waitAb: 0};
+      return `<tr><td>${esc(q.number + ' ' + q.name)}</td><td>${esc(q.strategy)}</td><td class="num">${q.members.length}</td><td class="num">${nf(x.n)}</td><td class="num">${x.n ? pc(x.served / x.n) : '–'}</td><td class="num">${x.served ? dur(Math.round(x.wait / x.served)) : '–'}</td><td class="num">${x.ab ? dur(Math.round(x.waitAb / x.ab)) : '–'}</td><td>${esc(cmpDest(q.dest))}</td></tr>`; })))}
   ${sect('agents', 'Performance des agents', T(['Poste', 'Entrants répondus', 'Conversation moy.', 'Taux de réponse en file', 'Sonneries manquées'], agRows.map(([x, a]) => `<tr><td>${esc(x + ' ' + dnName(x))}</td><td class="num">${nf(a.n)}</td><td class="num">${a.n ? dur(Math.round(a.t / a.n)) : '–'}</td>
       <td class="num">${(a.pa + a.pe) ? pc(a.pa / (a.pa + a.pe)) : '–'}</td><td class="num">${nf(a.pe)}</td></tr>`)))}
   ${sect('postes', 'Postes', T(['Poste', 'Nom', 'Courriel', 'Téléphone', 'Files'], D.extensions.slice().sort((a, b) => a.number.localeCompare(b.number)).map(e => `<tr><td class="mono">${esc(e.number)}</td><td>${esc((e.first + ' ' + e.last).trim())}</td><td>${esc(e.email)}</td>

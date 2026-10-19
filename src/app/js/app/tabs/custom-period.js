@@ -62,7 +62,7 @@ function computeSnapshot(X){
     if(X.agentPolls) Object.entries(X.agentPolls).forEach(([k, v]) => { const [d, , a] = k.split('|'); if(d < from) return; both(segX(a), m => { m.pa += v[0]; m.pe += v[1]; }); });
   }
   // jours fériés du Québec des 90 jours suivant la date du backup, absents des départements
-  const bIso = backupDateISO(X.info.date), bDay = (bIso || new Date().toISOString()).slice(0, 10), lim = addDaysISO(bDay, 90), y = +bDay.slice(0, 4);
+  const bIso = backupDateISO(X.info.date), bDay = dayKey(bIso || new Date().toISOString()) /* 19.2 : jour local, pas le jour UTC */, lim = addDaysISO(bDay, 90), y = +bDay.slice(0, 4);
   const upcoming = [...qcHolidays(y), ...qcHolidays(y + 1)].filter(([, d]) => d >= bDay && d <= lim).map(x => x[1]);
   const hasDetail = X.groups.some(g => Array.isArray(g.holidayDates));
   if(hasDetail) X.groups.filter(g => !isSysGroup(g) && g.members.length && g.hours?.type !== 'AllHours' && g.routes && g.routes.office && g.routes.office.to !== 'None').forEach(g => {
@@ -83,7 +83,7 @@ function computeSnapshot(X){
   try{ if(need(FULL)) suiviUpsert(computeSnapshot(FULL)); if(window.REF_D && need(window.REF_D)) suiviUpsert(computeSnapshot(window.REF_D)); }catch(e){ console.warn('Suivi :', e); } }
 
 const SUIVI_METRICS = [
-  ['Qualité de service (30 derniers jours de chaque backup)', [['rate', 'Taux de réponse', '%', 1], ['lostRate', 'Appels perdus', '%', -1], ['wait', 'Attente moyenne en file', 's', -1], ['qRate', 'Taux de réponse en file (agents)', '%', 1], ['inc', 'Appels entrants', '', 0]]],
+  ['Qualité de service (30 derniers jours de chaque backup)', [['rate', 'Taux de réponse', '%', 1], ['lostRate', 'Appels perdus', '%', -1], ['wait', 'Attente moyenne en file (appels servis)', 's', -1], ['qRate', 'Taux de réponse en file (agents)', '%', 1], ['inc', 'Appels entrants', '', 0]]],
   ['Problèmes à corriger', [['unrouted', 'SDA non acheminés', '', -1], ['holMissing', 'Départements sans les fériés à venir', '', -1]]],
   ['Téléphones', [['phOk', 'À jour', '', 1], ['phUnk', 'Version inconnue', '', -1], ['phProb', 'Probablement à jour (firmware effacé)', '', -1], ['phOld', 'À mettre à jour', '', -1]]],
   ['Taille du parc', [['postes', 'Postes', '', 0], ['tels', 'Téléphones', '', 0], ['files', "Files d'attente", '', 0], ['sda', 'SDA', '', 0]]],

@@ -2924,4 +2924,21 @@ const EN = {
 "Japonais": "Japanese",
 
 "Choisir la langue Français pour ces téléphones dans la console 3CX, puis les reprovisionner (onglet Téléphones).": "Choose French as the language of these phones in the 3CX console, then reprovision them (Phones tab).",
+
+"Transit depuis un autre 3CX": "Transit from another 3CX",
+"Transit depuis un autre 3CX (bridge → trunk)": "Transit from another 3CX (bridge → trunk)",
+"Transit": "Transit",
+"Attente moy. en file (servis)**": "Avg. queue wait (served)**",
+"Attente moy. avant abandon**": "Avg. wait before abandon**",
+"Attente moy. en file (servis)": "Avg. queue wait (served)",
+"Attente moy. file (servis)": "Avg. queue wait (served)",
+"Attente moy. file, servis (s)": "Avg. queue wait, served (s)",
+"Attente moy. avant abandon (s)": "Avg. wait before abandon (s)",
+"Attente moy. (servis)": "Avg. wait (served)",
+"Attente avant abandon": "Wait before abandon",
+"Attente moyenne en file (appels servis)": "Average queue wait (served calls)",
+"* Répondus localement ou par renvoi externe, sur les appels entrants hors transferts vers un autre 3CX (bridge). Perdus = abandon en file, raccroché au menu, renvoi externe sans réponse, non répondu, raccroché en parking.": "* Answered locally or by external forward, out of inbound calls excluding transfers to another 3CX (bridge). Lost = abandoned in queue, hung up at the menu, external forward not answered, unanswered, hung up while parked.",
+"Les appels en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont pas comptés.": "Transit calls (an extension of the other 3CX going out through this system's trunk over a bridge) are not counted.",
+"** Attente en file : moyenne sur les entrées en file servies par un agent d'une part, sur les entrées non servies (l'appelant raccroche, attente maximale atteinte, aucun agent) d'autre part. Un appel qui passe par deux files compte une entrée dans chacune.": "** Queue wait: average over queue entries served by an agent on one side, over entries not served (caller hung up, maximum wait reached, no agent) on the other. A call that goes through two queues counts one entry in each.",
+"Attente moyenne en file : appels servis par un agent seulement.": "Average queue wait: calls served by an agent only.",
 };

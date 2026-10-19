@@ -155,6 +155,7 @@
     for(const r of await csv('cdroutput', f => progress("Lecture de l'historique des appels…", 9 + 46 * f))){ const k = r.main_call_history_id || r.call_history_id; if(!calls.has(k)) calls.set(k, []); calls.get(k).push(r); }
     const PATH = new Set(['ivr', 'queue', 'group', 'ring_group_ring_all', 'ring_group_hunt', 'extension', 'vmail_console', 'shared_parking', 'fax', 'script']);
     // 18.1.1 : étape « messagerie vocale » (3CX garde le type du poste, l'entité vaut voicemail) : ce n'est pas une personne qui répond
+    const LOCAL_DEST = new Set(['extension', 'queue', 'ivr', 'group', 'ring_group_ring_all', 'ring_group_hunt', 'shared_parking']);
     const isVM = r => r.destination_entity_type === 'voicemail'; // 18.1.2 : aussi la messagerie d'une file ou d'un groupe de sonnerie
     const out = [];
     let nGrp = 0; const totGrp = calls.size || 1;
@@ -166,8 +167,11 @@
       for(const r of segs){ if(r.cdr_started_at < start) start = r.cdr_started_at; const e = r.cdr_ended_at || r.cdr_started_at; if(e > end) end = e; }
       const inbound = first.source_dn_type === 'external_line' || first.source_entity_type === 'external_line';
       const outSeg = segs.find(r => r.destination_dn_type === 'provider');
+      // 19.2 : « transit » = un poste de l'autre 3CX arrive par le bridge et ressort par le trunk, sans jamais toucher un poste, une file ou un menu d'ici
+      const transit = first.source_entity_type === 'external_line' && first.source_dn_type === 'bridge' && outSeg && !segs.some(r => LOCAL_DEST.has(r.destination_dn_type));
       let direction, frm, frmName, to, did = '';
-      if(inbound){ direction = 'in'; frm = first.source_participant_phone_number; frmName = first.source_participant_name;
+      if(transit){ direction = 'transit'; frm = first.source_participant_phone_number; frmName = first.source_participant_name; to = outSeg.destination_participant_phone_number || outSeg.destination_dn_number; }
+      else if(inbound){ direction = 'in'; frm = first.source_participant_phone_number; frmName = first.source_participant_name;
         did = (segs.find(r => r.source_participant_trunk_did) || {}).source_participant_trunk_did || ''; to = did; }
       else if(outSeg){ direction = 'out'; frm = first.source_dn_number; frmName = first.source_dn_name; to = outSeg.destination_participant_phone_number || outSeg.destination_dn_number; }
       else { direction = 'int'; frm = first.source_dn_number; frmName = first.source_dn_name; to = first.destination_dn_number; }
@@ -183,7 +187,8 @@
         if(r.cdr_answered_at && isVM(r)){ if(!answered) answered = 'VM'; continue; }
         if(r.cdr_answered_at && r.destination_dn_type === 'fax'){ if(!answered || answered === 'VM') answered = r.destination_dn_number || 'FAX'; continue; } // 18.1.4 : fax reçu
         if(r.cdr_answered_at && ['extension', 'provider', 'vmail_console'].includes(r.destination_dn_type)){
-          if(direction === 'out' && r.destination_dn_type === 'provider'){ answered = answered || first.source_dn_number; talk += secs(r.cdr_answered_at, r.cdr_ended_at); }
+          if(direction === 'transit'){ if(r.destination_dn_type === 'provider') talk += secs(r.cdr_answered_at, r.cdr_ended_at); }
+          else if(direction === 'out' && r.destination_dn_type === 'provider'){ answered = answered || first.source_dn_number; talk += secs(r.cdr_answered_at, r.cdr_ended_at); }
           else if(r.destination_dn_type === 'extension'){ if(answered === 'VM') answered = null; answered = r.destination_dn_number; talk += secs(r.cdr_answered_at, r.cdr_ended_at); }
           else if(r.destination_dn_type === 'vmail_console' && !answered) answered = 'VM';
         }
@@ -191,7 +196,8 @@
       if(direction === 'int' && !answered && first.cdr_answered_at && ['extension', 'provider', 'vmail_console'].includes(first.destination_dn_type) && !isVM(first)){ answered = first.destination_dn_number; talk = secs(first.cdr_answered_at, first.cdr_ended_at); }
       const types = segs.map(r => r.destination_dn_type), prov = segs.filter(r => r.destination_dn_type === 'provider');
       let status;
-      if(answered === 'VM') status = 'vm';
+      if(direction === 'transit') status = 'transit';
+      else if(answered === 'VM') status = 'vm';
       else if(answered) status = 'ans';
       else if(direction === 'in' && prov.length){
         status = prov.some(r => r.cdr_answered_at) ? 'fwd_ok' : 'fwd_no';
@@ -210,7 +216,7 @@
       out.push([iso(start), direction, frm, frmName, to, did, answered || '', secs(start, end), talk, path, status, Object.entries(byExt), firstAt ? secs(start, firstAt) : null, firstBy, steps]);
     }
     out.sort((a, b) => a[0] < b[0] ? 1 : a[0] > b[0] ? -1 : 0);
-    D.calls = out; D.cdrv = 6; // version de lecture du backup (18.2.37 : fuseau du système)
+    D.calls = out; D.cdrv = 7; // version de lecture du backup (18.2.37 : fuseau du système ; 19.2 : appels en transit)
     // parkings partagés : chaque passage d'un appel par un parking (qui l'a mis, combien de temps, comment il en sort) ; aucun numéro externe conservé
     D.parkCalls = [];
     for(const segs of calls.values()){

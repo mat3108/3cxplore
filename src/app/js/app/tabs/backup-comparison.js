@@ -1,14 +1,13 @@
 // ---------- Comparaison entre deux backups ----------
-// Date du backup (« 10/11/2026 2:36:00 a.m. ») -> ISO UTC approximatif (heure locale du serveur traitée comme heure de l'Est)
+// Date du backup (« 10/11/2026 2:36:00 a.m. ») -> ISO UTC (19.2 : 3CX l'écrit en UTC, pas à l'heure du serveur)
 // 18.1.33 : date du backup lisible (3CX l'écrit mois/jour/année)
 const bkDate = s => { const i = backupDateISO(s); return i ? fmtD(i) : (s || ''); };
 function backupDateISO(s){
   const m = String(s || '').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([ap])?/i);
   if(!m) return '';
   let h = +m[4]; if(m[7]){ const pm = /p/i.test(m[7]); if(pm && h < 12) h += 12; if(!pm && h === 12) h = 0; }
-  const local = `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}T${String(h).padStart(2, '0')}:${m[5]}:${m[6] || '00'}`;
-  const guess = new Date(local + 'Z'), off = Date.parse(guess.toLocaleString('sv-SE', {timeZone: TZ}).replace(' ', 'T') + 'Z') - guess.getTime();
-  return new Date(guess.getTime() - off).toISOString();
+  const d = new Date(`${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}T${String(h).padStart(2, '0')}:${m[5]}:${m[6] || '00'}Z`);
+  return isNaN(d) ? '' : d.toISOString();
 }
 const cmpDest = d => !d || !d.to || d.to === 'None' ? '—' : d.to === 'External' ? 'Externe ' + phone(d.ext) : `${TO_FR[d.to] || d.to}${d.dn ? ' ' + d.dn + (dnName(d.dn) ? ' ' + dnName(d.dn) : '') : ''}`;
 const cmpHours = h => hoursSummary(h).join(' ; ') || '—';

@@ -41,7 +41,7 @@ V.stats = el => {
     const idx = []; meta.forEach((m, i) => { if(m[0] >= from && m[0] <= to) idx.push(i); });
     const qc = FULL.queueCalls.filter((r, i) => qmeta[i][0] >= from && qmeta[i][0] <= to);
     const segs = SEG_LIST.filter(s => s !== SEG_BRIDGE);
-    const by = {}; segs.concat([SEG_BRIDGE]).forEach(s => by[s] = {s, inc: 0, ans: 0, fwd: 0, lost: 0, vm: 0, bridge: 0, out: 0, int: 0, hours: Array(24).fill(0), heat: Array.from({length: 7}, () => Array(24).fill(0)), days: {}, qn: 0, qw: 0, qs: 0, qab: 0, talk: 0});
+    const by = {}; segs.concat([SEG_BRIDGE]).forEach(s => by[s] = {s, inc: 0, ans: 0, fwd: 0, lost: 0, vm: 0, bridge: 0, out: 0, int: 0, hours: Array(24).fill(0), heat: Array.from({length: 7}, () => Array(24).fill(0)), days: {}, qn: 0, qw: 0, qs: 0, qab: 0, qwa: 0, talk: 0});
     const inCalls = []; // [indice de l'appel, magasin, jour de semaine, heure] pour la carte de chaleur
     idx.forEach(i => {
       const c = all[i], m = meta[i], s = callSeg(c), b = by[s] || by[SEG_COMMON];
@@ -50,16 +50,16 @@ V.stats = el => {
         if(st === 'ans') b.ans++; else if(st === 'fwd_ok') b.fwd++; else if(st === 'vm') b.vm++; else if(st === 'bridge') b.bridge++; else if(ST_LOST.has(st)) b.lost++;
         if(ST_ANS.has(st)) b.talk += c[8];
         b.hours[m[1]]++; b.heat[m[2]][m[1]]++; b.days[m[0]] = (b.days[m[0]] || 0) + 1;
-      } else if(c[1] === 'out') b.out++; else b.int++;
+      } else if(c[1] === 'out') b.out++; else if(c[1] === 'int') b.int++; // 19.2 : les appels en transit ne sont ni entrants, ni sortants, ni internes
     });
-    qc.forEach(r => { const b = by[SEGOF[r[1]]] || by[SEG_COMMON]; b.qn++; if(r[6]){ b.qs++; b.qw += r[4]; } else b.qab++; });
+    qc.forEach(r => { const b = by[SEGOF[r[1]]] || by[SEG_COMMON]; b.qn++; if(r[6]){ b.qs++; b.qw += r[4]; } else { b.qab++; b.qwa += r[4]; } }); // 19.2 : attente des appels servis et des appels non servis, séparément
     const rows = Object.values(by).filter(b => b.inc || b.out || b.int).map(b => {
       const base = b.inc - b.bridge, peak = b.hours.indexOf(Math.max(...b.hours));
-      return {...b, base, rate: base ? (b.ans + b.fwd) / base : null, lostRate: base ? b.lost / base : null, wait: b.qs ? b.qw / b.qs : null, peak: b.inc ? peak : null, avgTalk: (b.ans + b.fwd) ? b.talk / (b.ans + b.fwd) : null};
+      return {...b, base, rate: base ? (b.ans + b.fwd) / base : null, lostRate: base ? b.lost / base : null, wait: b.qs ? b.qw / b.qs : null, waitAb: b.qab ? b.qwa / b.qab : null, peak: b.inc ? peak : null, avgTalk: (b.ans + b.fwd) ? b.talk / (b.ans + b.fwd) : null};
     }).sort((a, b) => b.inc - a.inc);
     lastRows = rows;
-    const tot = rows.reduce((t, r) => { ['inc','ans','fwd','lost','vm','bridge','out','int','qn','qs','qw','base'].forEach(k => t[k] += r[k]); r.hours.forEach((v, i) => t.hours[i] += v); return t; },
-      {inc:0, ans:0, fwd:0, lost:0, vm:0, bridge:0, out:0, int:0, qn:0, qs:0, qw:0, base:0, hours: Array(24).fill(0)});
+    const tot = rows.reduce((t, r) => { ['inc','ans','fwd','lost','vm','bridge','out','int','qn','qs','qw','qab','qwa','base'].forEach(k => t[k] += r[k]); r.hours.forEach((v, i) => t.hours[i] += v); return t; },
+      {inc:0, ans:0, fwd:0, lost:0, vm:0, bridge:0, out:0, int:0, qn:0, qs:0, qw:0, qab:0, qwa:0, base:0, hours: Array(24).fill(0)});
     const pc = v => v == null ? '–' : Math.round(v * 100) + ' %';
     const rateCls = v => v == null ? '' : v >= 0.85 ? 'ok' : v >= 0.7 ? 'warn' : 'bad';
     const shown = rows.filter(r => r.s !== SEG_BRIDGE && r.base > 0);
@@ -86,11 +86,11 @@ V.stats = el => {
     const LW = 900, LH = 200, LP = 34;
     const line = r => dayList.map((d, i) => `${LP + i * (LW - LP) / Math.max(1, dayList.length - 1)},${LH - (LH - 12) * (r.days[d] || 0) / dmax}`).join(' ');
     $('#sbody').innerHTML = `
-    <div class="grid kpis">${[['Appels entrants', nf(tot.inc)], ['Taux de réponse*', objPill(SEG, 'rate', tot.base ? 100 * (tot.ans + tot.fwd) / tot.base : null, pc(tot.base ? (tot.ans + tot.fwd) / tot.base : null))], ['Appels perdus', nf(tot.lost) + ' · ' + pc(tot.base ? tot.lost / tot.base : null)], ['Attente moy. en file', tot.qs ? dur(Math.round(tot.qw / tot.qs)) : '–'], ['Heure de pointe', tot.inc ? tot.hours.indexOf(Math.max(...tot.hours)) + ' h' : '–'], ['Appels sortants', nf(tot.out)]]
+    <div class="grid kpis">${[['Appels entrants', nf(tot.inc)], ['Taux de réponse*', objPill(SEG, 'rate', tot.base ? 100 * (tot.ans + tot.fwd) / tot.base : null, pc(tot.base ? (tot.ans + tot.fwd) / tot.base : null))], ['Appels perdus', nf(tot.lost) + ' · ' + pc(tot.base ? tot.lost / tot.base : null)], ['Attente moy. en file (servis)**', tot.qs ? dur(Math.round(tot.qw / tot.qs)) : '–'], ['Attente moy. avant abandon**', tot.qab ? dur(Math.round(tot.qwa / tot.qab)) : '–'], ['Heure de pointe', tot.inc ? tot.hours.indexOf(Math.max(...tot.hours)) + ' h' : '–'], ['Appels sortants', nf(tot.out)]]
       .map(([l, v]) => `<div class="card kpi"><div class="v" style="font-size:21px">${v}</div><div class="l">${l}</div></div>`).join('')}</div>
-    <p class="note">* Répondus localement ou par renvoi externe, sur les appels entrants hors transferts vers un autre 3CX (bridge). Perdus = abandon en file, raccroché au menu, renvoi externe sans réponse, non répondu, raccroché en parking.</p>
+    <p class="note">* Répondus localement ou par renvoi externe, sur les appels entrants hors transferts vers un autre 3CX (bridge). Perdus = abandon en file, raccroché au menu, renvoi externe sans réponse, non répondu, raccroché en parking. <span>Les appels en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont pas comptés.</span><br>** Attente en file : moyenne sur les entrées en file servies par un agent d'une part, sur les entrées non servies (l'appelant raccroche, attente maximale atteinte, aucun agent) d'autre part. Un appel qui passe par deux files compte une entrée dans chacune.</p>
     <h3>Comparaison des magasins</h3>
-    <div class="tw"><table class="stbl"><thead><tr><th>Magasin</th><th class="num">Entrants</th><th class="num">Répondus</th><th class="num">Taux de réponse</th><th class="num">Perdus</th><th class="num">% perdus</th><th class="num">Messagerie</th><th class="num">Vers bridge</th><th class="num">Attente moy. file</th><th class="num">Abandons file</th><th class="num">Conversation moy.</th><th class="num">Heure de pointe</th><th class="num">Sortants</th></tr></thead><tbody>
+    <div class="tw"><table class="stbl"><thead><tr><th>Magasin</th><th class="num">Entrants</th><th class="num">Répondus</th><th class="num">Taux de réponse</th><th class="num">Perdus</th><th class="num">% perdus</th><th class="num">Messagerie</th><th class="num">Vers bridge</th><th class="num">Attente moy. file (servis)</th><th class="num">Abandons file</th><th class="num">Conversation moy.</th><th class="num">Heure de pointe</th><th class="num">Sortants</th></tr></thead><tbody>
     ${rows.map(r => `<tr class="${r.s === SEG ? 'cur' : ''}"><td><span class="sw" style="background:${colorOf[r.s]}"></span><b>${esc(segShort(r.s))}</b>${r.s[0] !== '@' && SEGCFG.names[r.s] ? ` <span class="muted mono">${esc(r.s)}</span>` : ''}</td>
       <td class="num">${nf(r.inc)}</td><td class="num">${nf(r.ans + r.fwd)}</td><td class="num">${objPill(r.s, 'rate', r.rate == null ? null : r.rate * 100, pc(r.rate))}</td>
       <td class="num">${nf(r.lost)}</td><td class="num">${objPill(r.s, 'lostRate', r.lostRate == null ? null : r.lostRate * 100, pc(r.lostRate))}</td><td class="num">${nf(r.vm)}</td><td class="num">${nf(r.bridge)}</td>
@@ -134,8 +134,8 @@ V.stats = el => {
   $('#spt').addEventListener('change', e => { P.to = e.target.value; save(); draw(); });
   $('#sexp').addEventListener('click', () => {
     const [from, to] = range(), q = v => '"' + csvSafe(v) + '"', r2 = v => v == null ? '' : Math.round(v * 1000) / 10;
-    const out = [['Magasin', 'Code', 'Du', 'Au', 'Entrants', 'Répondus', 'Taux de réponse (%)', 'Perdus', '% perdus', 'Messagerie', 'Vers bridge', 'Attente moy. file (s)', 'Appels en file', 'Abandons file', 'Conversation moy. (s)', 'Heure de pointe', 'Sortants', 'Internes']]
-      .concat(lastRows.map(r => [segShort(r.s), r.s, from, to, r.inc, r.ans + r.fwd, r2(r.rate), r.lost, r2(r.lostRate), r.vm, r.bridge, r.wait == null ? '' : Math.round(r.wait), r.qn, r.qab, r.avgTalk == null ? '' : Math.round(r.avgTalk), r.peak == null ? '' : r.peak, r.out, r.int]));
+    const out = [['Magasin', 'Code', 'Du', 'Au', 'Entrants', 'Répondus', 'Taux de réponse (%)', 'Perdus', '% perdus', 'Messagerie', 'Vers bridge', 'Attente moy. file, servis (s)', 'Attente moy. avant abandon (s)', 'Appels en file', 'Abandons file', 'Conversation moy. (s)', 'Heure de pointe', 'Sortants', 'Internes']]
+      .concat(lastRows.map(r => [segShort(r.s), r.s, from, to, r.inc, r.ans + r.fwd, r2(r.rate), r.lost, r2(r.lostRate), r.vm, r.bridge, r.wait == null ? '' : Math.round(r.wait), r.waitAb == null ? '' : Math.round(r.waitAb), r.qn, r.qab, r.avgTalk == null ? '' : Math.round(r.avgTalk), r.peak == null ? '' : r.peak, r.out, r.int]));
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['﻿' + out.map(r => r.map(q).join(';')).join('\r\n')], {type: 'text/csv;charset=utf-8'}));
     a.download = `statistiques-magasins-${from}_${to}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);

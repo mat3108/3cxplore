@@ -1,6 +1,6 @@
 // ---------- Classement des magasins : achalandage, abandons, attente et couverture aux heures de pointe ----------
 const RK_METRICS = [
-  ['rate', 'Taux de réponse', '%', 1], ['qAb', 'Abandons en file', '%', -1], ['wait', 'Attente moy. en file', 's', -1],
+  ['rate', 'Taux de réponse', '%', 1], ['qAb', 'Abandons en file', '%', -1], ['wait', 'Attente moy. en file (servis)', 's', -1],
   ['peakAb', 'Abandons aux heures de pointe', '%', -1], ['peakCover', 'Heures de pointe bien couvertes', '%', 1], ['perAgent', 'Appels servis par agent / jour', '', 0]];
 function rankAnalysis(weeks){
   const endIso = FULL.calls.length ? FULL.calls[0][0] : new Date().toISOString(), last = localParts(endIso)[0];

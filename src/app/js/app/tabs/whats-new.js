@@ -1,6 +1,6 @@
 // ---------- « Quoi de neuf » : ce qui a changé depuis le backup précédent (carte du tableau de bord) ----------
 const WN_KEY = 'quoideneuf3cx:' + (FULL.info.fqdn || '');
-const WN_METRICS = [['rate', 'Taux de réponse', '%', 1], ['lostRate', 'Appels perdus', '%', -1], ['wait', 'Attente moy. en file', 's', -1], ['qRate', 'Réponse en file (agents)', '%', 1],
+const WN_METRICS = [['rate', 'Taux de réponse', '%', 1], ['lostRate', 'Appels perdus', '%', -1], ['wait', 'Attente moy. en file (servis)', 's', -1], ['qRate', 'Réponse en file (agents)', '%', 1],
   ['unrouted', 'SDA non acheminés', '', -1], ['holMissing', 'Départements sans les fériés à venir', '', -1], ['phOld', 'Téléphones à mettre à jour', '', -1], ['phUnk', 'Téléphones de version inconnue', '', -1]];
 function whatsNew(){
   const pts = suiviLoad(FULL.info.fqdn), curId = (FULL.info.fqdn || '') + '|' + FULL.info.date, cur = pts.find(p => p.id === curId);

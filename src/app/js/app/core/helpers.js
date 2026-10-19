@@ -23,5 +23,5 @@ const nf = n => (+n).toLocaleString('fr-CA');
 const pct = (a,b) => b ? Math.round(100*a/b)+' %' : '–';
 const phone = p => { const d=String(p||'').replace(/^\+?1(?=\d{10}$)/,''); return /^\d{10}$/.test(d)? `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : (p||''); };
 
-const ST = {ans:['Répondu','ok'],vm:['Messagerie','warn'],fwd_ok:['Renvoyé ext. (répondu)','acc'],fwd_no:['Renvoyé ext. (sans rép.)','bad'],park_ab:['Raccroché en parking','bad'],bridge:['Vers autre 3CX (bridge)',''],q_ab:['Abandon en file','bad'],ivr_ab:['Raccroché au menu','warn'],miss:['Non répondu','bad']};
+const ST = {ans:['Répondu','ok'],vm:['Messagerie','warn'],fwd_ok:['Renvoyé ext. (répondu)','acc'],fwd_no:['Renvoyé ext. (sans rép.)','bad'],park_ab:['Raccroché en parking','bad'],bridge:['Vers autre 3CX (bridge)',''],q_ab:['Abandon en file','bad'],ivr_ab:['Raccroché au menu','warn'],miss:['Non répondu','bad'],transit:['Transit depuis un autre 3CX','']};
 const stHTML = c => { const s=ST[c[10]]||['?','']; return c[10]==='ans'?dnLink(c[6]):`<span class="pill ${s[1]}">${s[0]}</span>`; };

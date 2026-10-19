@@ -11,7 +11,7 @@ function hsService(seg, m){
   const o = k => objFor(seg, k);
   if(m.rate != null){ const t = o('rate') || 85, sc = hsClamp(100 * m.rate / t); parts.push(sc); if(sc < 100) pen.push([Math.round((100 - sc) / 4), `Taux de réponse ${String(m.rate).replace('.', ',')} % (objectif ${t} %)`, 'stats']); }
   if(m.lostRate != null){ const t = o('lostRate') || 10, sc = m.lostRate <= t ? 100 : hsClamp(100 - (m.lostRate - t) * 5); parts.push(sc); if(sc < 100) pen.push([Math.round((100 - sc) / 4), `Appels perdus ${String(m.lostRate).replace('.', ',')} % (objectif ${t} %)`, 'rappels']); }
-  if(m.wait != null){ const t = o('wait') || 30, sc = m.wait <= t ? 100 : hsClamp(100 - (m.wait - t) * 2); parts.push(sc); if(sc < 100) pen.push([Math.round((100 - sc) / 4), `Attente moyenne en file ${m.wait} s (objectif ${t} s)`, 'statsfiles']); }
+  if(m.wait != null){ const t = o('wait') || 30, sc = m.wait <= t ? 100 : hsClamp(100 - (m.wait - t) * 2); parts.push(sc); if(sc < 100) pen.push([Math.round((100 - sc) / 4), `Attente moyenne en file (appels servis) ${m.wait} s (objectif ${t} s)`, 'statsfiles']); }
   if(m.qRate != null){ const t = o('qRate') || 85, sc = hsClamp(100 * m.qRate / t); parts.push(sc); if(sc < 100) pen.push([Math.round((100 - sc) / 4), `Réponse en file des agents ${String(m.qRate).replace('.', ',')} % (objectif ${t} %)`, 'agents']); }
   return parts.length ? {score: hsClamp(parts.reduce((a, b) => a + b, 0) / parts.length), pen} : null;
 }

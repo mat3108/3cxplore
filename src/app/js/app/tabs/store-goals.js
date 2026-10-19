@@ -1,6 +1,6 @@
 // ---------- Objectifs par magasin ----------
 const OBJ_DEF0 = {rate: 85, lostRate: 10, wait: 30, qRate: 85};
-const OBJ_META = {rate: {l: 'Taux de réponse', u: '%', dir: 1}, lostRate: {l: 'Appels perdus', u: '%', dir: -1}, wait: {l: 'Attente moyenne en file', u: 's', dir: -1}, qRate: {l: 'Taux de réponse en file (agents)', u: '%', dir: 1}};
+const OBJ_META = {rate: {l: 'Taux de réponse', u: '%', dir: 1}, lostRate: {l: 'Appels perdus', u: '%', dir: -1}, wait: {l: 'Attente moyenne en file (appels servis)', u: 's', dir: -1}, qRate: {l: 'Taux de réponse en file (agents)', u: '%', dir: 1}};
 const OBJ_KEY = 'objectifs3cx:' + (FULL.info.fqdn || '');
 const OBJ = (() => { let c = {}; try{ c = JSON.parse(localStorage.getItem(OBJ_KEY) || '{}'); }catch(e){} return {def: {...OBJ_DEF0, ...(c.def || {})}, seg: c.seg || {}}; })();
 const objSave = () => { try{ localStorage.setItem(OBJ_KEY, JSON.stringify(OBJ)); }catch(e){} };

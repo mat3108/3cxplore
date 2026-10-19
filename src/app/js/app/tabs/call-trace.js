@@ -42,7 +42,7 @@ function callJourney(c){
     <p class="muted" style="font-size:12px">D'après l'historique des appels (CDR) de 3CX. Moment : temps écoulé depuis le début de l'appel. La touche choisie dans un menu est déduite de l'étape suivante.</p>`;
 }
 function openCall(c){
-  openDrawer(`Appel du ${fmtD(c[0])}`, kv([['Direction', {in: 'Entrant', out: 'Sortant', int: 'Interne'}[c[1]]], ['Appelant', esc(phone(c[2])) + ' ' + esc(c[3]) + (DN[c[2]] ? ' ' + dnLink(c[2], false) : '')], ['Appelé', c[1] === 'int' ? dnLink(c[4]) : esc(phone(c[4]))],
+  openDrawer(`Appel du ${fmtD(c[0])}`, kv([['Direction', {in: 'Entrant', out: 'Sortant', int: 'Interne', transit: 'Transit depuis un autre 3CX (bridge → trunk)'}[c[1]]], ['Appelant', esc(phone(c[2])) + ' ' + esc(c[3]) + (DN[c[2]] ? ' ' + dnLink(c[2], false) : '')], ['Appelé', c[1] === 'int' ? dnLink(c[4]) : esc(phone(c[4]))],
       ['DID', esc(phone(c[5]))], ['Issue', stHTML(c)], ['Durée totale', dur(c[7])], c[12] != null ? ['Attente avant réponse', dur(c[12])] : null, ['Conversation', dur(c[8])]]) +
     (c[1] !== 'int' && normNum(c[1] === 'in' ? c[2] : c[4]) ? `<p><a class="btn" href="#client/${normNum(c[1] === 'in' ? c[2] : c[4])}">Historique de ce client</a></p>` : '') + callJourney(c));
 }

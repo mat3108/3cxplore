@@ -211,7 +211,7 @@ V.files = el => {
       {h:'Agents', num:1, v:q=>q.members.length},
       {h:'Appels', num:1, v:q=>st(q.number).total, f:q=>nf(st(q.number).total)},
       {h:'Servis', num:1, v:q=>st(q.number).total?st(q.number).served/st(q.number).total:-1, f:q=>pct(st(q.number).served, st(q.number).total)},
-      {h:'Attente moy.', num:1, v:q=>st(q.number).served?st(q.number).waitServed/st(q.number).served:0, f:q=>st(q.number).served?dur(Math.round(st(q.number).waitServed/st(q.number).served)):'–'},
+      {h:'Attente moy. (servis)', num:1, v:q=>st(q.number).served?st(q.number).waitServed/st(q.number).served:0, f:q=>st(q.number).served?dur(Math.round(st(q.number).waitServed/st(q.number).served)):'–'},
       {h:'Délai max →', v:q=>q.dest?.dn||'', f:q=>destHTML(q.dest)},
     ],
     onRow: showQueue
@@ -222,7 +222,7 @@ function showQueue(q){
   const qh = Array(24).fill(0); (FULL.queueCalls || []).forEach(r => { if(r[1] === q.number) qh[localParts(r[0])[1]]++; }); // 18.2.30 : heure du système 3CX
   const mx = Math.max(...qh,1);
   openDrawer(`<span class="mono">${esc(q.number)}</span> ${esc(q.name)}`,
-    `<div class="grid kpis">${[['Appels',nf(s.total)],['Servis',pct(s.served,s.total)],['Abandonnés',nf(s.abandoned)],['Sans agent',nf(s.noAgents)],['Attente moy.',s.served?dur(Math.round(s.waitServed/s.served)):'–'],['Conversation moy.',s.served?dur(Math.round(s.talk/s.served)):'–']].map(([l,v])=>`<div class="card kpi"><div class="v" style="font-size:19px">${v}</div><div class="l">${l}</div></div>`).join('')}</div>` +
+    `<div class="grid kpis">${[['Appels',nf(s.total)],['Servis',pct(s.served,s.total)],['Abandonnés',nf(s.abandoned)],['Sans agent',nf(s.noAgents)],['Attente moy. (servis)',s.served?dur(Math.round(s.waitServed/s.served)):'–'],['Attente avant abandon',s.abandoned?dur(Math.round((s.wait-s.waitServed)/s.abandoned)):'–'],['Conversation moy.',s.served?dur(Math.round(s.talk/s.served)):'–']].map(([l,v])=>`<div class="card kpi"><div class="v" style="font-size:19px">${v}</div><div class="l">${l}</div></div>`).join('')}</div>` +
     (s.total?`<h3>Appels par heure</h3><div style="display:flex;align-items:flex-end;gap:2px;height:60px">${qh.map((h,i)=>`<div title="${i} h : ${h}" style="flex:1;background:var(--accent);height:${100*h/mx}%;min-height:${h?2:0}px;border-radius:2px 2px 0 0"></div>`).join('')}</div>`:'') +
     kv([['Stratégie',esc(q.strategy)],['Sonnerie par agent',esc(q.ringTimeout)+' s'],['Attente maximale',esc(q.masterTimeout)+' s'],['Destination au délai max',destHTML(q.dest)],
       ['Annonce de position',yes(q.announcePos)+' (toutes les '+esc(q.announceInterval)+' s)'],['Intro',(q.introEnabled?'':'<span class="pill">désactivée</span> ')+promptHTML(q.intro)],['Musique d\'attente',promptHTML(q.moh)]]) +
@@ -303,13 +303,13 @@ V.appels = el => {
       rows, pageSize:100,
       search: c => [c[2],c[3],c[4],c[5],c[6],dnName(c[6]),phone(c[2]),phone(c[4]),...c[9].map(p=>p[0]+' '+dnName(p[0]))].join(' '),
       filters: [
-        {label:'Toutes directions', options:[['in','Entrants'],['out','Sortants'],['int','Internes']], test:(c,v)=>c[1]===v},
+        {label:'Toutes directions', options:[['in','Entrants'],['out','Sortants'],['int','Internes'],['transit','Transit']], test:(c,v)=>c[1]===v},
         {label:'Toutes issues', options:Object.entries(ST).map(([k,v])=>[k,v[0]]), test:(c,v)=>c[10]===v},
         {label:'Toutes files', options:D.queues.map(q=>[q.number,q.number+' '+q.name]), test:(c,v)=>c[9].some(p=>p[0]===v)},
       ],
       cols: [
         {h:'Date', v:c=>c[0], f:c=>fmtD(c[0])},
-        {h:'', v:c=>c[1], f:c=>`<span class="pill ${c[1]==='in'?'acc':c[1]==='out'?'ok':''}">${{in:'Entrant',out:'Sortant',int:'Interne'}[c[1]]}</span>`},
+        {h:'', v:c=>c[1], f:c=>`<span class="pill ${c[1]==='in'?'acc':c[1]==='out'?'ok':''}">${{in:'Entrant',out:'Sortant',int:'Interne',transit:'Transit'}[c[1]]}</span>`},
         {h:'De', v:c=>c[2], f:c=>c[1]==='in'?`<span class="mono">${esc(phone(c[2]))}</span>${vipStar(c[2])} <span class="muted">${esc(c[3])}</span>`:dnLink(c[2])},
         {h:'Vers', v:c=>c[4], f:c=>c[1]==='int'?dnLink(c[4]):`<span class="mono">${esc(phone(c[4]))}</span>`},
         {h:'Parcours', v:c=>c[9].length, f:c=>c[9].filter(p=>p[1]!=='extension').slice(0,4).map(p=>`<span class="pill" title="${esc(dnName(p[0]))}">${esc(dnName(p[0])||p[0])}</span>`).join('')},

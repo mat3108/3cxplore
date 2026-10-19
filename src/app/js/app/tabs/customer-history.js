@@ -1,5 +1,5 @@
 // ---------- Historique d'un client ----------
-const DIR_FR = {in: 'Entrant', out: 'Sortant', int: 'Interne'};
+const DIR_FR = {in: 'Entrant', out: 'Sortant', int: 'Interne', transit: 'Transit'};
 function clientHistory(num){
   const all = FULL.calls, calls = [];
   all.forEach(c => { if((c[1] === 'in' && normNum(c[2]) === num) || (c[1] === 'out' && normNum(c[4]) === num)) calls.push(c); });

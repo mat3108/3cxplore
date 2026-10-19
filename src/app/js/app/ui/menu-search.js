@@ -74,7 +74,7 @@ function route(){
 }
 // bandeau « magasin » et sous-onglets en haut de la page : ajoutés après chaque affichage d'un onglet,
 // y compris quand l'onglet se redessine lui-même (période, seuil, filtre…), sinon ils disparaissaient
-const CDRV = 6; // classement des appels attendu (voir D.cdrv à la lecture du backup)
+const CDRV = 7; // classement des appels attendu (voir D.cdrv à la lecture du backup)
 function decorate(tab){
   const main = $('#main'); main.querySelectorAll(':scope > [data-deco]').forEach(x => x.remove());
   if(FULL.calls.length && !((FULL.cdrv || 0) >= CDRV)){ const w = document.createElement('div'); w.className = 'segbar'; w.dataset.deco = '1'; w.style.borderColor = 'var(--warn)';

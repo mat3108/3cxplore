@@ -1,5 +1,18 @@
 [
  {
+  "version": "19.2",
+  "date": "2026-10-19",
+  "titre": "Chiffres d'appels corrigés après l'audit des données",
+  "resume": "Trois corrections issues de l'audit de crédibilité des données du 16 octobre : les appels en transit de l'autre 3CX ne sont plus comptés comme entrants, la date du backup est lue en UTC et l'attente en file dit sur quels appels elle porte. Rouvrez le backup pour en profiter.",
+  "changements": [
+   "Appels en transit : un poste de l'autre 3CX qui arrive par un bridge et ressort par le trunk d'ici, sans passer par un poste, une file ou un menu, n'est plus compté comme un appel entrant « renvoyé ext. ». Ces appels ont leur propre direction (« Transit ») et sont exclus des entrants, des taux de réponse, des appels perdus, des rappels et des SDA les plus appelés. Avec le backup de référence, environ 11 000 appels de juillet à septembre 2026 sont concernés ; le taux de réponse d'août passe d'environ 80 % à 76 %.",
+   "Date du backup : 3CX l'écrit en UTC. Elle était lue comme l'heure locale, donc affichée 4 à 5 h trop tard (et au lendemain le soir) dans le tableau de bord, les rapports, le suivi, la comparaison et l'export Excel. La fenêtre des jours fériés à venir part maintenant du jour local du backup.",
+   "Attente en file : le libellé précise « (servis) », car la moyenne ne porte que sur les appels servis par un agent. Une nouvelle mesure « Attente moy. avant abandon » (appels non servis) apparaît dans Statistiques, le rapport par magasin et la fiche de file ; l'export CSV des statistiques a une colonne de plus.",
+   "Un backup déjà mémorisé par une version précédente affiche un message invitant à le rouvrir : sans cela, les appels en transit restent comptés comme entrants."
+  ],
+  "onglets": []
+ },
+ {
   "version": "19.0.3",
   "date": "2026-10-19",
   "titre": "Renvois d'appel lus comme dans la console",

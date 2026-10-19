@@ -52,13 +52,13 @@ function recoBanner(){
 }
 V.dashboard = el => {
   const CS = SEG ? D.calls.filter(c => callSeg(c) === SEG) : D.calls; // 18.1.17 : un appel compté dans un seul magasin
-  const inc = CS.filter(c=>c[1]==='in'), out = CS.filter(c=>c[1]==='out'), intr = CS.filter(c=>c[1]==='int');
+  const inc = CS.filter(c=>c[1]==='in'), out = CS.filter(c=>c[1]==='out'), intr = CS.filter(c=>c[1]==='int'), nTransit = CS.filter(c=>c[1]==='transit').length;
   const incAns = inc.filter(c=>c[10]==='ans'||c[10]==='fwd_ok').length, incLocal = inc.filter(c=>c[10]!=='bridge').length;
   const stCount = {}; inc.forEach(c=>stCount[c[10]]=(stCount[c[10]]||0)+1);
   const first = D.calls.length ? D.calls[D.calls.length-1][0] : '', last = D.calls.length ? D.calls[0][0] : '';
   // volume par jour
   const days = {};
-  CS.forEach(c => { const k=dayKey(c[0]); (days[k] ||= {in:0,out:0,int:0})[c[1]]++; });
+  CS.forEach(c => { const k=dayKey(c[0]); const d=(days[k] ||= {in:0,out:0,int:0}); if(c[1] in d) d[c[1]]++; });
   let keys = Object.keys(days).sort();
   keys = keys.slice(-90);
   // heures
@@ -83,7 +83,7 @@ V.dashboard = el => {
        ['Appels totaux',nf(CS.length)],['Entrants',nf(inc.length)],['Entrants répondus*',pct(incAns,incLocal)],['Sortants',nf(out.length)],['Internes',nf(intr.length)],['Service files',pct(totQ.s,totQ.t)]]
       .map(([l,v])=>`<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('')}
   </div>
-  <p class="note">* Répondus localement ou via renvoi externe, hors appels transférés vers un autre 3CX par bridge.</p>
+  <p class="note">* Répondus localement ou via renvoi externe, hors appels transférés vers un autre 3CX par bridge.${nTransit?` <span>${nf(nTransit)} appel${nTransit>1?'s':''} en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont comptés ni comme entrants ni comme sortants : ce ne sont pas des appels de clients.</span>`:''}</p>
   <div class="card" style="margin-top:12px"><h3 style="margin-top:0">Issue des appels entrants</h3>
     ${Object.entries(stCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="hbar"><span class="nm"><span class="pill ${ST[k][1]}">${ST[k][0]}</span></span><span class="t"><span style="width:${100*v/inc.length}%"></span></span><span class="num">${nf(v)} <span class="muted">${pct(v,inc.length)}</span></span></div>`).join('')}</div>
   <div class="card chart" style="margin-top:12px"><h3 style="margin-top:0">Volume d'appels par jour <span class="muted" style="font-weight:400">(${keys.length} derniers jours avec activité)</span></h3>${stackChart(keys, keys.map(k=>days[k]))}
