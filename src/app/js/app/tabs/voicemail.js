@@ -18,7 +18,7 @@ function vmRefs(){
   // son propre renvoi : seulement dans le profil actif (les autres profils gardent souvent le renvoi par défaut de 3CX)
   FULL.extensions.forEach(e => { const oth = new Set(); let own = false;
     e.profiles.forEach(p => p.routes.forEach(([, d]) => { if(!isVM(d)) return; const n = d.dn || e.number; if(n !== e.number) oth.add(n); else if(p.name === e.profile) own = true; }));
-    if(own) add(e.number, {cat: 'own', from: e.number, what: `Renvoi du profil actif (${e.profile}) vers sa propre messagerie`});
+    if(own) add(e.number, {cat: 'own', from: e.number, what: `Renvoi du profil actif (${fwdName(e.profile)}) vers sa propre messagerie`});
     oth.forEach(n => add(n, {cat: 'fwd', from: e.number, what: 'Renvoi du collègue'})); });
   FULL.lines.forEach(l => { const by = {}; l.rules.forEach(r => by[r.data] = r); const def = l.rules.find(r => r.cond === 'ForwardAll');
     l.dids.forEach(did => { const r = by[did] || def; if(!r) return; ['office', 'outOfOffice', 'holidays'].forEach(k => { if(isVM(r[k])) add(r[k].dn, {cat: 'sda', from: l.number, did, what: `SDA ${phone(did)}`, hrs: GR[k]}); }); }); });

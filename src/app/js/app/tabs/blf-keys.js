@@ -1,7 +1,7 @@
 // ---------- Touches BLF des téléphones (onglet) ----------
 const BLF_T = {BLF: ['BLF', 'var(--accent)'], SharedParking: ['Parking', 'var(--k-rg)'], SpeedDial: ['Rapide', 'var(--c-out)'], CustomSpeedDial: ['Rapide perso.', 'var(--c-out)'],
   Line: ['Ligne', 'var(--muted)'], None: ['Vide', 'var(--line)'], ProfileStatus: ['Statut', 'var(--warn)'], QueueLogin: ['Files', 'var(--ok)']};
-const BLF_ST = ['Disponible', 'Absent', 'Ne pas déranger', 'Lunch', "Voyage d'affaires"];
+const BLF_ST = Object.values(FWD_ST); // 19.0.3 : noms des statuts du système
 // libellé d'une touche ; numéro interne visé (ou '')
 const blfNum = b => b.v.split(/\n/)[0].replace(/[\s().+-]/g, '');
 const blfTarget = b => b.type === 'BLF' || b.type === 'SharedParking' ? b.v : (b.type === 'SpeedDial' || b.type === 'CustomSpeedDial') && /^\d{2,5}$/.test(blfNum(b)) ? blfNum(b) : '';

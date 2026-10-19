@@ -20,9 +20,12 @@
   // json.dumps de Python (séparateurs « , » et « : » avec espace)
   const pyDumps = v => v === null ? 'null' : Array.isArray(v) ? '[' + v.map(pyDumps).join(', ') + ']' : typeof v === 'object' ? '{' + Object.entries(v).map(([k, x]) => JSON.stringify(k) + ': ' + pyDumps(x)).join(', ') + '}' : JSON.stringify(v);
   const strip = s => s.replace(/^[ ›]+|[ ›]+$/g, '');
+  // 19.0.3 : un sous-renvoi décoché dans la console reste dans le backup, marqué OutOfHoursInactive / InternalInactive="true" : on l'ignore
   const flatten = (e, path = '') => {
     let res = [];
+    const off = [e.getAttribute('OutOfHoursInactive') === 'true' && 'OutOfOfficeHours', e.getAttribute('InternalInactive') === 'true' && 'Internal'];
     for(const c of kids(e, '*')){
+      if(off.includes(c.tagName)) continue;
       if(q1(c, 'To')){ const d = dest(c); if(d) res.push([strip(path + ' › ' + c.tagName), d]); }
       else if(c.children.length) res = res.concat(flatten(c, strip(path + ' › ' + c.tagName)));
     }

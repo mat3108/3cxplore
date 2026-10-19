@@ -1,5 +1,20 @@
 [
  {
+  "version": "19.0.3",
+  "date": "2026-10-19",
+  "titre": "Renvois d'appel lus comme dans la console",
+  "resume": "Les renvois des statuts sont maintenant lus comme la console 3CX les affiche : un renvoi hors heures décoché n'est plus présenté comme actif, « Send Busy » est affiché comme un refus (occupé) et les statuts personnalisés portent leur vrai nom. Rouvrez le backup pour en profiter.",
+  "changements": [
+   "Renvois hors heures : une case « Out of Office hours Voicemail » décochée restait lue comme un renvoi vers la messagerie vocale (le backup garde la destination, marquée désactivée). Ces renvois sont maintenant ignorés partout : fiche du nouvel employé, messagerie vocale, recommandations, simulateur, diagrammes…",
+   "Renvois internes désactivés (« InternalInactive ») : même correction, les appels internes suivent le renvoi de tous les appels.",
+   "Statut Absent, Ne pas déranger et statuts personnalisés de ce type : « Send Busy » (« None » dans le backup) est affiché « refusé (occupé) » au lieu de « aucun renvoi » ; le simulateur d'appel l'indique comme un appel perdu.",
+   "Statuts personnalisés : leur nom vient du système (paramètres CUSTOM1NAME et CUSTOM2NAME) au lieu de « Lunch » et « Voyage d'affaires », dans tous les onglets.",
+   "Simulateur d'appel : le type d'un statut (Disponible ou Absent) est lu dans son profil de renvoi plutôt que deviné d'après son nom.",
+   "Un backup déjà mémorisé par une version précédente affiche un message invitant à le rouvrir : sans cela, les renvois décochés restent comptés."
+  ],
+  "onglets": []
+ },
+ {
   "version": "19.0.2",
   "date": "2026-10-16",
   "titre": "Catégories du menu soulignées",

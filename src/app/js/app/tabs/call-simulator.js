@@ -101,12 +101,13 @@ function simulate(did, day, min, keys, ctx, opt){
       }
       if(node.kind === 'Poste'){
         const p = o.profiles.find(x => x.name === o.profile) || o.profiles[0];
-        const avail = /avail|custom/i.test(o.profile || '');
+        const avail = p ? p.routes.some(r => /^AvailableRoute/.test(r[0])) : true; // 19.0.3 : type du statut lu dans son profil (les statuts personnalisés peuvent être de type Absent)
         const rt = p ? p.routes.find(r => avail ? /^AvailableRoute › NoAnswer › AllCalls/.test(r[0]) : /^AwayRoute › External/.test(r[0])) : null;
-        const s = st({kind: 'Poste', dn: d.dn, title: d.dn + ' ' + nmX(d.dn), lines: [`Profil actuel : ${o.profile || '—'}`, !o.enabled ? '⚠ Poste désactivé' : ''].filter(Boolean), cls: avail ? 'ok' : 'warn'});
+        const s = st({kind: 'Poste', dn: d.dn, title: d.dn + ' ' + nmX(d.dn), lines: [`Profil actuel : ${fwdName(o.profile) || '—'}`, !o.enabled ? '⚠ Poste désactivé' : ''].filter(Boolean), cls: avail ? 'ok' : 'warn'});
         const go = rt && rt[1].to && rt[1].to !== 'None' ? rt[1] : null;
         if(o.enabled === false){ s.cls = 'bad'; return {end: 'lost', why: "poste désactivé : l'appel n'aboutit pas"}; } // 18.1.26
         if(!avail && go){ s.branch = 'Absent : renvoi immédiat'; d = go; continue; }
+        if(!avail && rt && fwdBusy(rt[0], rt[1])){ s.branch = 'Absent : appel refusé'; st({kind: 'Fin', title: 'Refusé (occupé)', cls: 'bad', lines: ['Le statut renvoie « Send Busy » : l\'appelant entend occupé']}); return {end: 'lost', why: 'le poste refuse les appels dans ce statut (occupé)'}; }
         if(go){ s.branch = `Sans réponse (${p.noAnswer || o.noAnswer || '?'} s)`; return overflow('le poste sonne', go); }
         return {end: 'human', why: 'le poste sonne'};
       }
@@ -143,7 +144,7 @@ V.simulateur = (el, arg) => {
       <button class="btn" data-p="now">Maintenant</button><button class="btn" data-p="eve">Ce soir 20 h</button><button class="btn" data-p="sat">Samedi 11 h</button><button class="btn" data-p="sun">Dimanche 11 h</button><button class="btn" data-p="noon">Midi (pause)</button>${nh ? `<button class="btn" data-p="hol">${esc(nh[0])} (${esc(nh[1].slice(5))})</button>` : ''}</div>
     <div id="simout"></div>
     <h3>Toute la semaine</h3><p class="muted" style="margin-top:-4px">Issue de l'appel heure par heure pour la semaine du jour choisi, avec les touches choisies ci-dessus. Cliquez une case pour simuler ce moment.</p><div id="simweek"></div>
-    <p class="note">Le simulateur lit la configuration du backup. Pour une date passée couverte par l'historique, il utilise les connexions réelles des agents aux files à ce moment-là (les membres de chaque file restent ceux de la configuration actuelle) ; le statut de présence des postes (Disponible, Absent, Lunch…) et les renvois restent ceux du jour du backup, car 3CX ne conserve pas leur historique. Il ne tient pas compte des agents occupés au téléphone. Les jours fériés suivent ceux configurés dans chaque département ; un jour férié du Québec non configuré est signalé.</p></div>`;
+    <p class="note">Le simulateur lit la configuration du backup. Pour une date passée couverte par l'historique, il utilise les connexions réelles des agents aux files à ce moment-là (les membres de chaque file restent ceux de la configuration actuelle) ; le statut de présence des postes (Disponible, Absent, Ne pas déranger…) et les renvois restent ceux du jour du backup, car 3CX ne conserve pas leur historique. Il ne tient pas compte des agents occupés au téléphone. Les jours fériés suivent ceux configurés dans chaque département ; un jour férié du Québec non configuré est signalé.</p></div>`;
   const W = $('#simwrap');
   // recherche de SDA : chiffres seuls comparés au numéro (avec ou sans le 1), sinon texte du libellé (magasin, destination)
   const norm = t => gsNorm(t).replace(/[\s().+-]/g, '');

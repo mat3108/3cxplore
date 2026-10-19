@@ -71,7 +71,7 @@ function analyse(){
   if(vmOff.length) add('vm-off', 'fix', 'Postes', `${vmOff.length} poste${vmOff.length>1?'s':''} renvoient vers la messagerie alors qu'elle est désactivée`,
     'Dans le profil actuellement actif de ces postes, un renvoi mène à la messagerie vocale, mais la messagerie est désactivée : l\'appelant ne peut pas laisser de message.',
     'Activer la messagerie de ces postes, ou changer la destination de renvoi du profil actif.',
-    vmOff.map(e => ({html: `${dnLink(e.number)} <span class="muted">— profil ${esc(e.profile)}</span>`, text: `${e.number} ${dnName(e.number)} (${e.profile})`})));
+    vmOff.map(e => ({html: `${dnLink(e.number)} <span class="muted">— profil ${esc(fwdName(e.profile))}</span>`, text: `${e.number} ${dnName(e.number)} (${fwdName(e.profile)})`})));
 
   // 6. MAC en double
   const macs = {}; D.extensions.forEach(e => e.devices.forEach(d => { if(d.mac) (macs[d.mac.toUpperCase()] ||= []).push(e.number); }));

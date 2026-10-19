@@ -1,10 +1,9 @@
 // ---------- Assistant « nouvel employé » ----------
-// statuts 3CX V20 : nom interne du profil -> nom affiché dans la console et l'application
-const FWD_ST = {'Available': 'Disponible', 'Away': 'Absent', 'Out of office': 'Ne pas déranger', 'Custom 1': 'Lunch', 'Custom 2': "Voyage d'affaires"};
 const FWD_ORDER = Object.keys(FWD_ST);
 // une ligne de fiche par statut : où vont les appels, avec le poste du collègue remplacé par le nouveau poste
 function nvForwards(M, num){
-  const dst = d => {
+  const dst = (d, k) => {
+    if(k && fwdBusy(k, d)) return '<b>refusé (occupé)</b>';
     if(!d || !d.to || d.to === 'None') return null;
     const n = d.dn === M.number ? num : d.dn, mine = d.dn === M.number;
     if(d.to === 'VoiceMail') return `messagerie vocale de <b>${esc(n || num)}</b>${!mine && d.dn ? ` <span class="muted">(${esc(dnName(d.dn))})</span>` : ''}`;
@@ -14,13 +13,14 @@ function nvForwards(M, num){
     return `<b>${esc((TO_FR[d.to] || d.to).toLowerCase())}</b>`; };
   const COND = {NoAnswer: 'sans réponse', Busy: 'occupé', NotRegistered: 'téléphone non connecté'}, HRS = {AllHours: 'heures d\'ouverture', OutOfOfficeHours: 'hors heures'};
   return M.profiles.slice().sort((a, b) => (FWD_ORDER.indexOf(a.name) + 1 || 99) - (FWD_ORDER.indexOf(b.name) + 1 || 99)).map(p => {
-    const r = {}; p.routes.forEach(([k, d]) => { const t = k.split(' › '); r[t.slice(1).join('|')] = d; });
+    const r = {}, away = p.routes.some(([k]) => /^AwayRoute/.test(k)); p.routes.forEach(([k, d]) => { const t = k.split(' › '); r[t.slice(1).join('|')] = d; });
     const parts = [];
     if(Object.keys(r).some(k => /^(NoAnswer|Busy|NotRegistered)\|/.test(k))){
       Object.keys(COND).forEach(c => { const all = dst(r[c + '|AllCalls']), int = dst(r[c + '|Internal']);
         if(all || int) parts.push(`${COND[c]}${c === 'NoAnswer' && p.noAnswer ? ` (${esc(p.noAnswer)} s)` : ''} → ${all || '<span class="muted">aucun renvoi</span>'}${int ? ` ; appels internes → ${int}` : ''}`); });
     } else {
-      [['External', 'appels externes'], ['Internal', 'appels internes']].forEach(([w, l]) => { const a = dst(r[w + '|AllHours']), o = dst(r[w + '|OutOfOfficeHours']);
+      // 19.0.3 : sans renvoi hors heures actif (case décochée), les appels suivent le renvoi des heures d'ouverture à toute heure
+      [['External', 'appels externes'], ['Internal', 'appels internes']].forEach(([w, l]) => { const a = dst(r[w + '|AllHours'], away && 'AwayRoute'), o = r[w + '|OutOfOfficeHours'] ? dst(r[w + '|OutOfOfficeHours'], away && 'AwayRoute') : a;
         if(a || o) parts.push(a === o ? `${l} → ${a}` : `${l} : ${HRS.AllHours} → ${a || '<span class="muted">aucun renvoi</span>'}, ${HRS.OutOfOfficeHours} → ${o || '<span class="muted">aucun renvoi</span>'}`); });
     }
     if(p.ringMobile === 'True' || p.ringMobile === '1') parts.push('faire sonner aussi le cellulaire');

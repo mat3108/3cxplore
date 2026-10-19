@@ -324,7 +324,7 @@
       loss: Math.max(qn(r[x + '_rx_loss']) || 0, qn(r[x + '_tx_loss']) || 0), jit: Math.max(qn(r[x + '_rx_jitter']) || 0, qn(r[x + '_tx_jitter']) || 0),
       dur: qn(r[x + '_duration']) || 0}))}));
     D.chatCount = (await csv('chat_message')).length;
-    D.source = {kind: 'zip', name: file.name, size: file.size, loadedAt: new Date().toISOString()};
+    D.source = {kind: 'zip', name: file.name, size: file.size, loadedAt: new Date().toISOString(), fwd: 1}; // fwd : 19.0.3, renvois désactivés lus
     D.missingTables = MISSING;
     return {D, audio, rec: {z, map: recMap}};
   }

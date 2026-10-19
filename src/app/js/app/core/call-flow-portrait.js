@@ -139,7 +139,7 @@ V.postes = el => {
     search: e => [e.number,e.first,e.last,e.email,e.callerId,e.azure,...e.groups.map(g=>g.g),...e.devices.map(d=>d.mac+' '+d.model)].join(' '),
     filters: [
       {label:'Tous les départements', options:deps.map(d=>[d,d]), test:(e,v)=>e.groups.some(g=>g.g===v)},
-      {label:'Statut', options:[['Available','Disponible'],['Away','Absent'],['Out of office','Hors bureau']], test:(e,v)=>e.profile===v},
+      {label:'Statut', options:Object.entries(FWD_ST), test:(e,v)=>e.profile===v},
       {label:'Appareil', options:[['1','Avec téléphone'],['0','Sans téléphone']], test:(e,v)=>(e.devices.length>0)===(v==='1')},
     ],
     cols: [
@@ -149,7 +149,7 @@ V.postes = el => {
       {h:'Départements', v:e=>e.groups.map(g=>g.g).join(', '), f:e=>e.groups.filter(g=>g.g!=='__DEFAULT__').map(g=>`<span class="pill ${g.role==='supervisors'||g.role==='managers'?'warn':''}">${esc(g.g)}${g.role&&g.role!=='users'?' · '+esc(g.role):''}</span>`).join('')},
       {h:'Files', num:1, v:e=>e.queues.length},
       {h:'Téléphone', v:e=>e.devices.map(d=>d.model).join(', '), f:e=>e.devices.map(d=>`<span class="pill">${esc(d.model||d.template)}</span>`).join('')||'<span class="muted">–</span>'},
-      {h:'Statut', v:e=>e.profile, f:e=>`<span class="pill ${e.profile==='Available'?'ok':e.profile==='Away'?'warn':''}">${esc(e.profile)}</span>`},
+      {h:'Statut', v:e=>e.profile, f:e=>`<span class="pill ${e.profile==='Available'?'ok':e.profile==='Away'?'warn':''}">${esc(fwdName(e.profile))}</span>`},
       {h:'Enreg.', v:e=>e.record?1:0, f:e=>e.record?'<span class="pill acc">Oui</span>':''},
     ],
     onRow: showExt
@@ -160,14 +160,14 @@ function showExt(e){
   const vms = D.voicemails.filter(v=>v.ext===e.number), gr = D.vmGreetings.filter(v=>v.ext===e.number);
   openDrawer(`<span class="mono">${esc(e.number)}</span> ${esc(e.first+' '+e.last)}`,
     kv([['Courriel',esc(e.email)],['Compte Microsoft 365',esc(e.azure)],['Caller ID sortant',`<span class="mono">${esc(phone(e.callerId))}</span>`],['Mobile',esc(phone(e.mobile))],
-      ['Actif',yes(e.enabled)],['Profil actuel',esc(e.profile)],['Statut files',esc(e.queueStatus)],['Enregistrement',yes(e.record)],
+      ['Actif',yes(e.enabled)],['Profil actuel',esc(fwdName(e.profile))],['Statut files',esc(e.queueStatus)],['Enregistrement',yes(e.record)],
       ['Messagerie vocale',yes(e.vm)+' '+esc(e.vmEmail)],['LAN seulement',yes(e.lanOnly)],['Délai sans réponse',esc(e.noAnswer)+' s'],
       ['Appels (traités / initiés)', nf(myCalls.length)]]) +
     `<h3>Départements</h3>${e.groups.map(g=>`<span class="pill">${esc(g.g)} · ${esc(g.role)}</span>`).join('')||'<span class="muted">–</span>'}` +
     `<h3>Files d'attente</h3>${e.queues.map(q=>dnLink(q)).join('<br>')||'<span class="muted">–</span>'}` +
     (e.ringGroups.length?`<h3>Groupes de sonnerie</h3>${e.ringGroups.map(q=>dnLink(q)).join('<br>')}`:'') +
     `<h3>Téléphones</h3>${e.devices.map(d=>kv([['Modèle',esc(d.model)],['MAC',`<span class="mono">${esc(d.mac.replace(/(..)(?!$)/g,'$1:'))}</span>`],['Firmware',esc(d.firmware)],['Gabarit',esc(d.template)],['Langue',esc(d.lang)],['Interface',esc(d.iface)],['SBC',esc(d.sbc)]])).join('<hr style="border:0;border-top:1px solid var(--line)">')||'<span class="muted">Aucun appareil provisionné</span>'}` +
-    `<h3>Profils de renvoi</h3>${e.profiles.map(p=>`<details><summary><b>${esc(p.name)}</b> ${p.display?`<span class="muted">« ${esc(p.display)} »</span>`:''}</summary>${kv(p.routes.map(([k,d])=>[k.replace(/Route|AllHours|OutOfOfficeHours/g,m=>({Route:'',AllHours:'toutes heures',OutOfOfficeHours:'hors heures'}[m])), destHTML(d)]))}</details>`).join('')}` +
+    `<h3>Profils de renvoi</h3>${e.profiles.map(p=>`<details><summary><b>${esc(fwdName(p.name))}</b> ${p.display?`<span class="muted">« ${esc(p.display)} »</span>`:''}</summary>${kv(p.routes.map(([k,d])=>[k.replace(/Route|AllHours|OutOfOfficeHours/g,m=>({Route:'',AllHours:'toutes heures',OutOfOfficeHours:'hors heures'}[m])), fwdBusy(k,d)?'<span class="lbl">Refusé (occupé)</span>':destHTML(d)]))}</details>`).join('')}` +
     (gr.length?`<h3>Message d'accueil</h3>${gr.map(g=>audio(g.path)).join('')}`:'') +
     (vms.length?`<h3>Messages vocaux (${vms.length})</h3>${vms.map(v=>`<div>${esc(phone(v.from))} · ${esc(fmtD(vmUTC(v.date)) || v.date)}<br>${audio(v.path)}</div>`).join('')}`:'') +
     `<h3>Propriétés</h3>${kv(Object.entries(e.props).filter(([k,v])=>v!=='').map(([k,v])=>[k,`<span class="mono">${esc(v)}</span>`]))}`);

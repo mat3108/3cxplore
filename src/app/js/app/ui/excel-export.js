@@ -52,7 +52,7 @@ function xlsxSheets(){
   const yn = b => b ? 'oui' : 'non', sh = [], seg = n => segShort(SEGOF[n] || SEG_COMMON), inSeg = n => !SEG || SEGOF[n] === SEG;
   const exts = FULL.extensions.filter(e => inSeg(e.number));
   sh.push({name: 'Postes', rows: [['Poste', 'Nom', 'Magasin', 'Courriel', 'Actif', 'Profil actuel', 'Départements', "Files d'attente", 'Téléphones', 'Caller ID', 'Mobile', 'Enregistrement', 'Messagerie', 'Réseau local seulement', 'MFA', 'Compte Microsoft 365']]
-    .concat(exts.map(e => [e.number, (e.first + ' ' + e.last).trim(), seg(e.number), e.email, yn(e.enabled), e.profile, e.groups.filter(g => !/^(__|SYSTEM$|___FAV)/.test(g.g)).map(g => g.g + (g.role && g.role !== 'users' ? ' (' + secRole(g.role)[1] + ')' : '')).join(', '),
+    .concat(exts.map(e => [e.number, (e.first + ' ' + e.last).trim(), seg(e.number), e.email, yn(e.enabled), fwdName(e.profile), e.groups.filter(g => !/^(__|SYSTEM$|___FAV)/.test(g.g)).map(g => g.g + (g.role && g.role !== 'users' ? ' (' + secRole(g.role)[1] + ')' : '')).join(', '),
       e.queues.join(', '), e.devices.map(d => d.model || d.template).join(', '), e.callerId, e.mobile, yn(e.record), yn(e.vm), yn(e.lanOnly), MFA_L[mfaOf(e).k][0], mfaOf(e).upn]))});
   sh.push({name: 'Téléphones', rows: [['Poste', 'Utilisateur', 'Magasin', 'Modèle', 'MAC', 'Firmware assigné', 'Version recommandée 3CX', 'État', 'Détail']]
     .concat(phoneRows().map(r => [r.ext, r.user, seg(r.ext), r.model, r.mac, r.fw, r.rec, (PH_ST[r.st] || {l: r.st}).l, r.why]))});

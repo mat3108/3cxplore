@@ -36,7 +36,7 @@ function indispAnalysis(){
   FULL.ivrs.filter(i => inSeg(i.number)).forEach(i => i.options.forEach(op => { if(op.type === 'Extension' && op.dn) direct.push({src: `${i.name} · touche ${op.key}`, dn: op.dn, calls: null, ivr: i.number}); }));
   FULL.groups.filter(g => !isSysGroup(g) && inSeg(g.number) && g.routes).forEach(g => [['office', 'ouvert'], ['outOfOffice', 'fermé']].forEach(([k, l]) => { const d = g.routes[k]; if(d && d.to === 'Extension' && d.dn) direct.push({src: `Département ${g.name} (${l})`, dn: d.dn, calls: null}); }));
   direct.forEach(x => { const e = EXT_BY[x.dn], p = e && (e.profiles.find(p => p.name === e.profile) || e.profiles[0]);
-    const rt = p && p.routes.find(r => /^AvailableRoute › NoAnswer › AllCalls/.test(r[0])); x.ifNo = rt ? rt[1] : null; x.profile = e ? e.profile : ''; });
+    const rt = p && p.routes.find(r => /^AvailableRoute › NoAnswer › AllCalls/.test(r[0])); x.ifNo = rt ? rt[1] : null; x.profile = e ? fwdName(e.profile) : ''; });
   return {from, end, items, risky, people, direct};
 }
 V.indisp = el => {

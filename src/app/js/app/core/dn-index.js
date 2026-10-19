@@ -18,6 +18,12 @@ const dnLink = (n, withNum=true) => {
 };
 const TO_FR = {Extension:'Poste',Queue:'File',IVR:'IVR',RoutePoint:'Département',RingGroup:'Groupe sonnerie',VoiceMail:'Messagerie vocale',External:'Numéro externe',None:'Aucune',EndCall:'Raccrocher',RepeatPrompt:'Répéter le message',ProceedWithNoExceptions:'Continuer normalement',CallBack:'Rappel',Fax:'Fax',DialByName:'Annuaire par nom',Script:'Script'};
 const viaRule = num => { num=String(num||''); return D.outbound.find(o => o.prefix && o.prefix.split(',').some(p=>p && num.startsWith(p.trim()))); };
+// statuts 3CX V20 : nom interne du profil -> nom affiché dans la console (19.0.3 : statuts personnalisés lus dans le backup, CUSTOM1NAME / CUSTOM2NAME)
+const FWD_ST = (() => { const pv = n => ((FULL.params || []).find(p => p.name === n) || {}).value || '';
+  return {'Available': 'Disponible', 'Away': 'Absent', 'Out of office': pv('DND_PROFILE_NAME') || 'Ne pas déranger', 'Custom 1': pv('CUSTOM1NAME') || 'Lunch', 'Custom 2': pv('CUSTOM2NAME') || "Voyage d'affaires"}; })();
+const fwdName = n => FWD_ST[n] || n || '';
+// 19.0.3 : dans un statut de type Absent, « None » est affiché « Send Busy » dans la console : l'appel est refusé comme occupé
+const fwdBusy = (k, d) => /^AwayRoute/.test(k) && (!d || !d.to || d.to === 'None');
 const destHTML = d => {
   if(!d || !d.to) return '<span class="muted">–</span>';
   const t = TO_FR[d.to] || d.to;

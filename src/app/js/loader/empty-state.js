@@ -55,7 +55,12 @@
     const saved = await loadSaved();
     if(saved && saved.D && scrub(saved.D)) try{ await save(saved); }catch(e){}
     { const r = await getKey('reference'); if(r && r.D && scrub(r.D)) try{ await putKey('reference', r); }catch(e){} window.REF_D = r && r.D ? r.D : null; }
-    if(saved && saved.D){ AUDIO = saved.audio || {}; run(saved.D); }
+    if(saved && saved.D){ AUDIO = saved.audio || {}; run(saved.D);
+      // 19.0.3 : un backup analysé avant cette version garde les renvois hors heures décochés ; il faut le rouvrir pour les lire correctement
+      if(saved.D.source && saved.D.source.kind === 'zip' && !saved.D.source.fwd){ const n = document.createElement('div'); n.className = 'card'; n.setAttribute('role', 'status');
+        n.style.cssText = 'position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;max-width:min(560px,calc(100vw - 32px));padding:10px 14px;display:flex;gap:10px;align-items:center';
+        n.innerHTML = '<span>Ce backup a été analysé par une version précédente : rouvrez-le pour que les renvois d\'appel soient lus comme dans la console 3CX.</span><button class="btn" type="button">OK</button>';
+        n.querySelector('button').addEventListener('click', () => n.remove()); document.body.appendChild(n); } }
     else if(window.EMBEDDED) run(window.EMBEDDED);
     else emptyView();
   }

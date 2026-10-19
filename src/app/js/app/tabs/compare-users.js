@@ -12,7 +12,7 @@ V.comparer = el => {
   const fwdOf = e => { try{ const f = secAnalysis().fwd.find(r => r.e === e); return f ? f.nums.map(phone).join(', ') + (f.active ? ' (actif)' : '') : 'aucun'; }catch(er){ return '—'; } };
   const mfa = e => { try{ return MFA_L[mfaOf(e).k][0]; }catch(er){ return '—'; } };
   const facts = [['Magasin', e => segName(SEGOF[e.number] || SEG_COMMON)], ['Courriel', e => e.email || '—'], ['Actif', e => yn(e.enabled)], ['MFA', mfa], ['Réseau local seulement', e => yn(e.lanOnly)],
-    ['Profil actuel', e => e.profile || '—'], ['Caller ID', e => phone(e.callerId) || '—'], ['Téléphones', e => e.devices.map(d => d.model || d.template).join(', ') || 'aucun'], ['Enregistrement des appels', e => yn(e.record)],
+    ['Profil actuel', e => fwdName(e.profile) || '—'], ['Caller ID', e => phone(e.callerId) || '—'], ['Téléphones', e => e.devices.map(d => d.model || d.template).join(', ') || 'aucun'], ['Enregistrement des appels', e => yn(e.record)],
     ['Messagerie vocale', e => yn(e.vm)], ['Renvoi vers l\'extérieur', fwdOf], ["Files d'attente", e => e.queues.map(q => q + ' ' + dnName(q)).join(', ') || 'aucune'], ['Groupes de sonnerie', e => e.ringGroups.map(q => q + ' ' + dnName(q)).join(', ') || 'aucun']];
   // départements et droits
   const mA = VM.by[S.a] || [], mB = VM.by[S.b] || [], gs = [...new Set([...mA, ...mB].map(x => x.g))].sort((x, y) => x.name.localeCompare(y.name));
