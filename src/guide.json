@@ -107,6 +107,13 @@
     "Imprimez la liste pour la personne qui fera les changements."
    ]
   },
+  "maison": {
+   "sert": "Les paramètres demandés par la direction, vérifiés point par point : pour la direction, il n'y a pas de boîte vocale, ni générale, ni de file, ni d'usager.",
+   "comment": [
+    "Chaque point est « Conforme » ou « À corriger », avec la liste exacte des éléments et la correction à faire dans la console.",
+    "Exportez les points à corriger en CSV pour la personne qui fera les changements."
+   ]
+  },
   "postes": {
    "sert": "La liste des utilisateurs (postes), avec des filtres par département, statut et appareil. La fiche d'un poste montre ses coordonnées, son compte Microsoft 365, ses téléphones, ses files, ses profils de renvoi, son message d'accueil et ses messages vocaux.",
    "comment": [
@@ -976,6 +983,13 @@
     "comment": [
      "Tick each task once done; copy MAC addresses in one click.",
      "Print the list for the person who will make the changes."
+    ]
+   },
+   "maison": {
+    "sert": "The settings required by management, checked point by point: management wants no voicemail, whether general, queue or user.",
+    "comment": [
+     "Each point is « Compliant » or « To fix », with the exact list of items and the fix to make in the console.",
+     "Export the points to fix as CSV for the person who will make the changes."
     ]
    },
    "postes": {

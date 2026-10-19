@@ -76,6 +76,7 @@
 //#include tabs/agent-occupancy.js
 //#include tabs/important-numbers.js
 //#include tabs/voicemail.js
+//#include tabs/house-template.js
 //#include tabs/duplicates.js
 //#include tabs/call-trace.js
 //#include tabs/absences.js

@@ -1,7 +1,7 @@
 // ---------- Nouveau menu (18.0, bêta) : organisé par question ; activé par l'interrupteur du menu, l'ancien menu simplifié reste celui par défaut ----------
 const NAVBETA_KEY = 'menubeta3cx';
 const NAV_SETS_BETA = {
-  corriger: ['À corriger', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'pieges', 'doublons', 'controle', 'sdainut']],
+  corriger: ['À corriger', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'pieges', 'doublons', 'controle', 'sdainut', 'maison']],
   appels: ['Nos appels', 'appels', ['rappels', 'rappellent', 'numero', 'client', 'vip', 'appels', 'delai', 'receptions', 'courts', 'parkings']],
   equipes: ['Nos équipes', 'employe', ['employe', 'corrections', 'agents', 'occupation', 'indisp', 'absences', 'effectif', 'prevision', 'nouvel', 'depart', 'historique']],
   magasin: ['Mon magasin', 'fichemag', ['fichemag', 'rapport', 'deptrap', 'horaires', 'feries', 'ouvmag']],

@@ -1,5 +1,21 @@
 [
  {
+  "version": "19.2.1",
+  "date": "2026-10-19",
+  "titre": "Template maison",
+  "resume": "Nouvelle page Template maison : la maison y vérifie les paramètres demandés par la direction. Pour l'instant, un seul sujet en trois points : aucune boîte vocale générale, de file ou d'usager.",
+  "changements": [
+   "Template maison (Vue d'ensemble) : trois points « Conforme » ou « À corriger » — boîte vocale générale (SDA, menus, départements, groupes de sonnerie qui mènent à une messagerie), boîte vocale de file (débordement ou acheminement vers une messagerie) et boîte vocale d'usager (messagerie activée ou renvoi vers une messagerie dans le statut actuel d'un poste actif).",
+   "Chaque point non conforme liste les éléments exacts avec la correction à faire dans la console ; export CSV des points à corriger. La page suit le magasin choisi."
+  ],
+  "onglets": [
+   [
+    "Template maison",
+    "Nouvel onglet : paramètres demandés par la direction (pas de boîte vocale générale, de file ni d'usager), vérifiés point par point."
+   ]
+  ]
+ },
+ {
   "version": "19.2",
   "date": "2026-10-19",
   "titre": "Chiffres d'appels corrigés après l'audit des données",
