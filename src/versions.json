@@ -1,5 +1,22 @@
 [
  {
+  "version": "19.3.3",
+  "date": "2026-10-19",
+  "titre": "Les appels en cartes sur téléphone",
+  "resume": "Sur téléphone, l'historique des appels s'affiche en cartes lisibles au lieu d'un tableau qu'il fallait faire défiler de côté.",
+  "changements": [
+   "Appels, sur téléphone : chaque appel est une carte. La direction (Entrant, Sortant, Interne, Transit) est en haut ; dessous, une ligne par information (date, de, vers, parcours, issue, durée, conversation), avec son libellé.",
+   "Les informations vides ne sont pas affichées, la date tient sur une ligne et la page ne défile plus de côté. Toucher une carte ouvre la fiche de l'appel, comme une ligne du tableau.",
+   "Sur ordinateur, le tableau ne change pas."
+  ],
+  "onglets": [
+   [
+    "Appels",
+    "Sur téléphone, un appel par carte."
+   ]
+  ]
+ },
+ {
   "version": "19.3.2",
   "date": "2026-10-19",
   "titre": "Graphique par jour et tableaux allégés",

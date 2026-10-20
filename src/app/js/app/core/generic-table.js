@@ -1,5 +1,7 @@
 // ---------- Table générique ----------
-function table(el, {cols, rows, search, pageSize=50, onRow, sort, filters, state, rowCls}){
+function table(el, {cols, rows, search, pageSize=50, onRow, sort, filters, state, rowCls, cards}){
+  // cards (19.3.3) : sur téléphone, chaque ligne devient une carte (libellé de colonne devant chaque valeur)
+  el.classList.toggle('tcards', !!cards);
   // state (facultatif) : objet conservé par l'appelant pour retrouver recherche, filtres, tri et page après un nouvel affichage
   const S = state || {};
   let q=S.q||'', page=S.page||0, sk=S.sk!==undefined?S.sk:(sort?sort[0]:null), sd=S.sd||(sort?sort[1]:1), fvals={...(S.fvals||{})};
@@ -16,7 +18,7 @@ function table(el, {cols, rows, search, pageSize=50, onRow, sort, filters, state
   function draw(){
     const n = view.length, pages = Math.max(1, Math.ceil(n/pageSize));
     page = Math.min(page, pages-1);
-    tb.innerHTML = view.slice(page*pageSize,(page+1)*pageSize).map((r,i)=>`<tr data-i="${page*pageSize+i}" class="${onRow?'click':''}${rowCls?' '+(rowCls(r)||''):''}">${cols.map(c=>`<td class="${c.num?'num':''} ${c.cls||''}">${c.f?c.f(r):esc(c.v(r))}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${cols.length}" class="muted">Aucun résultat</td></tr>`;
+    tb.innerHTML = view.slice(page*pageSize,(page+1)*pageSize).map((r,i)=>`<tr data-i="${page*pageSize+i}" class="${onRow?'click':''}${rowCls?' '+(rowCls(r)||''):''}">${cols.map(c=>{ const v = c.f?c.f(r):esc(c.v(r)), emp = cards && !String(v??'').trim(); return `<td class="${c.num?'num':''} ${c.cls||''}${emp?' tdemp':''}">${cards&&!emp?`${c.h?`<span class="tdh">${esc(c.h)}</span>`:''}<span class="tdv">${v}</span>`:v}</td>`; }).join('')}</tr>`).join('') || `<tr><td colspan="${cols.length}" class="muted">Aucun résultat</td></tr>`;
     el.querySelector('.count').textContent = nf(n)+' élément'+(n>1?'s':'');
     el.querySelector('.pg').textContent = `Page ${page+1} / ${pages}`;
     el.querySelector('[data-p="-1"]').disabled = page===0;

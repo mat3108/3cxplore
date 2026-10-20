@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.3.2-2563eb)
+![Version](https://img.shields.io/badge/version-19.3.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -99,7 +99,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Qualité des appels** | Qualité de la voix par magasin, site, modèle de téléphone et trunk. |
 | **Horaires** | Lien « Rapport » sur chaque département et dans son détail. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
-| **Appels** | Sur téléphone, filtres derrière un bouton « Filtres ». |
+| **Appels** | Sur téléphone, un appel par carte. |
 | **Parkings partagés** | Bouton « Rapport des mises en attente par employé » et lien « Rapport » pour chaque employé. |
 | **Plan des parkings** | Nombre de parkings nécessaires par magasin d'après les appels parqués en même temps. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
@@ -221,7 +221,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.3.2** | Graphique par jour et tableaux allégés |
+| **19.3.3** | Les appels en cartes sur téléphone |
+| 19.3.2 | Graphique par jour et tableaux allégés |
 | 19.3.1 | La base de chaque pourcentage |
 | 19.3 | L'essentiel en haut du tableau de bord |
 | 19.2.3 | Qui peut laisser un message ? |

@@ -322,7 +322,7 @@ V.appels = el => {
         {h:'Durée', num:1, v:c=>c[7], f:c=>dur(c[7])},
         {h:'Conversation', num:1, v:c=>c[8], f:c=>c[8]?dur(c[8]):''},
       ],
-      onRow: c => openCall(c)
+      onRow: c => openCall(c), cards: true
     });
   };
   $('#d1').addEventListener('change', draw); $('#d2').addEventListener('change', draw);
