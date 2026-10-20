@@ -1,5 +1,28 @@
 [
  {
+  "version": "20.1",
+  "date": "2026-10-20",
+  "titre": "L'assistant de l'accueil",
+  "resume": "L'accueil devient un assistant : la mascotte pose une question, on répond avec un gros bouton, et elle ouvre la bonne page en deux ou trois réponses. Le menu de gauche est caché, le bouton « Menu » l'ouvre.",
+  "changements": [
+   "Accueil : la mascotte de 3CXplore dit combien de choses sont à réparer et demande « Qu'est-ce que vous voulez faire ? ». Sept réponses en gros boutons : voir les appels, régler un problème, ajouter ou retirer quelqu'un, voir mon magasin, trouver quelqu'un, comprendre où va un appel, autre chose. Chaque réponse pose une deuxième question, en mots simples (« Ceux qui n'ont pas eu de réponse », « Où sonne un appel, en le testant »…), puis ouvre la page.",
+   "Les réponses choisies restent affichées comme une conversation ; « Revenir en arrière » et « Recommencer » permettent de changer d'avis. En revenant à l'accueil, on retrouve où on en était.",
+   "Sous la conversation : un champ pour écrire ce que l'on cherche, et un bouton « Ouvrir le menu complet ».",
+   "Menu de gauche caché, sur ordinateur aussi : le bouton « Menu », en haut à gauche, l'ouvre par-dessus la page, et Échap le referme. Les pages prennent toute la largeur, et les autres pages de la rubrique s'affichent en pastilles sous le fil d'Ariane.",
+   "Interface : nouvelle option « Menu de gauche » (Caché, le bouton Menu l'ouvre / Toujours affiché) pour retrouver le menu de la 20.0."
+  ],
+  "onglets": [
+   [
+    "Accueil",
+    "Un assistant : la mascotte pose des questions, on répond avec de gros boutons, et elle ouvre la bonne page."
+   ],
+   [
+    "Interface",
+    "Option « Menu de gauche » : caché (par défaut) ou toujours affiché."
+   ]
+  ]
+ },
+ {
   "version": "20.0",
   "date": "2026-10-20",
   "titre": "Un menu simple, avec ses sous-menus",

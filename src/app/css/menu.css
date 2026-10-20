@@ -69,10 +69,24 @@ body.mini .pagehead .subtabs{display:flex}
 @media (max-width:800px){.pagehead .subtabs{display:flex}}
 @media print{.pagehead{display:none}}
 
-/* accueil */
-.home{max-width:1120px}
-.hohead h2{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.01em;margin:4px 0 6px}
-.hohead .lead{font-size:16px;color:var(--muted);margin:0 0 16px;max-width:62ch}
+/* accueil (20.1) : l'assistant — la mascotte pose une question, on répond avec un gros bouton */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ask{max-width:780px;margin:0 auto;padding-top:6px}
+.askrow{display:flex;gap:14px;align-items:flex-start;margin:0 0 14px}
+.askav{flex:none}.askav svg{display:block;width:52px;height:52px;border-radius:15px}
+.askq{margin:0;background:var(--panel);border:1.5px solid var(--line);border-radius:4px 20px 20px 20px;padding:14px 18px;font-size:19px;line-height:1.4;font-weight:600;max-width:58ch}
+.askme{display:flex;justify-content:flex-end;margin:0 0 14px}
+.askme span{background:var(--accent);color:var(--on-accent,#fff);border-radius:20px 20px 4px 20px;padding:10px 16px;font-size:16px;font-weight:600;max-width:70%}
+.askopts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:4px 0 0 66px}
+.askopts button{display:flex;align-items:center;gap:12px;text-align:left;min-height:66px;padding:12px 16px;border-radius:16px;border:2px solid color-mix(in srgb,var(--rc) 35%,var(--line));background:var(--panel);color:var(--text);font:inherit;font-size:16px;font-weight:600;line-height:1.25;cursor:pointer}
+.askopts button .ico{box-sizing:content-box;flex:none;width:22px;height:22px;padding:9px;border-radius:12px;background:var(--rc);stroke:#fff;stroke-width:2}
+.askopts button:hover{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 8%,var(--panel))}
+.askopts button:focus-visible{outline:3px solid var(--rc);outline-offset:2px}
+.asknav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0 66px}
+.askfoot{margin:40px 0 0 66px;padding-top:20px;border-top:1px solid var(--line)}
+.askfoot>p:first-child{margin:0 0 10px;color:var(--muted);font-size:15px}
+.askmenu{margin:18px 0 0}.askmenu .btn{display:inline-flex;align-items:center;gap:8px}
+@media (prefers-reduced-motion:no-preference){.asknew,.asknew~.askopts{animation:askin .26s ease-out}@keyframes askin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
 .hosearch{position:relative;max-width:640px}
 .hosearch .ico{position:absolute;left:15px;top:50%;width:20px;height:20px;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .hosearch input{width:100%;box-sizing:border-box;height:50px;padding:0 16px 0 46px;font:inherit;font-size:16px;color:var(--text);background:var(--panel);border:2px solid var(--line);border-radius:14px}
@@ -84,33 +98,22 @@ body.mini .pagehead .subtabs{display:flex}
 .hores a .ico{box-sizing:content-box;padding:6px;border-radius:8px;background:var(--rc);stroke:#fff;width:16px;height:16px}
 .hores a span{display:flex;flex-direction:column}.hores small{color:var(--muted);font-size:12.5px}
 .hores p{margin:8px 10px}
-.hofix{display:flex;align-items:center;gap:18px;margin:22px 0 4px;padding:16px 20px;border-radius:16px;text-decoration:none;color:var(--text);background:color-mix(in srgb,var(--rc) 8%,var(--panel));border:2px solid color-mix(in srgb,var(--rc) 45%,transparent)}
-.hofix:hover{border-color:var(--rc)}
-.hofn{flex:none;min-width:58px;font-size:36px;line-height:1;font-weight:700;color:var(--rc);text-align:center;font-variant-numeric:tabular-nums}
-.hoft{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}.hoft b{font-size:18px}.hoft span{color:var(--muted);font-size:14px}
-.hofgo{flex:none;padding:9px 16px;border-radius:999px;background:var(--rc);color:#fff;font-weight:700;font-size:14px}
-.hoh{font-size:17px;font-weight:700;margin:28px 0 10px}
-.hodo{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px}
-.hodo a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel);color:var(--text);text-decoration:none;font-weight:600;font-size:15px;line-height:1.25}
-.hodo a:hover{border-color:var(--rc)}
-.hodo a .ico{box-sizing:content-box;flex:none;padding:8px;border-radius:50%;background:color-mix(in srgb,var(--rc) 14%,transparent);stroke:var(--rc);width:20px;height:20px}
-.hogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
-.hot{position:relative;display:flex;gap:14px;padding:16px;border-radius:14px;background:var(--panel);border:1.5px solid var(--line)}
-.hot:hover,.hot:focus-within{border-color:var(--rc)}
-.hoti{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--rc)}
-.hoti .ico{width:24px;height:24px;stroke:#fff;stroke-width:2}
-.hotb{min-width:0}
-.hot h4{margin:2px 0 4px;font-size:17px;line-height:1.2}
-.hotl{color:var(--text);text-decoration:none}
-.hotl::after{content:"";position:absolute;inset:0;border-radius:14px}
-.hotl:focus-visible{outline:none}.hot:has(.hotl:focus-visible){outline:3px solid var(--rc);outline-offset:2px}
-.hot p{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.4}
-.hotp{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px}
-.hotp a{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;color:var(--text);text-decoration:none}
-.hotp a::before{content:"";width:7px;height:7px;border-radius:50%;border:2px solid var(--rc);background:var(--panel)}
-.hotp a:hover{text-decoration:underline;text-decoration-color:var(--rc);text-underline-offset:3px}
-.hotm{color:var(--muted)}
-@media (max-width:560px){.hohead h2{font-size:25px}.hofix{flex-wrap:wrap;gap:12px}.hofgo{width:100%;text-align:center}.hogrid,.hodo{grid-template-columns:1fr}}
+@media (max-width:560px){.askav svg{width:40px;height:40px;border-radius:12px}.askq{font-size:17px}.askopts,.asknav,.askfoot{margin-left:0}.askopts{grid-template-columns:1fr}.askme span{max-width:85%}}
+
+/* menu caché (20.1) : sur ordinateur aussi, le bouton « Menu » l'ouvre par-dessus la page */
+#menubtn .lb{display:none}
+@media (min-width:801px){
+  html.navhide #menubtn{display:inline-flex;align-items:center;gap:7px;font-weight:700}
+  html.navhide #menubtn .lb{display:inline}
+  html.navhide #side,html.navhide body.mini #side{position:fixed;top:0;left:0;height:100%;width:290px;transform:translateX(-102%);transition:transform .18s;z-index:30;box-shadow:8px 0 24px rgba(0,0,0,.18)}
+  html.navhide body.navopen #side{transform:none}
+  html.navhide body.navopen #scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:29}
+  html.navhide .collapse{display:none}
+  html.navhide .pagehead .subtabs{display:flex}
+  html.navhide body.mini #side #nav .lb,html.navhide body.mini #side #nav .n,html.navhide body.mini #side #nav .ng,html.navhide body.mini #side #nav .rbc{display:revert}
+  html.navhide body.mini #side #nav .rbw.open .stns{display:block}
+  html.navhide body.mini #side #nav a.rb{justify-content:flex-start;padding:5px 8px}
+}
 
 /* en-tête : la recherche garde de la place ; sous 1400 px, les boutons firmwares et mise à jour n'affichent que leur icône (le nom reste dans la bulle) */
 @media (min-width:801px){.top .gsearch{min-width:260px}}

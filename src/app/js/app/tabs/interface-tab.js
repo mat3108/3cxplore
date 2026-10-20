@@ -13,6 +13,7 @@ V.interface = el => {
     <p class="lead">Personnalisez l'apparence : un thème prêt à l'emploi, puis les détails (couleur, densité, texte, coins, cartes, police, largeur, menu, onglet d'accueil, animations). Tout s'applique tout de suite, est mémorisé dans ce navigateur et inclus dans la Sauvegarde des réglages. Les rapports imprimés gardent leurs couleurs habituelles.</p>
     <h3>Menu</h3>
     <div class="grid two" style="margin-top:10px">
+      ${opt('Menu de gauche', radios('uinh', A.navShow === 'on' ? 'on' : 'off', [['off', 'Caché, le bouton Menu l\'ouvre'], ['on', 'Toujours affiché']]), 'Caché : l\'accueil montre l\'assistant et le bouton « Menu », en haut à gauche, ouvre le menu par-dessus la page.')}
       ${opt('Mises à jour', radios('uiupd', window.UPD && !window.UPD.on() ? 'off' : 'on', [['on', 'Vérifier au démarrage'], ['off', 'Ne pas vérifier']]), 'Le bouton de téléchargement du bandeau du haut permet de vérifier à tout moment et d\'installer l\'application. Au démarrage (au plus une fois par jour), 3CXplore demande à GitHub le numéro de la dernière version publiée et affiche un bandeau si une mise à jour existe. C\'est la seule requête Internet de l\'outil : aucune donnée du backup n\'est envoyée.')}
       ${opt('Compteurs du menu', radios('uinc', A.navCount === 'off' ? 'off' : 'on', [['on', 'Affichés'], ['off', 'Masqués']]))}
       ${opt('Espacement du menu', radios('uins', A.navSpace === 'serre' ? 'serre' : 'confort', [['confort', 'Confortable'], ['serre', 'Serré']]))}
@@ -55,7 +56,7 @@ V.interface = el => {
     if(t.name === 'uith'){ window.applyTheme(t.value === 'auto' ? '' : t.value); V.interface(el); return; }
     if(t.name === 'uiupd'){ try{ localStorage.setItem('maj3cx', t.value); }catch(er){} if(t.value === 'off'){ const b = $('#updbar'); if(b) b.hidden = true; } V.interface(el); return; }
     if(t.name === 'uinv'){ document.body.classList.toggle('mini', t.value === 'reduit'); try{ localStorage.setItem('nav3cx', t.value === 'reduit' ? 'mini' : ''); }catch(er){} V.interface(el); return; }
-    const map = {uide: 'density', uisz: 'size', uira: 'radius', uica: 'cards', uifo: 'font', uiwi: 'width', uimo: 'motion', uisc: 'scan', uinf: 'navFold', uinc: 'navCount', uins: 'navSpace'};
+    const map = {uide: 'density', uisz: 'size', uira: 'radius', uica: 'cards', uifo: 'font', uiwi: 'width', uimo: 'motion', uisc: 'scan', uinf: 'navFold', uinc: 'navCount', uinh: 'navShow', uins: 'navSpace'};
     if(map[t.name]) return set(map[t.name], t.value);
     if(t.id === 'uiho') return set('home', t.value);
     if(t.id === 'uicc') return set('accent', t.value);

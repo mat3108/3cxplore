@@ -1,20 +1,57 @@
-// ---------- Accueil (20.0) : « Que voulez-vous faire ? » — les actions courantes, puis une tuile par rubrique, de la couleur de son menu ----------
+// ---------- Accueil (20.1) : l'assistant. La mascotte pose une question, on répond en touchant un gros bouton, et elle mène à la bonne page ----------
+// chaque question : [texte, réponses] ; une réponse : [libellé, icône (onglet), destination] — '>id' pose la question id, sinon c'est l'onglet à ouvrir
+const ASK = {
+  start: [null, [['Voir les appels', 'appels', '>appels'], ['Régler un problème', 'priorites', '>reparer'], ['Ajouter ou retirer quelqu\'un', 'nouvel', '>gens'],
+    ['Voir mon magasin', 'magasins', '>magasin'], ['Trouver quelqu\'un', 'annuaire', '>trouver'], ['Comprendre où va un appel', 'flux', '>chemin'], ['Autre chose', 'autre', '>autre']]],
+  appels: ['Quels appels ?', [['Ceux qui n\'ont pas eu de réponse', 'rappels', 'rappels'], ['Les clients qui rappellent souvent', 'rappellent', 'rappellent'],
+    ['Un numéro de téléphone précis', 'numero', 'numero'], ['Combien de temps on attend avant de répondre', 'delai', 'delai'], ['Les appels très courts', 'courts', 'courts'], ['Tous les appels, un par un', 'appels', 'appels']]],
+  reparer: ['On commence par quoi ?', [['Le plus urgent d\'abord', 'priorites', 'priorites'], ['La note de chaque magasin', 'sante', 'sante'],
+    ['Ce qu\'il faut changer dans la console 3CX', 'actions', 'actions'], ['Les numéros qui ne mènent nulle part', 'controle', 'controle'], ['Les appels qui tournent en rond', 'pieges', 'pieges']]],
+  gens: ['Que se passe-t-il ?', [['Quelqu\'un arrive', 'nouvel', 'nouvel'], ['Quelqu\'un part', 'depart', 'depart'], ['Quelqu\'un est absent ou en congé', 'absences', 'absences'], ['Un magasin ouvre', 'ouvmag', 'ouvmag']]],
+  magasin: ['Qu\'est-ce que vous voulez voir ?', [['Sa fiche', 'fichemag', 'fichemag'], ['Son rapport, à imprimer', 'rapport', 'rapport'], ['Son classement face aux autres', 'classement', 'classement'],
+    ['Ses heures d\'ouverture', 'horaires', 'horaires'], ['Les jours fériés à préparer', 'feries', 'feries']]],
+  trouver: ['Vous cherchez quoi ?', [['La fiche d\'un employé', 'employe', 'employe'], ['L\'annuaire', 'annuaire', 'annuaire'], ['Qui dépend de qui', 'organigramme', 'organigramme'], ['Un poste', 'postes', 'postes']]],
+  chemin: ['Qu\'est-ce que vous voulez savoir ?', [['Où sonne un appel, en le testant', 'simulateur', 'simulateur'], ['Le dessin du chemin', 'diagramme', 'diagramme'],
+    ['Les menus vocaux (tapez 1, tapez 2…)', 'ivr', 'ivr'], ['Les files d\'attente', 'files', 'files'], ['Les groupes qui sonnent ensemble', 'sonnerie', 'sonnerie']]],
+  autre: ['Voici le reste. Lequel ?', [['Les téléphones et leurs touches', 'telephones', '>tel'], ['Les chiffres', 'stats', '>chiffres'], ['Les messages vocaux', 'audio', '>vocal'],
+    ['La sécurité', 'securite', '>securite'], ['Ce qui a changé', 'modifs', '>change'], ['L\'apparence de 3CXplore', 'interface', 'interface']]],
+  tel: ['Plutôt quoi ?', [['La liste des postes', 'postes', 'postes'], ['Les téléphones de bureau', 'telephones', 'telephones'], ['Les touches des téléphones', 'blf', 'blf'], ['Les lignes vers l\'extérieur', 'trunks', 'trunks']]],
+  chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
+    ['Combien de personnes il faut', 'effectif', 'effectif'], ['Le tableau de bord', 'dashboard', 'dashboard']]],
+  vocal: ['Lequel ?', [['Les boîtes vocales', 'messageries', 'messageries'], ['Qui peut laisser un message', 'recobv', 'recobv'], ['Les messages d\'accueil', 'audio', 'audio'], ['Les enregistrements', 'enreg', 'enreg']]],
+  securite: ['Qu\'est-ce qui vous inquiète ?', [['Qui peut voir quoi', 'visibilite', 'visibilite'], ['Les renvois vers l\'extérieur', 'renvois', 'renvois'], ['Les appels bizarres', 'suspects', 'suspects'], ['Le bilan de sécurité', 'securite', 'securite']]],
+  change: ['Depuis quand ?', [['Les dernières modifications', 'modifs', 'modifs'], ['Le journal complet', 'audit', 'audit'], ['Avant et après une date', 'avantapres', 'avantapres']]],
+};
+let ASK_PATH = []; // réponses choisies depuis le début (gardées pendant la session : « Accueil » ramène où on en était)
 V.accueil = el => {
-  const n = RECO_COUNT, pages = id => NAV_SETS[id][2].filter(k => TAB_BY[k]);
-  const tile = id => { const [l, ic] = NAV_SETS[id], ms = pages(id);
-    return `<div class="hot" style="--rc:${navColor(id)}"><span class="hoti">${navIcon(ic)}</span><div class="hotb"><h4><a href="#${navLast(id)}" class="hotl">${esc(l)}</a></h4><p>${esc(NAV_HINT[id] || '')}</p>`
-      + `<div class="hotp">${ms.slice(0, 3).map(k => `<a href="#${k}">${esc(TAB_BY[k][1])}</a>`).join('')}${ms.length > 3 ? `<span class="hotm">et ${ms.length - 3} autre${ms.length - 3 > 1 ? 's' : ''}</span>` : ''}</div></div></div>`; };
-  const groups = NAV2.filter(([, ks]) => ks.some(k => k[0] === '@'));
-  el.innerHTML = `<div class="home">
-    <div class="hohead"><h2>Que voulez-vous faire ?</h2>
-      <p class="lead">Choisissez une rubrique. Chacune a sa couleur, que vous retrouvez dans le menu à gauche.</p>
-      <div class="hosearch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5"/></svg><input id="hoq" type="search" autocomplete="off" spellcheck="false" placeholder="Chercher une page : appels manqués, jours fériés, poste…" aria-label="Chercher une page" aria-controls="hores"></div>
-      <div id="hores" class="hores" role="listbox" aria-label="Pages trouvées" hidden></div></div>
-    <a class="hofix${n ? '' : ' ok'}" href="#priorites" style="--rc:${n ? navColor('reparer') : 'var(--ok)'}"><span class="hofn">${n ? nf(n) : '✓'}</span><span class="hoft"><b>${n ? `${n > 1 ? 'choses' : 'chose'} à réparer` : 'Rien d\'urgent à réparer'}</b><span>${n ? 'Commencez par la plus urgente : la liste est triée pour vous.' : 'Vous pouvez quand même jeter un œil aux priorités.'}</span></span><span class="hofgo">Voir la liste</span></a>
-    <h3 class="hoh">Je veux…</h3>
-    <div class="hodo">${Object.keys(NAV_DO).filter(k => TAB_BY[k]).map(k => `<a href="#${k}" style="--rc:${navColor(k)}">${navIcon(k)}<span>${esc(NAV_DO[k])}</span></a>`).join('')}</div>
-    ${groups.map(([g, ks]) => `<h3 class="hoh">${esc(g)}</h3><div class="hogrid">${ks.filter(k => k[0] === '@').map(k => tile(k.slice(1))).join('')}</div>`).join('')}
-  </div>`;
+  const n = RECO_COUNT, logo = (document.querySelector('.brandlogo') || {}).outerHTML || '';
+  const hello = `Bonjour ! ${n ? `Il y a ${nf(n)} ${n > 1 ? 'choses' : 'chose'} à réparer dans votre 3CX.` : 'Rien d\'urgent à réparer dans votre 3CX.'} Qu'est-ce que vous voulez faire ?`;
+  const bot = t => `<div class="askrow"><span class="askav" aria-hidden="true">${logo}</span><p class="askq">${esc(t)}</p></div>`;
+  const draw = () => {
+    let id = 'start', h = bot(hello);
+    for(const i of ASK_PATH){ const a = ASK[id][1][i]; h += `<div class="askme"><span>${esc(a[0])}</span></div>`; id = a[2].slice(1); h += bot(ASK[id][0]); }
+    h += `<div class="askopts" role="group" aria-label="Réponses">${ASK[id][1].map(([l, ic, to], i) => (to[0] === '>' || TAB_BY[to]) ? `<button type="button" data-ask="${i}" style="--rc:${navColor(to[0] === '>' ? ic : to)}">${navIcon(ic)}<span>${esc(l)}</span></button>` : '').join('')}</div>`;
+    if(ASK_PATH.length) h += `<div class="asknav"><button type="button" class="btn" data-askback>Revenir en arrière</button><button type="button" class="btn" data-askreset>Recommencer</button></div>`;
+    el.querySelector('#askchat').innerHTML = h;
+    const rows = el.querySelectorAll('#askchat .askrow'); if(ASK_PATH.length) rows[rows.length - 1].classList.add('asknew');
+  };
+  el.innerHTML = `<div class="ask"><h2 class="sr-only">Accueil</h2><div id="askchat" aria-live="polite"></div>
+    <div class="askfoot"><p>Vous pouvez aussi écrire ce que vous cherchez :</p>
+      <div class="hosearch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5"/></svg><input id="hoq" type="search" autocomplete="off" spellcheck="false" placeholder="Par exemple : appels manqués, jours fériés, poste…" aria-label="Chercher une page" aria-controls="hores"></div>
+      <div id="hores" class="hores" role="listbox" aria-label="Pages trouvées" hidden></div>
+      <p class="askmenu"><button type="button" class="btn" data-askmenu><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Ouvrir le menu complet</button></p></div></div>`;
+  draw();
+  el.querySelector('.ask').addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    if(b.hasAttribute('data-askmenu')){ document.body.classList.add('navopen'); const q = $('#navq'); if(q) q.focus(); return; }
+    if(b.hasAttribute('data-askback')){ ASK_PATH.pop(); return draw(); }
+    if(b.hasAttribute('data-askreset')){ ASK_PATH = []; return draw(); }
+    if(!b.dataset.ask) return;
+    let id = 'start'; for(const i of ASK_PATH) id = ASK[id][1][i][2].slice(1);
+    const [, , to] = ASK[id][1][+b.dataset.ask];
+    if(to[0] === '>'){ ASK_PATH.push(+b.dataset.ask); draw(); const f = el.querySelector('.askopts button'); if(f) f.focus({preventScroll: true}); }
+    else location.hash = '#' + to;
+  });
   // recherche : les mêmes pages que la recherche du menu, avec leur rubrique
   const inp = el.querySelector('#hoq'), res = el.querySelector('#hores');
   inp.addEventListener('input', () => {

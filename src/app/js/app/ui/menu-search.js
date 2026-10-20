@@ -52,6 +52,8 @@ function buildNav(){
 }
 buildNav(); navSearch();
 window.__app.rebuildNav = () => { buildNav(); navSearch(); route(); };
+// 20.1 : Échap referme le menu ouvert par-dessus la page
+if(!window.__navEscWired){ window.__navEscWired = true; document.addEventListener('keydown', e => { if(e.key === 'Escape' && document.body.classList.contains('navopen') && !document.getElementById('tour')) document.body.classList.remove('navopen'); }); }
 $('#sub').textContent = `${D.info.company} · ${D.info.fqdn} · V${D.info.version}${SEG ? ' · magasin : ' + segShort(SEG) : ''}`;
 { const ss = $('#segsel'); ss.hidden = false; ss.classList.toggle('on', !!SEG);
   ss.innerHTML = `<option value="">Tous les magasins</option>` + SEG_LIST.map(c => `<option value="${esc(c)}"${c===SEG?' selected':''}>${esc(segShort(c))} · ${FULL.extensions.filter(e => SEGOF[e.number]===c).length} postes</option>`).join(''); }

@@ -19,7 +19,7 @@ function tourStart(){
   const go = d => { i = Math.max(0, Math.min(TOUR.length - 1, i + d)); draw(); };
   const key = e => { if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); end(); } else if(e.key === 'ArrowRight'){ e.preventDefault(); go(1); } else if(e.key === 'ArrowLeft'){ e.preventDefault(); go(-1); } };
   function draw(){
-    const s = TOUR[i], narrow = innerWidth < 900;
+    const s = TOUR[i], narrow = innerWidth < 900 || document.documentElement.classList.contains('navhide');
     document.body.classList.toggle('navopen', !!(s.nav && narrow) || (wasOpen && !s.nav));
     const el = s.sel ? document.querySelector(s.sel) : null; if(el) el.scrollIntoView({block: 'nearest'});
     const r = el && el.getBoundingClientRect(), vis = !!(r && r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight);

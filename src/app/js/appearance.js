@@ -74,6 +74,8 @@ window.applyAppearance = a => {
   root.classList.toggle('geek', geek);
   // 20.0 : un seul menu, dessiné par menu.css ; les anciens styles de menu et les groupes repliables ne s'appliquent plus
   [...root.classList].filter(c => c.startsWith('nav-')).forEach(c => root.classList.remove(c)); root.classList.remove('navfold');
+  // 20.1 : le menu de gauche est caché (le bouton « Menu » l'ouvre), sauf si l'option « Toujours affiché » est choisie dans Interface
+  root.classList.toggle('navhide', a.navShow !== 'on');
   root.classList.toggle('nocount', a.navCount === 'off'); root.classList.toggle('navtight', a.navSpace === 'serre'); root.classList.toggle('scan', geek && a.scan !== 'off'); root.classList.toggle('geek-light', geek && p[5] === 'light');
   const c = /^#[0-9a-f]{6}$/i.test(a.accent || '') ? a.accent.toLowerCase() : null;
   if(c && !(c === '#2563eb' && !p))

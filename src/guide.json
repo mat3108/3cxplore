@@ -14,11 +14,11 @@
   ],
   [
    "Le menu",
-   "Le menu de gauche est rangé en rubriques, chacune avec sa couleur : Tous les jours (Accueil, Tableau de bord, À réparer, Les appels, Les magasins), Je veux… (les assistants : ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés), Mon installation (personnes, postes et lignes, chemin des appels, messages vocaux, sécurité) et Comprendre (chiffres, ce qui a changé). Cliquez sur une rubrique : ses pages s'affichent juste en dessous, comme les arrêts d'une ligne de métro ; la page ouverte est l'arrêt plein. En haut de chaque page, le fil d'Ariane (Accueil › rubrique › page) rappelle où vous êtes ; sur téléphone et menu réduit, les autres pages de la rubrique s'affichent aussi en pastilles. Ce guide suit le même ordre."
+   "Le menu de gauche est rangé en rubriques, chacune avec sa couleur : Tous les jours (Accueil, Tableau de bord, À réparer, Les appels, Les magasins), Je veux… (les assistants : ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés), Mon installation (personnes, postes et lignes, chemin des appels, messages vocaux, sécurité) et Comprendre (chiffres, ce qui a changé). Cliquez sur une rubrique : ses pages s'affichent juste en dessous, comme les arrêts d'une ligne de métro ; la page ouverte est l'arrêt plein. En haut de chaque page, le fil d'Ariane (Accueil › rubrique › page) rappelle où vous êtes ; sur téléphone et menu réduit, les autres pages de la rubrique s'affichent aussi en pastilles. Ce guide suit le même ordre. Le menu est caché au départ : le bouton « Menu », en haut à gauche, l'ouvre par-dessus la page (Échap le referme). Pour le garder toujours affiché, choisissez « Toujours affiché » dans l'onglet Interface."
   ],
   [
    "L'accueil",
-   "La page Accueil s'ouvre en premier : un champ pour chercher une page, le nombre de choses à réparer, les actions « Je veux… » et une tuile par rubrique, de la couleur de son menu, avec ses pages les plus utiles. Pour ouvrir une autre page au démarrage, choisissez-la dans l'onglet Interface (Onglet d'accueil)."
+   "La page Accueil s'ouvre en premier : la mascotte de 3CXplore vous pose une question (« Qu'est-ce que vous voulez faire ? ») et vous répondez en touchant un gros bouton. En deux ou trois réponses, elle ouvre la bonne page. « Revenir en arrière » et « Recommencer » changent la réponse ; dessous, un champ trouve une page par son nom. Pour ouvrir une autre page au démarrage, choisissez-la dans l'onglet Interface (Onglet d'accueil)."
   ],
   [
    "Chercher une page",
@@ -55,11 +55,11 @@
  ],
  "onglets": {
   "accueil": {
-   "sert": "La page d'ouverture : « Que voulez-vous faire ? ». Elle montre combien de choses sont à réparer, les actions courantes (ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés) et une tuile par rubrique du menu, de la même couleur, avec ses pages les plus utiles.",
+   "sert": "La page d'ouverture : un assistant. La mascotte de 3CXplore dit combien de choses sont à réparer et demande ce que vous voulez faire ; vous répondez en touchant un gros bouton (voir les appels, régler un problème, ajouter ou retirer quelqu'un, voir mon magasin…) et, en deux ou trois réponses, elle ouvre la bonne page.",
    "comment": [
-    "Tapez quelques lettres dans le grand champ pour trouver une page (par exemple « manqués » ou « fériés »), puis Entrée pour l'ouvrir.",
-    "Cliquez sur une tuile pour ouvrir sa rubrique, ou sur une des pages listées dessous pour y aller directement.",
-    "Le cadre « choses à réparer » mène aux Priorités, triées de la plus urgente à la moins urgente."
+    "Touchez la réponse qui vous convient : la question suivante s'affiche dessous, jusqu'à la page qui répond.",
+    "« Revenir en arrière » change la dernière réponse, « Recommencer » repart de la première question. En revenant à l'accueil, vous retrouvez où vous en étiez.",
+    "Vous pouvez aussi écrire ce que vous cherchez dans le champ du bas (par exemple « manqués » ou « fériés »), ou ouvrir le menu complet."
    ],
    "astuce": "Le logo 3CXplore, en haut à gauche, ramène toujours ici."
   },
@@ -901,11 +901,11 @@
    ],
    [
     "The menu",
-    "The left menu is arranged in sections, each with its own colour: Every day (Home, Dashboard, To fix, Calls, Stores), I want to… (the wizards: add or remove an employee, open a store, prepare public holidays), My setup (people, extensions and lines, how calls travel, voicemail, security) and Understand (numbers and statistics, what changed). Click a section: its pages appear right below, like the stops of a metro line; the open page is the filled stop. At the top of each page, the breadcrumb (Home › section › page) shows where you are; on a phone and with the collapsed menu, the other pages of the section also appear as pills. This guide follows the same order."
+    "The left menu is arranged in sections, each with its own colour: Every day (Home, Dashboard, To fix, Calls, Stores), I want to… (the wizards: add or remove an employee, open a store, prepare public holidays), My setup (people, extensions and lines, how calls travel, voicemail, security) and Understand (numbers and statistics, what changed). Click a section: its pages appear right below, like the stops of a metro line; the open page is the filled stop. At the top of each page, the breadcrumb (Home › section › page) shows where you are; on a phone and with the collapsed menu, the other pages of the section also appear as pills. This guide follows the same order. The menu is hidden at first: the “Menu” button, top left, opens it over the page (Esc closes it). To keep it always shown, choose “Always shown” in the Interface tab."
    ],
    [
     "Home",
-    "The Home page opens first: a field to find a page, the number of things to fix, the “I want to…” actions and one tile per section, in the colour of its menu, with its most useful pages. To open another page at start-up, choose it in the Interface tab (Home tab)."
+    "The Home page opens first: the 3CXplore mascot asks you a question (“What do you want to do?”) and you answer by tapping a large button. In two or three answers, it opens the right page. “Go back” and “Start over” change your answer; below, a field finds a page by its name. To open another page at start-up, choose it in the Interface tab (Home tab)."
    ],
    [
     "Find a page",
@@ -942,11 +942,11 @@
   ],
   "onglets": {
    "accueil": {
-    "sert": "The opening page: “What do you want to do?”. It shows how many things need fixing, the common actions (add or remove an employee, open a store, prepare public holidays) and one tile per menu section, in the same colour, with its most useful pages.",
+    "sert": "The opening page: an assistant. The 3CXplore mascot says how many things need fixing and asks what you want to do; you answer by tapping a large button (see calls, fix a problem, add or remove someone, see my store…) and, in two or three answers, it opens the right page.",
     "comment": [
-     "Type a few letters in the large field to find a page (for example “missed” or “holidays”), then Enter to open it.",
-     "Click a tile to open its section, or one of the pages listed below it to go straight there.",
-     "The “things to fix” box leads to Priorities, sorted from most to least urgent."
+     "Tap the answer that fits: the next question appears below, until the page that answers it.",
+     "“Go back” changes the last answer, “Start over” returns to the first question. When you come back to Home, you find where you left off.",
+     "You can also type what you are looking for in the field at the bottom (for example “missed” or “holidays”), or open the full menu."
     ],
     "astuce": "The 3CXplore logo, top left, always brings you back here."
    },

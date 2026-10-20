@@ -23,7 +23,7 @@ const NAV2 = [
 const SET_OF = {}; Object.entries(NAV_SETS).forEach(([id, [, , ms]]) => ms.forEach(k => SET_OF[k] = id));
 // couleur de chaque rubrique : la même dans le menu, le fil d'Ariane, les sous-onglets et les tuiles de l'accueil
 const NAV_COLOR = {accueil: '#0b6bcb', dashboard: '#0b6bcb', reparer: '#d93d42', appels: '#2f7fd6', magasins: '#b07d06', personnes: '#a144b3', postes: '#2f8f46',
-  chemin: '#6650c8', vocal: '#0e8a7c', securite: '#5b6b7f', chiffres: '#d9590b', historique: '#97704f', reglages: '#6b7280', faire: '#0b6bcb'};
+  chemin: '#6650c8', vocal: '#0e8a7c', securite: '#5b6b7f', chiffres: '#d9590b', historique: '#97704f', reglages: '#6b7280', autre: '#6b7280', faire: '#0b6bcb'};
 // ce que l'on trouve dans chaque rubrique, en une phrase (bulle du menu et tuiles de l'accueil)
 const NAV_HINT = {
   reparer: 'Ce qui ne va pas, du plus urgent au moins urgent, et comment le corriger.',
