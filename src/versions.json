@@ -1,5 +1,22 @@
 [
  {
+  "version": "19.3",
+  "date": "2026-10-19",
+  "titre": "L'essentiel en haut du tableau de bord",
+  "resume": "Le tableau de bord commence par la note de santé, les chiffres clés et les trois problèmes à traiter en premier ; le backup ouvert et les informations du système passent en bas de la page.",
+  "changements": [
+   "Nouvel ordre du tableau de bord : titre, note de santé, chiffres clés, « À traiter en premier », Recommandations, Quoi de neuf, puis les graphiques.",
+   "Nouvel encart « À traiter en premier » : les trois problèmes qui font perdre le plus d'appels (repris de l'onglet Priorités), chacun avec un lien vers l'onglet qui l'explique, et un lien vers toutes les priorités.",
+   "La carte « Backup affiché » est déplacée en bas de la page ; les informations du système (FQDN, licence, courriel, chemins, codecs…) y sont repliées et s'ouvrent d'un clic. Sur téléphone, les chiffres clés sont maintenant visibles dès l'ouverture."
+  ],
+  "onglets": [
+   [
+    "Tableau de bord",
+    "L'essentiel en haut (note, chiffres, À traiter en premier) ; backup et système repliés en bas de la page."
+   ]
+  ]
+ },
+ {
   "version": "19.2.3",
   "date": "2026-10-19",
   "titre": "Qui peut laisser un message ?",

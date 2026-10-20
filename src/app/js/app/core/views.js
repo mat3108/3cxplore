@@ -19,7 +19,7 @@ function systemInfo(){
     ['Codecs', (i.codecs||[]).filter(Boolean).map(c=>`<span class="pill">${esc(c)}</span>`).join('')],
     ['Parkings', nf(D.parks.length)], ['Messages de clavardage', nf(D.chatCount)], ['Enregistrements', nf(D.recordings.length)],
   ].filter(Boolean);
-  return `<div class="sys"><div class="bkt">Système</div><div class="sysgrid">${items.map(([k,v])=>`<div><div class="sk">${k}</div><div class="sv">${v||'<span class="muted">–</span>'}</div></div>`).join('')}</div></div>`;
+  return `<details class="sys"><summary><span class="bkt">Système</span> <span class="muted">FQDN, licence, courriel, chemins, codecs…</span></summary><div class="sysgrid">${items.map(([k,v])=>`<div><div class="sk">${k}</div><div class="sv">${v||'<span class="muted">–</span>'}</div></div>`).join('')}</div></details>`;
 }
 function backupCard(){
   const s = D.source || {kind:'embedded'};
@@ -43,6 +43,16 @@ function backupCard(){
   </div>`;
 }
 function wireBackup(){ BK.wireCard(); }
+
+// 19.3 : les trois problèmes qui font perdre le plus d'appels, repris de l'onglet Priorités
+function prioTopCard(){
+  try{
+    const P = prioAnalysis(), top = P.A.slice(0, 3); if(!top.length) return '';
+    const SEVL = {crit: ['Critique', 'bad'], fix: ['À corriger', 'warn'], obs: ['Observation', '']};
+    return `<div class="card prtop"><div class="prtoph"><h3>À traiter en premier</h3><a class="dlink" href="#priorites"><span>Toutes les priorités</span> <span class="muted">(${nf(P.A.length + P.R.length)})</span> ▸</a></div>
+      ${top.map(x => `<a class="prtopr" href="#${esc(x.link)}"><span class="pill ${SEVL[x.sev][1]}">${SEVL[x.sev][0]}</span><span class="prtopt">${esc(x.title)}</span><span class="prtopn"><b>${nf(x.calls)}</b> <span class="muted">${esc(x.unit || '')}</span></span></a>`).join('')}</div>`;
+  }catch(e){ console.warn('Priorités :', e); return ''; }
+}
 
 function recoBanner(){
   const F = analyse(), c = s => F.filter(f => f.sev === s).length;
@@ -71,19 +81,20 @@ V.dashboard = el => {
   const didRule = {}; allDIDs.forEach(x=>didRule[x.did]=x.rule);
   const maxAg = topAg.length?topAg[0][1].n:1, maxDid = topDid.length?topDid[0][1]:1;
   const totQ = Object.values(D.queueStats).reduce((a,q)=>({t:a.t+q.total,s:a.s+q.served,w:a.w+q.waitServed}),{t:0,s:0,w:0});
+  // 19.3 : l'essentiel d'abord (note, chiffres, priorités) ; le backup et le système en bas de page
   el.innerHTML = `
-  ${backupCard()}
-  ${whatsNewCard()}
-  ${hsDashCard()}
-  ${recoBanner()}
   <h2>Tableau de bord</h2>
   <p class="lead">${esc(D.info.company)} · ${esc(D.info.fqdn)} · 3CX ${esc(D.info.version)} · backup du ${esc(bkDate(D.info.date))}${first?` · appels du ${dayKey(first)} au ${dayKey(last)}`:''}</p>
-  <div class="grid kpis">
+  ${hsDashCard()}
+  <div class="grid kpis dkpis">
     ${[['Postes',D.extensions.length],['Files d\'attente',D.queues.length],['Standards (IVR)',D.ivrs.length],['Départements',D.groups.filter(g=>!g.name.startsWith('__')&&g.name!=='SYSTEM').length],['Numéros (DID)',allDIDs.length],['Téléphones',D.extensions.reduce((a,e)=>a+e.devices.length,0)],
        ['Appels totaux',nf(CS.length)],['Entrants',nf(inc.length)],['Entrants répondus*',pct(incAns,incLocal)],['Sortants',nf(out.length)],['Internes',nf(intr.length)],['Service files',pct(totQ.s,totQ.t)]]
       .map(([l,v])=>`<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('')}
   </div>
   <p class="note">* Répondus localement ou via renvoi externe, hors appels transférés vers un autre 3CX par bridge.${nTransit?` <span>${nf(nTransit)} appel${nTransit>1?'s':''} en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont comptés ni comme entrants ni comme sortants : ce ne sont pas des appels de clients.</span>`:''}</p>
+  ${prioTopCard()}
+  ${recoBanner()}
+  ${whatsNewCard()}
   <div class="card" style="margin-top:12px"><h3 style="margin-top:0">Issue des appels entrants</h3>
     ${Object.entries(stCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="hbar"><span class="nm"><span class="pill ${ST[k][1]}">${ST[k][0]}</span></span><span class="t"><span style="width:${100*v/inc.length}%"></span></span><span class="num">${nf(v)} <span class="muted">${pct(v,inc.length)}</span></span></div>`).join('')}</div>
   <div class="card chart" style="margin-top:12px"><h3 style="margin-top:0">Volume d'appels par jour <span class="muted" style="font-weight:400">(${keys.length} derniers jours avec activité)</span></h3>${stackChart(keys, keys.map(k=>days[k]))}
@@ -95,7 +106,8 @@ V.dashboard = el => {
       ${topAg.map(([n,v])=>`<div class="hbar"><span class="nm">${dnLink(n)}</span><span class="t"><span style="width:${100*v.n/maxAg}%"></span></span><span class="num">${nf(v.n)}</span></div>`).join('')||'<span class="muted">–</span>'}</div>
     <div class="card"><h3 style="margin-top:0">Numéros (DID) les plus appelés</h3>
       ${topDid.map(([n,v])=>`<div class="hbar"><span class="nm"><span class="mono">${esc(phone(n))}</span> <span class="muted">${esc(didRule[n]?.name||'')}</span></span><span class="t"><span style="width:${100*v/maxDid}%"></span></span><span class="num">${nf(v)}</span></div>`).join('')||'<span class="muted">–</span>'}</div>
-  </div>`;
+  </div>
+  <div style="margin-top:18px">${backupCard()}</div>`;
   wireBackup();
 };
 

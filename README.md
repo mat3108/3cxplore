@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.2.3-2563eb)
+![Version](https://img.shields.io/badge/version-19.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -37,7 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
-| **Tableau de bord** | Chiffres clés, issue des appels entrants, volume quotidien (entrants/sortants/internes), appels entrants par heure, postes et numéros les plus actifs, informations système. |
+| **Tableau de bord** | L'essentiel en haut (note, chiffres, À traiter en premier) ; backup et système repliés en bas de la page. |
 | **Priorités** | Tous les problèmes en une liste, classés selon les appels touchés puis par gravité. |
 | **Note de santé** | Note sur 100 par magasin : service, configuration, sécurité et téléphones. |
 | **Recommandations** | Analyse automatique de la configuration et de l'activité, classée Critique / À corriger / Observation, avec éléments concernés, recommandation, statut et notes personnelles ; ajout d'observations manuelles ; export CSV et impression. |
@@ -221,7 +221,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.2.3** | Qui peut laisser un message ? |
+| **19.3** | L'essentiel en haut du tableau de bord |
+| 19.2.3 | Qui peut laisser un message ? |
 | 19.2.2 | Recommandation BV |
 | 19.2.1 | Template maison |
 | 19.2 | Chiffres d'appels corrigés après l'audit des données |

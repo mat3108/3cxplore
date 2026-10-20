@@ -2,7 +2,7 @@
  "general": [
   [
    "Ouvrir un backup",
-   "Dans le Tableau de bord, cliquez « Choisir un backup (.zip) » ou glissez-déposez le fichier. Le traitement se fait entièrement dans votre navigateur : rien n'est envoyé sur Internet. Le backup reste mémorisé jusqu'à « Fermer le backup »."
+   "Dans le Tableau de bord (en bas de la page une fois un backup ouvert), cliquez « Choisir un backup (.zip) » ou glissez-déposez le fichier. Le traitement se fait entièrement dans votre navigateur : rien n'est envoyé sur Internet. Le backup reste mémorisé jusqu'à « Fermer le backup »."
   ],
   [
    "Visite guidée",
@@ -55,9 +55,9 @@
  ],
  "onglets": {
   "dashboard": {
-   "sert": "Le point de départ : les chiffres clés du système ou du magasin choisi, l'issue des appels entrants, le volume par jour et par heure, les postes et numéros les plus actifs, et les informations du serveur.",
+   "sert": "Le point de départ : en haut, la note de santé, les chiffres clés du système ou du magasin choisi et les trois problèmes qui font perdre le plus d'appels ; ensuite l'issue des appels entrants, le volume par jour et par heure, les postes et numéros les plus actifs ; tout en bas, le backup ouvert et les informations du serveur.",
    "comment": [
-    "Choisissez d'abord un backup (.zip) : c'est ici qu'il s'ouvre et qu'on peut en changer.",
+    "Choisissez d'abord un backup (.zip) : c'est ici qu'il s'ouvre. Pour en changer, descendez en bas de la page ; « Système » s'y déplie pour voir le FQDN, la licence, les chemins et les codecs.",
     "Regardez l'issue des appels entrants (répondus, perdus, messagerie, renvoyés) pour repérer d'un coup d'œil un problème de service.",
     "Cliquez sur un poste ou un numéro pour ouvrir sa fiche."
    ],
@@ -880,7 +880,7 @@
   "general": [
    [
     "Open a backup",
-    "On the Dashboard, click “Choose a backup (.zip)” or drag and drop the file. Processing happens entirely in your browser: nothing is sent to the Internet. The backup is remembered until “Close the backup”."
+    "On the Dashboard (at the bottom of the page once a backup is open), click “Choose a backup (.zip)” or drag and drop the file. Processing happens entirely in your browser: nothing is sent to the Internet. The backup is remembered until “Close the backup”."
    ],
    [
     "Guided tour",
@@ -933,9 +933,9 @@
   ],
   "onglets": {
    "dashboard": {
-    "sert": "The starting point: key figures for the system or the selected store, the outcome of inbound calls, volume by day and by hour, the most active extensions and numbers, and server information.",
+    "sert": "The starting point: at the top, the health score, key figures for the system or the selected store and the three problems that lose the most calls; then the outcome of inbound calls, volume by day and by hour, the most active extensions and numbers; at the very bottom, the open backup and server information.",
     "comment": [
-     "First choose a backup (.zip): this is where it is opened and where you can change it.",
+     "First choose a backup (.zip): this is where it is opened. To change it, scroll to the bottom of the page; “System” expands there to show the FQDN, licence, paths and codecs.",
      "Look at the outcome of inbound calls (answered, lost, voicemail, forwarded) to spot a service problem at a glance.",
      "Click an extension or a number to open its details."
     ],

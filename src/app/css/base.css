@@ -145,6 +145,20 @@ audio{height:30px;max-width:260px}
 .btn:hover{filter:brightness(1.05)}
 .bkdrop{color:var(--muted);font-size:12.5px;margin-top:8px}
 .sys{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+.sys>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:8px;font-size:12.5px}
+.sys>summary::-webkit-details-marker{display:none}
+.sys>summary::after{content:'▸';color:var(--muted)}
+.sys[open]>summary::after{content:'▾'}
+.dkpis{margin-top:12px}
+.prtop{margin-top:12px}
+.prtoph{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.prtoph h3{margin:0}
+.prtopr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);color:var(--text);text-decoration:none}
+.prtopr:hover .prtopt{color:var(--accent)}
+.prtopt{flex:1;min-width:0;font-weight:600;font-size:13.5px}
+.prtopn{white-space:nowrap;font-size:12.5px;text-align:right}
+.prtop+.rbanner{margin-top:12px}
+@media (max-width:640px){.prtopr{flex-wrap:wrap}.prtopn{flex-basis:100%;text-align:left}}
 #segsel{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font:inherit;font-size:13px;max-width:220px;cursor:pointer}
 #segsel.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
 .segbar{background:var(--accent-soft);color:var(--text);border-radius:8px;padding:8px 12px;font-size:13px;margin-bottom:14px}
