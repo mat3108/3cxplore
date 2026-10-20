@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.3.3-2563eb)
+![Version](https://img.shields.io/badge/version-19.3.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -39,7 +39,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 |---|---|
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Tous les problèmes en une liste, classés selon les appels touchés puis par gravité. |
-| **Note de santé** | Note sur 100 par magasin : service, configuration, sécurité et téléphones. |
+| **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
 | **Recommandations** | Analyse automatique de la configuration et de l'activité, classée Critique / À corriger / Observation, avec éléments concernés, recommandation, statut et notes personnelles ; ajout d'observations manuelles ; export CSV et impression. |
 | **Actions console** | Liste de tâches à faire dans la console 3CX, classées par moment, avec chemin, impact, éléments exacts, copie des MAC, suivi et impression. |
 | **Rapport** | Rapport imprimable / PDF par magasin : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes, téléphones à mettre à jour. |
@@ -115,7 +115,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Licences et postes** | Postes jamais utilisés ou inactifs (seuil au choix), encore visés par un acheminement, en double ou désactivés ; téléphones à récupérer ; pic d'appels simultanés. |
 | **Magasins** | Codes de magasin détectés (nom, type Magasin/Commun, nombre d'éléments) et attribution de chaque département, file, standard, groupe de sonnerie et poste, avec correction manuelle. |
 | **Sauvegarde des réglages** | Export et import en un fichier de tous les réglages saisis dans l'interface (magasins, objectifs, suivi, notes, tâches, préférences). |
-| **Interface** | Thèmes prêts à l'emploi, couleur, densité, texte, coins, cartes, police, largeur, menu, onglet d'accueil et animations. |
+| **Interface** | Focus visible au clavier, plus de survol collé sur téléphone, zones à toucher agrandies. |
 | **Sécurité** | Droits d'administration, double authentification, renvois externes, appels internationaux, connexions et changements sensibles. |
 | **Renvois externes** | Renvois vers des numéros externes : statuts, appels renvoyés, anciens employés, cellulaires de collègues, numéros inconnus. |
 | **Appels suspects** | Démarchage et robots : rafales, plusieurs SDA appelés, appels très courts ou de nuit répétés, appels masqués par heure. |
@@ -221,7 +221,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.3.3** | Les appels en cartes sur téléphone |
+| **19.3.4** | Cohérence et accessibilité |
+| 19.3.3 | Les appels en cartes sur téléphone |
 | 19.3.2 | Graphique par jour et tableaux allégés |
 | 19.3.1 | La base de chaque pourcentage |
 | 19.3 | L'essentiel en haut du tableau de bord |

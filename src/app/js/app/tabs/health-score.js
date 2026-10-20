@@ -2,6 +2,7 @@
 // quatre volets : service (35 %), configuration (25 %), sécurité (20 %), téléphones (20 %)
 const HS_W = {service: 35, config: 25, secu: 20, tel: 20};
 const HS_L = {service: 'Service', config: 'Configuration', secu: 'Sécurité', tel: 'Téléphones'};
+const HS_S = {service: 'Serv.', config: 'Conf.', secu: 'Sécu.', tel: 'Tél.'}; // 19.3.4 : libellés courts des pastilles (S C S T était ambigu)
 const hsGrade = n => n == null ? ['–', ''] : n >= 85 ? ['A', 'ok'] : n >= 70 ? ['B', 'ok'] : n >= 55 ? ['C', 'warn'] : ['D', 'bad'];
 const hsClamp = v => Math.max(0, Math.min(100, Math.round(v)));
 // volets calculables à partir d'un point du suivi (pour l'évolution)
@@ -89,7 +90,7 @@ V.sante = el => {
     <p class="lead">Une note sur 100 par magasin, qui résume quatre volets : <b>service</b> (taux de réponse, appels perdus, attente, réponse des agents, comparés aux objectifs), <b>configuration</b> (SDA non acheminés ou qui perdent des appels, jours fériés manquants, files sans agent), <b>sécurité</b> (MFA des postes nominatifs, comptes à droits élevés, renvois externes) et <b>téléphones</b> (firmwares à jour). A : 85 et plus · B : 70 à 84 · C : 55 à 69 · D : moins de 55.${H.prev ? ` Évolution du service et des téléphones depuis le backup du ${esc(dayKey(H.prev.iso))}.` : ''}</p>
     ${focus ? hsCard(focus, true) : ''}
     ${sys && !SEG ? hsCard(sys, false) : ''}
-    ${SEG ? '' : `<h3>Par magasin (${stores.length})</h3><div class="hsgrid">${stores.map(r => `<div class="card hsmini" data-hs="${esc(r.seg)}">${hsBadge(r.total)}<div><b>${esc(segShort(r.seg))}</b><div class="hsdots">${Object.keys(HS_W).map(k => `<span title="${HS_L[k]} : ${r.comp[k] ? r.comp[k].score : '–'}" class="${hsGrade(r.comp[k] && r.comp[k].score)[1]}">${HS_L[k][0]}</span>`).join('')}</div></div></div>`).join('')}</div>
+    ${SEG ? '' : `<h3>Par magasin (${stores.length})</h3><div class="hsgrid">${stores.map(r => `<div class="card hsmini" data-hs="${esc(r.seg)}">${hsBadge(r.total)}<div><b>${esc(segShort(r.seg))}</b><div class="hsdots">${Object.keys(HS_W).map(k => `<span title="${HS_L[k]} : ${r.comp[k] ? r.comp[k].score : '–'}" class="${hsGrade(r.comp[k] && r.comp[k].score)[1]}">${HS_S[k]}</span>`).join('')}</div></div></div>`).join('')}</div>
       <p class="muted" style="font-size:12.5px">Cliquez un magasin pour voir le détail de sa note.</p>`}
     <p class="note">Service : 30 derniers jours de l'historique, comparés aux objectifs du magasin (onglet Objectifs). Configuration : retenues de 10 points par SDA non acheminé (max. 40), 5 par SDA perdant un appel à un moment clé (max. 30), 5 par département sans les fériés à venir (max. 25), 10 par file sans agent connecté (max. 30). Sécurité : part des postes nominatifs (avec courriel) protégés par un MFA (Microsoft 365 ou 3CX), moins 20 points par compte à droits élevés sans MFA et jusqu'à 15 pour les renvois externes actifs. Téléphones : part des téléphones à jour (moitié pour « probablement à jour » et pour les versions inconnues, qui ne peuvent pas être vérifiées).</p></div>`;
   $('#hswrap').addEventListener('click', e => { const c = e.target.closest('[data-hs]'); if(c) window.__app.setSeg(c.dataset.hs); });

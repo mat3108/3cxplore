@@ -1,5 +1,27 @@
 [
  {
+  "version": "19.3.4",
+  "date": "2026-10-19",
+  "titre": "Cohérence et accessibilité",
+  "resume": "Libellés clairs dans la Note de santé, survol qui ne reste plus collé sur téléphone, contour visible au clavier, zones à toucher plus grandes et « /100 » plus lisible.",
+  "changements": [
+   "Note de santé, par magasin : les pastilles « S C S T » (deux S pour Service et Sécurité) deviennent « Serv. Conf. Sécu. Tél. » ; les cartes sont un peu plus larges pour qu'elles tiennent.",
+   "Sur téléphone et tablette, une entrée de menu ou un sous-onglet touché ne reste plus surligné comme s'il était actif ; au clavier, l'élément qui a le focus est entouré d'un contour visible.",
+   "Sur écran tactile, boutons, listes, champs, sous-onglets, entrées du menu, liens « ouvrir ▸ », étoiles des numéros importants, liens vers les postes et boutons de pages ont une zone à toucher d'au moins 24 px (40 px pour la plupart).",
+   "Le « /100 » des notes est plus contrasté (au-dessus du minimum de lisibilité WCAG AA)."
+  ],
+  "onglets": [
+   [
+    "Note de santé",
+    "Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible."
+   ],
+   [
+    "Interface",
+    "Focus visible au clavier, plus de survol collé sur téléphone, zones à toucher agrandies."
+   ]
+  ]
+ },
+ {
   "version": "19.3.3",
   "date": "2026-10-19",
   "titre": "Les appels en cartes sur téléphone",

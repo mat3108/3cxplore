@@ -207,3 +207,25 @@ a.dlink{color:var(--accent);text-decoration:none} a.dlink:hover{text-decoration:
 .bkst.err{color:var(--bad)}
 .bkbar{height:6px;border-radius:3px;background:var(--panel2);overflow:hidden;margin-top:6px}.bkbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
 @media (max-width:700px){.bar input[type=search]{flex:1 1 100%;max-width:none;min-width:0} .bar select{flex:1 1 auto;min-width:0;max-width:100%} .top .sub{display:none} main{padding:14px 16px 60px} .top{padding:10px 16px} dl.kv{grid-template-columns:1fr} input[type=search]{min-width:0;width:100%} .two{grid-template-columns:1fr}}
+
+/* 19.3.4 : cohérence et accessibilité */
+.hsgrid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.hsdots{flex-wrap:wrap}
+.hsdots span{width:auto!important;padding:0 5px}
+.hsb small{color:color-mix(in srgb,var(--text) 72%,transparent);font-size:11.5px}
+:where(a,button,select,input,summary,[tabindex]):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (hover:none){
+  #nav a:not(.on):hover,.subtabs a:not(.on):hover{background:transparent;color:var(--muted)}
+  tbody tr:hover{background:transparent}
+}
+@media (pointer:coarse){
+  .btn,.bar select,.bar input,input[type=date],#segsel{min-height:40px}
+  .subtabs a,#nav a{min-height:40px}
+  .dlink,.pmore>summary{display:inline-block;padding:8px 4px;margin:-8px 0}
+  .tourtgl{min-height:40px}
+  a.dn{display:inline-block;padding:5px 0}
+  .vipst{min-width:32px;min-height:32px}
+  .pager button{min-height:40px}
+  main summary{padding:6px 0}
+  .tabhelp{width:32px;height:32px}
+}
