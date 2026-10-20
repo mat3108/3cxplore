@@ -9,7 +9,7 @@ V.prevision = el => {
   if(!all.length){ el.innerHTML = '<h2>Prévision du volume</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
   const addD = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
   const wdOf = d => (new Date(d + 'T12:00:00Z').getUTCDay() + 6) % 7;
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   // dernier jour complet : si le backup a été pris en cours de journée, on s'arrête la veille
   const lastFull = localParts(all[0][0])[1] < 20 ? addD(last, -1) : last;
   const from = addD(lastFull, -(W * 7) + 1);

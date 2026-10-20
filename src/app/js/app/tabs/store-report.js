@@ -11,7 +11,7 @@ function rptSections(){ try{ const v = JSON.parse(localStorage.getItem(RPT_KEY) 
 V.rapport = el => {
   const all = FULL.calls, sec = rptSections();
   const meta = all.map(c => localParts(c[0]));
-  const lastDay = meta.length ? meta[0][0] : '', firstDay = meta.length ? meta[meta.length - 1][0] : '';
+  const lastDay = meta.length ? meta[0][0] : '', firstDay = meta.length ? callHist().first : '';
   const P = statsPeriod();
   const addDays = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
   const [from, to] = !lastDay ? ['', ''] : P.mode === 'all' ? [firstDay, lastDay] : P.mode === 'custom' ? [P.from || firstDay, P.to || lastDay] : [addDays(lastDay, -(+P.mode) + 1), lastDay];

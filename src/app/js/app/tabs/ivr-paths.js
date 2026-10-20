@@ -30,7 +30,7 @@ const median = a => { if(!a.length) return null; const s = a.slice().sort((x, y)
 V.menus = el => {
   const all = FULL.calls;
   if(!all.length){ el.innerHTML = '<h2>Parcours dans les menus</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const lastDay = localParts(all[0][0])[0], firstDay = localParts(all[all.length - 1][0])[0];
+  const lastDay = localParts(all[0][0])[0], firstDay = callHist().first;
   const P = statsPeriod();
   const range = () => P.mode === 'all' ? [firstDay, lastDay] : P.mode === 'custom' ? [P.from || firstDay, P.to || lastDay] : [addDaysISO(lastDay, -(+P.mode) + 1), lastDay];
   el.innerHTML = `<div id="mnwrap"><h2>Parcours dans les menus (IVR)</h2>

@@ -5,7 +5,7 @@ V.courts = el => {
   let S = {p: '30', t: 5}; try{ S = {...S, ...JSON.parse(localStorage.getItem(SHT_KEY) || '{}')}; }catch(e){}
   const all = FULL.calls, T = +S.t;
   if(!all.length){ el.innerHTML = '<h2>Appels très courts</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(S.p, first, last);
   // ligne (trunk) d'un appel entrant, d'après son SDA
   const didLine = {}; FULL.lines.forEach(l => (l.dids || []).forEach(d => { const k = normNum(d); if(k) didLine[k] = l; }));

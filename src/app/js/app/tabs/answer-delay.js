@@ -9,7 +9,7 @@ V.delai = el => {
   let S = {p: '30', t: 20}; try{ S = {...S, ...JSON.parse(localStorage.getItem(DLY_KEY) || '{}')}; }catch(e){}
   const all = FULL.calls;
   if(!all.length){ el.innerHTML = '<h2>Délai avant réponse</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(S.p, first, last);
   const T = +S.t;
   const rows = []; let exact = 0, skipped = 0; // [délai, magasin, heure, jour de semaine, poste qui a répondu, appel]

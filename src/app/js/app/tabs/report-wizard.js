@@ -61,7 +61,7 @@ V.genrap = (el, arg) => {
   if(arg){ const [k, id] = decodeURIComponent(arg).split('~'); // « ext », « queue » ou « did », suivi ou non de ~numéro (20.2.1 : l'accueil ouvre directement « Lequel ? »)
     if(GRP_Q[k]){ if(S.k !== k){ S.qs = null; S.id = ''; } S.k = k; S.done = false; if(id){ S.id = id; S.step = 2; } else S.step = 1; } history.replaceState(null, '', '#genrap'); }
   const en = document.documentElement.lang === 'en', T = (fr, e) => en ? e : fr, loc = en ? 'en-CA' : 'fr-CA';
-  const all = FULL.calls, first = all.length ? localParts(all[all.length - 1][0])[0] : '', last = all.length ? localParts(all[0][0])[0] : '';
+  const all = FULL.calls, first = all.length ? callHist().first : '', last = all.length ? localParts(all[0][0])[0] : '';
   const save = () => { try{ localStorage.setItem(GRP_KEY, JSON.stringify({k: S.k, id: S.id, p: S.p, cmp: S.cmp, qs: S.qs, sl: S.sl, list: S.list, step: S.step, done: S.done})); }catch(e){} };
   const title = T('Générateur de rapport', 'Report generator');
   if(!all.length){ el.innerHTML = `<h2>${title}</h2><p class="muted">${T('Aucun appel dans ce backup.', 'No calls in this backup.')}</p>`; return; }
@@ -143,8 +143,11 @@ V.genrap = (el, arg) => {
   // ---------------- rapport ----------------
   function build(){
     const s = subj(); if(!s) return null;
-    const [from, to] = perRange(S.p || '30', first, last), days = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1);
-    const pTo = addDaysISO(from, -1), pFrom = addDaysISO(from, -days), hasPrev = S.cmp && pTo >= first;
+    const [from0, to] = perRange(S.p || '30', first, last), days = Math.max(1, Math.round((Date.parse(to) - Date.parse(from0)) / 864e5) + 1);
+    const pTo = addDaysISO(from0, -1), pFrom = addDaysISO(from0, -days), hasPrev = S.cmp && pFrom >= first; // 20.3.1 : la période d'avant doit être entièrement dans l'historique
+    // jours couverts par l'historique (20.3.1) : les jours avant son début n'ont aucune donnée et ne comptent pas dans les moyennes par jour
+    // les calculs partent du début réel de l'historique (from) ; la période demandée (from0) reste affichée, ses premiers jours grisés
+    const H = callHist(), from = from0 < H.first ? H.first : from0, cDays = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1);
     const want = new Set(S.qs || GRP_Q[S.k].map(x => x[0]));
     const inP = (iso, a, b) => { const d = localParts(iso)[0]; return d >= a && d <= b; };
     const pc = (a, b) => b ? Math.round(100 * a / b) + ' %' : '–', avg = (t, n) => n ? Math.round(t / n) : 0;
@@ -153,7 +156,7 @@ V.genrap = (el, arg) => {
     const K = (l, v, x, o) => ({l, v, x: x ?? grpTxt(String(v)), ...(o || {})});
     const sec = (id, h, o) => { if(want.has(id)) secs.push({id, h, kpis: [], tables: [], html: '', note: '', ...o}); };
     const tbl = (t, hd, r, numFrom, x) => ({t, h: hd, r, n: numFrom, x});
-    const vbars = (items, small) => { const mx = Math.max(1, ...items.map(x => x.v)); return `<div class="attvb${small ? ' sm' : ''}">${items.map(x => `<div><b>${x.v ? nf(x.v) : ''}</b><i style="height:calc((100% - 18px) * ${(Math.max(x.v ? .02 : 0, x.v / mx)).toFixed(3)})" class="${x.hot ? 'hot' : ''}"></i><span>${esc(x.lab)}</span></div>`).join('')}</div>`; };
+    const vbars = (items, small) => { const mx = Math.max(1, ...items.map(x => x.v)); return `<div class="attvb${small ? ' sm' : ''}">${items.map(x => `<div><b>${x.v ? nf(x.v) : ''}</b><i style="height:calc((100% - 18px) * ${(Math.max(x.v ? .02 : 0, x.v / mx)).toFixed(3)})" class="${x.nod ? 'nod' : x.hot ? 'hot' : ''}"></i><span>${esc(x.lab)}</span></div>`).join('')}</div>`; };
     const WDS = en ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
     // répartition dans le temps : par heure, par jour de semaine, puis par jour, semaine ou mois selon la longueur de la période
     const timeCharts = (pts, lab) => {
@@ -161,15 +164,15 @@ V.genrap = (el, arg) => {
       const used = hrs.map((v, i) => v ? i : -1).filter(i => i >= 0), h0 = used.length ? used[0] : 8, h1 = used.length ? used[used.length - 1] : 17;
       const hmx = Math.max(...hrs), wmx = Math.max(...wd);
       let per = [], perT = '';
-      if(days <= 45){ perT = T('Par jour', 'By day'); for(let d = from; d <= to; d = addDaysISO(d, 1)) per.push({v: (byD[d] || {}).n || 0, lab: d.slice(8)}); }
+      if(days <= 45){ perT = T('Par jour', 'By day'); for(let d = from0; d <= to; d = addDaysISO(d, 1)) per.push({v: (byD[d] || {}).n || 0, lab: d.slice(8), nod: d < H.first}); }
       else if(days <= 210){ perT = T('Par semaine (date du lundi)', 'By week (Monday date)'); const wk = {}; Object.entries(byD).forEach(([d, x]) => { const k = addDaysISO(d, -localParts(d + 'T12:00:00Z')[2]); wk[k] = (wk[k] || 0) + x.n; });
-        for(let d = addDaysISO(from, -localParts(from + 'T12:00:00Z')[2]); d <= to; d = addDaysISO(d, 7)) per.push({v: wk[d] || 0, lab: d.slice(5)}); }
+        for(let d = addDaysISO(from0, -localParts(from0 + 'T12:00:00Z')[2]); d <= to; d = addDaysISO(d, 7)) per.push({v: wk[d] || 0, lab: d.slice(5), nod: addDaysISO(d, 6) < H.first}); }
       else { perT = T('Par mois', 'By month'); const mo = {}; Object.entries(byD).forEach(([d, x]) => mo[d.slice(0, 7)] = (mo[d.slice(0, 7)] || 0) + x.n); Object.keys(mo).sort().forEach(m => per.push({v: mo[m], lab: m})); }
       const pk = hrs.indexOf(hmx), pw = wd.indexOf(wmx);
       return {html: `<div class="att2"><div><h3>${T('Par heure', 'By hour')}</h3>${vbars(hrs.slice(h0, h1 + 1).map((v, i) => ({v, lab: `${h0 + i} h`, hot: v === hmx && v > 0})), true)}</div>
         <div><h3>${T('Par jour de la semaine', 'By day of the week')}</h3>${vbars(wd.map((v, i) => ({v, lab: WDS[i], hot: v === wmx && v > 0})))}</div></div>
         <h3>${perT}</h3>${vbars(per, per.length > 14)}`,
-        kpis: pts.length ? [K(T('Heure de pointe', 'Peak hour'), `${pk} h`), K(T('Jour le plus chargé', 'Busiest weekday'), WDS[pw]), K(T(`${lab} par jour (moyenne)`, `${lab} per day (average)`), (Math.round(pts.length / days * 10) / 10).toLocaleString(loc), Math.round(pts.length / days * 10) / 10)] : [],
+        kpis: pts.length ? [K(T('Heure de pointe', 'Peak hour'), `${pk} h`), K(T('Jour le plus chargé', 'Busiest weekday'), WDS[pw]), K(T(`${lab} par jour (moyenne)`, `${lab} per day (average)`), (Math.round(pts.length / cDays * 10) / 10).toLocaleString(loc), Math.round(pts.length / cDays * 10) / 10)] : [],
         table: tbl(T('Par heure', 'By hour'), [T('Heure', 'Hour'), lab], hrs.map((v, i) => [`${i} h`, nf(v)]).filter((r, i) => hrs[i]), 1, hrs.map((v, i) => [i, v]).filter(r => r[1]))};
     };
     const pickSec = (id, h, vals, lab) => sec(id, h, {kpis: vals.length ? [K(T('Délai médian', 'Median time'), dur(grpMed(vals)), grpMed(vals)), K(T('Délai moyen', 'Average time'), dur(avg(vals.reduce((a, b) => a + b, 0), vals.length)), avg(vals.reduce((a, b) => a + b, 0), vals.length)),
@@ -207,9 +210,9 @@ V.genrap = (el, arg) => {
         if(talk && (!longest || talk > longest[1])) longest = [c, talk];
         mine.push([c[0], dir, other, res, talk]); }
       const tot = R.inTalk + R.outTalk, ptot = P ? P.inTalk + P.outTalk : null;
-      sec('talk', T('Temps au téléphone', 'Time on the phone'), {kpis: [K(T('Temps total en conversation', 'Total talk time'), dur(tot), tot, {s: 1, p: ptot}), K(T('Par jour (moyenne)', 'Per day (average)'), dur(Math.round(tot / days)), Math.round(tot / days), {s: 1}),
+      sec('talk', T('Temps au téléphone', 'Time on the phone'), {kpis: [K(T('Temps total en conversation', 'Total talk time'), dur(tot), tot, {s: 1, p: ptot}), K(T('Par jour (moyenne)', 'Per day (average)'), dur(Math.round(tot / cDays)), Math.round(tot / cDays), {s: 1}),
         K(T('Conversation moyenne (entrants)', 'Average talk (inbound)'), dur(avg(R.inTalk, R.inAns)), avg(R.inTalk, R.inAns), {s: 1, p: P && avg(P.inTalk, P.inAns)}), K(T('Conversation moyenne (sortants)', 'Average talk (outbound)'), dur(avg(R.outTalk, R.outAns)), avg(R.outTalk, R.outAns), {s: 1}),
-        K(T('Plus long appel', 'Longest call'), longest ? dur(longest[1]) : '–', longest ? longest[1] : '', {sm: longest ? fmtD(longest[0][0]) : ''})], note: T(`Moyenne par jour sur les ${nf(days)} jours de la période, fins de semaine comprises.`, `Daily average over the ${nf(days)} days of the period, weekends included.`)});
+        K(T('Plus long appel', 'Longest call'), longest ? dur(longest[1]) : '–', longest ? longest[1] : '', {sm: longest ? fmtD(longest[0][0]) : ''})], note: T(`Moyenne par jour sur les ${nf(cDays)} jours de la période, fins de semaine comprises.`, `Daily average over the ${nf(cDays)} days of the period, weekends included.`)});
       if(want.has('when')){ const tc = timeCharts(mine.filter(x => x[4] || x[1] !== T('Entrant', 'Inbound')).map(x => [x[0], 0]), T('Appels', 'Calls')); sec('when', T('Quand il est le plus occupé', 'When they are busiest'), {kpis: tc.kpis, html: tc.html, tables: [tc.table], note: T('Appels répondus, sortants et internes.', 'Answered, outbound and internal calls.')}); }
       const qr = Object.entries(R.q).sort((a, b) => (b[1].ans + b[1].served) - (a[1].ans + a[1].served));
       sec('queue', T('Travail dans les files d\'attente', 'Work in queues'), {kpis: [K(T('Temps connecté aux files', 'Time logged in to queues'), R.onH ? dur(Math.round(R.onH * 3600)) : '–', Math.round(R.onH * 3600), {s: 1}), K(T('Taux d\'occupation', 'Occupancy rate'), R.occ != null ? Math.round(R.occ * 100) + ' %' : '–', R.occ != null ? Math.round(R.occ * 100) : '')],
@@ -357,7 +360,7 @@ V.genrap = (el, arg) => {
     }
     // dans l'ordre des questions
     const order = GRP_Q[S.k].map(x => x[0]); secs.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
-    return {name, sub, meta, from, to, days, pFrom, pTo, hasPrev, secs, brief, list};
+    return {name, sub, meta, from: from0, to, days, H, cDays, pFrom, pTo, hasPrev, secs, brief, list};
   }
 
   function draw(){
@@ -379,7 +382,8 @@ V.genrap = (el, arg) => {
         <button class="btn" id="grpedit">${T('Changer mes réponses', 'Change my answers')}</button><button class="btn" id="grpnew">${T('Nouveau rapport', 'New report')}</button><button class="btn primary" id="grpprint">${T('Imprimer / PDF', 'Print / PDF')}</button><button class="btn" id="grpxl">${T('Exporter en Excel', 'Export to Excel')}</button></div></div>
       <div class="report attrep dprep grprep" id="grpsheet"><header class="rpcover"><div class="rpk">${esc(R.sub)} · 3CXplore</div><h1>${esc(R.name)}</h1>
         <div class="attsub">${esc(R.meta)}</div>
-        <div class="rpmeta">${T(`Du ${R.from} au ${R.to}`, `From ${R.from} to ${R.to}`)} (${nf(R.days)} ${T('jours', 'days')})${R.hasPrev ? ` · ${T(`comparé au ${R.pFrom} → ${R.pTo}`, `compared with ${R.pFrom} → ${R.pTo}`)}` : S.cmp ? ` · ${T('pas d\'historique avant la période pour comparer', 'no history before the period to compare')}` : ''} · ${T('préparé le', 'prepared on')} ${esc(new Date().toLocaleDateString(loc))}</div></header>
+        <div class="rpmeta">${T(`Du ${R.from} au ${R.to}`, `From ${R.from} to ${R.to}`)} (${nf(R.days)} ${T('jours', 'days')}${R.cDays < R.days ? T(`, dont ${nf(R.cDays)} avec historique`, `, ${nf(R.cDays)} with history`) : ''})${R.hasPrev ? ` · ${T(`comparé au ${R.pFrom} → ${R.pTo}`, `compared with ${R.pFrom} → ${R.pTo}`)}` : S.cmp ? ` · ${T(`pas de comparaison : la période d'avant commencerait avant le début de l'historique (${R.H.first})`, `no comparison: the previous period would start before the history begins (${R.H.first})`)}` : ''} · ${T('préparé le', 'prepared on')} ${esc(new Date().toLocaleDateString(loc))}</div></header>
+      ${R.from < R.H.first ? `<p class="gvhist">${esc(T(`L'historique des appels commence le ${R.H.first} : la période ne compte que ${nf(R.cDays)} jour${R.cDays > 1 ? 's' : ''} sur ${nf(R.days)}, moyennes par jour comprises ; les jours d'avant sont grisés dans les graphiques par jour.`, `Call history starts on ${R.H.first}: the period covers only ${nf(R.cDays)} of ${nf(R.days)} days, daily averages included; the days before are greyed out in the daily charts.`))}</p>` : ''}${R.H.stray && (S.p === 'all' || R.from < R.H.first) ? `<p class="gvhist">${esc(T(`${nf(R.H.stray)} appel${R.H.stray > 1 ? 's' : ''} d'avant le début réel de l'historique (appel${R.H.stray > 1 ? 's' : ''} isolé${R.H.stray > 1 ? 's' : ''} ou essais de mise en service, à partir du ${R.H.strayFrom}) ${R.H.stray > 1 ? 'ne sont' : 'n\'est'} pas compté${R.H.stray > 1 ? 's' : ''}.`, `${nf(R.H.stray)} call${R.H.stray > 1 ? 's' : ''} from before the real start of the history (isolated call${R.H.stray > 1 ? 's' : ''} or set-up tests, from ${R.H.strayFrom}) ${R.H.stray > 1 ? 'are' : 'is'} not counted.`))}</p>` : ''}
       ${R.brief.length ? `<div class="attbrief"><h3>${T('En bref', 'In short')}</h3>${R.brief.map(t => `<p>${t}</p>`).join('')}</div>` : ''}
       ${R.secs.map(x => `<section class="rps grpsec"><h2>${esc(x.h)}</h2>${x.kpis.length ? `<div class="attkpi">${x.kpis.map(kpiH).join('')}</div>` : ''}${x.html}${x.tables.map(tblH).join('')}${x.note ? `<p class="muted grpnote">${esc(x.note)}</p>` : ''}</section>`).join('')}
       ${showList ? `<section class="rps grpsec attbrk"><h2>${T('Les appels un par un', 'Calls one by one')} <span class="muted">(${nf(R.list.r.length)})</span></h2>${tblH({t: R.list.r.length > 300 ? T('Les 300 plus récents (tous dans Excel)', 'The 300 most recent (all in Excel)') : '', h: R.list.h, r: R.list.r.slice(0, 300), n: 99})}</section>` : ''}

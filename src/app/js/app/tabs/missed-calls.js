@@ -44,7 +44,7 @@ const fmtDelay = m => m == null ? '–' : m < 60 ? m + ' min' : m < 1440 ? Math.
 V.rappels = el => {
   const all = FULL.calls;
   if(!all.length){ el.innerHTML = '<h2>Appels manqués</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const lastDay = localParts(all[0][0])[0], firstDay = localParts(all[all.length - 1][0])[0];
+  const lastDay = localParts(all[0][0])[0], firstDay = callHist().first;
   const P = statsPeriod();
   const range = () => P.mode === 'all' ? [firstDay, lastDay] : P.mode === 'custom' ? [P.from || firstDay, P.to || lastDay] : [addDaysISO(lastDay, -(+P.mode) + 1), lastDay];
   let done = {}; try{ done = JSON.parse(localStorage.getItem(RAP_KEY()) || '{}'); }catch(e){}

@@ -7,7 +7,7 @@ V.receptions = el => {
   // postes ajoutés ou exclus : mémorisés dans ce navigateur
   if(!S.loaded){ try{ const j = JSON.parse(localStorage.getItem(RK) || '{}'); S.extra = j.extra || []; S.off = j.off || []; }catch(e){} S.loaded = 1; }
   const keep = () => { try{ localStorage.setItem(RK, JSON.stringify({extra: S.extra, off: S.off})); }catch(e){} };
-  const all = FULL.calls, lastDay = all.length ? localParts(all[0][0])[0] : new Date().toISOString().slice(0, 10), firstDay = all.length ? localParts(all[all.length - 1][0])[0] : lastDay;
+  const all = FULL.calls, lastDay = all.length ? localParts(all[0][0])[0] : new Date().toISOString().slice(0, 10), firstDay = all.length ? callHist().first : lastDay;
   const [from, to] = perRange(S.per, firstDay, lastDay);
   const recs = [...new Set([...recAuto(), ...S.extra])].filter(n => !S.off.includes(n) && DN[n] && (!SEG || SEGOF[n] === SEG));
   const set = new Set(recs), M = {}; recs.forEach(n => M[n] = {n, off: 0, ans: 0, lost: 0, talk: 0, iv: [], heat: Array.from({length: 7}, () => Array.from({length: 24}, () => ({o: 0, l: 0}))), park: 0, phang: 0, pback: 0});

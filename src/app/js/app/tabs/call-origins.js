@@ -28,7 +28,7 @@ const PRV_KEY = 'provenance3cx-periode';
 V.provenance = el => {
   const all = FULL.calls; let P = '30'; try{ P = localStorage.getItem(PRV_KEY) || '30'; }catch(e){}
   if(!all.length){ el.innerHTML = '<h2>Provenance des appels</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(P, first, last);
   const rows = []; // [appel, magasin, région, indicatif]
   for(const c of all){ if(c[1] !== 'in') continue; const day = localParts(c[0])[0]; if(day < from) break; if(day > to) continue; const s = callSeg(c); if(SEG && s !== SEG) continue; if(s === SEG_BRIDGE) continue; const [r, ac] = prvOf(c[2]); rows.push([c, s, r, ac]); }

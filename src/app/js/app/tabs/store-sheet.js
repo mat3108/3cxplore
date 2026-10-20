@@ -6,7 +6,7 @@ V.fichemag = el => {
   if(!stores.includes(S.seg)) S.seg = stores[0] || '';
   const s = S.seg, all = FULL.calls;
   if(!s){ el.innerHTML = '<h2>Fiche magasin</h2><p class="muted">Aucun magasin.</p>'; return; }
-  const lastDay = all.length ? localParts(all[0][0])[0] : new Date().toISOString().slice(0, 10), firstDay = all.length ? localParts(all[all.length - 1][0])[0] : lastDay;
+  const lastDay = all.length ? localParts(all[0][0])[0] : new Date().toISOString().slice(0, 10), firstDay = all.length ? callHist().first : lastDay;
   const [from, to] = perRange(S.per, firstDay, lastDay), inP = c => { const d = localParts(c[0])[0]; return d >= from && d <= to; };
   // appels entrants du magasin
   const inc = all.filter(c => c[1] === 'in' && c[10] !== 'bridge' && callSeg(c) === s && inP(c));

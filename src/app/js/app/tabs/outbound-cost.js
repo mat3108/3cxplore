@@ -9,7 +9,7 @@ const money = v => (+v || 0).toLocaleString('fr-CA', {style: 'currency', currenc
 V.couts = el => {
   const all = FULL.calls, C = cstLoad();
   if(!all.length){ el.innerHTML = '<h2>Coût des appels sortants</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(C.p, first, last), days = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1);
   const rate = k => cstNum((C.t[k] || {}).m), fee = k => cstNum((C.t[k] || {}).a);
   // durée facturée : à la seconde, par tranche de 6 s ou à la minute entamée

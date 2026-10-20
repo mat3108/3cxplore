@@ -11,7 +11,7 @@ function numInfo(raw){
 V.numero = (el, arg) => {
   const S = window.__num ||= (() => { try{ return JSON.parse(localStorage.getItem(NUM_KEY) || '{}'); }catch(e){ return {}; } })();
   if(arg) S.q = decodeURIComponent(arg);
-  const all = FULL.calls, first = all.length ? localParts(all[all.length - 1][0])[0] : '', last = all.length ? localParts(all[0][0])[0] : '';
+  const all = FULL.calls, first = all.length ? callHist().first : '', last = all.length ? localParts(all[0][0])[0] : '';
   S.p ||= 'all'; const [from, to] = all.length ? perRange(S.p, first, last) : ['', ''];
   const save = () => { try{ localStorage.setItem(NUM_KEY, JSON.stringify({q: S.q || '', p: S.p})); }catch(e){} V.numero(el); };
   const inP = c => { const d = localParts(c[0])[0]; return d >= from && d <= to; };

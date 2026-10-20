@@ -3,7 +3,7 @@ const INT_KEY = 'internes3cx-periode';
 V.internes = el => {
   const all = FULL.calls; let P = '30'; try{ P = localStorage.getItem(INT_KEY) || '30'; }catch(e){}
   if(!all.length){ el.innerHTML = '<h2>Appels internes</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(P, first, last);
   const kindOf = n => DN[n] ? DN[n].kind : 'Poste';
   const rows = []; // {c, a: appelant, b: appelé, sa, sb, ok}

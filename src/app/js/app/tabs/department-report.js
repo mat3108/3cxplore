@@ -22,7 +22,7 @@ V.deptrap = (el, arg) => {
   if(!gs.length){ el.innerHTML = `<h2>${title}</h2><p class="muted">${T('Aucun appel entrant passé par un département', 'No inbound call went through a department')}${SEG ? T(' dans ce magasin', ' in this store') : ''}.</p>`; return; }
   if(!gs.some(g => g.number === S.g)) S.g = gs[0].number;
   const g = gs.find(x => x.number === S.g), IX = IDX[g.number];
-  const first = localParts(all[all.length - 1][0])[0], last = localParts(all[0][0])[0];
+  const first = callHist().first, last = localParts(all[0][0])[0];
   S.p ||= '90'; const [from, to] = perRange(S.p, first, last), days = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1);
   const save = () => { try{ localStorage.setItem(DPR_KEY, JSON.stringify({g: S.g, p: S.p})); }catch(e){} V.deptrap(el); };
   const pc = (a, b) => b ? Math.round(100 * a / b) + (en ? '%' : ' %') : '–', pn = (a, b) => b ? Math.round(100 * a / b) : 0, hh = h => en ? (h % 12 || 12) + (h < 12 ? ' am' : ' pm') : h + ' h';

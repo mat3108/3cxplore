@@ -15,7 +15,7 @@ const DST_KEY = 'destinations3cx-periode';
 V.destinations = el => {
   const all = FULL.calls; let P = '30'; try{ P = localStorage.getItem(DST_KEY) || '30'; }catch(e){}
   if(!all.length){ el.innerHTML = '<h2>Destinations des appels sortants</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(P, first, last);
   // soirs, nuits et fins de semaine : avant 8 h, à partir de 20 h, samedi et dimanche (heure de l'Est)
   const offHours = lp => lp[1] < 8 || lp[1] >= 20 || lp[2] >= 5;

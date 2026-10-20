@@ -8,6 +8,21 @@ function localParts(iso){
   if(o === undefined){ const d = new Date(k + ':00:00Z'); o = _tzOff[k] = Date.parse(d.toLocaleString('sv-SE', {timeZone: TZ}).replace(' ', 'T') + 'Z') - d.getTime(); }
   const t = new Date(Date.parse(iso) + o); return [t.toISOString().slice(0, 10), t.getUTCHours(), (t.getUTCDay() + 6) % 7];
 }
+// début réel de l'historique des appels (20.3.1). Ne le font pas commencer : des appels isolés, séparés du reste par plus de 30 jours sans aucun appel
+// et qui font moins de 2 % du total (un appel resté d'une ancienne installation), puis les jours de mise en service où il n'y a eu que des appels
+// internes, avant le premier appel venu de l'extérieur ou passé vers l'extérieur -> {first, last, stray (appels écartés), strayFrom (le plus ancien)}
+let _callHist = null;
+function callHist(){
+  if(_callHist) return _callHist;
+  const all = FULL.calls; if(!all.length) return _callHist = {first: '', last: '', stray: 0, strayFrom: ''};
+  const days = [], cnt = [], ext = []; // jours où il y a eu des appels, du plus ancien au plus récent : nombre d'appels, dont entrants ou sortants
+  for(let i = all.length - 1; i >= 0; i--){ const d = localParts(all[i][0])[0]; if(days[days.length - 1] !== d){ days.push(d); cnt.push(0); ext.push(0); } cnt[cnt.length - 1]++; if(all[i][1] === 'in' || all[i][1] === 'out') ext[ext.length - 1]++; }
+  let cut = 0, acc = 0;
+  for(let i = 0; i < days.length - 1; i++){ acc += cnt[i]; if((Date.parse(days[i + 1]) - Date.parse(days[i])) / 864e5 > 30 && acc <= all.length * .02) cut = i + 1; }
+  while(cut < days.length - 1 && !ext[cut]) cut++;
+  const stray = cnt.slice(0, cut).reduce((a, b) => a + b, 0);
+  return _callHist = {first: days[cut], last: days[days.length - 1], stray, strayFrom: cut ? days[0] : ''};
+}
 // magasin d'un appel (un seul, pour comparer sans double compte) : SDA pour les entrants, poste d'origine sinon
 const callSeg = c => {
   if(c[1] === 'in'){ const s = DIDSEG[c[5]]; if(s && s !== SEG_COMMON) return s; const p = c[9].find(x => SEGOF[x[0]] && SEGOF[x[0]] !== SEG_COMMON); return p ? SEGOF[p[0]] : (s || SEG_COMMON); }
@@ -21,7 +36,7 @@ V.stats = el => {
   const all = FULL.calls;
   if(!all.length){ el.innerHTML = '<h2>Statistiques</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
   const meta = all.map(c => localParts(c[0])), qmeta = FULL.queueCalls.map(r => localParts(r[0]));
-  const lastDay = meta[0][0], firstDay = meta[meta.length - 1][0];
+  const lastDay = meta[0][0], firstDay = callHist().first;
   const P = statsPeriod();
   const addDays = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
   const range = () => P.mode === 'all' ? [firstDay, lastDay] : P.mode === 'custom' ? [P.from || firstDay, P.to || lastDay] : [addDays(lastDay, -(+P.mode) + 1), lastDay];

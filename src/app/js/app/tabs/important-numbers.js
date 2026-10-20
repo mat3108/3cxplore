@@ -23,7 +23,7 @@ if(!window.__vipWired){ window.__vipWired = true;
 // analyse : appels reçus, répondus, manqués, rappels, délais, sur la période ; rappel cherché jusqu'à la fin de l'historique
 function vipAnalysis(v){
   const all = FULL.calls, idx = vipNums(v), end = all.length ? Date.parse(all[0][0]) : Date.now();
-  const vF = all.length ? localParts(all[all.length - 1][0])[0] : '', vL = all.length ? localParts(all[0][0])[0] : '', vR = perIsC(v.p) ? perRange(v.p, vF, vL) : null;
+  const vF = all.length ? callHist().first : '', vL = all.length ? localParts(all[0][0])[0] : '', vR = perIsC(v.p) ? perRange(v.p, vF, vL) : null;
   const from = v.p === 'all' ? 0 : vR ? dayStartTs(vR[0]) : end - (+v.p) * 864e5, toTs = vR ? dayStartTs(addDaysISO(vR[1], 1)) : Infinity;
   const R = {}, served = {}; v.contacts.forEach(c => R[c.id] = {c, inc: [], out: [], ans: 0, lost: 0, waits: [], missed: [], talk: {}});
   for(const c of all){ const t = Date.parse(c[0]);

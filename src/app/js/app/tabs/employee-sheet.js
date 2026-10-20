@@ -51,7 +51,7 @@ V.employe = (el, arg) => {
   if(!exts.some(e => e.number === S.ext)) S.ext = (exts.find(e => (e.first || e.last)) || exts[0] || {}).number || '';
   const E = EXT_BY[S.ext];
   if(!E){ el.innerHTML = '<h2>Fiche employé</h2><p class="muted">Aucun poste.</p>'; return; }
-  const all = FULL.calls, first = all.length ? localParts(all[all.length - 1][0])[0] : '', last = all.length ? localParts(all[0][0])[0] : '';
+  const all = FULL.calls, first = all.length ? callHist().first : '', last = all.length ? localParts(all[0][0])[0] : '';
   S.p ||= '30'; const [from, to] = all.length ? perRange(S.p, first, last) : ['', ''], days = from ? Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1) : 1;
   const save = () => { try{ localStorage.setItem(EMP_KEY, JSON.stringify({ext: S.ext, p: S.p})); }catch(e){} V.employe(el); };
   const nm = e => (e.first + ' ' + e.last).trim() || e.number, seg = SEGOF[E.number] || SEG_COMMON, R = empStats(E, from, to);

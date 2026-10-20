@@ -89,7 +89,7 @@ V.parkings = el => {
       sh.push({name: 'Mises en parking', rows: [['Date', 'Parking', 'Poste', 'Nom', 'Magasin', 'Attente (s)', 'Issue', 'Repris par', 'Appel']].concat(rows.slice().sort((a, b) => a[0] < b[0] ? 1 : -1).map(r => [fd(r[0]), r[1], r[4], dnName(r[4]), r[4] ? sgs(r[4]) : '', r[2], PK_OUT[r[3]][0], r[3] === 'pickup' ? (r[5] === r[4] ? 'lui-même' : who(r[5])) : '', r[6] === 'ext' ? 'Externe' : 'Interne']))});
       sh.push({name: 'Par magasin', rows: [['Magasin', 'Mises en parking', 'Reprises', 'dont par un collègue', 'Revenues (délai)', 'Raccrochés', 'Attente moy. (s)']].concat(Object.values(bySeg).sort((a, b) => b.n - a.n).map(b => [segShort(b.s), b.n, b.pick, b.other, b.back, b.hang, Math.round(b.w / b.n)]))});
       sh.push({name: 'Par employé', rows: [['Poste', 'Nom', 'Magasin', 'Mises en parking', 'Raccrochés en attente', 'Revenues (délai)']].concat(Object.entries(byExt).sort((a, b) => b[1].n - a[1].n).map(([n, b]) => [n, dnName(n), sgs(n), b.n, b.hang, b.back]))});
-      if(FULL.calls.some(c => c[10] === 'park_ab')){ const all = FULL.calls, lastDay = localParts(all[0][0])[0], firstDay = localParts(all[all.length - 1][0])[0];
+      if(FULL.calls.some(c => c[10] === 'park_ab')){ const all = FULL.calls, lastDay = localParts(all[0][0])[0], firstDay = callHist().first;
         const lr = missedAnalysis(firstDay, lastDay).filter(r => r.where === LOST_WHERE.park_ab && (!SEG || r.seg === SEG));
         sh.push({name: 'À rappeler', rows: [['Client', 'Nom affiché', 'Magasin', 'Dernier appel perdu', 'Tentatives', 'Statut', 'Rappelé le']].concat(lr.sort((a, b) => a.last < b.last ? 1 : -1).map(r => [phone(r.num), r.name, segShort(r.seg), fd(r.last), r.n, RAP_ST[r.st].l, r.when ? fd(r.when) : '']))}); }
     }

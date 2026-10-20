@@ -1,7 +1,7 @@
 // ---------- Appels perdus en parking (section de l'onglet Parkings partagés) ----------
 function parkLostHTML(){
   if(!FULL.calls.some(c => c[10] === 'park_ab')) return (FULL.parkCalls || []).some(r => r[3] === 'hangup') ? `<h3>Appels perdus en parking</h3><div class="card" style="border-left:3px solid var(--warn)">Des appels ont été raccrochés en parking : <b>rouvrez le backup</b> pour les retrouver ici et dans la liste des Appels manqués, avec le numéro du client à rappeler.</div>` : '';
-  const all = FULL.calls, lastDay = localParts(all[0][0])[0], firstDay = localParts(all[all.length - 1][0])[0];
+  const all = FULL.calls, lastDay = localParts(all[0][0])[0], firstDay = callHist().first;
   const rows = missedAnalysis(firstDay, lastDay).filter(r => r.lost.some(i => FULL.calls[i][10] === 'park_ab') && (!SEG || r.seg === SEG)); // 18.2.33
   const calls = all.filter(c => c[10] === 'park_ab' && (!SEG || callSeg(c) === SEG));
   const days = {}; calls.forEach(c => { const d = localParts(c[0])[0]; (days[d] ||= {n: 0, nums: new Set()}).n++; days[d].nums.add(normNum(c[2])); });

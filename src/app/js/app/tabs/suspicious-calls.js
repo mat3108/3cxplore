@@ -6,7 +6,7 @@ const SUS_FLAG = {burst: ['Rafale', 'bad', '5 appels ou plus en 15 minutes'], mu
 V.suspects = el => {
   const all = FULL.calls; let P = '30'; try{ P = localStorage.getItem(SUS_KEY) || '30'; }catch(e){}
   if(!all.length){ el.innerHTML = '<h2>Appels suspects</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const last = localParts(all[0][0])[0], first = localParts(all[all.length - 1][0])[0];
+  const last = localParts(all[0][0])[0], first = callHist().first;
   const [from, to] = perRange(P, first, last);
   const byNum = {}, masked = Array(24).fill(0); let inTot = 0, maskTot = 0;
   for(const c of all){ if(c[1] !== 'in') continue; const lp = localParts(c[0]); if(lp[0] < from) break; if(lp[0] > to) continue; const s = callSeg(c); if(SEG && s !== SEG) continue; inTot++;

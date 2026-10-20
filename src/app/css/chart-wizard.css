@@ -14,6 +14,8 @@
 .gvsvg .gvval{fill:var(--text);font-weight:600;font-size:12px}
 .gvsvg .gvgrid{stroke:var(--gv-grid);stroke-width:1}
 .gvsvg .gvbase{stroke:var(--gv-base);stroke-width:1}
+.gvsvg .gvnod{fill:var(--panel2)}.gvsvg .gvnodt{fill:var(--muted);font-size:12px;font-style:italic}
+.gvhist{margin:10px 0 4px;padding:8px 12px;border-left:3px solid var(--muted);background:var(--panel2);font-size:13px;border-radius:0 6px 6px 0}
 .gvsvg .gvx{stroke:var(--muted);stroke-width:1}
 .gv-s1{fill:var(--gv-s1);background:var(--gv-s1)}.gv-s2{fill:var(--gv-s2);background:var(--gv-s2)}.gv-s3{fill:var(--gv-s3);background:var(--gv-s3)}.gv-prev{fill:var(--gv-prev);background:var(--gv-prev)}
 .gvsvg .gvline{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}

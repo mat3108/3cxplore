@@ -21,7 +21,7 @@ function repAnalysis(from, to, win){
 V.rappellent = el => {
   const all = FULL.calls;
   if(!all.length){ el.innerHTML = '<h2>Clients qui rappellent</h2><p class="muted">Aucun appel dans ce backup.</p>'; return; }
-  const lastDay = localParts(all[0][0])[0], firstDay = localParts(all[all.length - 1][0])[0], P = statsPeriod();
+  const lastDay = localParts(all[0][0])[0], firstDay = callHist().first, P = statsPeriod();
   const range = () => P.mode === 'all' ? [firstDay, lastDay] : P.mode === 'custom' ? [P.from || firstDay, P.to || lastDay] : [addDaysISO(lastDay, -(+P.mode) + 1), lastDay];
   let S = {win: 48, quick: false, freq: true}; try{ S = {...S, ...JSON.parse(localStorage.getItem(REP_KEY) || '{}')}; }catch(e){}
   const [from, to] = range(), A = repAnalysis(from, to, S.win), days = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1);

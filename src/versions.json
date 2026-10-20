@@ -1,5 +1,32 @@
 [
  {
+  "version": "20.3.1",
+  "date": "2026-10-20",
+  "titre": "Le vrai début de l'historique",
+  "resume": "3CXplore trouve le vrai début de l'historique des appels : un appel isolé des mois plus tôt ou quelques essais de mise en service ne font plus commencer « Tout l'historique » trop tôt. Dans les générateurs de graphique et de rapport, les jours sans données sont grisés et ne comptent plus dans les moyennes.",
+  "changements": [
+   "Début réel de l'historique : des appels isolés, séparés du reste par plus de 30 jours sans appel et qui font moins de 2 % du total, puis les jours de mise en service où il n'y a eu que des appels internes, sont écartés. Tous les onglets qui proposent « Tout l'historique » ou des dates au choix partent de ce début réel (Statistiques, rapports, fiches, appels manqués, prévision du volume, délai avant réponse, coûts, provenance, destinations, etc.).",
+   "Générateur de graphique : quand la période demandée commence avant l'historique, les jours d'avant sont grisés (« Pas d'historique » dans le graphique, l'info-bulle et le tableau) au lieu d'être comptés à 0 ; un encadré le dit en clair, avec le nombre d'appels écartés, et la moyenne par jour ne compte que les jours couverts.",
+   "Générateur de rapport : même encadré, jours grisés dans les graphiques par jour, moyennes par jour sur les seuls jours couverts, et les appels de mise en service ne sont plus comptés.",
+   "Comparaison avec la période d'avant : proposée seulement si cette période est entièrement dans l'historique ; sinon le rapport dit pourquoi il n'y a pas de comparaison, au lieu d'afficher des hausses trompeuses.",
+   "Générateur de graphique : le dessin suit la largeur de la page (fenêtre redimensionnée, page affichée après avoir été masquée)."
+  ],
+  "onglets": [
+   [
+    "Générateur de graphique",
+    "Jours avant l'historique grisés, moyennes sur les jours couverts, dessin qui suit la largeur de la page."
+   ],
+   [
+    "Générateur de rapport",
+    "Jours avant l'historique grisés, moyennes sur les jours couverts, comparaison seulement si possible."
+   ],
+   [
+    "Statistiques",
+    "« Tout l'historique » part du vrai début de l'historique."
+   ]
+  ]
+ },
+ {
   "version": "20.3",
   "date": "2026-10-20",
   "titre": "Le générateur de graphique",
