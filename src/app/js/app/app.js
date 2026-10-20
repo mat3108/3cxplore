@@ -91,6 +91,7 @@
 //#include tabs/department-report.js
 //#include tabs/number-sheet.js
 //#include tabs/fixes-by-user.js
+//#include tabs/report-wizard.js
 //#include ui/settings-backup.js
 //#include tabs/home.js
 //#include ui/navigation.js

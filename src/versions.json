@@ -1,5 +1,24 @@
 [
  {
+  "version": "20.2",
+  "date": "2026-10-20",
+  "titre": "Le générateur de rapport",
+  "resume": "Nouvelle page « Générateur de rapport » dans Les chiffres : un assistant pose des questions, puis prépare le rapport d'un utilisateur, d'une file d'attente ou d'un numéro entrant (SDA) avec seulement les statistiques choisies, à imprimer ou à exporter en Excel.",
+  "changements": [
+   "Assistant en conversation, comme l'accueil : sur quoi (utilisateur, file d'attente, SDA), lequel (avec recherche), quelle période (dates au choix comprises), comparer ou non avec la période juste avant, ce que l'on veut savoir (cases à cocher), le délai visé pour une file, et la liste de chaque appel ou non.",
+   "Utilisateur : appels reçus et répondus, sonneries sans réponse, vitesse de décroché, appels sortants et destinations, appels internes et collègues, temps au téléphone, heures et jours chargés, travail en file (servis, sonneries expirées, occupation), messages vocaux, appelants les plus fréquents.",
+   "File d'attente : appels entrés, servis et non servis, aucun agent disponible, attente moyenne (tous les appels et appels servis), médiane et 9 sur 10, niveau de service selon le délai choisi, attente avant de raccrocher et motifs, détail par agent, heures et jours, durée des conversations, clients non servis rappelés ou non, réglages de la file.",
+   "Numéro entrant (SDA) : appels reçus, répondus, perdus et en messagerie, destinations configurées et première étape réelle, qui répond, délai avant réponse, façon de perdre l'appel et dernière étape, heures et jours, appelants nouveaux et fréquents, clients à rappeler, durée des conversations.",
+   "Rapport : résumé « En bref », chiffres clés avec la hausse ou la baisse (vert si c'est mieux, rouge si c'est pire), graphiques, tableaux, impression / PDF et export Excel (une feuille par tableau, plus la liste des appels)."
+  ],
+  "onglets": [
+   [
+    "Générateur de rapport",
+    "Un assistant qui prépare le rapport d'un utilisateur, d'une file d'attente ou d'un SDA, avec les statistiques choisies."
+   ]
+  ]
+ },
+ {
   "version": "20.1",
   "date": "2026-10-20",
   "titre": "L'assistant de l'accueil",

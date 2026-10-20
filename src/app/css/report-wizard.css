@@ -1,0 +1,20 @@
+/* Générateur de rapport (20.2) : l'assistant reprend la conversation de l'accueil (.ask*) ; le rapport reprend celui des départements (.attrep, .dprep) */
+.grpask{max-width:860px;margin:0}
+.grpask .askopts button small{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:3px}
+.grpfind{margin:4px 0 10px 66px}.grpfind .hosearch input{width:100%}
+.grpids{max-height:520px;overflow:auto;padding:2px}
+.grpmore{grid-column:1/-1;margin:4px 0}
+.grpdates{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 0 66px}.grpdates input{font:inherit;padding:6px 8px}
+.grpqs{display:grid;gap:8px;margin:4px 0 0 66px}
+.grpq{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;border:2px solid var(--line);background:var(--panel);font-size:16px;font-weight:600;line-height:1.3;cursor:pointer}
+.grpq input{width:22px;height:22px;flex:none;accent-color:var(--rc)}
+.grpq.on{border-color:color-mix(in srgb,var(--rc) 55%,var(--line));background:color-mix(in srgb,var(--rc) 7%,var(--panel))}
+.grpq:focus-within{outline:3px solid var(--rc);outline-offset:2px}
+.grpbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 14px}.grpans{display:flex;flex-wrap:wrap;gap:4px}
+.grprep .grpsec{margin-top:18px}.grprep .grpsec>h2{margin-bottom:6px}
+.grprep .attkpi div small.grpd{font-size:11.5px;color:var(--muted);font-weight:500}
+.grprep .attkpi div small.grpd.ok{color:#15803d}.grprep .attkpi div small.grpd.bad{color:#b91c1c}
+.grprep .attkpi div.bad b{color:#b91c1c}.grprep .attkpi div.ok b{color:#15803d}.grprep .attkpi div.warn b{color:#b45309}
+.grprep .attkpi b{white-space:normal;font-size:20px}
+.grpnote{font-size:12px;margin:6px 0 0}
+@media (max-width:560px){.grpfind,.grpdates,.grpqs{margin-left:0}}

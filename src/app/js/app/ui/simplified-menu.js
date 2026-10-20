@@ -9,7 +9,7 @@ const NAV_SETS = {
   chemin: ['Le chemin des appels', 'flux', ['simulateur', 'diagramme', 'flux', 'ivr', 'menus', 'sonnerie', 'files', 'groupes', 'pkplan']],
   vocal: ['Messages vocaux', 'audio', ['messageries', 'recobv', 'audio', 'enreg']],
   securite: ['Sécurité et droits', 'securite', ['securite', 'renvois', 'suspects', 'visibilite', 'droits', 'comparer']],
-  chiffres: ['Les chiffres', 'stats', ['stats', 'statsfiles', 'provenance', 'destinations', 'couts', 'internes', 'qualite', 'effectif', 'prevision']],
+  chiffres: ['Les chiffres', 'stats', ['stats', 'genrap', 'statsfiles', 'provenance', 'destinations', 'couts', 'internes', 'qualite', 'effectif', 'prevision']],
   historique: ['Ce qui a changé', 'modifs', ['modifs', 'audit', 'suivi', 'comparaison', 'avantapres']],
   reglages: ['Réglages', 'reglages', ['interface', 'reglages', 'params']],
 };

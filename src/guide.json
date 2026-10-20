@@ -500,6 +500,16 @@
    ],
    "astuce": "La section « Heures d'ouverture et hors heures » montre ce que deviennent les appels reçus pendant la fermeture (messagerie, perdus, répondus quand même) et à quelle heure ils arrivent."
   },
+  "genrap": {
+   "sert": "Un assistant qui pose des questions puis prépare le rapport d'un utilisateur, d'une file d'attente ou d'un numéro entrant (SDA) : appels reçus et répondus, vitesse de décroché, attente, niveau de service, agents, heures et jours chargés, appelants, clients à rappeler, réglages… seulement ce que vous avez choisi.",
+   "comment": [
+    "Répondez aux questions avec les gros boutons : sur quoi (utilisateur, file ou SDA), lequel (champ de recherche), la période (y compris des dates au choix), la comparaison avec la période juste avant, puis cochez ce que vous voulez savoir.",
+    "Pour une file d'attente, choisissez aussi le délai de réponse visé (20 s, 30 s…) : le rapport calcule le niveau de service.",
+    "Le rapport s'affiche avec un résumé « En bref », des chiffres clés (hausse ou baisse par rapport à avant), des graphiques et des tableaux. Imprimez-le ou enregistrez-le en PDF ; l'export Excel donne chaque chiffre et chaque tableau, et la liste de chaque appel si vous l'avez demandée.",
+    "« Changer mes réponses » revient aux questions ; le dernier rapport est retrouvé en revenant sur la page."
+   ],
+   "astuce": "Pour suivre une file d'attente d'un mois à l'autre, choisissez « 30 derniers jours » et « Oui, comparer » : chaque chiffre clé dit s'il s'améliore (vert) ou se dégrade (rouge)."
+  },
   "numero": {
    "sert": "Tout ce que le backup sait d'un numéro, sur une seule page : s'il s'agit d'un numéro entrant (SDA) du système, d'un client, d'un poste ou du cellulaire d'un employé, avec ses appels, qui répond, les appels perdus et les rappels.",
    "comment": [
@@ -1386,6 +1396,16 @@
      "Print it or save it as PDF; the Excel export also gives the list of every call, the callers to call back and the detail by employee."
     ],
     "astuce": "The « Office hours and out of hours » section shows what happens to the calls received while closed (voicemail, lost, answered anyway) and at what time they arrive."
+   },
+   "genrap": {
+    "sert": "An assistant that asks questions, then prepares the report of a user, a queue or an incoming number (DID): calls received and answered, pick-up speed, waiting, service level, agents, busy hours and days, callers, callers to call back, settings… only what you chose.",
+    "comment": [
+     "Answer the questions with the big buttons: what (user, queue or DID), which one (search field), the period (custom dates too), the comparison with the period just before, then tick what you want to know.",
+     "For a queue, also choose the target answer time (20 s, 30 s…): the report computes the service level.",
+     "The report shows an « In short » summary, key figures (rise or fall versus before), charts and tables. Print it or save it as PDF; the Excel export gives every figure and table, and the list of every call if you asked for it.",
+     "« Change my answers » goes back to the questions; the last report is shown again when you come back to the page."
+    ],
+    "astuce": "To follow a queue month after month, choose « Last 30 days » and « Yes, compare »: each key figure says whether it improves (green) or gets worse (red)."
    },
    "numero": {
     "sert": "Everything the backup knows about a number, on a single page: whether it is an inbound number (DID) of the system, a caller, an extension or an employee's cell phone, with its calls, who answers, lost calls and callbacks.",
