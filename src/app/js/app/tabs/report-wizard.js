@@ -58,7 +58,8 @@ function grpSubjects(k){
 
 V.genrap = (el, arg) => {
   const S = window.__grp ||= (() => { try{ return JSON.parse(localStorage.getItem(GRP_KEY) || '{}'); }catch(e){ return {}; } })();
-  if(arg){ const [k, id] = decodeURIComponent(arg).split('~'); if(GRP_Q[k] && id){ Object.assign(S, {k, id, done: false}); S.step = 2; } history.replaceState(null, '', '#genrap'); }
+  if(arg){ const [k, id] = decodeURIComponent(arg).split('~'); // « ext », « queue » ou « did », suivi ou non de ~numéro (20.2.1 : l'accueil ouvre directement « Lequel ? »)
+    if(GRP_Q[k]){ if(S.k !== k){ S.qs = null; S.id = ''; } S.k = k; S.done = false; if(id){ S.id = id; S.step = 2; } else S.step = 1; } history.replaceState(null, '', '#genrap'); }
   const en = document.documentElement.lang === 'en', T = (fr, e) => en ? e : fr, loc = en ? 'en-CA' : 'fr-CA';
   const all = FULL.calls, first = all.length ? localParts(all[all.length - 1][0])[0] : '', last = all.length ? localParts(all[0][0])[0] : '';
   const save = () => { try{ localStorage.setItem(GRP_KEY, JSON.stringify({k: S.k, id: S.id, p: S.p, cmp: S.cmp, qs: S.qs, sl: S.sl, list: S.list, step: S.step, done: S.done})); }catch(e){} };

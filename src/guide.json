@@ -506,7 +506,7 @@
     "Répondez aux questions avec les gros boutons : sur quoi (utilisateur, file ou SDA), lequel (champ de recherche), la période (y compris des dates au choix), la comparaison avec la période juste avant, puis cochez ce que vous voulez savoir.",
     "Pour une file d'attente, choisissez aussi le délai de réponse visé (20 s, 30 s…) : le rapport calcule le niveau de service.",
     "Le rapport s'affiche avec un résumé « En bref », des chiffres clés (hausse ou baisse par rapport à avant), des graphiques et des tableaux. Imprimez-le ou enregistrez-le en PDF ; l'export Excel donne chaque chiffre et chaque tableau, et la liste de chaque appel si vous l'avez demandée.",
-    "« Changer mes réponses » revient aux questions ; le dernier rapport est retrouvé en revenant sur la page."
+    "« Changer mes réponses » revient aux questions ; le dernier rapport est retrouvé en revenant sur la page. Depuis l'accueil, la réponse « Faire un rapport » ouvre l'assistant directement sur l'employé, la file ou le numéro à choisir."
    ],
    "astuce": "Pour suivre une file d'attente d'un mois à l'autre, choisissez « 30 derniers jours » et « Oui, comparer » : chaque chiffre clé dit s'il s'améliore (vert) ou se dégrade (rouge)."
   },
@@ -1403,7 +1403,7 @@
      "Answer the questions with the big buttons: what (user, queue or DID), which one (search field), the period (custom dates too), the comparison with the period just before, then tick what you want to know.",
      "For a queue, also choose the target answer time (20 s, 30 s…): the report computes the service level.",
      "The report shows an « In short » summary, key figures (rise or fall versus before), charts and tables. Print it or save it as PDF; the Excel export gives every figure and table, and the list of every call if you asked for it.",
-     "« Change my answers » goes back to the questions; the last report is shown again when you come back to the page."
+     "« Change my answers » goes back to the questions; the last report is shown again when you come back to the page. From Home, the answer « Make a report » opens the assistant directly on the employee, queue or number to choose."
     ],
     "astuce": "To follow a queue month after month, choose « Last 30 days » and « Yes, compare »: each key figure says whether it improves (green) or gets worse (red)."
    },

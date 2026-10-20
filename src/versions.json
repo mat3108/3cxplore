@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.2.1",
+  "date": "2026-10-20",
+  "titre": "Le rapport depuis l'accueil",
+  "resume": "L'assistant de l'accueil propose « Faire un rapport » : il demande sur quoi (un employé, une file d'attente ou un numéro entrant) et ouvre le générateur de rapport directement au choix de l'employé, de la file ou du numéro.",
+  "changements": [
+   "Accueil : nouvelle réponse « Faire un rapport » à la première question, suivie de « Un rapport sur quoi ? » (Un employé, Une file d'attente, Un numéro entrant (SDA)) ; le générateur de rapport s'ouvre sur la question « Lequel ? ».",
+   "Accueil, « Autre chose » → « Les chiffres » : nouvelle réponse « Un rapport sur une personne, une file ou un numéro ».",
+   "Générateur de rapport : il peut s'ouvrir avec le sujet déjà choisi (adresses #genrap/ext, #genrap/queue, #genrap/did)."
+  ],
+  "onglets": [
+   [
+    "Accueil",
+    "Nouvelle réponse « Faire un rapport », qui ouvre le générateur de rapport sur le bon sujet."
+   ],
+   [
+    "Générateur de rapport",
+    "S'ouvre depuis l'accueil avec le sujet déjà choisi."
+   ]
+  ]
+ },
+ {
   "version": "20.2",
   "date": "2026-10-20",
   "titre": "Le générateur de rapport",

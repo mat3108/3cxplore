@@ -1,8 +1,9 @@
 // ---------- Accueil (20.1) : l'assistant. La mascotte pose une question, on répond en touchant un gros bouton, et elle mène à la bonne page ----------
-// chaque question : [texte, réponses] ; une réponse : [libellé, icône (onglet), destination] — '>id' pose la question id, sinon c'est l'onglet à ouvrir
+// chaque question : [texte, réponses] ; une réponse : [libellé, icône (onglet), destination] — '>id' pose la question id, sinon c'est l'onglet à ouvrir (« onglet/argument » possible)
 const ASK = {
   start: [null, [['Voir les appels', 'appels', '>appels'], ['Régler un problème', 'priorites', '>reparer'], ['Ajouter ou retirer quelqu\'un', 'nouvel', '>gens'],
-    ['Voir mon magasin', 'magasins', '>magasin'], ['Trouver quelqu\'un', 'annuaire', '>trouver'], ['Comprendre où va un appel', 'flux', '>chemin'], ['Autre chose', 'autre', '>autre']]],
+    ['Voir mon magasin', 'magasins', '>magasin'], ['Trouver quelqu\'un', 'annuaire', '>trouver'], ['Comprendre où va un appel', 'flux', '>chemin'], ['Faire un rapport', 'genrap', '>rapport'], ['Autre chose', 'autre', '>autre']]],
+  rapport: ['Un rapport sur quoi ?', [['Un employé', 'employe', 'genrap/ext'], ['Une file d\'attente', 'files', 'genrap/queue'], ['Un numéro entrant (SDA)', 'numero', 'genrap/did']]],
   appels: ['Quels appels ?', [['Ceux qui n\'ont pas eu de réponse', 'rappels', 'rappels'], ['Les clients qui rappellent souvent', 'rappellent', 'rappellent'],
     ['Un numéro de téléphone précis', 'numero', 'numero'], ['Combien de temps on attend avant de répondre', 'delai', 'delai'], ['Les appels très courts', 'courts', 'courts'], ['Tous les appels, un par un', 'appels', 'appels']]],
   reparer: ['On commence par quoi ?', [['Le plus urgent d\'abord', 'priorites', 'priorites'], ['La note de chaque magasin', 'sante', 'sante'],
@@ -16,7 +17,7 @@ const ASK = {
   autre: ['Voici le reste. Lequel ?', [['Les téléphones et leurs touches', 'telephones', '>tel'], ['Les chiffres', 'stats', '>chiffres'], ['Les messages vocaux', 'audio', '>vocal'],
     ['La sécurité', 'securite', '>securite'], ['Ce qui a changé', 'modifs', '>change'], ['L\'apparence de 3CXplore', 'interface', 'interface']]],
   tel: ['Plutôt quoi ?', [['La liste des postes', 'postes', 'postes'], ['Les téléphones de bureau', 'telephones', 'telephones'], ['Les touches des téléphones', 'blf', 'blf'], ['Les lignes vers l\'extérieur', 'trunks', 'trunks']]],
-  chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
+  chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['Un rapport sur une personne, une file ou un numéro', 'genrap', 'genrap'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
     ['Combien de personnes il faut', 'effectif', 'effectif'], ['Le tableau de bord', 'dashboard', 'dashboard']]],
   vocal: ['Lequel ?', [['Les boîtes vocales', 'messageries', 'messageries'], ['Qui peut laisser un message', 'recobv', 'recobv'], ['Les messages d\'accueil', 'audio', 'audio'], ['Les enregistrements', 'enreg', 'enreg']]],
   securite: ['Qu\'est-ce qui vous inquiète ?', [['Qui peut voir quoi', 'visibilite', 'visibilite'], ['Les renvois vers l\'extérieur', 'renvois', 'renvois'], ['Les appels bizarres', 'suspects', 'suspects'], ['Le bilan de sécurité', 'securite', 'securite']]],
@@ -30,7 +31,7 @@ V.accueil = el => {
   const draw = () => {
     let id = 'start', h = bot(hello);
     for(const i of ASK_PATH){ const a = ASK[id][1][i]; h += `<div class="askme"><span>${esc(a[0])}</span></div>`; id = a[2].slice(1); h += bot(ASK[id][0]); }
-    h += `<div class="askopts" role="group" aria-label="Réponses">${ASK[id][1].map(([l, ic, to], i) => (to[0] === '>' || TAB_BY[to]) ? `<button type="button" data-ask="${i}" style="--rc:${navColor(to[0] === '>' ? ic : to)}">${navIcon(ic)}<span>${esc(l)}</span></button>` : '').join('')}</div>`;
+    h += `<div class="askopts" role="group" aria-label="Réponses">${ASK[id][1].map(([l, ic, to], i) => (to[0] === '>' || TAB_BY[to.split('/')[0]]) ? `<button type="button" data-ask="${i}" style="--rc:${navColor(to[0] === '>' ? ic : to.split('/')[0])}">${navIcon(ic)}<span>${esc(l)}</span></button>` : '').join('')}</div>`;
     if(ASK_PATH.length) h += `<div class="asknav"><button type="button" class="btn" data-askback>Revenir en arrière</button><button type="button" class="btn" data-askreset>Recommencer</button></div>`;
     el.querySelector('#askchat').innerHTML = h;
     const rows = el.querySelectorAll('#askchat .askrow'); if(ASK_PATH.length) rows[rows.length - 1].classList.add('asknew');

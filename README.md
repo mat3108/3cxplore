@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.2-2563eb)
+![Version](https://img.shields.io/badge/version-20.2.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -37,7 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
-| **Accueil** | Un assistant : la mascotte pose des questions, on répond avec de gros boutons, et elle ouvre la bonne page. |
+| **Accueil** | Nouvelle réponse « Faire un rapport », qui ouvre le générateur de rapport sur le bon sujet. |
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Tous les problèmes en une liste, classés selon les appels touchés puis par gravité. |
 | **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
@@ -85,7 +85,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Réceptions** | Postes de réception : appels présentés, répondus, perdus, parking, appels simultanés et heures de surcharge. |
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | Comparaison des magasins sur une période et carte de chaleur jour × heure (appels entrants, perdus ou taux de perte, par magasin et par file), avec les appels de chaque créneau. |
-| **Générateur de rapport** | Un assistant qui prépare le rapport d'un utilisateur, d'une file d'attente ou d'un SDA, avec les statistiques choisies. |
+| **Générateur de rapport** | S'ouvre depuis l'accueil avec le sujet déjà choisi. |
 | **Rapport de département** | Nouveau rapport imprimable de toutes les statistiques des appels d'un département. |
 | **Provenance des appels** | Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région. |
 | **Destinations des appels sortants** | Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine. |
@@ -223,7 +223,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.2** | Le générateur de rapport |
+| **20.2.1** | Le rapport depuis l'accueil |
+| 20.2 | Le générateur de rapport |
 | 20.1 | L'assistant de l'accueil |
 | 20.0 | Un menu simple, avec ses sous-menus |
 | 19.x | Code source en modules, construit avec Vite · Langue des téléphones · Catégories du menu soulignées · Renvois d'appel lus comme dans la console · Chiffres d'appels corrigés après l'audit des données · … |

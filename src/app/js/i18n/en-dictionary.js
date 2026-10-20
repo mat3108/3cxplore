@@ -3040,6 +3040,8 @@ const EN = {
 "Trouver quelqu'un": "Find someone",
 "Comprendre où va un appel": "Understand where a call goes",
 "Autre chose": "Something else",
+"Faire un rapport": "Make a report", "Un rapport sur quoi ?": "A report on what?", "Un employé": "An employee", "Une file d'attente": "A queue", "Un numéro entrant (SDA)": "An incoming number (DID)",
+"Un rapport sur une personne, une file ou un numéro": "A report on a person, a queue or a number",
 "Ceux qui n'ont pas eu de réponse": "The ones that got no answer",
 "Les clients qui rappellent souvent": "Customers who call back often",
 "Un numéro de téléphone précis": "A specific phone number",
