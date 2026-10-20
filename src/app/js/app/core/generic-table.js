@@ -4,7 +4,7 @@ function table(el, {cols, rows, search, pageSize=50, onRow, sort, filters, state
   const S = state || {};
   let q=S.q||'', page=S.page||0, sk=S.sk!==undefined?S.sk:(sort?sort[0]:null), sd=S.sd||(sort?sort[1]:1), fvals={...(S.fvals||{})};
   const keep = () => { if(state) Object.assign(state, {q, page, sk, sd, fvals: {...fvals}}); };
-  el.innerHTML = `<div class="bar"><input type="search" placeholder="Rechercher…">${(filters||[]).map((f,i)=>`<select data-f="${i}"><option value="">${esc(f.label)}</option>${f.options.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join('')}</select>`).join('')}<span class="count"></span></div><div class="tw"><table><thead><tr>${cols.map((c,i)=>`<th data-i="${i}" class="${c.num?'num':''}">${esc(c.h)}</th>`).join('')}</tr></thead><tbody></tbody></table></div><div class="pager"><button data-p="-1">‹ Préc.</button><span class="count pg"></span><button data-p="1">Suiv. ›</button></div>`;
+  el.innerHTML = `<div class="bar"><input type="search" placeholder="Rechercher…">${filters&&filters.length?'<button type="button" class="btn fbtn" aria-expanded="false"><span>Filtres</span><span class="fn"></span></button>':''}${(filters||[]).map((f,i)=>`<select data-f="${i}"><option value="">${esc(f.label)}</option>${f.options.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join('')}</select>`).join('')}<span class="count"></span></div><div class="tw"><table><thead><tr>${cols.map((c,i)=>`<th data-i="${i}" class="${c.num?'num':''}">${esc(c.h)}</th>`).join('')}</tr></thead><tbody></tbody></table></div><div class="pager"><button data-p="-1">‹ Préc.</button><span class="count pg"></span><button data-p="1">Suiv. ›</button></div>`;
   const tb = el.querySelector('tbody');
   let view = rows;
   function apply(){
@@ -29,11 +29,15 @@ function table(el, {cols, rows, search, pageSize=50, onRow, sort, filters, state
   el.querySelectorAll('select[data-f]').forEach(s=>s.addEventListener('change',e=>{fvals[s.dataset.f]=e.target.value; apply();}));
   el.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{const i=+th.dataset.i; if(sk===i) sd=-sd; else {sk=i; sd=cols[i].num?-1:1;} apply();}));
   el.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{page+=+b.dataset.p; draw();}));
-  tb.addEventListener('click', e => { if(e.target.closest('a,audio,input,select,button,label')) return; const tr=e.target.closest('tr[data-i]'); if(tr && onRow) onRow(view[+tr.dataset.i]); });
+  // 19.3.2 : sur téléphone, les listes de filtres se rangent derrière le bouton « Filtres » (nombre de filtres actifs entre parenthèses)
+  const fb = el.querySelector('.fbtn'), fcount = () => { if(!fb) return; const n = Object.values(fvals).filter(Boolean).length; fb.querySelector('.fn').textContent = n ? '('+n+')' : ''; fb.classList.toggle('on', n>0); };
+  if(fb) fb.addEventListener('click', () => { const b = el.querySelector('.bar'); b.classList.toggle('fopen'); fb.setAttribute('aria-expanded', b.classList.contains('fopen')); });
+  el.querySelectorAll('select[data-f]').forEach(s=>s.addEventListener('change', fcount));
+  tb.addEventListener('click', e => { if(e.target.closest('a,audio,input,select,button,label,summary,details')) return; const tr=e.target.closest('tr[data-i]'); if(tr && onRow) onRow(view[+tr.dataset.i]); });
   // restaurer l'état mémorisé (valeurs des champs, puis page)
   el.querySelector('input').value = q;
   el.querySelectorAll('select[data-f]').forEach(s => { if(fvals[s.dataset.f]) s.value = fvals[s.dataset.f]; });
-  const startPage = page; apply();
+  fcount(); const startPage = page; apply();
   if(startPage){ page = startPage; draw(); }
 }
 

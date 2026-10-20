@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.3.1-2563eb)
+![Version](https://img.shields.io/badge/version-19.3.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -37,7 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
-| **Tableau de bord** | Base de calcul sous chaque pourcentage ; issue des appels entrants sur les appels de clients, bridge indiqué à part. |
+| **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Tous les problèmes en une liste, classés selon les appels touchés puis par gravité. |
 | **Note de santé** | Note sur 100 par magasin : service, configuration, sécurité et téléphones. |
 | **Recommandations** | Analyse automatique de la configuration et de l'activité, classée Critique / À corriger / Observation, avec éléments concernés, recommandation, statut et notes personnelles ; ajout d'observations manuelles ; export CSV et impression. |
@@ -58,7 +58,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Configuration
 | Onglet | À quoi il sert |
 |---|---|
-| **Postes** | Utilisateurs avec filtres (département, statut, appareil). Fiche : coordonnées, compte Microsoft 365, téléphones (modèle, MAC, firmware), files, profils de renvoi, message d'accueil et messages vocaux écoutables, propriétés. |
+| **Postes** | Longues listes de départements repliées (« +N autres »). |
 | **Téléphones** | Inventaire des téléphones, comparaison avec les firmwares recommandés par 3CX (par modèle et par téléphone), état du serveur, vérification en ligne et export CSV. |
 | **Touches BLF** | Touches programmées des téléphones : BLF, parkings, numérotation rapide, touches à corriger et qui surveille qui. |
 | **Modèle de touches** | Modèle de touches d'un département et fiche des touches à ajouter ou retirer sur chaque téléphone. |
@@ -99,7 +99,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Qualité des appels** | Qualité de la voix par magasin, site, modèle de téléphone et trunk. |
 | **Horaires** | Lien « Rapport » sur chaque département et dans son détail. |
 | **Menus IVR** | Choix des appelants dans chaque standard, raccrochages, délais sans choix, devenir des appels par choix, points de perte du parcours. |
-| **Appels** | Fiche d'un appel : parcours détaillé étape par étape avec frise chronologique. |
+| **Appels** | Sur téléphone, filtres derrière un bouton « Filtres ». |
 | **Parkings partagés** | Bouton « Rapport des mises en attente par employé » et lien « Rapport » pour chaque employé. |
 | **Plan des parkings** | Nombre de parkings nécessaires par magasin d'après les appels parqués en même temps. |
 | **Appels en file** | Chaque passage en file d'attente : attente, conversation, résultat et agent. |
@@ -221,7 +221,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.3.1** | La base de chaque pourcentage |
+| **19.3.2** | Graphique par jour et tableaux allégés |
+| 19.3.1 | La base de chaque pourcentage |
 | 19.3 | L'essentiel en haut du tableau de bord |
 | 19.2.3 | Qui peut laisser un message ? |
 | 19.2.2 | Recommandation BV |

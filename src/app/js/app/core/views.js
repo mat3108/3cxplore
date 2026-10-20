@@ -70,8 +70,11 @@ V.dashboard = el => {
   // volume par jour
   const days = {};
   CS.forEach(c => { const k=dayKey(c[0]); const d=(days[k] ||= {in:0,out:0,int:0}); if(c[1] in d) d[c[1]]++; });
-  let keys = Object.keys(days).sort();
-  keys = keys.slice(-90);
+  // 19.3.2 : jours consécutifs (un jour sans appel garde sa place) sur 90 jours au plus, du premier jour actif de cette fenêtre au dernier
+  const act = Object.keys(days).sort(), dAdd = (d, n) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const keys = [];
+  if(act.length){ const lastD = act[act.length-1], from = dAdd(lastD, -89), firstD = act.find(k => k >= from);
+    for(let k = firstD; k <= lastD; k = dAdd(k, 1)){ keys.push(k); days[k] ||= {in:0,out:0,int:0}; } }
   // heures
   const hrs = Array(24).fill(0).map(()=>({a:0,m:0}));
   inc.filter(c=>c[10]!=='bridge').forEach(c => { const h=hourOf(c[0]); (c[10]==='ans'||c[10]==='fwd_ok')?hrs[h].a++:hrs[h].m++; });
@@ -99,7 +102,7 @@ V.dashboard = el => {
   <div class="card" style="margin-top:12px"><h3 style="margin-top:0">Issue des appels entrants <span class="muted" style="font-weight:400">(${nf(incLocal)} appels de clients)</span></h3>
     ${Object.entries(stCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="hbar"><span class="nm"><span class="pill ${ST[k][1]}">${ST[k][0]}</span></span><span class="t"><span style="width:${100*v/incLocal}%"></span></span><span class="num">${nf(v)} <span class="muted">${pct(v,incLocal)}</span></span></div>`).join('')}
     ${nBridge?`<p class="note" style="margin-bottom:0">Hors pourcentages : ${nf(nBridge)} appels envoyés vers un autre 3CX (bridge), traités sur l'autre système.</p>`:''}</div>
-  <div class="card chart" style="margin-top:12px"><h3 style="margin-top:0">Volume d'appels par jour <span class="muted" style="font-weight:400">(${keys.length} derniers jours avec activité)</span></h3>${stackChart(keys, keys.map(k=>days[k]))}
+  <div class="card chart" style="margin-top:12px"><h3 style="margin-top:0">Volume d'appels par jour <span class="muted" style="font-weight:400">${keys.length?`(du ${keys[0]} au ${keys[keys.length-1]})`:''}</span></h3>${stackChart(keys, keys.map(k=>days[k]))}
     <div class="legend"><span><i style="background:var(--c-in)"></i>Entrants</span><span><i style="background:var(--c-out)"></i>Sortants</span><span><i style="background:var(--c-int)"></i>Internes</span></div></div>
   <div class="grid two" style="margin-top:12px">
     <div class="card chart"><h3 style="margin-top:0">Appels entrants par heure</h3>${hourChart(hrs)}

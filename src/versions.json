@@ -1,5 +1,30 @@
 [
  {
+  "version": "19.3.2",
+  "date": "2026-10-19",
+  "titre": "Graphique par jour et tableaux allégés",
+  "resume": "Le volume d'appels par jour suit maintenant le calendrier, les longues listes de départements se replient dans Postes, et sur téléphone les filtres des tableaux se rangent derrière un bouton « Filtres ».",
+  "changements": [
+   "Tableau de bord, volume d'appels par jour : les jours se suivent sans trou caché (un jour sans appel garde sa place). Le graphique couvre au plus les 90 derniers jours, du premier jour avec des appels au dernier, et le titre indique les dates (par exemple du 2026-07-23 au 2026-08-17). Avant, un jour isolé de l'année précédente était collé au mois en cours.",
+   "Postes : au-delà de 5 départements, seuls les 4 premiers sont affichés (les rôles de responsable en premier) ; « +N autres » déplie le reste sans ouvrir la fiche du poste.",
+   "Sur téléphone, dans tous les tableaux qui ont des filtres (Appels, Postes…), les listes de filtres sont rangées derrière un bouton « Filtres », qui indique le nombre de filtres actifs. Sur ordinateur, rien ne change."
+  ],
+  "onglets": [
+   [
+    "Tableau de bord",
+    "Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre."
+   ],
+   [
+    "Postes",
+    "Longues listes de départements repliées (« +N autres »)."
+   ],
+   [
+    "Appels",
+    "Sur téléphone, filtres derrière un bouton « Filtres »."
+   ]
+  ]
+ },
+ {
   "version": "19.3.1",
   "date": "2026-10-19",
   "titre": "La base de chaque pourcentage",

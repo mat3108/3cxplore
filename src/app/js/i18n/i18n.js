@@ -54,6 +54,7 @@ const RX = [
   [/^Les plus faibles : (.+)$/, m => 'Weakest: ' + m[1]], [/^(Lun|Mar|Mer|Jeu|Ven|Sam|Dim) (fermé)$/, m => DAYS[m[1]] + ' closed'], [/^(Lun|Mar|Mer|Jeu|Ven|Sam|Dim) (\d[^·]*)$/, m => DAYS[m[1]] + ' ' + m[2]],
   [/^Inactifs? > (\d+) (jours|j)$/, m => 'Inactive > ' + m[1] + (m[2] === 'j' ? ' d' : ' days')], [/^Inactif \((\d+) j\)$/, m => 'Inactive (' + m[1] + ' d)'], [/^(\d+) jours$/, m => m[1] + ' days'],
   [/^vu le (.+)$/, m => 'seen on ' + m[1]],
+  [/^\(du (\d{4}-\d\d-\d\d) au (\d{4}-\d\d-\d\d)\)$/, m => '(from ' + m[1] + ' to ' + m[2] + ')'],
   [/^dont ([\d ]+) vers un autre 3CX$/, m => 'incl. ' + m[1] + ' to another 3CX'], [/^([\d ]+) sur ([\d ]+) appels de clients$/, m => m[1] + ' of ' + m[2] + ' customer calls'],
   [/^([\d ]+) servis sur ([\d ]+) appels en file$/, m => m[1] + ' served of ' + m[2] + ' queue calls'], [/^\(([\d ]+) appels de clients\)$/, m => '(' + m[1] + ' customer calls)'],
   [/^Hors pourcentages : ([\d ]+) appels envoyés vers un autre 3CX \(bridge\), traités sur l'autre système\.$/, m => 'Not in the percentages: ' + m[1] + ' calls sent to another 3CX (bridge), handled on the other system.'],

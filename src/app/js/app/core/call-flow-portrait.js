@@ -146,7 +146,12 @@ V.postes = el => {
       {h:'Poste', v:e=>e.number, cls:'mono'},
       {h:'Nom', v:e=>(e.first+' '+e.last).trim()},
       {h:'Courriel', v:e=>e.email, cls:'muted'},
-      {h:'Départements', v:e=>e.groups.map(g=>g.g).join(', '), f:e=>e.groups.filter(g=>g.g!=='__DEFAULT__').map(g=>`<span class="pill ${g.role==='supervisors'||g.role==='managers'?'warn':''}">${esc(g.g)}${g.role&&g.role!=='users'?' · '+esc(g.role):''}</span>`).join('')},
+      {h:'Départements', v:e=>e.groups.map(g=>g.g).join(', '), f:e=>{ // 19.3.2 : au-delà de 4 départements, les autres se déplient (responsables en premier)
+        const pl = g=>`<span class="pill ${g.role==='supervisors'||g.role==='managers'?'warn':''}">${esc(g.g)}${g.role&&g.role!=='users'?' · '+esc(g.role):''}</span>`;
+        const gs = e.groups.filter(g=>g.g!=='__DEFAULT__'), lead = g=>g.role==='supervisors'||g.role==='managers'?0:1;
+        if(gs.length<=5) return gs.map(pl).join('');
+        const o = gs.slice().sort((a,b)=>lead(a)-lead(b));
+        return o.slice(0,4).map(pl).join('')+`<details class="pmore"><summary>+${o.length-4} autres</summary>${o.slice(4).map(pl).join('')}</details>`; }},
       {h:'Files', num:1, v:e=>e.queues.length},
       {h:'Téléphone', v:e=>e.devices.map(d=>d.model).join(', '), f:e=>e.devices.map(d=>`<span class="pill">${esc(d.model||d.template)}</span>`).join('')||'<span class="muted">–</span>'},
       {h:'Statut', v:e=>e.profile, f:e=>`<span class="pill ${e.profile==='Available'?'ok':e.profile==='Away'?'warn':''}">${esc(fwdName(e.profile))}</span>`},
