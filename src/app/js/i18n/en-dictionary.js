@@ -3113,7 +3113,7 @@ const EN = {
 "Réponses": "Answers",
 "Vous pouvez aussi écrire ce que vous cherchez :": "You can also type what you are looking for:",
 "Par exemple : appels manqués, jours fériés, poste…": "For example: missed calls, public holidays, extension…",
-"Ouvrir le menu complet": "Open the full menu",
+"Ouvrir le menu complet": "Open the full menu", "Backup ouvert :": "Open backup:",
 "Menu de gauche": "Left menu",
 "Caché, le bouton Menu l'ouvre": "Hidden, the Menu button opens it",
 "Toujours affiché": "Always shown",

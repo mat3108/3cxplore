@@ -63,6 +63,6 @@
   const recHas = url => !!(RECZIP && RECZIP.map[url]);
   const recLinked = () => !!RECZIP;
   async function recBlob(url){ if(!recHas(url)) return null; return RECZIP.z.blob(RECZIP.map[url], /\.mp3$/i.test(url) ? 'audio/mpeg' : 'audio/wav'); }
-  return {start, load, close, audioURL, ensureListeners, wireCard, rerun: () => run(window.D), loadRef, clearRef, parseOnly, linkRecZip, recHas, recLinked, recBlob};
+  return {start, load, close, closeDialog, audioURL, ensureListeners, wireCard, rerun: () => run(window.D), loadRef, clearRef, parseOnly, linkRecZip, recHas, recLinked, recBlob};
 })();
 

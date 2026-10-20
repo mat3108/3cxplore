@@ -25,6 +25,8 @@ const ASK = {
 };
 let ASK_PATH = []; // réponses choisies depuis le début (gardées pendant la session : « Accueil » ramène où on en était)
 V.accueil = el => {
+  // 20.2.2 : raccourci « Fermer le backup » (même fenêtre que la carte du tableau de bord), avec le nom du backup ouvert
+  const bkName = D.source && D.source.kind === 'zip' ? D.source.name : '';
   const n = RECO_COUNT, logo = (document.querySelector('.brandlogo') || {}).outerHTML || '';
   const hello = `Bonjour ! ${n ? `Il y a ${nf(n)} ${n > 1 ? 'choses' : 'chose'} à réparer dans votre 3CX.` : 'Rien d\'urgent à réparer dans votre 3CX.'} Qu'est-ce que vous voulez faire ?`;
   const bot = t => `<div class="askrow"><span class="askav" aria-hidden="true">${logo}</span><p class="askq">${esc(t)}</p></div>`;
@@ -40,10 +42,13 @@ V.accueil = el => {
     <div class="askfoot"><p>Vous pouvez aussi écrire ce que vous cherchez :</p>
       <div class="hosearch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5"/></svg><input id="hoq" type="search" autocomplete="off" spellcheck="false" placeholder="Par exemple : appels manqués, jours fériés, poste…" aria-label="Chercher une page" aria-controls="hores"></div>
       <div id="hores" class="hores" role="listbox" aria-label="Pages trouvées" hidden></div>
-      <p class="askmenu"><button type="button" class="btn" data-askmenu><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Ouvrir le menu complet</button></p></div></div>`;
+      <p class="askmenu"><button type="button" class="btn" data-askmenu><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Ouvrir le menu complet</button>
+        <button type="button" class="btn danger" data-askclose><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Fermer le backup</button></p>
+      ${bkName ? `<p class="askbk muted">Backup ouvert : <b>${esc(bkName)}</b></p>` : ''}</div></div>`;
   draw();
   el.querySelector('.ask').addEventListener('click', e => {
     const b = e.target.closest('button'); if(!b) return;
+    if(b.hasAttribute('data-askclose')){ if(typeof BK !== 'undefined' && BK.closeDialog) BK.closeDialog(true); return; }
     if(b.hasAttribute('data-askmenu')){ document.body.classList.add('navopen'); const q = $('#navq'); if(q) q.focus(); return; }
     if(b.hasAttribute('data-askback')){ ASK_PATH.pop(); return draw(); }
     if(b.hasAttribute('data-askreset')){ ASK_PATH = []; return draw(); }

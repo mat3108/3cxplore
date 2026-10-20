@@ -1,5 +1,21 @@
 [
  {
+  "version": "20.2.2",
+  "date": "2026-10-20",
+  "titre": "Fermer le backup depuis l'accueil",
+  "resume": "L'accueil a un raccourci « Fermer le backup », à côté de « Ouvrir le menu complet », avec le nom du backup ouvert.",
+  "changements": [
+   "Accueil : bouton « Fermer le backup » sous la conversation. Il ouvre la même fenêtre que la carte « Backup affiché » du tableau de bord : on choisit ce qui est effacé de ce navigateur, puis l'écran « Aucun backup ouvert » s'affiche.",
+   "Accueil : le nom du backup ouvert est affiché sous les boutons."
+  ],
+  "onglets": [
+   [
+    "Accueil",
+    "Raccourci « Fermer le backup » et nom du backup ouvert."
+   ]
+  ]
+ },
+ {
   "version": "20.2.1",
   "date": "2026-10-20",
   "titre": "Le rapport depuis l'accueil",

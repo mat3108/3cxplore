@@ -85,7 +85,7 @@ body.mini .pagehead .subtabs{display:flex}
 .asknav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0 66px}
 .askfoot{margin:40px 0 0 66px;padding-top:20px;border-top:1px solid var(--line)}
 .askfoot>p:first-child{margin:0 0 10px;color:var(--muted);font-size:15px}
-.askmenu{margin:18px 0 0}.askmenu .btn{display:inline-flex;align-items:center;gap:8px}
+.askmenu{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}.askmenu .btn{display:inline-flex;align-items:center;gap:8px}.askbk{margin:10px 0 0;font-size:14px;overflow-wrap:anywhere}
 @media (prefers-reduced-motion:no-preference){.asknew,.asknew~.askopts{animation:askin .26s ease-out}@keyframes askin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
 .hosearch{position:relative;max-width:640px}
 .hosearch .ico{position:absolute;left:15px;top:50%;width:20px;height:20px;transform:translateY(-50%);color:var(--muted);pointer-events:none}

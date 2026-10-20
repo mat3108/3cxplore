@@ -59,7 +59,7 @@
    "comment": [
     "Touchez la réponse qui vous convient : la question suivante s'affiche dessous, jusqu'à la page qui répond.",
     "« Revenir en arrière » change la dernière réponse, « Recommencer » repart de la première question. En revenant à l'accueil, vous retrouvez où vous en étiez.",
-    "Vous pouvez aussi écrire ce que vous cherchez dans le champ du bas (par exemple « manqués » ou « fériés »), ou ouvrir le menu complet."
+    "Vous pouvez aussi écrire ce que vous cherchez dans le champ du bas (par exemple « manqués » ou « fériés »), ou ouvrir le menu complet. Le bouton « Fermer le backup », à côté, ferme le backup ouvert (son nom est affiché dessous) et efface ce que vous choisissez de ce navigateur."
    ],
    "astuce": "Le logo 3CXplore, en haut à gauche, ramène toujours ici."
   },
@@ -956,7 +956,7 @@
     "comment": [
      "Tap the answer that fits: the next question appears below, until the page that answers it.",
      "“Go back” changes the last answer, “Start over” returns to the first question. When you come back to Home, you find where you left off.",
-     "You can also type what you are looking for in the field at the bottom (for example “missed” or “holidays”), or open the full menu."
+     "You can also type what you are looking for in the field at the bottom (for example “missed” or “holidays”), or open the full menu. The « Close backup » button next to it closes the open backup (its name is shown below) and erases what you choose from this browser."
     ],
     "astuce": "The 3CXplore logo, top left, always brings you back here."
    },
