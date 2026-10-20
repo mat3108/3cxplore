@@ -3,8 +3,8 @@ const TOUR_KEY = 'visite3cx';
 const TOUR = [
   {t: 'Bienvenue dans 3CXplore', d: "Une visite en quelques étapes pour trouver l'essentiel. Passez-la à tout moment (touche Échap) et relancez-la avec « Visite guidée », en bas du menu de gauche.", sel: null},
   {t: 'Choisir un magasin', d: 'Cette liste limite tous les onglets à un magasin ; « Tous les magasins » montre tout le système.', sel: '#segsel'},
-  {t: 'Le menu', d: "Les onglets sont regroupés par thème. « Simplifié » réunit les onglets voisins avec des sous-onglets en haut de la page ; « Complet » les affiche tous. L'interrupteur « Nouveau menu (bêta) » propose une organisation par question, et le champ juste en dessous trouve un menu ou un sous-menu par son nom.", sel: '#nav .navmode', nav: true},
-  {t: 'Priorités', d: 'Tous les problèmes en une seule liste, classés selon le nombre d\'appels touchés : un bon point de départ chaque jour.', sel: '#nav a[data-k="priorites"]', nav: true},
+  {t: 'Le menu', d: "Chaque rubrique a sa couleur. Cliquez sur une rubrique : ses pages s'affichent juste en dessous, comme les arrêts d'une ligne de métro, et la page ouverte est l'arrêt plein. « Je veux… » mène directement aux assistants, et le champ du haut trouve une page par son nom.", sel: '#nav .ngrp', nav: true},
+  {t: 'À réparer', d: 'Tous les problèmes en une seule liste, classés selon le nombre d\'appels touchés : un bon point de départ chaque jour.', sel: '#nav a[data-set="reparer"]', nav: true},
   {t: 'Rechercher', d: 'Tapez « / » pour chercher un poste, un SDA, une adresse MAC ou un nom ; Ctrl+K (Cmd+K sur Mac) ouvre la palette de commandes.', sel: '#gsearch'},
   {t: 'Aide sur chaque onglet', d: "Le « ? » à côté du titre ouvre l'explication de l'onglet dans le guide de l'utilisateur.", sel: '#main .tabhelp'},
   {t: 'Exporter et imprimer', d: 'La plupart des tableaux ont un bouton « Exporter (CSV) » ; les fiches et rapports s\'impriment ou s\'enregistrent en PDF.', sel: null},

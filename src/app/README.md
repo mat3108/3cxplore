@@ -57,6 +57,6 @@ drawn, which ES modules (always deferred) would not do.
 
 1. Create `js/app/tabs/<name>.js`.
 2. Add it to `js/app/app.js`, before `ui/navigation.js`.
-3. Declare it in `TABS` and the menus (`ui/navigation.js`, `ui/simplified-menu.js`, `ui/new-menu.js`).
+3. Declare it in `TABS` and `NAV_GROUPS` (`ui/navigation.js`), then in a menu section (`NAV_SETS` or `NAV2`, `ui/simplified-menu.js`).
 4. Explain it in `src/guide.json` (French and English); `mise run check` makes sure of it.
 5. Texts shown to the user are written in French; add their English translation to `js/i18n/en-dictionary.js`.

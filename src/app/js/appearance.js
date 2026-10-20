@@ -5,8 +5,8 @@ window.applyTheme = t => {
   try{ if(t === 'light' || t === 'dark') localStorage.setItem('theme3cx', t); else localStorage.removeItem('theme3cx'); }catch(e){}
   document.querySelectorAll('.themesw button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.t === ((t === 'light' || t === 'dark') ? t : 'auto'))));
 };
-// interface par défaut : thème Graphite en mode sombre, menu Dégradé, groupes repliables, compteurs affichés, espacement confortable
-window.APP_DEFAULT = {preset: 'graphite', nav: 'degrade', navFold: 'on'};
+// interface par défaut : thème Graphite en mode sombre, compteurs affichés, espacement confortable
+window.APP_DEFAULT = {preset: 'graphite'};
 // première ouverture (aucun réglage d'apparence mémorisé) : on enregistre l'interface par défaut, et le mode sombre si aucun mode n'a été choisi
 try{ if(localStorage.getItem('apparence3cx') === null){ localStorage.setItem('apparence3cx', JSON.stringify(window.APP_DEFAULT)); if(localStorage.getItem('theme3cx') === null) localStorage.setItem('theme3cx', 'dark'); } }catch(e){}
 try{ const t = localStorage.getItem('theme3cx'); if(t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }catch(e){}
@@ -58,7 +58,7 @@ window.APP_PRESETS.push(
     {bg: '#14121f', panel: '#1b1829', panel2: '#232036', text: '#ece9fb', muted: '#a6a1c4', line: '#2f2b48', accent: '#b4a0ff', 'accent-soft': '#2c2550', 'c-in': '#b4a0ff', 'on-accent': '#14121f'}, null, 'raffine'],
   ['solarise', 'Solarisé', 'La palette classique des éditeurs de code.', {bg: '#fdf6e3', panel: '#fffbee', panel2: '#eee8d5', text: '#073642', muted: '#657b83', line: '#e4dcc4', accent: '#268bd2', 'accent-soft': '#e3eef5', ok: '#859900', 'ok-soft': '#eef0d6', warn: '#b58900', 'warn-soft': '#f6ecd0', bad: '#dc322f', 'bad-soft': '#f9e0dc', 'c-in': '#268bd2', 'c-out': '#2aa198'},
     {bg: '#002b36', panel: '#073642', panel2: '#0b4050', text: '#eee8d5', muted: '#93a1a1', line: '#124b59', accent: '#4ea4e6', 'accent-soft': '#0e4459', ok: '#a3b81a', 'ok-soft': '#1d3d2a', warn: '#d9a514', 'warn-soft': '#3b3a1c', bad: '#ef5350', 'bad-soft': '#3d1f24', 'c-in': '#4ea4e6', 'c-out': '#2aa198', 'on-accent': '#002b36'}, null, 'raffine']);
-window.APP_HOMES = [['dashboard', 'Tableau de bord'], ['priorites', 'Priorités'], ['sante', 'Note de santé'], ['reco', 'Recommandations'], ['actions', 'Actions console'], ['stats', 'Statistiques'], ['rappels', 'Appels manqués']];
+window.APP_HOMES = [['accueil', 'Accueil'], ['dashboard', 'Tableau de bord'], ['priorites', 'Priorités'], ['sante', 'Note de santé'], ['reco', 'Recommandations'], ['actions', 'Actions console'], ['stats', 'Statistiques'], ['rappels', 'Appels manqués']];
 window.loadAppearance = () => { try{ const v = localStorage.getItem('apparence3cx'); return v === null ? {...window.APP_DEFAULT} : (JSON.parse(v) || {}); }catch(e){ return {...window.APP_DEFAULT}; } };
 window.applyAppearance = a => {
   if(a === undefined) a = window.loadAppearance();
@@ -72,9 +72,9 @@ window.applyAppearance = a => {
   const raf = !!(p && /^raffine/.test(p[6] || ''));
   root.classList.toggle('raffine', raf); root.classList.toggle('serif-titles', !!(p && p[6] === 'raffine-serif'));
   root.classList.toggle('geek', geek);
-  [...root.classList].filter(c => c.startsWith('nav-')).forEach(c => root.classList.remove(c));
-  if(a.nav && a.nav !== 'classique') root.classList.add('nav-' + a.nav);
-  root.classList.toggle('navfold', a.navFold === 'on'); root.classList.toggle('nocount', a.navCount === 'off'); root.classList.toggle('navtight', a.navSpace === 'serre'); root.classList.toggle('scan', geek && a.scan !== 'off'); root.classList.toggle('geek-light', geek && p[5] === 'light');
+  // 20.0 : un seul menu, dessiné par menu.css ; les anciens styles de menu et les groupes repliables ne s'appliquent plus
+  [...root.classList].filter(c => c.startsWith('nav-')).forEach(c => root.classList.remove(c)); root.classList.remove('navfold');
+  root.classList.toggle('nocount', a.navCount === 'off'); root.classList.toggle('navtight', a.navSpace === 'serre'); root.classList.toggle('scan', geek && a.scan !== 'off'); root.classList.toggle('geek-light', geek && p[5] === 'light');
   const c = /^#[0-9a-f]{6}$/i.test(a.accent || '') ? a.accent.toLowerCase() : null;
   if(c && !(c === '#2563eb' && !p))
     css += blocks(`--accent:${c};--accent-soft:color-mix(in srgb,${c} 13%,var(--panel));--c-in:${c}`, `--accent:color-mix(in srgb,${c} 62%,#fff);--accent-soft:color-mix(in srgb,${c} 24%,var(--panel));--c-in:color-mix(in srgb,${c} 62%,#fff)`);
@@ -90,11 +90,3 @@ window.applyAppearance = a => {
   st.textContent = css;
 };
 try{ window.applyAppearance(); }catch(e){}
-window.APP_NAVSTYLES = [['classique', 'Classique', 'Le menu d\'origine.'], ['pilules', 'Pilules', 'Éléments arrondis, onglet actif en couleur pleine.'], ['trait', 'Trait indicateur', 'Fin trait de couleur à gauche, très sobre.'],
-  ['pastilles', 'Icônes en pastilles', 'Une couleur par groupe, façon Réglages de macOS.'], ['sombre', 'Menu sombre', 'Toujours sombre, même en thème clair.'], ['ilot', 'Îlot flottant', 'Détaché du bord, coins arrondis et ombre.'], ['degrade', 'Dégradé', 'Fond dégradé discret, onglet actif en verre.']];
-// groupes du menu repliables (si l'option est active) ; état mémorisé
-document.addEventListener('click', e => {
-  const ng = e.target.closest('#nav .ng'); if(!ng || !document.documentElement.classList.contains('navfold') || document.body.classList.contains('mini')) return;
-  const g = ng.closest('.ngrp'); if(!g) return; g.classList.toggle('closed');
-  try{ localStorage.setItem('navgroupes3cx', JSON.stringify([...document.querySelectorAll('#nav .ngrp.closed')].map(x => x.dataset.gi))); }catch(er){}
-});

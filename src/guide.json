@@ -13,16 +13,16 @@
    "La liste « Tous les magasins » en haut à droite limite tous les onglets à un magasin. Revenez à « Tous les magasins » pour voir l'ensemble du système."
   ],
   [
-   "Menu simplifié ou complet",
-   "En haut du menu de gauche : « Simplifié » regroupe les onglets voisins sous une seule entrée avec des sous-onglets ; « Complet » affiche tous les onglets à plat. Ce guide suit le menu simplifié."
+   "Le menu",
+   "Le menu de gauche est rangé en rubriques, chacune avec sa couleur : Tous les jours (Accueil, Tableau de bord, À réparer, Les appels, Les magasins), Je veux… (les assistants : ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés), Mon installation (personnes, postes et lignes, chemin des appels, messages vocaux, sécurité) et Comprendre (chiffres, ce qui a changé). Cliquez sur une rubrique : ses pages s'affichent juste en dessous, comme les arrêts d'une ligne de métro ; la page ouverte est l'arrêt plein. En haut de chaque page, le fil d'Ariane (Accueil › rubrique › page) rappelle où vous êtes ; sur téléphone et menu réduit, les autres pages de la rubrique s'affichent aussi en pastilles. Ce guide suit le même ordre."
   ],
   [
-   "Nouveau menu (bêta)",
-   "Sous « Simplifié / Complet », l'interrupteur « Nouveau menu (bêta) » propose un menu simplifié organisé par question : Au quotidien (Tableau de bord, À corriger, Nos appels, Nos équipes, Mon magasin), Analyser (Statistiques, Comparer, Parcours des appels) et Technique (postes, lignes, messagerie, sécurité, historique des changements, réglages). Il est désactivé par défaut : le menu habituel ne change pas, et on peut revenir à tout moment. Ce guide suit le menu habituel ; la recherche dans le menu trouve chaque onglet dans les deux menus."
+   "L'accueil",
+   "La page Accueil s'ouvre en premier : un champ pour chercher une page, le nombre de choses à réparer, les actions « Je veux… » et une tuile par rubrique, de la couleur de son menu, avec ses pages les plus utiles. Pour ouvrir une autre page au démarrage, choisissez-la dans l'onglet Interface (Onglet d'accueil)."
   ],
   [
-   "Rechercher un menu",
-   "Sous « Simplifié / Complet », le champ « Rechercher un menu… » trouve un menu ou un sous-menu en tapant quelques lettres de son nom (sans tenir compte des accents ni des majuscules), y compris les sous-onglets réunis sous une entrée du menu simplifié. Chaque résultat indique où il se trouve dans le menu. Les flèches choisissent un résultat, Entrée l'ouvre et Échap efface la recherche."
+   "Chercher une page",
+   "En haut du menu, le champ « Chercher une page… » (et celui de l'accueil) trouve une page en tapant quelques lettres de son nom, sans tenir compte des accents ni des majuscules. Chaque résultat indique sa rubrique. Les flèches choisissent un résultat, Entrée l'ouvre et Échap efface la recherche."
   ],
   [
    "Rechercher",
@@ -54,6 +54,15 @@
   ]
  ],
  "onglets": {
+  "accueil": {
+   "sert": "La page d'ouverture : « Que voulez-vous faire ? ». Elle montre combien de choses sont à réparer, les actions courantes (ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés) et une tuile par rubrique du menu, de la même couleur, avec ses pages les plus utiles.",
+   "comment": [
+    "Tapez quelques lettres dans le grand champ pour trouver une page (par exemple « manqués » ou « fériés »), puis Entrée pour l'ouvrir.",
+    "Cliquez sur une tuile pour ouvrir sa rubrique, ou sur une des pages listées dessous pour y aller directement.",
+    "Le cadre « choses à réparer » mène aux Priorités, triées de la plus urgente à la moins urgente."
+   ],
+   "astuce": "Le logo 3CXplore, en haut à gauche, ramène toujours ici."
+  },
   "dashboard": {
    "sert": "Le point de départ : en haut, la note de santé, les chiffres clés du système ou du magasin choisi et les trois problèmes qui font perdre le plus d'appels ; ensuite l'issue des appels entrants, le volume par jour et par heure, les postes et numéros les plus actifs ; tout en bas, le backup ouvert et les informations du serveur.",
    "comment": [
@@ -891,16 +900,16 @@
     "The “All stores” list at the top right limits every tab to one store. Go back to “All stores” to see the whole system."
    ],
    [
-    "Simple or full menu",
-    "At the top of the left menu: “Simple” groups neighbouring tabs under a single entry with sub-tabs; “Full” shows all tabs flat. This guide follows the simple menu."
+    "The menu",
+    "The left menu is arranged in sections, each with its own colour: Every day (Home, Dashboard, To fix, Calls, Stores), I want to… (the wizards: add or remove an employee, open a store, prepare public holidays), My setup (people, extensions and lines, how calls travel, voicemail, security) and Understand (numbers and statistics, what changed). Click a section: its pages appear right below, like the stops of a metro line; the open page is the filled stop. At the top of each page, the breadcrumb (Home › section › page) shows where you are; on a phone and with the collapsed menu, the other pages of the section also appear as pills. This guide follows the same order."
    ],
    [
-    "New menu (beta)",
-    "Below « Simple / Full », the « New menu (beta) » switch offers a simple menu organised by question: Day to day (Dashboard, To fix, Our calls, Our teams, My store), Analyse (Statistics, Compare, Call routes) and Technical (extensions, lines, voicemail, security, change history, settings). It is off by default: the usual menu does not change, and you can switch back at any time. This guide follows the usual menu; the menu search finds every tab in both menus."
+    "Home",
+    "The Home page opens first: a field to find a page, the number of things to fix, the “I want to…” actions and one tile per section, in the colour of its menu, with its most useful pages. To open another page at start-up, choose it in the Interface tab (Home tab)."
    ],
    [
-    "Search a menu",
-    "Below « Simple / Full », the « Search a menu… » field finds a menu or sub-menu as you type a few letters of its name (ignoring accents and capitals), including the sub-tabs grouped under an entry of the simple menu. Each result shows where it sits in the menu. The arrow keys choose a result, Enter opens it and Esc clears the search."
+    "Find a page",
+    "At the top of the menu, the “Find a page…” field (and the one on the home page) finds a page as you type a few letters of its name, ignoring accents and capitals. Each result shows its section. The arrow keys choose a result, Enter opens it and Esc clears the search."
    ],
    [
     "Search",
@@ -932,6 +941,15 @@
    ]
   ],
   "onglets": {
+   "accueil": {
+    "sert": "The opening page: “What do you want to do?”. It shows how many things need fixing, the common actions (add or remove an employee, open a store, prepare public holidays) and one tile per menu section, in the same colour, with its most useful pages.",
+    "comment": [
+     "Type a few letters in the large field to find a page (for example “missed” or “holidays”), then Enter to open it.",
+     "Click a tile to open its section, or one of the pages listed below it to go straight there.",
+     "The “things to fix” box leads to Priorities, sorted from most to least urgent."
+    ],
+    "astuce": "The 3CXplore logo, top left, always brings you back here."
+   },
    "dashboard": {
     "sert": "The starting point: at the top, the health score, key figures for the system or the selected store and the three problems that lose the most calls; then the outcome of inbound calls, volume by day and by hour, the most active extensions and numbers; at the very bottom, the open backup and server information.",
     "comment": [

@@ -4,6 +4,7 @@
 // Rien n'est envoyé sur le réseau ; le dernier backup est mémorisé (IndexedDB).
 // ===================================================================
 window.NAV_ICONS = {
+  accueil:'M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5',
   dashboard:'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z',
   magasins:'M3 9l1.5-5h15L21 9M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8M10 21v-5h4v5',
   telephones:'M5 9h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zM7 9V5a2 2 0 0 1 2-2h1v6M14 13h4M14 17h4M7 13h3v4H7z',

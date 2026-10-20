@@ -57,6 +57,6 @@ s'exécuter avant l'affichage, ce que des modules ES (toujours différés) ne fo
 
 1. Créer `js/app/tabs/<nom>.js`.
 2. L'ajouter dans `js/app/app.js`, avant `ui/navigation.js`.
-3. Le déclarer dans `TABS` et les menus (`ui/navigation.js`, `ui/simplified-menu.js`, `ui/new-menu.js`).
+3. Le déclarer dans `TABS` et `NAV_GROUPS` (`ui/navigation.js`), puis dans une rubrique du menu (`NAV_SETS` ou `NAV2`, `ui/simplified-menu.js`).
 4. L'expliquer dans `src/guide.json` (français et anglais) ; `mise run check` le vérifie.
 5. Les textes affichés sont écrits en français ; ajouter leur traduction dans `js/i18n/en-dictionary.js`.

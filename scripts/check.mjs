@@ -51,13 +51,15 @@ else {
   try {
     const html = inlineScripts(read('src/app/index.html'), path.resolve('src/app'), srcFiles);
     srcFiles.push(path.resolve('src/app/index.html'));
-    // stylesheets: index.html links css/styles.css, which @imports the others
-    const css = f => { srcFiles.push(f); for (const m of read(f).matchAll(/^@import "([^"]+)";$/gm)) css(path.resolve(path.dirname(f), m[1])); };
+    // stylesheets: index.html links css/styles.css, which @imports the others; url("…") files (fonts) are inlined by Vite
+    const css = f => { srcFiles.push(f); const t = read(f);
+      for (const m of t.matchAll(/url\("(\.[^"]+)"\)/g)) srcFiles.push(path.resolve(path.dirname(f), m[1]));
+      for (const m of t.matchAll(/^@import "([^"]+)";$/gm)) css(path.resolve(path.dirname(f), m[1])); };
     for (const m of html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)) css(path.resolve('src/app', m[1]));
     latestTemplate = html;
     const used = new Set(srcFiles.map(f => path.relative(BASE, f)));
     const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
-    for (const f of walk('src/app').sort()) if (!used.has(f) && !/\.md$|\.DS_Store$/.test(f)) error(`file in src/app/ not included anywhere: ${f}`);
+    for (const f of walk('src/app').sort()) if (!used.has(f) && !/\.md$|\.DS_Store$|\/OFL\.txt$/.test(f)) error(`file in src/app/ not included anywhere: ${f}`);
   } catch (e) { error(`sources of the latest version (src/app/): ${e.message}`); }
 }
 const seen = new Set();

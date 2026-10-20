@@ -1,5 +1,30 @@
 [
  {
+  "version": "20.0",
+  "date": "2026-10-20",
+  "titre": "Un menu simple, avec ses sous-menus",
+  "resume": "Un seul menu, rangé en rubriques de couleur qui s'ouvrent sur leurs pages, une page d'accueil « Que voulez-vous faire ? », un fil d'Ariane en haut de chaque page et une police plus lisible.",
+  "changements": [
+   "Menu : les trois menus (Simplifié, Complet, Nouveau menu bêta) sont remplacés par un seul, rangé en rubriques : Tous les jours (Accueil, Tableau de bord, À réparer, Les appels, Les magasins), Je veux… (ajouter ou retirer un employé, ouvrir un magasin, préparer les jours fériés), Mon installation (Les personnes ; Postes, téléphones et lignes ; Le chemin des appels ; Messages vocaux ; Sécurité et droits), Comprendre (Les chiffres, Ce qui a changé) et Réglages.",
+   "Sous-menus : chaque rubrique a sa couleur et s'ouvre sur ses pages, juste en dessous, dessinées comme les arrêts d'une ligne de métro ; la page ouverte est l'arrêt plein. La rubrique mène à la dernière page ouverte dedans.",
+   "Accueil : nouvelle page d'ouverture « Que voulez-vous faire ? » avec un grand champ pour chercher une page, le nombre de choses à réparer, les actions « Je veux… » et une tuile par rubrique avec ses pages les plus utiles. Le logo ramène à l'accueil ; l'onglet Interface permet toujours de choisir une autre page d'ouverture.",
+   "Haut de chaque page : un fil d'Ariane « Accueil › rubrique › page ». Sur téléphone et quand le menu est réduit, les autres pages de la rubrique s'affichent en pastilles que l'on fait défiler.",
+   "Police Atkinson Hyperlegible Next, dessinée pour être lue sans effort, intégrée dans la page : rien à installer, elle fonctionne hors ligne.",
+   "Bandeau du haut : sous 1400 px de large, les boutons Firmwares et Mise à jour n'affichent que leur icône, pour laisser de la place à la recherche.",
+   "Interface : les choix « Style du menu » et « Groupes du menu » disparaissent (un seul menu). Les adresses des pages (#appels, #postes…) ne changent pas."
+  ],
+  "onglets": [
+   [
+    "Accueil",
+    "Nouvelle page d'ouverture : chercher une page, choses à réparer, actions « Je veux… » et une tuile par rubrique."
+   ],
+   [
+    "Interface",
+    "Plus de choix de style de menu ni de groupes repliables ; l'Accueil est la page d'ouverture par défaut."
+   ]
+  ]
+ },
+ {
   "version": "19.3.4",
   "date": "2026-10-19",
   "titre": "Cohérence et accessibilité",

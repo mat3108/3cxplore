@@ -11,10 +11,8 @@ V.interface = el => {
     return `<span class="pvmini" style="background:${c.bg};border-color:${c.line}"><i style="background:${c.panel};border-color:${c.line}"><b style="background:${c.accent}"></b><u style="background:${c.text}"></u></i></span>`; };
   el.innerHTML = `<div id="uiwrap"><h2>Interface</h2><p><button class="btn" data-tour="1">Relancer la visite guidée</button> <label class="tourtgl" title="Lancer la visite guidée à chaque ouverture d'un backup"><input type="checkbox" class="tourauto"${(() => { try{ return localStorage.getItem('visiteauto3cx') === '1' ? ' checked' : ''; }catch(e){ return ''; } })()}> Visite guidée à l'ouverture du backup</label></p>
     <p class="lead">Personnalisez l'apparence : un thème prêt à l'emploi, puis les détails (couleur, densité, texte, coins, cartes, police, largeur, menu, onglet d'accueil, animations). Tout s'applique tout de suite, est mémorisé dans ce navigateur et inclus dans la Sauvegarde des réglages. Les rapports imprimés gardent leurs couleurs habituelles.</p>
-    <h3>Style du menu</h3>
-    <div class="pvgrid">${APP_NAVSTYLES.map(([k, l, d]) => `<button class="card pvcard${(A.nav || 'classique') === k ? ' on' : ''}" data-nav="${k}" type="button"><span class="nvpv nvpv-${k}"><i></i><i class="on"></i><i></i><i></i></span><b>${esc(l)}</b><span class="muted" style="font-size:12px">${esc(d)}</span></button>`).join('')}</div>
+    <h3>Menu</h3>
     <div class="grid two" style="margin-top:10px">
-      ${opt('Groupes du menu', radios('uinf', A.navFold === 'on' ? 'on' : 'off', [['off', 'Toujours ouverts'], ['on', 'Repliables']]), 'Repliables : un clic sur « Vue d\'ensemble », « Configuration »… ouvre ou ferme le groupe (l\'onglet actif reste visible).')}
       ${opt('Mises à jour', radios('uiupd', window.UPD && !window.UPD.on() ? 'off' : 'on', [['on', 'Vérifier au démarrage'], ['off', 'Ne pas vérifier']]), 'Le bouton de téléchargement du bandeau du haut permet de vérifier à tout moment et d\'installer l\'application. Au démarrage (au plus une fois par jour), 3CXplore demande à GitHub le numéro de la dernière version publiée et affiche un bandeau si une mise à jour existe. C\'est la seule requête Internet de l\'outil : aucune donnée du backup n\'est envoyée.')}
       ${opt('Compteurs du menu', radios('uinc', A.navCount === 'off' ? 'off' : 'on', [['on', 'Affichés'], ['off', 'Masqués']]))}
       ${opt('Espacement du menu', radios('uins', A.navSpace === 'serre' ? 'serre' : 'confort', [['confort', 'Confortable'], ['serre', 'Serré']]))}
@@ -39,7 +37,7 @@ V.interface = el => {
       ${opt('Police', radios('uifo', A.font || 'systeme', [['systeme', 'Système'], ['arrondie', 'Arrondie'], ['serif', 'À empattements'], ['mono', 'Chasse fixe']]), 'Selon les polices installées sur l\'ordinateur.')}
       ${opt('Largeur du contenu', radios('uiwi', A.width || 'centre', [['centre', 'Centrée (1500 px max.)'], ['large', 'Pleine largeur']]), 'Pleine largeur : utile sur un grand écran.')}
       ${opt('Menu latéral', radios('uinv', mini ? 'reduit' : 'etendu', [['etendu', 'Étendu'], ['reduit', 'Réduit (icônes)']]), 'Conservé au prochain démarrage (comme le bouton « Réduire le menu »).')}
-      ${opt('Onglet d\'accueil', `<select id="uiho">${APP_HOMES.map(([k, l]) => `<option value="${k}"${(A.home || 'dashboard') === k ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select>`, 'Onglet affiché à l\'ouverture de l\'interface (sans lien direct vers un autre onglet).')}
+      ${opt('Onglet d\'accueil', `<select id="uiho">${APP_HOMES.map(([k, l]) => `<option value="${k}"${(A.home || 'accueil') === k ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select>`, 'Onglet affiché à l\'ouverture de l\'interface (sans lien direct vers un autre onglet).')}
       ${opt('Animations', radios('uimo', A.motion || 'normal', [['normal', 'Normales'], ['reduit', 'Réduites']]), 'Réduites : aucune transition ni animation (confort visuel), curseur fixe.')}
       ${opt('Effets rétro (thèmes geek)', radios('uisc', A.scan === 'off' ? 'off' : 'on', [['on', 'Grille et lignes de balayage'], ['off', 'Sans lignes de balayage']]), 'Effet d\'écran cathodique ; sans effet sur les thèmes classiques.')}
     </div>
@@ -63,7 +61,6 @@ V.interface = el => {
     if(t.id === 'uicc') return set('accent', t.value);
   });
   W.addEventListener('click', e => {
-    const nv = e.target.closest('[data-nav]'); if(nv){ A.nav = nv.dataset.nav; return save(); }
     const pv = e.target.closest('[data-preset]');
     if(pv){ const p = APP_PRESETS.find(x => x[0] === pv.dataset.preset); A.preset = p[0]; delete A.accent; if(p[5]) window.applyTheme(p[5]); return save(); }
     const b = e.target.closest('.uicol'); if(b){ if(b.dataset.c) A.accent = b.dataset.c; else delete A.accent; return save(); }

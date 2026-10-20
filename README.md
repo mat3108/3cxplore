@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.3.4-2563eb)
+![Version](https://img.shields.io/badge/version-20.0-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **84 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **85 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -37,6 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
+| **Accueil** | Nouvelle page d'ouverture : chercher une page, choses à réparer, actions « Je veux… » et une tuile par rubrique. |
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Tous les problèmes en une liste, classés selon les appels touchés puis par gravité. |
 | **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
@@ -115,7 +116,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Licences et postes** | Postes jamais utilisés ou inactifs (seuil au choix), encore visés par un acheminement, en double ou désactivés ; téléphones à récupérer ; pic d'appels simultanés. |
 | **Magasins** | Codes de magasin détectés (nom, type Magasin/Commun, nombre d'éléments) et attribution de chaque département, file, standard, groupe de sonnerie et poste, avec correction manuelle. |
 | **Sauvegarde des réglages** | Export et import en un fichier de tous les réglages saisis dans l'interface (magasins, objectifs, suivi, notes, tâches, préférences). |
-| **Interface** | Focus visible au clavier, plus de survol collé sur téléphone, zones à toucher agrandies. |
+| **Interface** | Plus de choix de style de menu ni de groupes repliables ; l'Accueil est la page d'ouverture par défaut. |
 | **Sécurité** | Droits d'administration, double authentification, renvois externes, appels internationaux, connexions et changements sensibles. |
 | **Renvois externes** | Renvois vers des numéros externes : statuts, appels renvoyés, anciens employés, cellulaires de collègues, numéros inconnus. |
 | **Appels suspects** | Démarchage et robots : rafales, plusieurs SDA appelés, appels très courts ou de nuit répétés, appels masqués par heure. |
@@ -221,19 +222,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.3.4** | Cohérence et accessibilité |
-| 19.3.3 | Les appels en cartes sur téléphone |
-| 19.3.2 | Graphique par jour et tableaux allégés |
-| 19.3.1 | La base de chaque pourcentage |
-| 19.3 | L'essentiel en haut du tableau de bord |
-| 19.2.3 | Qui peut laisser un message ? |
-| 19.2.2 | Recommandation BV |
-| 19.2.1 | Template maison |
-| 19.2 | Chiffres d'appels corrigés après l'audit des données |
-| 19.0.3 | Renvois d'appel lus comme dans la console |
-| 19.0.2 | Catégories du menu soulignées |
-| 19.0.1 | Langue des téléphones |
-| 19.0 | Code source en modules, construit avec Vite |
+| **20.0** | Un menu simple, avec ses sous-menus |
+| 19.x | Code source en modules, construit avec Vite · Langue des téléphones · Catégories du menu soulignées · Renvois d'appel lus comme dans la console · Chiffres d'appels corrigés après l'audit des données · … |
 | 18.x | Nouveau menu (bêta) · Diagramme en portrait (lettre) · Messagerie vocale des employés : plus comptée comme un appel répondu · Messagerie vocale des files et groupes : plus comptée comme un abandon · Appels internes vers une file ou un menu : plus comptés comme répondus · … |
 | 17.x | Guide de l'utilisateur en anglais · Visite guidée · Rapport et fiches : affichage sans chevauchement · Visite guidée : interrupteur à l'ouverture du backup · Fiche employé · … |
 | 16.x | Plan des parkings par magasin · Plan des parkings : export pour corriger les usagers · Plan des parkings : tableau des usagers en problème · Aide contextuelle « ? » sur chaque onglet · Plan des parkings : nombre de parkings nécessaires · … |

@@ -92,6 +92,7 @@
 //#include tabs/number-sheet.js
 //#include tabs/fixes-by-user.js
 //#include ui/settings-backup.js
+//#include tabs/home.js
 //#include ui/navigation.js
 //#include ui/simplified-menu.js
 //#include ui/new-menu.js

@@ -1,5 +1,5 @@
 /* ---------- Finition « moderne et raffinée » ---------- */
-html.raffine body{font-family:"Inter","SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;letter-spacing:-.006em;-webkit-font-smoothing:antialiased}
+html.raffine body{font-family:var(--ui-font);-webkit-font-smoothing:antialiased}
 html.raffine header{background:color-mix(in srgb,var(--panel) 80%,transparent)!important;backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px)}
 html.raffine .card{border-radius:12px;border-color:color-mix(in srgb,var(--line) 75%,transparent);box-shadow:0 1px 2px rgba(15,23,42,.04),0 6px 18px -8px rgba(15,23,42,.12)}
 html.raffine[data-theme="dark"] .card{box-shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6)}
