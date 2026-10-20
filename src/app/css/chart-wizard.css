@@ -1,0 +1,44 @@
+/* Générateur de graphique (20.3) : l'assistant reprend celui du générateur de rapport (.ask*, .grp*). Le graphique est sur la feuille blanche du
+   rapport (.report, claire même en thème sombre) : couleurs vérifiées pour les daltoniens sur fond blanc (bleu, orange, turquoise, toutes les paires
+   séparées ; le turquoise, plus pâle, est toujours accompagné de la légende et du tableau). La grille jour × heure suit une seule teinte, du pâle au foncé */
+.gvrep{--gv-s1:#2a78d6;--gv-s2:#eb6834;--gv-s3:#1baf7a;--gv-prev:#a9adb5;--gv-grid:#e8ebef;--gv-base:#b8bec8;--gv-ring:var(--panel);
+  --gv-h0:#cde2fb;--gv-h1:#9ec5f4;--gv-h2:#6da7ec;--gv-h3:#3987e5;--gv-h4:#256abf;--gv-h5:#184f95;--gv-h6:#0d366b;
+  --gv-t0:#0d366b;--gv-t1:#0d366b;--gv-t2:#0b1d36;--gv-t3:#fff;--gv-t4:#fff;--gv-t5:#fff;--gv-t6:#fff}
+.gvrep .attkpi{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.gvcard{padding:14px 12px 10px;margin:14px 0 8px}
+.gvplot{position:relative}
+.gvsvg{display:block;overflow:visible;font-family:inherit}
+.gvsvg text{font-size:11.5px}
+.gvsvg .gvax{fill:var(--muted);font-variant-numeric:tabular-nums}
+.gvsvg .gvlab{fill:var(--text);font-size:12.5px}
+.gvsvg .gvval{fill:var(--text);font-weight:600;font-size:12px}
+.gvsvg .gvgrid{stroke:var(--gv-grid);stroke-width:1}
+.gvsvg .gvbase{stroke:var(--gv-base);stroke-width:1}
+.gvsvg .gvx{stroke:var(--muted);stroke-width:1}
+.gv-s1{fill:var(--gv-s1);background:var(--gv-s1)}.gv-s2{fill:var(--gv-s2);background:var(--gv-s2)}.gv-s3{fill:var(--gv-s3);background:var(--gv-s3)}.gv-prev{fill:var(--gv-prev);background:var(--gv-prev)}
+.gvsvg .gvline{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.gvsvg .gvl-s1{stroke:var(--gv-s1)}.gvsvg .gvl-prev{stroke:var(--gv-prev)}
+.gvsvg .gvdot{stroke:var(--gv-ring);stroke-width:2}
+.gvsvg .gvhit{fill:transparent;pointer-events:all;outline:none}
+.gvsvg .gvhit.on,.gvsvg .gvhit:focus-visible{fill:color-mix(in srgb,var(--text) 5%,transparent)}
+.gvsvg .gvcell{outline:none;cursor:default}
+.gvsvg .gvcell.on rect,.gvsvg .gvcell:focus-visible rect{stroke:var(--text);stroke-width:2}
+.gvh-1{fill:var(--panel2);background:var(--panel2)}
+.gvh0{fill:var(--gv-h0);background:var(--gv-h0)}.gvh1{fill:var(--gv-h1);background:var(--gv-h1)}.gvh2{fill:var(--gv-h2);background:var(--gv-h2)}.gvh3{fill:var(--gv-h3);background:var(--gv-h3)}
+.gvh4{fill:var(--gv-h4);background:var(--gv-h4)}.gvh5{fill:var(--gv-h5);background:var(--gv-h5)}.gvh6{fill:var(--gv-h6);background:var(--gv-h6)}
+.gvsvg text.gvht0{fill:var(--gv-t0)}.gvsvg text.gvht1{fill:var(--gv-t1)}.gvsvg text.gvht2{fill:var(--gv-t2)}.gvsvg text.gvht3{fill:var(--gv-t3)}.gvsvg text.gvht4{fill:var(--gv-t4)}.gvsvg text.gvht5{fill:var(--gv-t5)}.gvsvg text.gvht6{fill:var(--gv-t6)}
+.gvsvg [class^="gvht"]{font-size:11px;font-weight:600;pointer-events:none}
+.gvleg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;margin:0 0 8px 4px;color:var(--text)}
+.gvleg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.gvleg i.ln{height:3px;width:16px;border-radius:2px;vertical-align:3px}
+.gvscale{display:flex;flex-wrap:wrap;align-items:center;gap:3px;font-size:12px;margin:8px 0 0 44px;color:var(--muted)}
+.gvscale i{display:inline-block;width:26px;height:12px;border-radius:2px}.gvscale span{margin:0 6px}
+.gvtip{position:absolute;z-index:5;pointer-events:none;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:8px 11px;min-width:150px;max-width:300px;font-size:12.5px}
+.gvtt{color:var(--muted);margin-bottom:5px}
+.gvtr{display:flex;align-items:center;gap:7px;margin:2px 0}
+.gvtr i{display:inline-block;width:12px;height:3px;border-radius:2px;flex:none}
+.gvtr b{font-size:14px;font-weight:600}.gvtr span{color:var(--muted)}
+.gvdet{margin:10px 0}.gvdet summary{cursor:pointer;font-weight:600;margin-bottom:6px}
+.gvtbl td.num,.gvtbl th.num{font-variant-numeric:tabular-nums}
+.report .gvtbl th{white-space:nowrap}
+@media print{.gvtip{display:none}.gvcard{box-shadow:none;border:0}}

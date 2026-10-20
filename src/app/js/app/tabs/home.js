@@ -2,7 +2,7 @@
 // chaque question : [texte, réponses] ; une réponse : [libellé, icône (onglet), destination] — '>id' pose la question id, sinon c'est l'onglet à ouvrir (« onglet/argument » possible)
 const ASK = {
   start: [null, [['Voir les appels', 'appels', '>appels'], ['Régler un problème', 'priorites', '>reparer'], ['Ajouter ou retirer quelqu\'un', 'nouvel', '>gens'],
-    ['Voir mon magasin', 'magasins', '>magasin'], ['Trouver quelqu\'un', 'annuaire', '>trouver'], ['Comprendre où va un appel', 'flux', '>chemin'], ['Faire un rapport', 'genrap', '>rapport'], ['Autre chose', 'autre', '>autre']]],
+    ['Voir mon magasin', 'magasins', '>magasin'], ['Trouver quelqu\'un', 'annuaire', '>trouver'], ['Comprendre où va un appel', 'flux', '>chemin'], ['Faire un rapport', 'genrap', '>rapport'], ['Faire un graphique', 'gengraph', 'gengraph'], ['Autre chose', 'autre', '>autre']]],
   rapport: ['Un rapport sur quoi ?', [['Un employé', 'employe', 'genrap/ext'], ['Une file d\'attente', 'files', 'genrap/queue'], ['Un numéro entrant (SDA)', 'numero', 'genrap/did']]],
   appels: ['Quels appels ?', [['Ceux qui n\'ont pas eu de réponse', 'rappels', 'rappels'], ['Les clients qui rappellent souvent', 'rappellent', 'rappellent'],
     ['Un numéro de téléphone précis', 'numero', 'numero'], ['Combien de temps on attend avant de répondre', 'delai', 'delai'], ['Les appels très courts', 'courts', 'courts'], ['Tous les appels, un par un', 'appels', 'appels']]],
@@ -17,7 +17,7 @@ const ASK = {
   autre: ['Voici le reste. Lequel ?', [['Les téléphones et leurs touches', 'telephones', '>tel'], ['Les chiffres', 'stats', '>chiffres'], ['Les messages vocaux', 'audio', '>vocal'],
     ['La sécurité', 'securite', '>securite'], ['Ce qui a changé', 'modifs', '>change'], ['L\'apparence de 3CXplore', 'interface', 'interface']]],
   tel: ['Plutôt quoi ?', [['La liste des postes', 'postes', 'postes'], ['Les téléphones de bureau', 'telephones', 'telephones'], ['Les touches des téléphones', 'blf', 'blf'], ['Les lignes vers l\'extérieur', 'trunks', 'trunks']]],
-  chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['Un rapport sur une personne, une file ou un numéro', 'genrap', 'genrap'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
+  chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['Un rapport sur une personne, une file ou un numéro', 'genrap', 'genrap'], ['Un graphique à mon goût', 'gengraph', 'gengraph'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
     ['Combien de personnes il faut', 'effectif', 'effectif'], ['Le tableau de bord', 'dashboard', 'dashboard']]],
   vocal: ['Lequel ?', [['Les boîtes vocales', 'messageries', 'messageries'], ['Qui peut laisser un message', 'recobv', 'recobv'], ['Les messages d\'accueil', 'audio', 'audio'], ['Les enregistrements', 'enreg', 'enreg']]],
   securite: ['Qu\'est-ce qui vous inquiète ?', [['Qui peut voir quoi', 'visibilite', 'visibilite'], ['Les renvois vers l\'extérieur', 'renvois', 'renvois'], ['Les appels bizarres', 'suspects', 'suspects'], ['Le bilan de sécurité', 'securite', 'securite']]],

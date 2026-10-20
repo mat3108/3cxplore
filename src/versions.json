@@ -1,5 +1,29 @@
 [
  {
+  "version": "20.3",
+  "date": "2026-10-20",
+  "titre": "Le générateur de graphique",
+  "resume": "Nouvelle page « Générateur de graphique » dans Les chiffres et à l'accueil : un assistant pose des questions (quoi, pour quoi, quelle période, découpé comment, quel graphique, comparer ou non) puis dessine le graphique avec ses chiffres clés et son tableau, à imprimer, à enregistrer en image ou à exporter en Excel.",
+  "changements": [
+   "Assistant en conversation, comme le générateur de rapport : ce que l'on veut voir (appels entrants ; répondus, messagerie ou perdus ; taux de réponse ; appels perdus ; appels sortants ; délai avant réponse ; durée des conversations ; appels en file servis ou non ; attente en file), pour quoi (tous les appels, un magasin, un utilisateur, une file d'attente ou un SDA, avec recherche), la période (dates au choix comprises).",
+   "Découpage : dans le temps (par jour, semaine ou mois selon la longueur de la période), par heure, par jour de la semaine, heure et jour ensemble (grille où la couleur la plus foncée est le chiffre le plus élevé), ou en comparant les magasins, les SDA, les files d'attente ou les employés (les 15 plus gros volumes).",
+   "Graphique au choix : colonnes, courbe, barres empilées ou en pourcentage ; la période juste avant peut s'afficher en gris à côté, et le premier chiffre clé dit s'il monte ou baisse (vert si c'est mieux, rouge si c'est pire).",
+   "Info-bulle au survol, au toucher et au clavier ; légende dès qu'il y a deux séries ; couleurs vérifiées pour les daltoniens, en thème clair et sombre ; tableau des chiffres sous le graphique.",
+   "Impression / PDF, image PNG et export Excel (les chiffres du graphique et les réponses données).",
+   "Accueil : nouvelle réponse « Faire un graphique » à la première question, et « Un graphique à mon goût » dans « Les chiffres »."
+  ],
+  "onglets": [
+   [
+    "Générateur de graphique",
+    "Un assistant qui dessine le graphique choisi : quoi, pour quoi, sur quelle période et découpé comment."
+   ],
+   [
+    "Accueil",
+    "Raccourci « Faire un graphique »."
+   ]
+  ]
+ },
+ {
   "version": "20.2.3",
   "date": "2026-10-20",
   "titre": "Un générateur plus léger sur le disque",

@@ -510,6 +510,16 @@
    ],
    "astuce": "Pour suivre une file d'attente d'un mois à l'autre, choisissez « 30 derniers jours » et « Oui, comparer » : chaque chiffre clé dit s'il s'améliore (vert) ou se dégrade (rouge)."
   },
+  "gengraph": {
+   "sert": "Un assistant qui pose des questions puis dessine le graphique demandé : appels entrants, répondus, messagerie ou perdus, taux de réponse, appels perdus, appels sortants, délai avant réponse, durée des conversations, appels et attente en file, pour tous les appels, un magasin, un utilisateur, une file d'attente ou un numéro entrant (SDA).",
+   "comment": [
+    "Répondez aux questions avec les gros boutons : ce que vous voulez voir, pour quoi (et lequel, avec la recherche), la période (y compris des dates au choix), puis comment découper les chiffres : dans le temps, par heure, par jour de la semaine, heure et jour ensemble, ou en comparant les magasins, les SDA, les files ou les employés.",
+    "Choisissez ensuite le genre de graphique (colonnes, courbe, barres empilées ou en pourcentage) et, si vous voulez, la période juste avant : elle s'affiche en gris à côté.",
+    "Passez la souris ou le doigt sur une barre, un point ou une case pour lire ses chiffres. Les chiffres clés sont au-dessus, et « Les chiffres du graphique » donne le tableau complet.",
+    "Imprimez-le ou enregistrez-le en PDF, enregistrez l'image (PNG) ou exportez les chiffres en Excel. « Changer mes réponses » revient aux questions ; le dernier graphique est retrouvé en revenant sur la page."
+   ],
+   "astuce": "Pour trouver les heures où il manque du monde, choisissez « Les appels perdus », « Tous les appels » puis « Heure et jour ensemble » : les cases les plus foncées sont les moments à renforcer."
+  },
   "numero": {
    "sert": "Tout ce que le backup sait d'un numéro, sur une seule page : s'il s'agit d'un numéro entrant (SDA) du système, d'un client, d'un poste ou du cellulaire d'un employé, avec ses appels, qui répond, les appels perdus et les rappels.",
    "comment": [
@@ -1406,6 +1416,16 @@
      "« Change my answers » goes back to the questions; the last report is shown again when you come back to the page. From Home, the answer « Make a report » opens the assistant directly on the employee, queue or number to choose."
     ],
     "astuce": "To follow a queue month after month, choose « Last 30 days » and « Yes, compare »: each key figure says whether it improves (green) or gets worse (red)."
+   },
+   "gengraph": {
+    "sert": "An assistant that asks questions, then draws the chart you want: inbound calls, answered, voicemail or lost, answer rate, lost calls, outbound calls, time to answer, conversation length, queue calls and waiting, for all calls, a store, a user, a queue or an incoming number (DID).",
+    "comment": [
+     "Answer the questions with the big buttons: what you want to see, for what (and which one, with search), the period (custom dates too), then how to split the figures: over time, by hour, by day of the week, hour and day together, or comparing the stores, DIDs, queues or employees.",
+     "Then choose the kind of chart (columns, line, stacked bars or percentage) and, if you want, the period just before: it shows in grey alongside.",
+     "Move the mouse or your finger over a bar, a point or a cell to read its figures. The key figures are above, and « The chart figures » gives the full table.",
+     "Print it or save it as PDF, save the image (PNG) or export the figures to Excel. « Change my answers » goes back to the questions; the last chart is shown again when you come back to the page."
+    ],
+    "astuce": "To find the hours that lack staff, choose « Lost calls », « All calls » then « Hour and day together »: the darkest cells are the times to reinforce."
    },
    "numero": {
     "sert": "Everything the backup knows about a number, on a single page: whether it is an inbound number (DID) of the system, a caller, an extension or an employee's cell phone, with its calls, who answers, lost calls and callbacks.",
