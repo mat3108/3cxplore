@@ -14,9 +14,9 @@ const NAV_SETS = {
   reglages: ['Réglages', 'reglages', ['objectifs', 'magasins', 'interface', 'reglages', 'params']],
 };
 const NAV2 = [
-  ["Vue d'ensemble", ['dashboard', 'priorites', 'reco', 'sante', 'rapport', 'fichemag', 'actions', 'recobv']],
+  ["Vue d'ensemble", ['dashboard', 'priorites', 'reco', 'sante', 'rapport', 'fichemag', 'actions']],
   ['Configuration', ['@postes', '@structure', '@route', 'trunks', 'sortant', 'annuaire']],
   ['Activité', ['@appels', '@files', '@analyse', '@vocal']],
-  ['Système', ['@securite', '@employes', '@changements', '@reglages']],
+  ['Système', ['@securite', '@employes', '@changements', '@reglages', 'recobv']],
 ];
 const SET_OF = {}; Object.entries(NAV_SETS).forEach(([id, [, , ms]]) => ms.forEach(k => SET_OF[k] = id));

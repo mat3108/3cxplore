@@ -1,4 +1,4 @@
-// ---------- Recommandation BV (19.2.1, renommée en 19.2.2) : paramètres demandés par la direction — pas de boîte vocale générale, de file ni d'usager ----------
+// ---------- Qui peut laisser un message ? (19.2.1 Template maison, 19.2.2 Recommandation BV, 19.2.3 nom actuel, en bas du menu) : paramètres demandés par la direction — pas de boîte vocale générale, de file ni d'usager ----------
 // 19.2.2 : chaque tableau montre toutes les conditions (départements, files) et tous les statuts (usagers), la messagerie en rouge
 const RBV_VM = d => d && d.to === 'VoiceMail';
 const RBV_GR = [['office', "Heures d'ouverture"], ['outOfOffice', 'Hors heures'], ['break', 'Pause'], ['holidays', 'Jours fériés']];
@@ -46,7 +46,7 @@ V.recobv = el => {
       exigence: "Aucun poste actif n'a sa messagerie vocale activée, ni de renvoi vers une messagerie dans aucun de ses statuts.",
       correction: "Dans le poste, désactiver la messagerie vocale et remplacer les renvois « Messagerie vocale » de chaque statut."}];
   const nBad = pts.filter(p => p.n).length, unit = {general: ['élément', 'éléments'], files: ['file', 'files'], usagers: ['poste', 'postes']};
-  el.innerHTML = `<h2>Recommandation BV</h2>
+  el.innerHTML = `<h2>Qui peut laisser un message ?</h2>
     <p class="lead">Les paramètres demandés par la direction, vérifiés un à un dans ce backup${SEG ? ` — magasin <b>${esc(segName(SEG))}</b>` : ''}. Pour la direction, il n'y a pas de boîte vocale : ni générale, ni de file, ni d'usager.</p>
     <div class="card" style="border-left:4px solid var(--${nBad ? 'bad' : 'ok'})"><b>${nBad ? `${nf(nBad)} point${nBad > 1 ? 's' : ''} sur ${nf(pts.length)} à corriger` : `Les ${nf(pts.length)} points sont conformes`}</b> <span class="muted">${nBad ? 'Le détail de chaque point est plus bas.' : 'La configuration respecte la demande de la direction.'}</span></div>
     <div class="grid kpis">${pts.map(p => `<div class="card kpi ${p.n ? 'bad' : 'ok'}" data-go="${p.id}" style="cursor:pointer"><div class="v" style="font-size:21px">${p.n ? nf(p.n) : '✓'}</div><div class="l">${esc(p.titre)}</div><div class="muted" style="font-size:12px">${p.n ? `${unit[p.id][p.n > 1 ? 1 : 0]} à corriger` : 'Conforme'}</div></div>`).join('')}</div>

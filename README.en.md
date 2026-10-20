@@ -6,7 +6,7 @@
 >
 > A fully local web interface to **explore, analyse and audit a 3CX V20 phone system from its backup file**: configuration, call flows, statistics, security and recommendations, store by store.
 
-![Version](https://img.shields.io/badge/version-19.2.2-2563eb)
+![Version](https://img.shields.io/badge/version-19.2.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Data](https://img.shields.io/badge/data-100%25%20local-15803d)
 
@@ -33,7 +33,7 @@ The user guide is in [`app/documentation-en.html`](app/documentation-en.html).
 
 <!-- ONGLETS:START -->
 ### Overview
-Dashboard · Priorities · Health score · Recommendations · Console actions · Voicemail recommendation · Report · Store sheet · Tracking · Comparison · Call flows · Call flow (diagram) · Call simulator · DID check · Unused DIDs · Routing traps · Duplicates and inconsistencies · Before / after
+Dashboard · Priorities · Health score · Recommendations · Console actions · Report · Store sheet · Tracking · Comparison · Call flows · Call flow (diagram) · Call simulator · DID check · Unused DIDs · Routing traps · Duplicates and inconsistencies · Before / after
 
 ### Configuration
 Extensions · Phones · BLF keys · Key template · Numbering plan · Departments · Org chart · Holidays · Queues · IVR menus · Ring groups · Trunks · Outbound rules · Phonebook
@@ -42,7 +42,7 @@ Extensions · Phones · BLF keys · Key template · Numbering plan · Department
 Missed calls · Repeat callers · Number sheet · Customer history · Key numbers · Receptions · Time to answer · Statistics · Department report · Call origin · Outbound call destinations · Outbound call costs · Internal calls · Agents · Agent occupancy · Key people · Volume forecast · Staffing by call volume · Store ranking · Very short calls · Call quality · Hours · IVR menus · Calls · Shared parking · Parking plan · Queue calls · Recordings · Voicemail & audio · Voicemail boxes
 
 ### System
-Targets · Compare stores · Licences and extensions · Stores · Settings backup · Interface · Security · External forwards · Suspicious calls · Visibility and rights · Rights matrix · Compare two users · Employee sheet · Fixes by user · New employee · Employee departure · Absences and leave · Opening a store · Employee history · Changes · Audit log · Parameters
+Targets · Compare stores · Licences and extensions · Stores · Settings backup · Interface · Security · External forwards · Suspicious calls · Visibility and rights · Rights matrix · Compare two users · Employee sheet · Fixes by user · New employee · Employee departure · Absences and leave · Opening a store · Employee history · Changes · Audit log · Parameters · Who can leave a message?
 <!-- ONGLETS:END -->
 
 ## 🔒 Privacy

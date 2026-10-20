@@ -1,5 +1,21 @@
 [
  {
+  "version": "19.2.3",
+  "date": "2026-10-19",
+  "titre": "Qui peut laisser un message ?",
+  "resume": "La page Recommandation BV s'appelle maintenant « Qui peut laisser un message ? » et se trouve tout en bas du menu.",
+  "changements": [
+   "Nouveau nom dans le menu et en titre de page : « Qui peut laisser un message ? » (au lieu de Recommandation BV).",
+   "L'entrée est déplacée tout en bas du menu, après Réglages, dans le menu simplifié, le menu complet et le nouveau menu. L'adresse de la page (#recobv) ne change pas."
+  ],
+  "onglets": [
+   [
+    "Qui peut laisser un message ?",
+    "Onglet renommé (ancien Recommandation BV) et déplacé en bas du menu."
+   ]
+  ]
+ },
+ {
   "version": "19.2.2",
   "date": "2026-10-19",
   "titre": "Recommandation BV",

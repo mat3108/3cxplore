@@ -108,7 +108,7 @@
    ]
   },
   "recobv": {
-   "sert": "Recommandation BV : les paramètres demandés par la direction, vérifiés point par point. Pour la direction, il n'y a pas de boîte vocale, ni générale, ni de file, ni d'usager.",
+   "sert": "Qui peut laisser un message ? Les paramètres demandés par la direction, vérifiés point par point. Pour la direction, il n'y a pas de boîte vocale, ni générale, ni de file, ni d'usager.",
    "comment": [
     "Chaque tableau montre toutes les conditions : départements (heures d'ouverture, hors heures, pause, jours fériés), files (si personne ne répond, heures d'ouverture, hors heures) et tous les statuts des usagers ; la messagerie vocale est en rouge.",
     "Le filtre « À corriger » est choisi par défaut ; « Tous » montre aussi les éléments conformes. Exportez les points à corriger en CSV."
@@ -986,7 +986,7 @@
     ]
    },
    "recobv": {
-    "sert": "Voicemail recommendation: the settings required by management, checked point by point. Management wants no voicemail, whether general, queue or user.",
+    "sert": "Who can leave a message? The settings required by management, checked point by point. Management wants no voicemail, whether general, queue or user.",
     "comment": [
      "Each table shows every condition: departments (office hours, after hours, break, holidays), queues (if no answer, office hours, after hours) and every user status; voicemail is shown in red.",
      "The « To fix » filter is selected by default; « All » also shows compliant items. Export the points to fix as CSV."

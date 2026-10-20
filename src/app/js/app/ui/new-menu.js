@@ -1,7 +1,7 @@
 // ---------- Nouveau menu (18.0, bêta) : organisé par question ; activé par l'interrupteur du menu, l'ancien menu simplifié reste celui par défaut ----------
 const NAVBETA_KEY = 'menubeta3cx';
 const NAV_SETS_BETA = {
-  corriger: ['À corriger', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'pieges', 'doublons', 'controle', 'sdainut', 'recobv']],
+  corriger: ['À corriger', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'pieges', 'doublons', 'controle', 'sdainut']],
   appels: ['Nos appels', 'appels', ['rappels', 'rappellent', 'numero', 'client', 'vip', 'appels', 'delai', 'receptions', 'courts', 'parkings']],
   equipes: ['Nos équipes', 'employe', ['employe', 'corrections', 'agents', 'occupation', 'indisp', 'absences', 'effectif', 'prevision', 'nouvel', 'depart', 'historique']],
   magasin: ['Mon magasin', 'fichemag', ['fichemag', 'rapport', 'deptrap', 'horaires', 'feries', 'ouvmag']],
@@ -18,7 +18,7 @@ const NAV_SETS_BETA = {
 const NAV2_BETA = [
   ['Au quotidien', ['dashboard', '@corriger', '@appels', '@equipes', '@magasin']],
   ['Analyser', ['@stats', '@comparer', '@parcours']],
-  ['Technique', ['@postes', '@lignes', '@vocal', '@securite', '@changements', '@reglages']],
+  ['Technique', ['@postes', '@lignes', '@vocal', '@securite', '@changements', '@reglages', 'recobv']],
 ];
 const NAV_SETS_STD = {...NAV_SETS}, NAV2_STD = NAV2.slice();
 const navBeta = () => { try{ return localStorage.getItem(NAVBETA_KEY) === '1'; }catch(e){ return false; } };

@@ -2941,7 +2941,7 @@ const EN = {
 "Les appels en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont pas comptés.": "Transit calls (an extension of the other 3CX going out through this system's trunk over a bridge) are not counted.",
 "** Attente en file : moyenne sur les entrées en file servies par un agent d'une part, sur les entrées non servies (l'appelant raccroche, attente maximale atteinte, aucun agent) d'autre part. Un appel qui passe par deux files compte une entrée dans chacune.": "** Queue wait: average over queue entries served by an agent on one side, over entries not served (caller hung up, maximum wait reached, no agent) on the other. A call that goes through two queues counts one entry in each.",
 "Attente moyenne en file : appels servis par un agent seulement.": "Average queue wait: calls served by an agent only.",
-"Recommandation BV": "Voicemail recommendation",
+"Qui peut laisser un message ?": "Who can leave a message?",
 "Les paramètres demandés par la direction, vérifiés un à un dans ce backup. Pour la direction, il n'y a pas de boîte vocale : ni générale, ni de file, ni d'usager.": "The settings required by management, checked one by one in this backup. Management wants no voicemail: no general voicemail, no queue voicemail and no user voicemail.",
 "Les paramètres demandés par la direction, vérifiés un à un dans ce backup — magasin": "The settings required by management, checked one by one in this backup — store",
 ". Pour la direction, il n'y a pas de boîte vocale : ni générale, ni de file, ni d'usager.": ". Management wants no voicemail: no general voicemail, no queue voicemail and no user voicemail.",

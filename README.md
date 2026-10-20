@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-19.2.2-2563eb)
+![Version](https://img.shields.io/badge/version-19.2.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -42,7 +42,6 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Note de santé** | Note sur 100 par magasin : service, configuration, sécurité et téléphones. |
 | **Recommandations** | Analyse automatique de la configuration et de l'activité, classée Critique / À corriger / Observation, avec éléments concernés, recommandation, statut et notes personnelles ; ajout d'observations manuelles ; export CSV et impression. |
 | **Actions console** | Liste de tâches à faire dans la console 3CX, classées par moment, avec chemin, impact, éléments exacts, copie des MAC, suivi et impression. |
-| **Recommandation BV** | Onglet renommé (ancien Template maison) : toutes les conditions des départements et des files, et tous les statuts des usagers. |
 | **Rapport** | Rapport imprimable / PDF par magasin : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes, téléphones à mettre à jour. |
 | **Fiche magasin** | Lien « Rapport du département » pour chaque département du magasin. |
 | **Suivi** | Évolution des indicateurs d'un backup à l'autre (service, problèmes, téléphones, parc), par système ou par magasin ; ajout d'anciens backups, export / import de l'historique. |
@@ -133,6 +132,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Modifications** | Changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ. |
 | **Journal d'audit** | Modifications de configuration et connexions, avec l'avant/après de chaque champ modifié. |
 | **Paramètres** | Paramètres système et tenant (valeurs sensibles masquées). |
+| **Qui peut laisser un message ?** | Onglet renommé (ancien Recommandation BV) et déplacé en bas du menu. |
 <!-- ONGLETS:END -->
 
 ## 🔒 Confidentialité et sécurité
@@ -221,7 +221,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **19.2.2** | Recommandation BV |
+| **19.2.3** | Qui peut laisser un message ? |
+| 19.2.2 | Recommandation BV |
 | 19.2.1 | Template maison |
 | 19.2 | Chiffres d'appels corrigés après l'audit des données |
 | 19.0.3 | Renvois d'appel lus comme dans la console |
