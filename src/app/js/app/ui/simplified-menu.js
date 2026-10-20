@@ -14,7 +14,7 @@ const NAV_SETS = {
   reglages: ['Réglages', 'reglages', ['objectifs', 'magasins', 'interface', 'reglages', 'params']],
 };
 const NAV2 = [
-  ["Vue d'ensemble", ['dashboard', 'priorites', 'reco', 'sante', 'rapport', 'fichemag', 'actions', 'maison']],
+  ["Vue d'ensemble", ['dashboard', 'priorites', 'reco', 'sante', 'rapport', 'fichemag', 'actions', 'recobv']],
   ['Configuration', ['@postes', '@structure', '@route', 'trunks', 'sortant', 'annuaire']],
   ['Activité', ['@appels', '@files', '@analyse', '@vocal']],
   ['Système', ['@securite', '@employes', '@changements', '@reglages']],

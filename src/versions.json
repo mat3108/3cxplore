@@ -1,5 +1,24 @@
 [
  {
+  "version": "19.2.2",
+  "date": "2026-10-19",
+  "titre": "Recommandation BV",
+  "resume": "La page Template maison devient Recommandation BV. Ses tableaux montrent maintenant toutes les conditions des départements et des files et tous les statuts des usagers, avec la messagerie vocale en rouge.",
+  "changements": [
+   "Nouveau nom : Recommandation BV (au lieu de Template maison), à la même place dans le menu.",
+   "Départements : un tableau avec les quatre conditions (heures d'ouverture, hors heures, pause, jours fériés) ; les SDA, menus et groupes de sonnerie qui mènent à une messagerie restent listés à part.",
+   "Files : un tableau avec « Si personne ne répond », heures d'ouverture et hors heures.",
+   "Usagers : la messagerie et une colonne par statut (Disponible, Absent, Ne pas déranger et les deux statuts personnalisés) ; un renvoi vers une messagerie dans n'importe quel statut est maintenant à corriger, pas seulement dans le statut actuel, qui est marqué « actuel ».",
+   "Chaque tableau s'ouvre sur le filtre « À corriger » ; « Tous » montre aussi les éléments conformes. L'export CSV suit ces règles."
+  ],
+  "onglets": [
+   [
+    "Recommandation BV",
+    "Onglet renommé (ancien Template maison) : toutes les conditions des départements et des files, et tous les statuts des usagers."
+   ]
+  ]
+ },
+ {
   "version": "19.2.1",
   "date": "2026-10-19",
   "titre": "Template maison",

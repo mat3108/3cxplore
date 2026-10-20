@@ -6,7 +6,7 @@
 >
 > A fully local web interface to **explore, analyse and audit a 3CX V20 phone system from its backup file**: configuration, call flows, statistics, security and recommendations, store by store.
 
-![Version](https://img.shields.io/badge/version-19.2.1-2563eb)
+![Version](https://img.shields.io/badge/version-19.2.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Data](https://img.shields.io/badge/data-100%25%20local-15803d)
 
@@ -33,7 +33,7 @@ The user guide is in [`app/documentation-en.html`](app/documentation-en.html).
 
 <!-- ONGLETS:START -->
 ### Overview
-Dashboard · Priorities · Health score · Recommendations · Console actions · House template · Report · Store sheet · Tracking · Comparison · Call flows · Call flow (diagram) · Call simulator · DID check · Unused DIDs · Routing traps · Duplicates and inconsistencies · Before / after
+Dashboard · Priorities · Health score · Recommendations · Console actions · Voicemail recommendation · Report · Store sheet · Tracking · Comparison · Call flows · Call flow (diagram) · Call simulator · DID check · Unused DIDs · Routing traps · Duplicates and inconsistencies · Before / after
 
 ### Configuration
 Extensions · Phones · BLF keys · Key template · Numbering plan · Departments · Org chart · Holidays · Queues · IVR menus · Ring groups · Trunks · Outbound rules · Phonebook
