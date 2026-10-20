@@ -58,7 +58,7 @@
    "sert": "Le point de départ : en haut, la note de santé, les chiffres clés du système ou du magasin choisi et les trois problèmes qui font perdre le plus d'appels ; ensuite l'issue des appels entrants, le volume par jour et par heure, les postes et numéros les plus actifs ; tout en bas, le backup ouvert et les informations du serveur.",
    "comment": [
     "Choisissez d'abord un backup (.zip) : c'est ici qu'il s'ouvre. Pour en changer, descendez en bas de la page ; « Système » s'y déplie pour voir le FQDN, la licence, les chemins et les codecs.",
-    "Regardez l'issue des appels entrants (répondus, perdus, messagerie, renvoyés) pour repérer d'un coup d'œil un problème de service.",
+    "Regardez l'issue des appels entrants (répondus, perdus, messagerie, renvoyés) pour repérer d'un coup d'œil un problème de service. Les pourcentages portent sur les appels de clients : les appels envoyés vers un autre 3CX (bridge) sont indiqués à part. Sous chaque taux, la base du calcul est rappelée (par exemple « 4 149 sur 5 908 appels de clients »).",
     "Cliquez sur un poste ou un numéro pour ouvrir sa fiche."
    ],
    "astuce": "Un bandeau signale les numéros importants en retard et les nouveautés du backup par rapport au précédent."
@@ -936,7 +936,7 @@
     "sert": "The starting point: at the top, the health score, key figures for the system or the selected store and the three problems that lose the most calls; then the outcome of inbound calls, volume by day and by hour, the most active extensions and numbers; at the very bottom, the open backup and server information.",
     "comment": [
      "First choose a backup (.zip): this is where it is opened. To change it, scroll to the bottom of the page; “System” expands there to show the FQDN, licence, paths and codecs.",
-     "Look at the outcome of inbound calls (answered, lost, voicemail, forwarded) to spot a service problem at a glance.",
+     "Look at the outcome of inbound calls (answered, lost, voicemail, forwarded) to spot a service problem at a glance. The percentages are of customer calls: calls sent to another 3CX (bridge) are shown separately. Under each rate, the basis of the calculation is shown (for example “4 149 of 5 908 customer calls”).",
      "Click an extension or a number to open its details."
     ],
     "astuce": "A banner flags important numbers waiting for a call-back and what is new in the backup compared with the previous one."

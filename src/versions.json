@@ -1,5 +1,22 @@
 [
  {
+  "version": "19.3.1",
+  "date": "2026-10-19",
+  "titre": "La base de chaque pourcentage",
+  "resume": "Le tableau de bord indique sur quoi porte chaque pourcentage, et l'issue des appels entrants se lit sur les mêmes appels de clients que le taux de réponse.",
+  "changements": [
+   "Sous « Entrants répondus », la base du calcul : appels répondus sur appels de clients (par exemple 4 149 sur 5 908). Sous « Service files » : appels servis sur appels en file. Sous « Entrants » : le nombre envoyé vers un autre 3CX.",
+   "« Issue des appels entrants » calcule ses pourcentages sur les appels de clients, comme le taux de réponse : « Répondu » et « Entrants répondus » donnent maintenant le même ordre de grandeur (70 %) au lieu de 44 % contre 70 %.",
+   "Les appels envoyés vers un autre 3CX (bridge) ne sont plus une ligne de la liste : leur nombre est indiqué à part, sous la liste, hors pourcentages."
+  ],
+  "onglets": [
+   [
+    "Tableau de bord",
+    "Base de calcul sous chaque pourcentage ; issue des appels entrants sur les appels de clients, bridge indiqué à part."
+   ]
+  ]
+ },
+ {
   "version": "19.3",
   "date": "2026-10-19",
   "titre": "L'essentiel en haut du tableau de bord",
