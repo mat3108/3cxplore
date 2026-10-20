@@ -1,5 +1,15 @@
 [
  {
+  "version": "20.2.3",
+  "date": "2026-10-20",
+  "titre": "Un générateur plus léger sur le disque",
+  "resume": "Le générateur de pages ne garde plus une copie complète du dépôt pour chaque ancienne version : build/tags passe de plusieurs Go à quelques dizaines de Mo. L'application ne change pas.",
+  "changements": [
+   "Générateur : pour chaque ancienne version à partir de 19.0, seules les sources nécessaires à la construction de la page sont extraites du tag git (src/app, src/versions.json, vite.config.js, scripts/vite-inline-scripts.mjs, package.json), puis effacées une fois la page faite. Seules la page construite et son repère de cache restent dans build/tags."
+  ],
+  "onglets": []
+ },
+ {
   "version": "20.2.2",
   "date": "2026-10-20",
   "titre": "Fermer le backup depuis l'accueil",

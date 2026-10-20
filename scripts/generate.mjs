@@ -59,6 +59,9 @@ export async function buildLatest() {
   return viteBuild(P('vite.config.js'), path.join(BUILD, 'app'));
 }
 
+// Files of a git tag that Vite's build of src/app/ needs (present in every tag from 19.0 on).
+const TAG_SOURCES = ['src/app', 'src/versions.json', 'scripts/vite-inline-scripts.mjs', 'vite.config.js', 'package.json'];
+
 /** Template of an older version from 19.0 on: Vite's build of the sources saved in git tag v<n>. */
 async function buildFromTag(version) {
   const tag = `v${version}`;
@@ -69,9 +72,12 @@ async function buildFromTag(version) {
   if (fs.existsSync(stamp) && read(stamp) === commit && fs.existsSync(path.join(out, 'index.html'))) return read(path.join(out, 'index.html'));
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
-  execFileSync('sh', ['-c', `git archive "${commit}" | tar -x -C "${dir}"`], { cwd: BASE });
+  // only what the Vite build reads (the whole tree is ~450 MB per version); the build fails if a file is missing
+  execFileSync('sh', ['-c', `git archive "${commit}" -- ${TAG_SOURCES.join(' ')} | tar -x -C "${dir}"`], { cwd: BASE });
   fs.symlinkSync(P('node_modules'), path.join(dir, 'node_modules'));
   const html = await viteBuild(path.join(dir, 'vite.config.js'), out);
+  // keep only the built page and the stamp the cache check reads
+  for (const f of fs.readdirSync(dir)) if (f !== '.out') fs.rmSync(path.join(dir, f), { recursive: true, force: true });
   write(stamp, commit);
   return html;
 }
