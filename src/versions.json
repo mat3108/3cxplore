@@ -1,5 +1,23 @@
 [
  {
+  "version": "20.3.2",
+  "date": "2026-10-21",
+  "titre": "Les touches BLF du nouvel employé",
+  "resume": "La fiche « Nouvel employé » donne maintenant les touches BLF à programmer sur le téléphone du nouveau poste, et les collègues chez qui ajouter une touche vers lui. Trois cases à cocher choisissent ce que la fiche contient.",
+  "changements": [
+   "Nouvel employé : nouvelle section « Touches du téléphone (BLF) » : chaque touche du collègue modèle à la même position (BLF, parking, numérotation rapide, statut, files). Une touche vers un numéro disparu, en double ou vers son propre poste n'est pas recopiée, et la fiche dit pourquoi.",
+   "Nouvel employé : option « Ajouter les touches du département » : les touches qu'au moins 75 % des collègues du même département et du même magasin ont, avec leur position habituelle, comme dans l'onglet Modèle de touches.",
+   "Nouvel employé : nouvelle section « Touches des collègues » : les collègues qui ont une touche BLF vers le collègue modèle, chez qui ajouter une touche vers le nouveau poste.",
+   "Trois cases à cocher dans le formulaire choisissent ces options (toutes cochées par défaut). Les touches sont aussi dans « Copier la fiche » et à l'impression."
+  ],
+  "onglets": [
+   [
+    "Nouvel employé",
+    "Touches BLF du nouveau poste et des collègues, au choix."
+   ]
+  ]
+ },
+ {
   "version": "20.3.1",
   "date": "2026-10-20",
   "titre": "Le vrai début de l'historique",

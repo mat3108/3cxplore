@@ -418,9 +418,10 @@
    "astuce": "La section « À corriger sur son poste » réunit les problèmes trouvés dans les autres onglets (messagerie, doublons, parkings, touches BLF, renvois externes)."
   },
   "nouvel": {
-   "sert": "La fiche de création d'un poste sur le modèle d'un collègue, avec un numéro libre et les renvois selon le statut.",
+   "sert": "La fiche de création d'un poste sur le modèle d'un collègue, avec un numéro libre, les touches BLF du téléphone et les renvois selon le statut.",
    "comment": [
-    "Choisissez le magasin et le collègue modèle, saisissez le nom et le courriel, puis imprimez la fiche."
+    "Choisissez le magasin et le collègue modèle, saisissez le nom et le courriel, puis imprimez la fiche.",
+    "Touches du téléphone (BLF) : cochez ce que la fiche doit contenir. Recopier les touches du collègue modèle (à la même position, sans les touches cassées ou en double), ajouter les touches que presque tout le département a (au moins 75 % des collègues), et dire chez quels collègues ajouter une touche vers le nouveau poste (ceux qui en ont déjà une vers le collègue modèle)."
    ]
   },
   "depart": {
@@ -1325,9 +1326,10 @@
     "astuce": "The “To fix on their extension” section gathers the problems found in the other tabs (voicemail, duplicates, parkings, BLF keys, external forwards)."
    },
    "nouvel": {
-    "sert": "The sheet for creating an extension modelled on a colleague, with a free number and forwarding by status.",
+    "sert": "The sheet for creating an extension modelled on a colleague, with a free number, the phone's BLF keys and forwarding by status.",
     "comment": [
-     "Choose the store and the model colleague, enter the name and email, then print the sheet."
+     "Choose the store and the model colleague, enter the name and email, then print the sheet.",
+     "Phone keys (BLF): tick what the sheet should include. Copy the model colleague's keys (same position, without broken or duplicate keys), add the keys almost the whole department has (at least 75% of colleagues), and list the colleagues who should get a key to the new extension (those who already have one to the model colleague)."
     ]
    },
    "depart": {
