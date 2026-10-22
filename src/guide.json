@@ -517,6 +517,7 @@
     "Répondez aux questions avec les gros boutons : ce que vous voulez voir, pour quoi (et lequel, avec la recherche), la période (y compris des dates au choix), puis comment découper les chiffres : dans le temps, par heure, par jour de la semaine, heure et jour ensemble, ou en comparant les magasins, les SDA, les files ou les employés.",
     "Choisissez ensuite le genre de graphique (colonnes, courbe, barres empilées ou en pourcentage) et, si vous voulez, la période juste avant : elle s'affiche en gris à côté.",
     "Passez la souris ou le doigt sur une barre, un point ou une case pour lire ses chiffres. Les chiffres clés sont au-dessus, et « Les chiffres du graphique » donne le tableau complet.",
+    "Cliquez sur une barre, un point ou une case (ou appuyez sur Entrée) pour voir les appels qui la composent : date, correspondant, SDA, résultat, qui a répondu, durée, avec un lien vers la fiche de chaque numéro. Pour une barre empilée, filtrez par résultat (répondus, messagerie, perdus) ; la liste s'exporte en Excel.",
     "Imprimez-le ou enregistrez-le en PDF, enregistrez l'image (PNG) ou exportez les chiffres en Excel. « Changer mes réponses » revient aux questions ; le dernier graphique est retrouvé en revenant sur la page."
    ],
    "astuce": "Pour trouver les heures où il manque du monde, choisissez « Les appels perdus », « Tous les appels » puis « Heure et jour ensemble » : les cases les plus foncées sont les moments à renforcer."
@@ -1425,6 +1426,7 @@
      "Answer the questions with the big buttons: what you want to see, for what (and which one, with search), the period (custom dates too), then how to split the figures: over time, by hour, by day of the week, hour and day together, or comparing the stores, DIDs, queues or employees.",
      "Then choose the kind of chart (columns, line, stacked bars or percentage) and, if you want, the period just before: it shows in grey alongside.",
      "Move the mouse or your finger over a bar, a point or a cell to read its figures. The key figures are above, and « The chart figures » gives the full table.",
+     "Click a bar, a point or a cell (or press Enter) to see the calls behind it: date, other party, DID, result, who answered, duration, with a link to each number's sheet. For a stacked bar, filter by result (answered, voicemail, lost); the list exports to Excel.",
      "Print it or save it as PDF, save the image (PNG) or export the figures to Excel. « Change my answers » goes back to the questions; the last chart is shown again when you come back to the page."
     ],
     "astuce": "To find the hours that lack staff, choose « Lost calls », « All calls » then « Hour and day together »: the darkest cells are the times to reinforce."

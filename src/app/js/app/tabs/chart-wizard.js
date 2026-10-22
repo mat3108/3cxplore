@@ -169,15 +169,15 @@ V.gengraph = el => {
           if((d === 'in' && ST_ANS.has(st)) || (S.k !== 'did' && d === 'out' && st === 'ans')) push({v: c[8] || 0}); return;
       } };
     const emitQ = (r, push) => { if(m[0] === 'qcalls') push({cat: r[6] ? 'sv' : 'ns'}); else push({v: r[4]}); };
-    const blank = () => ({n: 0, cats: {}, num: 0, den: 0, sum: 0, cnt: 0, vals: []});
+    const blank = () => ({n: 0, cats: {}, num: 0, den: 0, sum: 0, cnt: 0, vals: [], recs: []});
     const add = (a, x, keep) => { if(x.n) a.n += x.n; if(x.cat) a.cats[x.cat] = (a.cats[x.cat] || 0) + 1; if(x.den){ a.num += x.num; a.den += x.den; } if(x.v != null){ a.sum += x.v; a.cnt++; if(keep) a.vals.push(x.v); } };
-    const run = (a, b) => { const acc = new Map(), tot = blank();
+    const run = (a, b, keepRecs) => { const acc = new Map(), tot = blank();
       const rows = src === 'c' ? all : FULL.queueCalls, ok = src === 'c' ? okC : okQ, emit = src === 'c' ? emitC : emitQ;
       for(const rec of rows){ const lp = localParts(rec[0]); if(lp[0] > b) continue; if(lp[0] < a) break; // les deux listes sont triées du plus récent au plus ancien
         if(!ok(rec)) continue;
-        emit(rec, (x, ext) => { if(extMode && S.k === 'ext' && ext !== S.id) return; add(tot, x, true); const k = gKey(lp, rec, ext); if(k == null || k === '') return; let o = acc.get(k); if(!o) acc.set(k, o = blank()); add(o, x); }); }
+        emit(rec, (x, ext) => { if(extMode && S.k === 'ext' && ext !== S.id) return; add(tot, x, true); const k = gKey(lp, rec, ext); if(k == null || k === '') return; let o = acc.get(k); if(!o) acc.set(k, o = blank()); add(o, x); if(keepRecs) o.recs.push([rec, x, ext]); }); } // 20.4 : les appels derrière chaque barre
       return {acc, tot}; };
-    const cur = run(cFrom, to), prv = hasPrev ? run(pFrom, pTo) : null;
+    const cur = run(cFrom, to, true), prv = hasPrev ? run(pFrom, pTo) : null;
     const CATS = m[0] === 'res' ? [['ans', T('Répondus', 'Answered'), 's1'], ['vm', T('Messagerie', 'Voicemail'), 's3'], ['lost', T('Perdus', 'Lost'), 's2']] : m[0] === 'qcalls' ? [['sv', T('Servis', 'Served'), 's1'], ['ns', T('Non servis', 'Not served'), 's2']] : [];
     const val = a => !a ? (K === 'count' || K === 'stack' ? 0 : null) : K === 'count' ? a.n : K === 'stack' ? CATS.reduce((t, [c]) => t + (a.cats[c] || 0), 0) : K === 'ratio' ? (a.den ? 100 * a.num / a.den : null) : (a.cnt ? a.sum / a.cnt : null);
     const vol = a => !a ? 0 : K === 'count' ? a.n : K === 'stack' ? val(a) : K === 'ratio' ? a.den : a.cnt;
@@ -203,7 +203,7 @@ V.gengraph = el => {
     let heat = null;
     if(g === 'heat'){ const used = [...cur.acc.keys()].map(k => k % 24), h0 = used.length ? Math.min(...used) : 8, h1 = used.length ? Math.max(...used) : 17;
       heat = {h0, h1, v: WDS.map((l, w) => { const r = []; for(let h = h0; h <= h1; h++) r.push(val(cur.acc.get(w * 24 + h))); return r; }), n: WDS.map((l, w) => { const r = []; for(let h = h0; h <= h1; h++) r.push(vol(cur.acc.get(w * 24 + h))); return r; })}; }
-    return {m, K, s, g, by, unit, from, to, days, H, cFrom, cDays, nod, pFrom, pTo, hasPrev, cur, prv, cats, series, heat, CATS, val, vol};
+    return {m, K, s, g, by, src, extMode, unit, from, to, days, H, cFrom, cDays, nod, pFrom, pTo, hasPrev, cur, prv, cats, series, heat, CATS, val, vol};
   }
 
   // ---------------- dessin ----------------
@@ -233,7 +233,7 @@ V.gengraph = el => {
       if(K === 'stack'){ const tot = R.series.reduce((t, s) => t + s.v[i], 0); R.series.forEach(s => rows.push([s.col, s.l, nf(s.v[i]), tot ? `${Math.round(100 * s.v[i] / tot)} %` : ''])); rows.push(['', T('Total', 'Total'), nf(tot), '']); }
       else R.series.forEach(s => rows.push([s.col, s.id === 'prev' && s.keys ? `${s.l} (${(R.unit === 'day' ? s.keys[i] : R.unit === 'week' ? T('sem. du ', 'wk of ') + s.keys[i] : monthLab(s.keys[i], true))})` : s.l, fmtV(K, s.v[i]),
         K === 'ratio' || K === 'avg' ? (s.n[i] ? T(`sur ${nf(s.n[i])} appel${s.n[i] > 1 ? 's' : ''}`, `over ${nf(s.n[i])} call${s.n[i] > 1 ? 's' : ''}`) : '') : '']));
-      tips[i] = {t: c.tt, rows}; };
+      tips[i] = {t: c.tt, rows, k: c.k}; };
 
     if(R.g === 'heat'){
       const H = R.heat, cols = H.h1 - H.h0 + 1, ml = 44, cw = Math.max(14, (svgW - ml - 4) / cols), ch = 32, top = 22, mx = Math.max(0, ...H.v.flat().filter(v => v != null));
@@ -241,7 +241,7 @@ V.gengraph = el => {
       let o = ''; for(let h = H.h0; h <= H.h1; h++) if(cw >= 22 || (h - H.h0) % 2 === 0) o += `<text x="${ml + (h - H.h0 + .5) * cw}" y="14" class="gvax" text-anchor="middle">${h} h</text>`;
       H.v.forEach((row, wd) => { o += `<text x="${ml - 8}" y="${top + wd * ch + ch / 2 + 4}" class="gvax" text-anchor="end">${esc(WDS[wd])}</text>`;
         row.forEach((v, j) => { const st = v == null || v <= 0 || !mx ? -1 : Math.min(6, Math.floor(7 * v / mx - 1e-9)), x = ml + j * cw, y = top + wd * ch, i = tips.length;
-          tips.push({t: `${WDL[wd]}, ${T(`de ${H.h0 + j} h à ${H.h0 + j + 1} h`, `${H.h0 + j}:00 to ${H.h0 + j + 1}:00`)}`, rows: [['', mLab(m[0]), fmtV(K, v), K === 'ratio' || K === 'avg' ? (H.n[wd][j] ? T(`sur ${nf(H.n[wd][j])} appels`, `over ${nf(H.n[wd][j])} calls`) : '') : '']]});
+          tips.push({k: wd * 24 + H.h0 + j, t: `${WDL[wd]}, ${T(`de ${H.h0 + j} h à ${H.h0 + j + 1} h`, `${H.h0 + j}:00 to ${H.h0 + j + 1}:00`)}`, rows: [['', mLab(m[0]), fmtV(K, v), K === 'ratio' || K === 'avg' ? (H.n[wd][j] ? T(`sur ${nf(H.n[wd][j])} appels`, `over ${nf(H.n[wd][j])} calls`) : '') : '']]});
           const txt = fmtV(K, v), fits = v != null && v > 0 && txt.length * 6.4 + 6 <= cw - 2;
           o += `<g class="gvcell" tabindex="0" data-i="${i}" aria-label="${esc(tips[i].t + ' : ' + txt)}"><rect x="${x + 1}" y="${y + 1}" width="${cw - 2}" height="${ch - 2}" rx="3" class="gvh${st}"/>${fits ? `<text x="${x + cw / 2}" y="${y + ch / 2 + 4}" text-anchor="middle" class="gvht${st}">${esc(txt)}</text>` : ''}</g>`; }); });
       svg = `<svg viewBox="0 0 ${w} ${hgt}" width="100%" class="gvsvg" role="img" aria-label="${esc(mLab(m[0]))}">${o}</svg>`;
@@ -349,11 +349,42 @@ V.gengraph = el => {
         <details class="gvdet"${R.cats.length <= 31 ? ' open' : ''}><summary>${T('Les chiffres du graphique', 'The chart figures')}</summary>${table}</details>
       </div></div>`;
 
+    // ---- les appels derrière une barre, un point ou une case (20.4) : panneau de côté, filtre par résultat pour les barres empilées, export Excel ----
+    const {src, extMode} = R;
+    const recsOf = d => d && d.k != null ? ((R.cur.acc.get(d.k) || {}).recs || []) : [], nRecs = d => recsOf(d).length;
+    const numA = n => { const k = normNum(n); return k ? `<a class="mono" href="#numero/${esc(k)}">${esc(phone(n))}</a>` : `<span class="mono">${esc(phone(n) || n || '')}</span>`; };
+    const who = n => n && (EXT_BY[n] || DN[n]) ? dnLink(n) : n ? `<span class="mono">${esc(n)}</span>` : '';
+    const valH = K === 'avg' ? {pick: T('Délai avant réponse', 'Time to answer'), talk: T('Conversation', 'Talk'), qwait: T('Attente', 'Wait')}[m[0]] : '';
+    // une ligne : [cellules HTML, cellules Excel, catégorie]
+    const rowOf = ([r, x, ext]) => {
+      if(src === 'q'){ const res = r[6] ? T('Servi', 'Served') : T('Non servi', 'Not served') + (r[8] ? ` (${r[8]})` : '');
+        return [[esc(fmtD(r[0])), `${numA(r[2])} <span class="muted">${esc(r[3] || '')}</span>`, `${r[1]} ${esc(dnName(r[1]))}`, dur(r[4]), r[6] ? `<span class="pill ok">${esc(res)}</span>` : `<span class="pill bad">${esc(res)}</span>`, r[6] && r[7] ? who(r[7]) : '', r[6] ? dur(r[5]) : ''],
+          [fmtD(r[0]), phone(r[2]) || r[2], r[3] || '', `${r[1]} ${dnName(r[1])}`, r[4], res, r[6] && r[7] ? `${r[7]} ${dnName(r[7])}` : '', r[6] ? r[5] : ''], x.cat]; }
+      const inb = r[1] === 'in', other = inb ? r[2] : r[1] === 'out' ? r[4] : r[2] === ext ? r[4] : r[2], st = ST[r[10]] || [r[10], ''], by = r[13] || (EXT_BY[r[6]] ? r[6] : '');
+      const sens = inb ? T('Entrant', 'Inbound') : r[1] === 'out' ? T('Sortant', 'Outbound') : T('Interne', 'Internal');
+      return [[esc(fmtD(r[0])), esc(sens), `${numA(other)}${inb && r[3] ? ` <span class="muted">${esc(r[3])}</span>` : ''}`, inb && r[5] ? numA(r[5]) : '', `<span class="pill ${st[1]}">${esc(st[0])}</span>`, extMode ? who(ext) : who(by), valH ? dur(Math.round(x.v)) : r[8] ? dur(r[8]) : ''],
+        [fmtD(r[0]), sens, phone(other) || other, inb ? r[3] || '' : '', inb ? phone(r[5]) || r[5] || '' : '', st[0], extMode ? `${ext} ${dnName(ext)}` : by ? `${by} ${dnName(by)}` : '', valH ? Math.round(x.v) : r[8] || 0], x.cat]; };
+    const heads = src === 'q' ? [[T('Date', 'Date'), T('Appelant', 'Caller'), T('File', 'Queue'), T('Attente', 'Wait'), T('Résultat', 'Result'), T('Agent', 'Agent'), T('Conversation', 'Talk')], [T('Date', 'Date'), T('Appelant', 'Caller'), T('Nom', 'Name'), T('File', 'Queue'), T('Attente (s)', 'Wait (s)'), T('Résultat', 'Result'), T('Agent', 'Agent'), T('Conversation (s)', 'Talk (s)')]]
+      : [[T('Date', 'Date'), T('Sens', 'Direction'), T('Correspondant', 'Other party'), T('SDA', 'DID'), T('Résultat', 'Result'), extMode ? T('Employé', 'Employee') : T('Répondu par', 'Answered by'), valH || T('Conversation', 'Talk')], [T('Date', 'Date'), T('Sens', 'Direction'), T('Correspondant', 'Other party'), T('Nom', 'Name'), T('SDA', 'DID'), T('Résultat', 'Result'), extMode ? T('Employé', 'Employee') : T('Répondu par', 'Answered by'), `${valH || T('Conversation', 'Talk')} (s)`]];
+    function openCalls(d){
+      const recs = recsOf(d); if(!recs.length) return; hide();
+      const rows = recs.map(rowOf), cats = R.CATS.filter(([c]) => rows.some(x => x[2] === c)); let f = '';
+      const body = () => { const L = rows.filter(x => !f || x[2] === f), MAX = 500;
+        return `<p class="muted gvcl">${esc(mLab(m[0]))} — ${esc(R.s.l)}<br>${T(`${nf(L.length)} appel${L.length > 1 ? 's' : ''}`, `${nf(L.length)} call${L.length > 1 ? 's' : ''}`)}${L.length > MAX ? T(` : les ${MAX} plus récents ici, tous dans Excel`, `: the ${MAX} most recent here, all in Excel`) : ''}${extMode && S.k !== 'ext' ? T(' · un appel transféré compte pour chaque employé qui lui a parlé', ' · a transferred call counts for each employee who talked on it') : ''}</p>
+          ${cats.length > 1 ? `<div class="gvcf">${[['', T('Tous', 'All')], ...cats].map(([c, l]) => `<button type="button" class="btn${f === c ? ' primary' : ''}" data-gvf="${esc(c)}">${esc(l)} (${nf(c ? rows.filter(x => x[2] === c).length : rows.length)})</button>`).join('')}</div>` : ''}
+          <p><button type="button" class="btn" data-gvxl>${T('Exporter en Excel', 'Export to Excel')}</button></p>
+          <div class="tw"><table class="gvcalls"><thead><tr>${heads[0].map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${L.slice(0, MAX).map(x => `<tr>${x[0].map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; };
+      const paint = () => { openDrawer(esc(d.t), body());
+        const db = $('#db'); db.querySelectorAll('[data-gvf]').forEach(b => b.addEventListener('click', () => { f = b.dataset.gvf; paint(); }));
+        db.querySelector('[data-gvxl]').addEventListener('click', () => { const L = rows.filter(x => !f || x[2] === f);
+          const a = document.createElement('a'); a.href = URL.createObjectURL(XL.build([{name: T('Appels', 'Calls'), rows: [heads[1], ...L.map(x => x[1])]}]).blob); a.download = `${T('appels', 'calls')}-${m[0]}-${String(d.t).replace(/[^\w-]+/g, '-').slice(0, 40)}.xlsx`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }); };
+      paint(); }
     // info-bulle : survol, toucher et clavier ; le contenu passe par textContent
     const plot = $('#gvzplot'), tip = $('#gvztip'), svgEl = plot.querySelector('svg'), xl = svgEl && svgEl.querySelector('.gvx');
     const show = (node, cx, cy) => { const d = tips[+node.dataset.i]; if(!d) return; tip.replaceChildren();
       const t = document.createElement('div'); t.className = 'gvtt'; t.textContent = d.t; tip.appendChild(t);
       d.rows.forEach(([col, l, v, sub]) => { const r = document.createElement('div'); r.className = 'gvtr'; const k = document.createElement('i'); if(col) k.className = `gv-${col}`; const b = document.createElement('b'); b.textContent = v; const s = document.createElement('span'); s.textContent = l + (sub ? ` · ${sub}` : ''); r.append(k, b, s); tip.appendChild(r); });
+      if(nRecs(d)){ const h = document.createElement('div'); h.className = 'gvhint'; h.textContent = T('Cliquez pour voir les appels', 'Click to see the calls'); tip.appendChild(h); }
       tip.hidden = false; const pr = plot.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
       let x = cx - pr.left + 14, y = cy - pr.top - th - 10; if(x + tw > pr.width) x = Math.max(0, cx - pr.left - tw - 14); if(y < 0) y = cy - pr.top + 16;
       tip.style.left = x + 'px'; tip.style.top = y + 'px';
@@ -363,7 +394,9 @@ V.gengraph = el => {
     if(svgEl){ svgEl.addEventListener('pointermove', e => { const n = e.target.closest('[data-i]'); if(n) show(n, e.clientX, e.clientY); else hide(); });
       svgEl.addEventListener('pointerleave', hide);
       svgEl.addEventListener('focusin', e => { const n = e.target.closest('[data-i]'); if(n){ const b = n.getBoundingClientRect(); show(n, b.left + b.width / 2, b.top + Math.min(b.height / 2, 40)); } });
-      svgEl.addEventListener('focusout', hide); }
+      svgEl.addEventListener('focusout', hide);
+      svgEl.addEventListener('click', e => { const n = e.target.closest('[data-i]'); if(n) openCalls(tips[+n.dataset.i]); });
+      svgEl.addEventListener('keydown', e => { if(e.key !== 'Enter' && e.key !== ' ') return; const n = e.target.closest('[data-i]'); if(n){ e.preventDefault(); openCalls(tips[+n.dataset.i]); } }); }
 
     $('#gvzedit').addEventListener('click', () => { S.done = false; S.step = steps().length - 1; save(); drawWizard(); });
     $('#gvznew').addEventListener('click', () => { Object.keys(S).forEach(k => delete S[k]); save(); drawWizard(); });

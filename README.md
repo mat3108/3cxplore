@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.3.3-2563eb)
+![Version](https://img.shields.io/badge/version-20.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -86,7 +86,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | « Tout l'historique » part du vrai début de l'historique. |
 | **Générateur de rapport** | Jours avant l'historique grisés, moyennes sur les jours couverts, comparaison seulement si possible. |
-| **Générateur de graphique** | Jours avant l'historique grisés, moyennes sur les jours couverts, dessin qui suit la largeur de la page. |
+| **Générateur de graphique** | Clic sur une barre, un point ou une case : la liste des appels, filtrable et exportable. |
 | **Rapport de département** | Nouveau rapport imprimable de toutes les statistiques des appels d'un département. |
 | **Provenance des appels** | Appels entrants par région de l'appelant (indicatif), par magasin : parts, appels perdus par région, indicatifs fréquents, numéros d'une région. |
 | **Destinations des appels sortants** | Appels sortants par destination (indicatif), par magasin et par poste : hors Québec, international, services spéciaux, soirs et fins de semaine. |
@@ -224,7 +224,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.3.3** | Trouver un SDA avec la barre de recherche |
+| **20.4** | Les appels derrière chaque barre |
+| 20.3.3 | Trouver un SDA avec la barre de recherche |
 | 20.3.2 | Les touches BLF du nouvel employé |
 | 20.3.1 | Le vrai début de l'historique |
 | 20.3 | Le générateur de graphique |

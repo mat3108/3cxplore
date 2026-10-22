@@ -44,3 +44,9 @@
 .gvtbl td.num,.gvtbl th.num{font-variant-numeric:tabular-nums}
 .report .gvtbl th{white-space:nowrap}
 @media print{.gvtip{display:none}.gvcard{box-shadow:none;border:0}}
+/* 20.4 : clic sur une barre, un point ou une case -> les appels dans le panneau de côté */
+.gvsvg .gvhit,.gvsvg .gvcell{cursor:pointer}
+.gvhint{margin-top:6px;padding-top:5px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.gvcl{margin:0 0 8px;font-size:13px}.gvcf{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}.gvcf .btn{padding:5px 10px;font-size:12.5px}
+.gvcalls{font-size:12.5px}.gvcalls td{white-space:nowrap;vertical-align:top}
+.gvcalls a{color:var(--accent);text-decoration:none}.gvcalls a:hover{text-decoration:underline}
