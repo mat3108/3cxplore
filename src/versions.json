@@ -1,5 +1,24 @@
 [
  {
+  "version": "20.5",
+  "date": "2026-10-21",
+  "titre": "Comparer 2 ou 3 sur le même graphique",
+  "resume": "Le générateur de graphique compare jusqu'à trois magasins, utilisateurs, files d'attente ou numéros entrants sur le même graphique, chacun avec sa couleur, ses chiffres clés et sa colonne dans le tableau.",
+  "changements": [
+   "Générateur de graphique : après « Lequel ? », nouvelle question « Voulez-vous le comparer avec un ou deux autres ? » : on en ajoute jusqu'à deux autres du même genre (avec la recherche) ou on passe.",
+   "Chaque sujet a sa couleur (bleu, orange, turquoise : trois couleurs qui restent distinctes pour les daltoniens) : une courbe chacun, ou des colonnes côte à côte, dans le temps, par heure ou par jour de la semaine.",
+   "Chiffres clés : une case par sujet (total et moyenne par jour, ou taux et durée moyenne avec le nombre d'appels comptés). Tableau et Excel : une colonne par sujet, et le nombre d'appels comptés de chacun pour un taux ou une durée.",
+   "Clic sur une barre ou un point : la liste des appels de tous les sujets, triée par date, avec une colonne pour le sujet et un bouton par sujet pour filtrer.",
+   "Pas de comparaison pour les mesures empilées (répondus / messagerie / perdus, servis / non servis), ni avec la grille jour × heure ou la période d'avant : le graphique resterait illisible."
+  ],
+  "onglets": [
+   [
+    "Générateur de graphique",
+    "Comparer jusqu'à trois magasins, utilisateurs, files ou SDA sur le même graphique."
+   ]
+  ]
+ },
+ {
   "version": "20.4",
   "date": "2026-10-21",
   "titre": "Les appels derrière chaque barre",

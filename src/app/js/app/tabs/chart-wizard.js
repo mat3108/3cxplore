@@ -29,7 +29,7 @@ V.gengraph = el => {
   const S = window.__gvz ||= (() => { try{ return JSON.parse(localStorage.getItem(GVZ_KEY) || '{}'); }catch(e){ return {}; } })();
   const en = document.documentElement.lang === 'en', T = (fr, e) => en ? e : fr, loc = en ? 'en-CA' : 'fr-CA';
   const all = FULL.calls, first = all.length ? callHist().first : '', last = all.length ? localParts(all[0][0])[0] : '';
-  const save = () => { try{ localStorage.setItem(GVZ_KEY, JSON.stringify({m: S.m, k: S.k, id: S.id, p: S.p, g: S.g, t: S.t, cmp: S.cmp, step: S.step, done: S.done})); }catch(e){} };
+  const save = () => { try{ localStorage.setItem(GVZ_KEY, JSON.stringify({m: S.m, k: S.k, id: S.id, ids: S.ids, moreDone: S.moreDone, p: S.p, g: S.g, t: S.t, cmp: S.cmp, step: S.step, done: S.done})); }catch(e){} };
   const title = T('Générateur de graphique', 'Chart generator');
   if(!all.length){ el.innerHTML = `<h2>${title}</h2><p class="muted">${T('Aucun appel dans ce backup.', 'No calls in this backup.')}</p>`; return; }
   const M = () => GVZ_MB[S.m], kind = () => (M() || [])[3];
@@ -39,6 +39,11 @@ V.gengraph = el => {
   const MI = {recv: 'appels', res: 'stats', rate: 'classement', lost: 'rappels', out: 'destinations', pick: 'delai', talk: 'attente', qcalls: 'statsfiles', qwait: 'files'};
   const stores = () => SEG_LIST.filter(c => c !== SEG_BRIDGE && (!SEG || c === SEG)).map(c => ({id: c, l: segName(c), s: c === SEG_COMMON ? '' : c, n: null}));
   const subjects = k => k === 'store' ? stores() : grpSubjects(k);
+  // 20.5 : jusqu'à 2 autres sujets du même genre, comparés sur le même graphique (pas pour les mesures empilées)
+  S.ids ||= [];
+  const multiOk = () => S.k && S.k !== 'all' && kind() !== 'stack';
+  const multi = () => multiOk() && S.ids.length > 0;
+  const nameOf = id => (subjects(S.k).find(x => x.id === id) || {l: id}).l;
   const subj = () => S.k === 'all' ? {id: '', l: KL.all, s: ''} : (subjects(S.k).find(x => x.id === S.id) || null);
   const perLab = p => p === 'all' ? T("Tout l'historique", 'All history') : perIsC(p) ? (() => { const [a, b] = perRange(p, first, last); return T(`Du ${a} au ${b}`, `From ${a} to ${b}`); })() : T(`${p} derniers jours`, `Last ${p} days`);
   // découpages possibles selon la mesure et le sujet
@@ -47,6 +52,7 @@ V.gengraph = el => {
     const o = [['time', T('Dans le temps', 'Over time'), 'prevision', T('Par jour, par semaine ou par mois selon la longueur de la période', 'By day, week or month depending on the period length')],
       ['hour', T('Par heure de la journée', 'By hour of the day'), 'horaires', ''], ['wd', T('Par jour de la semaine', 'By day of the week'), 'absences', ''],
       ['heat', T('Heure et jour ensemble', 'Hour and day together'), 'classement', T('Une grille jour × heure : plus la case est foncée, plus le chiffre est élevé', 'A day × hour grid: the darker the cell, the higher the figure')]];
+    if(multi()) return o.filter(x => x[0] !== 'heat'); // 20.5 : plusieurs sujets -> une série chacun, dans le temps, par heure ou par jour
     if(S.k === 'all' || S.k === 'store'){
       if(S.k === 'all' && !SEG && SEG_LIST.length > 3) o.push(['by:store', BY.store, 'magasins', '']);
       if(['recv', 'res', 'rate', 'lost', 'pick'].includes(m[0])) o.push(['by:did', BY.did, 'numero', T('Les 15 qui reçoivent le plus d\'appels', 'The 15 with the most calls')]);
@@ -62,11 +68,13 @@ V.gengraph = el => {
   const tLab = t => (tOpts().find(x => x[0] === t) || [, ''])[1];
   // la période juste avant doit être entièrement dans l'historique (20.3.1), sinon la comparaison serait faussée par des jours sans données
   const prevOk = () => { const [a, b] = perRange(S.p || '30', first, last), d = Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1; return addDaysISO(a, -d) >= first; };
-  const cmpOk = () => S.p && S.p !== 'all' && S.g && S.g !== 'heat' && kind() !== 'stack' && prevOk();
+  const cmpOk = () => S.p && S.p !== 'all' && S.g && S.g !== 'heat' && kind() !== 'stack' && !multi() && prevOk();
   const steps = () => [
     ['m', T('Bonjour ! Je vais vous faire un graphique. Qu\'est-ce que vous voulez voir ?', "Hello! I'll make you a chart. What do you want to see?"), S.m ? mLab(S.m) : ''],
     ['k', T('Pour quoi ?', 'For what?'), S.k ? KL[S.k] : ''],
     ...(S.k && S.k !== 'all' ? [['id', S.k === 'store' ? T('Quel magasin ?', 'Which store?') : S.k === 'ext' ? T('Quel utilisateur ?', 'Which user?') : S.k === 'queue' ? T("Quelle file d'attente ?", 'Which queue?') : T('Quel numéro entrant ?', 'Which incoming number?'), (s => s ? `${s.l}${s.s && s.s !== s.l ? ` (${s.s})` : ''}` : '')(subj())]] : []),
+    ...(multiOk() && S.id ? [['more', S.k === 'store' ? T('Voulez-vous le comparer avec un ou deux autres magasins ?', 'Do you want to compare it with one or two other stores?') : S.k === 'ext' ? T('Voulez-vous le comparer avec un ou deux autres utilisateurs ?', 'Do you want to compare them with one or two other users?') : S.k === 'queue' ? T('Voulez-vous la comparer avec une ou deux autres files ?', 'Do you want to compare it with one or two other queues?') : T('Voulez-vous le comparer avec un ou deux autres numéros entrants ?', 'Do you want to compare it with one or two other incoming numbers?'),
+      S.moreDone ? (S.ids.length ? T(`Comparer avec ${S.ids.map(nameOf).join(' et ')}`, `Compare with ${S.ids.map(nameOf).join(' and ')}`) : T('Non', 'No')) : '']] : []),
     ['p', T('Sur quelle période ?', 'For what period?'), S.p ? perLab(S.p) : ''],
     ['g', T('Comment voulez-vous découper les chiffres ?', 'How do you want to split the figures?'), S.g ? gLab(S.g) : ''],
     ...(tOpts().length ? [['t', T('Quel genre de graphique ?', 'What kind of chart?'), S.t ? tLab(S.t) : '']] : []),
@@ -93,6 +101,9 @@ V.gengraph = el => {
         <span class="muted">${T(`Historique disponible du ${first} au ${last}.`, `History available from ${first} to ${last}.`)}</span></div>`;
     else if(id === 'g') h += `<div class="askopts" role="group">${gOpts().map(([v, l, ic, sub]) => opt(v, l, ic, sub)).join('')}</div>`;
     else if(id === 't') h += `<div class="askopts" role="group">${tOpts().map(([v, l, ic, sub]) => opt(v, l, ic, sub)).join('')}</div>`;
+    else if(id === 'more') h += `<div class="gvmore">${[S.id, ...S.ids].map((x, j) => `<span class="gvchip"><i class="gv-s${j + 1}"></i>${esc(nameOf(x))}${j ? `<button type="button" data-rm="${esc(x)}" aria-label="${esc(T('Retirer', 'Remove'))}">×</button>` : ''}</span>`).join('')}</div>
+      <div class="askopts" role="group">${opt('__go', S.ids.length ? T(`Continuer avec ces ${S.ids.length + 1}`, `Continue with these ${S.ids.length + 1}`) : T('Non, pas de comparaison', 'No comparison'), S.ids.length ? 'avantapres' : 'stats', S.ids.length ? '' : T('Ou choisissez ci-dessous jusqu\'à deux autres à mettre sur le même graphique', 'Or pick below up to two others to put on the same chart'))}</div>
+      ${S.ids.length < 2 ? `<div class="grpfind"><div class="hosearch"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5"/></svg><input id="gvzq" type="search" autocomplete="off" spellcheck="false" placeholder="${esc(T('Chercher un nom ou un numéro…', 'Search a name or number…'))}" aria-label="${esc(T('Chercher', 'Search'))}"></div></div><div class="askopts grpids" role="group" id="gvzids"></div>` : `<p class="muted grpfind">${T('Trois au plus : au-delà, les couleurs ne se distinguent plus assez.', 'Three at most: beyond that, the colours are no longer distinct enough.')}</p>`}`;
     else if(id === 'cmp') h += `<div class="askopts" role="group">${opt('1', T('Oui, comparer', 'Yes, compare'), 'avantapres', T('La période d\'avant s\'affiche en gris à côté', 'The previous period shows in grey alongside'))}${opt('0', T('Non', 'No'), 'stats')}</div>`;
     if(S.step) h += `<div class="asknav"><button type="button" class="btn" data-back>${T('Revenir en arrière', 'Go back')}</button><button type="button" class="btn" data-reset>${T('Recommencer', 'Start over')}</button></div>`;
     el.innerHTML = `<div id="gvzwrap">${head}<div class="ask grpask" id="gvzchat" aria-live="polite">${h}</div></div>`;
@@ -103,19 +114,22 @@ V.gengraph = el => {
       if(b.hasAttribute('data-back')){ S.step--; save(); return drawWizard(); }
       if(b.hasAttribute('data-reset')){ Object.keys(S).forEach(k => delete S[k]); save(); return drawWizard(); }
       if(b.id === 'gvzdok'){ const f = $('#gvzf').value, t = $('#gvzt').value; if(f && t){ S.p = `c:${f}:${t}`; next(); } return; }
+      if(b.dataset.rm){ S.ids = S.ids.filter(x => x !== b.dataset.rm); save(); return drawWizard(); }
       const v = b.dataset.v; if(v == null) return;
+      if(id === 'more' && v !== '__go'){ if(v !== S.id && !S.ids.includes(v) && S.ids.length < 2) S.ids.push(v); save(); drawWizard(); const q = $('#gvzq'); if(q) q.focus({preventScroll: true}); return; }
+      if(id === 'more'){ S.moreDone = true; if(S.g && !gOpts().some(x => x[0] === S.g)){ S.g = ''; S.t = ''; } }
       // une réponse changée efface les réponses qui en dépendent
       if(id === 'm'){ if(S.m !== v){ S.m = v; if(!GVZ_MB[v][5].includes(S.k)){ S.k = ''; S.id = ''; } S.g = ''; S.t = ''; S.cmp = null; } }
-      else if(id === 'k'){ if(S.k !== v){ S.k = v; S.id = ''; S.g = ''; S.t = ''; } }
-      else if(id === 'id') S.id = v;
+      else if(id === 'k'){ if(S.k !== v){ S.k = v; S.id = ''; S.ids = []; S.moreDone = false; S.g = ''; S.t = ''; } }
+      else if(id === 'id'){ S.id = v; S.ids = S.ids.filter(x => x !== v); }
       else if(id === 'p'){ if(v === 'custom'){ $('#gvzdates').hidden = false; $('#gvzf').focus(); return; } S.p = v; }
       else if(id === 'g'){ if(S.g !== v){ S.g = v; S.t = ''; } }
       else if(id === 't') S.t = v;
       else if(id === 'cmp') S.cmp = v === '1';
       next();
     });
-    if(id === 'id'){
-      const L = subjects(S.k).sort((a, b) => (b.n || 0) - (a.n || 0) || String(a.s || a.l).localeCompare(String(b.s || b.l), undefined, {numeric: true})), box = $('#gvzids'), inp = $('#gvzq');
+    if((id === 'id' || id === 'more') && $('#gvzq')){ const skip = new Set(id === 'more' ? [S.id, ...S.ids] : []);
+      const L = subjects(S.k).filter(x => !skip.has(x.id)).sort((a, b) => (b.n || 0) - (a.n || 0) || String(a.s || a.l).localeCompare(String(b.s || b.l), undefined, {numeric: true})), box = $('#gvzids'), inp = $('#gvzq');
       const show = () => { const w = inp.value.trim().toLowerCase(), wd = w.replace(/\D/g, '');
         const hit = L.filter(x => !w || x.l.toLowerCase().includes(w) || String(x.s).toLowerCase().includes(w) || (wd && String(x.id).replace(/\D/g, '').includes(wd)));
         box.innerHTML = hit.slice(0, 24).map(x => opt(x.id, x.l, KI[S.k], [x.s && x.s !== x.l ? x.s : '', x.n != null ? T(`${nf(x.n)} appel${x.n > 1 ? 's' : ''}`, `${nf(x.n)} call${x.n > 1 ? 's' : ''}`) : ''].filter(Boolean).join(' · '))).join('')
@@ -151,13 +165,13 @@ V.gengraph = el => {
     const qSeg = r => SEGOF[r[1]] || SEG_COMMON;
     const gKey = (lp, rec, x) => g === 'time' ? tKey(lp) : g === 'hour' ? lp[1] : g === 'wd' ? lp[2] : g === 'heat' ? lp[2] * 24 + lp[1]
       : by === 'store' ? (src === 'c' ? callSeg(rec) : qSeg(rec)) : by === 'did' ? rec[5] : by === 'queue' ? rec[1] : x;
-    const nk = normNum(S.id);
-    const okC = c => S.k === 'all' ? !SEG || callSeg(c) === SEG : S.k === 'store' ? callSeg(c) === S.id : S.k === 'did' ? c[1] === 'in' && (c[5] === S.id || (nk && normNum(c[5]) === nk)) : true;
-    const okQ = r => S.k === 'all' ? !SEG || qSeg(r) === SEG : S.k === 'store' ? qSeg(r) === S.id : r[1] === S.id;
+    let SID = S.id, nk = normNum(SID); // sujet en cours de calcul (20.5 : jusqu'à 3 sujets comparés)
+    const okC = c => S.k === 'all' ? !SEG || callSeg(c) === SEG : S.k === 'store' ? callSeg(c) === SID : S.k === 'did' ? c[1] === 'in' && (c[5] === SID || (nk && normNum(c[5]) === nk)) : true;
+    const okQ = r => S.k === 'all' ? !SEG || qSeg(r) === SEG : S.k === 'store' ? qSeg(r) === SID : r[1] === SID;
     // ce que chaque appel apporte à la mesure : push(apport, poste)
     const emitC = (c, push) => {
       const d = c[1], st = c[10]; if(d === 'transit') return;
-      const xp = () => gvzExtParts(c).filter(p => S.k !== 'ext' || p[0] === S.id);
+      const xp = () => gvzExtParts(c).filter(p => S.k !== 'ext' || p[0] === SID);
       switch(m[0]){
         case 'recv': if(d !== 'in') return; if(extMode) xp().forEach(p => push({n: 1}, p[0])); else push({n: 1}); return;
         case 'res': if(d !== 'in' || st === 'bridge') return; push({cat: ST_ANS.has(st) ? 'ans' : st === 'vm' ? 'vm' : 'lost'}); return;
@@ -171,13 +185,16 @@ V.gengraph = el => {
     const emitQ = (r, push) => { if(m[0] === 'qcalls') push({cat: r[6] ? 'sv' : 'ns'}); else push({v: r[4]}); };
     const blank = () => ({n: 0, cats: {}, num: 0, den: 0, sum: 0, cnt: 0, vals: [], recs: []});
     const add = (a, x, keep) => { if(x.n) a.n += x.n; if(x.cat) a.cats[x.cat] = (a.cats[x.cat] || 0) + 1; if(x.den){ a.num += x.num; a.den += x.den; } if(x.v != null){ a.sum += x.v; a.cnt++; if(keep) a.vals.push(x.v); } };
-    const run = (a, b, keepRecs) => { const acc = new Map(), tot = blank();
+    const run = (a, b, keepRecs, sid = S.id) => { SID = sid; nk = normNum(sid); const acc = new Map(), tot = blank();
       const rows = src === 'c' ? all : FULL.queueCalls, ok = src === 'c' ? okC : okQ, emit = src === 'c' ? emitC : emitQ;
       for(const rec of rows){ const lp = localParts(rec[0]); if(lp[0] > b) continue; if(lp[0] < a) break; // les deux listes sont triées du plus récent au plus ancien
         if(!ok(rec)) continue;
-        emit(rec, (x, ext) => { if(extMode && S.k === 'ext' && ext !== S.id) return; add(tot, x, true); const k = gKey(lp, rec, ext); if(k == null || k === '') return; let o = acc.get(k); if(!o) acc.set(k, o = blank()); add(o, x); if(keepRecs) o.recs.push([rec, x, ext]); }); } // 20.4 : les appels derrière chaque barre
+        emit(rec, (x, ext) => { if(extMode && S.k === 'ext' && ext !== SID) return; add(tot, x, true); const k = gKey(lp, rec, ext); if(k == null || k === '') return; let o = acc.get(k); if(!o) acc.set(k, o = blank()); add(o, x); if(keepRecs) o.recs.push([rec, x, ext]); }); } // 20.4 : les appels derrière chaque barre
       return {acc, tot}; };
     const cur = run(cFrom, to, true), prv = hasPrev ? run(pFrom, pTo) : null;
+    // autres sujets à comparer (20.5) : un calcul chacun, sur la même période
+    const others = multi() ? S.ids.map(id => ({sid: id, s: subjects(S.k).find(x => x.id === id)})).filter(o => o.s).map(o => ({...o, run: run(cFrom, to, true, o.sid)})) : [];
+    const runs = [{sid: S.id, s, run: cur}, ...others];
     const CATS = m[0] === 'res' ? [['ans', T('Répondus', 'Answered'), 's1'], ['vm', T('Messagerie', 'Voicemail'), 's3'], ['lost', T('Perdus', 'Lost'), 's2']] : m[0] === 'qcalls' ? [['sv', T('Servis', 'Served'), 's1'], ['ns', T('Non servis', 'Not served'), 's2']] : [];
     const val = a => !a ? (K === 'count' || K === 'stack' ? 0 : null) : K === 'count' ? a.n : K === 'stack' ? CATS.reduce((t, [c]) => t + (a.cats[c] || 0), 0) : K === 'ratio' ? (a.den ? 100 * a.num / a.den : null) : (a.cnt ? a.sum / a.cnt : null);
     const vol = a => !a ? 0 : K === 'count' ? a.n : K === 'stack' ? val(a) : K === 'ratio' ? a.den : a.cnt;
@@ -186,7 +203,7 @@ V.gengraph = el => {
     const tTitle = k => unit === 'day' ? `${WDL[wdOf(k)]} ${k}` : unit === 'week' ? T(`Semaine du ${k} au ${addDaysISO(k, 6)}`, `Week of ${k} to ${addDaysISO(k, 6)}`) : monthLab(k, true);
     const tShort = k => unit === 'day' ? k.slice(5) : unit === 'week' ? k.slice(5) : monthLab(k);
     if(g === 'time'){ cats = tKeys(from, to).map(k => ({k, l: tShort(k), tt: tTitle(k)})); if(prv) prevKeys = tKeys(pFrom, pTo); }
-    else if(g === 'hour'){ const used = [...cur.acc.keys(), ...(prv ? prv.acc.keys() : [])].map(Number), h0 = used.length ? Math.min(...used) : 8, h1 = used.length ? Math.max(...used) : 17;
+    else if(g === 'hour'){ const used = [...cur.acc.keys(), ...(prv ? prv.acc.keys() : []), ...others.flatMap(o => [...o.run.acc.keys()])].map(Number), h0 = used.length ? Math.min(...used) : 8, h1 = used.length ? Math.max(...used) : 17;
       for(let h = h0; h <= h1; h++) cats.push({k: h, l: `${h} h`, tt: T(`De ${h} h à ${h + 1} h`, `From ${h}:00 to ${h + 1}:00`)}); }
     else if(g === 'wd') cats = WDS.map((l, i) => ({k: i, l, tt: WDL[i]}));
     else if(g === 'heat') cats = [];
@@ -195,6 +212,7 @@ V.gengraph = el => {
       cats.sort((a, b) => (val(cur.acc.get(b.k)) ?? -1) - (val(cur.acc.get(a.k)) ?? -1)); }
     const curLab = T('Période choisie', 'Chosen period'), prevLab = T('Période d\'avant', 'Previous period');
     const series = K === 'stack' ? CATS.map(([c, l, col]) => ({id: c, l, col, v: cats.map(x => (cur.acc.get(x.k) || {cats: {}}).cats[c] || 0)}))
+      : others.length ? runs.map((o, j) => ({id: 'cur' + j, sid: o.sid, l: o.s.l, col: 's' + (j + 1), v: cats.map(x => val(o.run.acc.get(x.k))), n: cats.map(x => vol(o.run.acc.get(x.k)))}))
       : [{id: 'cur', l: hasPrev ? curLab : mLab(m[0]), col: 's1', v: cats.map(x => val(cur.acc.get(x.k))), n: cats.map(x => vol(cur.acc.get(x.k)))},
         ...(prv ? [{id: 'prev', l: prevLab, col: 'prev', v: cats.map((x, i) => val(prv.acc.get(prevKeys ? prevKeys[i] : x.k))), n: cats.map((x, i) => vol(prv.acc.get(prevKeys ? prevKeys[i] : x.k))), keys: prevKeys}] : [])];
     const nod = cats.map(c => g === 'time' && (unit === 'day' ? c.k < H.first : unit === 'week' ? addDaysISO(c.k, 6) < H.first : c.k < H.first.slice(0, 7)));
@@ -203,7 +221,7 @@ V.gengraph = el => {
     let heat = null;
     if(g === 'heat'){ const used = [...cur.acc.keys()].map(k => k % 24), h0 = used.length ? Math.min(...used) : 8, h1 = used.length ? Math.max(...used) : 17;
       heat = {h0, h1, v: WDS.map((l, w) => { const r = []; for(let h = h0; h <= h1; h++) r.push(val(cur.acc.get(w * 24 + h))); return r; }), n: WDS.map((l, w) => { const r = []; for(let h = h0; h <= h1; h++) r.push(vol(cur.acc.get(w * 24 + h))); return r; })}; }
-    return {m, K, s, g, by, src, extMode, unit, from, to, days, H, cFrom, cDays, nod, pFrom, pTo, hasPrev, cur, prv, cats, series, heat, CATS, val, vol};
+    return {m, K, s, g, by, src, extMode, runs, multi: others.length > 0, unit, from, to, days, H, cFrom, cDays, nod, pFrom, pTo, hasPrev, cur, prv, cats, series, heat, CATS, val, vol};
   }
 
   // ---------------- dessin ----------------
@@ -276,12 +294,12 @@ V.gengraph = el => {
       if(isLine){
         R.series.slice().reverse().forEach(s => { let d = '', pen = false; s.v.forEach((v, i) => { if(v == null){ pen = false; return; } d += `${pen ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`; pen = true; });
           o += `<path d="${d}" class="gvline gvl-${s.col}"/>`;
-          if(s.id === 'cur' && n <= 20) s.v.forEach((v, i) => { if(v != null) o += `<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" class="gvdot gv-${s.col}"/>`; }); });
-        const c0 = R.series[0], li = c0.v.map((v, i) => v == null ? -1 : i).filter(i => i >= 0).pop();
-        if(li != null){ o += `<circle cx="${X(li)}" cy="${Y(c0.v[li])}" r="4.5" class="gvdot gv-${c0.col}"/>`; }
+          if((s.id === 'cur' || R.multi) && n <= 20) s.v.forEach((v, i) => { if(v != null) o += `<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" class="gvdot gv-${s.col}"/>`; }); });
+        (R.multi ? R.series : [R.series[0]]).forEach(c0 => { const li = c0.v.map((v, i) => v == null ? -1 : i).filter(i => i >= 0).pop();
+          if(li != null) o += `<circle cx="${X(li)}" cy="${Y(c0.v[li])}" r="4.5" class="gvdot gv-${c0.col}"/>`; });
         o += `<line class="gvx" x1="0" x2="0" y1="${mt}" y2="${mt + ph}" visibility="hidden"/>`;
       } else {
-        const k = K === 'stack' ? 1 : R.series.length, bw = Math.max(2, Math.min(24, band * (k > 1 ? .36 : .68))), gw = k * bw + (k - 1) * 2;
+        const k = K === 'stack' ? 1 : R.series.length, bw = Math.max(2, Math.min(24, k > 1 ? (band * .8 - (k - 1) * 2) / k : band * .68)), gw = k * bw + (k - 1) * 2;
         R.cats.forEach((c, i) => { const xs = X(i) - gw / 2;
           if(K === 'stack'){ const t = tot(i); let y = mt + ph; const segs = R.series.map(s => ({s, h: t ? ph * (pct ? 100 * s.v[i] / t : s.v[i]) / sc.top : 0})).filter(z => z.h > 0);
             segs.forEach((z, j) => { const lastS = j === segs.length - 1, hh = Math.max(0, z.h - (lastS ? 0 : 2)); y -= z.h; o += lastS ? `<path d="${rbar(xs, y, bw, hh, 4)}" class="gv-${z.s.col}"/>` : `<rect x="${xs}" y="${y + 2}" width="${bw}" height="${hh}" class="gv-${z.s.col}"/>`; }); }
@@ -289,7 +307,7 @@ V.gengraph = el => {
       }
       // une seule valeur écrite : le plus haut de la période choisie (le reste dans l'info-bulle et le tableau)
       const ref = K === 'stack' ? R.cats.map((c, i) => pct ? null : tot(i)) : R.series[0].v, pk = ref.reduce((b, v, i) => v != null && (b < 0 || v > ref[b]) ? i : b, -1);
-      if(pk >= 0 && ref[pk] > 0){ const k = K === 'stack' || isLine ? 1 : R.series.length, bw = Math.max(2, Math.min(24, band * (k > 1 ? .36 : .68))), gw = k * bw + (k - 1) * 2, x = isLine || k === 1 ? X(pk) : X(pk) - gw / 2 + bw / 2;
+      if(pk >= 0 && ref[pk] > 0 && !R.multi){ const k = K === 'stack' || isLine ? 1 : R.series.length, bw = Math.max(2, Math.min(24, k > 1 ? (band * .8 - (k - 1) * 2) / k : band * .68)), gw = k * bw + (k - 1) * 2, x = isLine || k === 1 ? X(pk) : X(pk) - gw / 2 + bw / 2;
         o += `<text x="${Math.min(ml + pw - 10, Math.max(ml + 14, x))}" y="${Y(ref[pk]) - 8}" class="gvval" text-anchor="middle">${esc(fmtV(K, ref[pk]))}</text>`; }
       R.cats.forEach((c, i) => { tipFor(i); o += `<rect x="${ml + band * i}" y="${mt}" width="${band}" height="${ph}" class="gvhit" tabindex="0" data-i="${i}" aria-label="${esc(c.tt)}"/>`; });
       svg = `<svg viewBox="0 0 ${svgW} ${hgt}" width="100%" class="gvsvg" role="img" aria-label="${esc(mLab(m[0]))}">${o}</svg>`;
@@ -304,11 +322,13 @@ V.gengraph = el => {
     const kpi = (l, v, sm) => kp.push(`<div><span>${esc(l)}</span><b>${esc(v)}</b>${sm || ''}</div>`);
     const allCells = R.g === 'heat' ? R.heat.v.flatMap((r, w) => r.map((v, j) => [v, `${WDS[w]} ${R.heat.h0 + j} h`])) : R.cats.map((c, i) => [K === 'stack' ? R.series.reduce((t, s) => t + s.v[i], 0) : R.series[0].v[i], c.tt]);
     const pkC = allCells.filter(x => x[0] != null).sort((a, b) => b[0] - a[0])[0];
-    if(K === 'count'){ kpi(T('Total sur la période', 'Total over the period'), nf(tot.n), delta(tot.n, ptot && ptot.n, m[6])); kpi(T('Par jour (moyenne)', 'Per day (average)'), (Math.round(tot.n / R.cDays * 10) / 10).toLocaleString(loc)); }
+    if(R.multi) R.runs.forEach((o, j) => { const t = o.run.tot, v = K === 'count' ? t.n : K === 'ratio' ? (t.den ? 100 * t.num / t.den : null) : (t.cnt ? t.sum / t.cnt : null);
+      kp.push(`<div><span><i class="gvkey gv-s${j + 1}"></i>${esc(o.s.l)}</span><b>${esc(fmtV(K, v))}</b><small class="grpd">${K === 'count' ? esc(T(`${(Math.round(t.n / R.cDays * 10) / 10).toLocaleString(loc)} par jour`, `${(Math.round(t.n / R.cDays * 10) / 10).toLocaleString(loc)} per day`)) : esc(T(`sur ${nf(K === 'ratio' ? t.den : t.cnt)} appels`, `over ${nf(K === 'ratio' ? t.den : t.cnt)} calls`))}</small></div>`); });
+    else if(K === 'count'){ kpi(T('Total sur la période', 'Total over the period'), nf(tot.n), delta(tot.n, ptot && ptot.n, m[6])); kpi(T('Par jour (moyenne)', 'Per day (average)'), (Math.round(tot.n / R.cDays * 10) / 10).toLocaleString(loc)); }
     else if(K === 'stack'){ const t = R.CATS.reduce((a, [c]) => a + (tot.cats[c] || 0), 0); kpi(T('Total sur la période', 'Total over the period'), nf(t)); R.CATS.forEach(([c, l]) => kpi(l, `${nf(tot.cats[c] || 0)} (${t ? Math.round(100 * (tot.cats[c] || 0) / t) : 0} %)`)); }
     else if(K === 'ratio'){ const v = tot.den ? 100 * tot.num / tot.den : null; kpi(T('Sur toute la période', 'Over the whole period'), fmtV(K, v), delta(v, ptot && ptot.den ? 100 * ptot.num / ptot.den : null, m[6])); kpi(T('Appels comptés', 'Calls counted'), nf(tot.den)); }
     else { const v = tot.cnt ? tot.sum / tot.cnt : null; kpi(T('Moyenne sur la période', 'Average over the period'), fmtV(K, v), delta(v, ptot && ptot.cnt ? ptot.sum / ptot.cnt : null, m[6])); kpi(T('Médiane', 'Median'), fmtV(K, grpMed(tot.vals))); kpi(T('Appels comptés', 'Calls counted'), nf(tot.cnt)); }
-    if(pkC && K !== 'stack') kpi(T('Le plus haut', 'Highest'), fmtV(K, pkC[0]), `<small class="grpd">${esc(pkC[1])}</small>`);
+    if(pkC && K !== 'stack' && !R.multi) kpi(T('Le plus haut', 'Highest'), fmtV(K, pkC[0]), `<small class="grpd">${esc(pkC[1])}</small>`);
     else if(pkC && R.CATS.length && !pct) kpi(T('Le plus haut', 'Highest'), nf(pkC[0]), `<small class="grpd">${esc(pkC[1])}</small>`);
 
     // ce que mesure le graphique
@@ -331,13 +351,13 @@ V.gengraph = el => {
 
     // tableau des chiffres (le même que l'export Excel)
     const tH = R.g === 'heat' ? [T('Jour', 'Day'), ...Array.from({length: R.heat.h1 - R.heat.h0 + 1}, (x, j) => `${R.heat.h0 + j} h`)]
-      : [R.by ? {store: T('Magasin', 'Store'), did: T('Numéro entrant (SDA)', 'Incoming number (DID)'), queue: T("File d'attente", 'Queue'), ext: T('Employé', 'Employee')}[R.by] : R.g === 'time' ? T('Période', 'Period') : R.g === 'hour' ? T('Heure', 'Hour') : T('Jour', 'Day'), ...R.series.map(s => s.l), ...(K === 'stack' ? [T('Total', 'Total')] : K === 'ratio' || K === 'avg' ? [T('Appels comptés', 'Calls counted')] : [])];
-    const tR = R.g === 'heat' ? R.heat.v.map((r, w) => [WDL[w], ...r]) : R.cats.map((c, i) => R.nod[i] ? [c.tt, T('pas d\'historique', 'no history'), ...tH.slice(2).map(() => '')] : [c.tt, ...R.series.map(s => s.v[i]), ...(K === 'stack' ? [R.series.reduce((t, s) => t + s.v[i], 0)] : K === 'ratio' || K === 'avg' ? [R.series[0].n[i]] : [])]);
+      : [R.by ? {store: T('Magasin', 'Store'), did: T('Numéro entrant (SDA)', 'Incoming number (DID)'), queue: T("File d'attente", 'Queue'), ext: T('Employé', 'Employee')}[R.by] : R.g === 'time' ? T('Période', 'Period') : R.g === 'hour' ? T('Heure', 'Hour') : T('Jour', 'Day'), ...R.series.map(s => s.l), ...(K === 'stack' ? [T('Total', 'Total')] : K === 'ratio' || K === 'avg' ? (R.multi ? R.series.map(x => `${T('Appels comptés', 'Calls counted')} — ${x.l}`) : [T('Appels comptés', 'Calls counted')]) : [])];
+    const tR = R.g === 'heat' ? R.heat.v.map((r, w) => [WDL[w], ...r]) : R.cats.map((c, i) => R.nod[i] ? [c.tt, T('pas d\'historique', 'no history'), ...tH.slice(2).map(() => '')] : [c.tt, ...R.series.map(s => s.v[i]), ...(K === 'stack' ? [R.series.reduce((t, s) => t + s.v[i], 0)] : K === 'ratio' || K === 'avg' ? (R.multi ? R.series.map(x => x.n[i]) : [R.series[0].n[i]]) : [])]);
     const isVal = j => j >= 1 && j <= (R.g === 'heat' ? 99 : R.series.length); // colonnes de valeurs (les autres sont des nombres d'appels)
     const cellTxt = (v, j) => typeof v !== 'number' && v != null ? esc(v) : (K === 'ratio' || K === 'avg') && isVal(j) ? fmtV(K, v) : v == null ? '–' : nf(Math.round(v));
     const table = `<div class="attsc"><table class="rpt gvtbl"><thead><tr>${tH.map((h, i) => `<th${i ? ' class="num"' : ''}>${esc(h)}</th>`).join('')}</tr></thead><tbody>${tR.map(r => `<tr>${r.map((v, j) => `<td${j ? ' class="num"' : ''}>${cellTxt(v, j)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 
-    const hTitle = `${mLab(m[0])} — ${R.s.l}`;
+    const hTitle = `${mLab(m[0])} — ${R.multi ? R.runs.map(o => o.s.l).join(' / ') : R.s.l}`;
     el.innerHTML = `<div id="gvzwrap"><div class="noprint">${head}
       <div class="grpbar"><span class="grpans">${answers.map(a => `<span class="pill">${esc(a)}</span>`).join(' ')}</span><span style="flex:1"></span>
         <button class="btn" id="gvzedit">${T('Changer mes réponses', 'Change my answers')}</button><button class="btn" id="gvznew">${T('Nouveau graphique', 'New chart')}</button><button class="btn primary" id="gvzprint">${T('Imprimer / PDF', 'Print / PDF')}</button><button class="btn" id="gvzpng">${T('Enregistrer l\'image', 'Save the image')}</button><button class="btn" id="gvzxl">${T('Exporter en Excel', 'Export to Excel')}</button></div></div>
@@ -351,26 +371,30 @@ V.gengraph = el => {
 
     // ---- les appels derrière une barre, un point ou une case (20.4) : panneau de côté, filtre par résultat pour les barres empilées, export Excel ----
     const {src, extMode} = R;
-    const recsOf = d => d && d.k != null ? ((R.cur.acc.get(d.k) || {}).recs || []) : [], nRecs = d => recsOf(d).length;
+    const recsOf = d => { if(!d || d.k == null) return []; const L = R.runs.flatMap(o => ((o.run.acc.get(d.k) || {}).recs || []).map(x => R.multi ? [...x, o.sid] : x)); return R.multi ? L.sort((a, b) => a[0][0] < b[0][0] ? 1 : a[0][0] > b[0][0] ? -1 : 0) : L; }, nRecs = d => recsOf(d).length;
     const numA = n => { const k = normNum(n); return k ? `<a class="mono" href="#numero/${esc(k)}">${esc(phone(n))}</a>` : `<span class="mono">${esc(phone(n) || n || '')}</span>`; };
     const who = n => n && (EXT_BY[n] || DN[n]) ? dnLink(n) : n ? `<span class="mono">${esc(n)}</span>` : '';
     const valH = K === 'avg' ? {pick: T('Délai avant réponse', 'Time to answer'), talk: T('Conversation', 'Talk'), qwait: T('Attente', 'Wait')}[m[0]] : '';
     // une ligne : [cellules HTML, cellules Excel, catégorie]
-    const rowOf = ([r, x, ext]) => {
+    const subjOf = sid => (R.runs.find(o => o.sid === sid) || {s: {l: sid}}).s.l;
+    // en comparaison (20.5), une colonne de plus : le sujet de l'appel
+    const rowOf = q => { const row = rowOf1(q); if(R.multi){ row[0].splice(1, 0, esc(subjOf(q[3]))); row[1].splice(1, 0, subjOf(q[3])); } return row; };
+    const rowOf1 = ([r, x, ext, sid]) => { const cat = R.multi ? sid : x.cat;
       if(src === 'q'){ const res = r[6] ? T('Servi', 'Served') : T('Non servi', 'Not served') + (r[8] ? ` (${r[8]})` : '');
         return [[esc(fmtD(r[0])), `${numA(r[2])} <span class="muted">${esc(r[3] || '')}</span>`, `${r[1]} ${esc(dnName(r[1]))}`, dur(r[4]), r[6] ? `<span class="pill ok">${esc(res)}</span>` : `<span class="pill bad">${esc(res)}</span>`, r[6] && r[7] ? who(r[7]) : '', r[6] ? dur(r[5]) : ''],
-          [fmtD(r[0]), phone(r[2]) || r[2], r[3] || '', `${r[1]} ${dnName(r[1])}`, r[4], res, r[6] && r[7] ? `${r[7]} ${dnName(r[7])}` : '', r[6] ? r[5] : ''], x.cat]; }
+          [fmtD(r[0]), phone(r[2]) || r[2], r[3] || '', `${r[1]} ${dnName(r[1])}`, r[4], res, r[6] && r[7] ? `${r[7]} ${dnName(r[7])}` : '', r[6] ? r[5] : ''], cat]; }
       const inb = r[1] === 'in', other = inb ? r[2] : r[1] === 'out' ? r[4] : r[2] === ext ? r[4] : r[2], st = ST[r[10]] || [r[10], ''], by = r[13] || (EXT_BY[r[6]] ? r[6] : '');
       const sens = inb ? T('Entrant', 'Inbound') : r[1] === 'out' ? T('Sortant', 'Outbound') : T('Interne', 'Internal');
       return [[esc(fmtD(r[0])), esc(sens), `${numA(other)}${inb && r[3] ? ` <span class="muted">${esc(r[3])}</span>` : ''}`, inb && r[5] ? numA(r[5]) : '', `<span class="pill ${st[1]}">${esc(st[0])}</span>`, extMode ? who(ext) : who(by), valH ? dur(Math.round(x.v)) : r[8] ? dur(r[8]) : ''],
-        [fmtD(r[0]), sens, phone(other) || other, inb ? r[3] || '' : '', inb ? phone(r[5]) || r[5] || '' : '', st[0], extMode ? `${ext} ${dnName(ext)}` : by ? `${by} ${dnName(by)}` : '', valH ? Math.round(x.v) : r[8] || 0], x.cat]; };
+        [fmtD(r[0]), sens, phone(other) || other, inb ? r[3] || '' : '', inb ? phone(r[5]) || r[5] || '' : '', st[0], extMode ? `${ext} ${dnName(ext)}` : by ? `${by} ${dnName(by)}` : '', valH ? Math.round(x.v) : r[8] || 0], cat]; };
     const heads = src === 'q' ? [[T('Date', 'Date'), T('Appelant', 'Caller'), T('File', 'Queue'), T('Attente', 'Wait'), T('Résultat', 'Result'), T('Agent', 'Agent'), T('Conversation', 'Talk')], [T('Date', 'Date'), T('Appelant', 'Caller'), T('Nom', 'Name'), T('File', 'Queue'), T('Attente (s)', 'Wait (s)'), T('Résultat', 'Result'), T('Agent', 'Agent'), T('Conversation (s)', 'Talk (s)')]]
       : [[T('Date', 'Date'), T('Sens', 'Direction'), T('Correspondant', 'Other party'), T('SDA', 'DID'), T('Résultat', 'Result'), extMode ? T('Employé', 'Employee') : T('Répondu par', 'Answered by'), valH || T('Conversation', 'Talk')], [T('Date', 'Date'), T('Sens', 'Direction'), T('Correspondant', 'Other party'), T('Nom', 'Name'), T('SDA', 'DID'), T('Résultat', 'Result'), extMode ? T('Employé', 'Employee') : T('Répondu par', 'Answered by'), `${valH || T('Conversation', 'Talk')} (s)`]];
+    if(R.multi){ const sh = {store: T('Magasin', 'Store'), ext: T('Utilisateur', 'User'), queue: T('File', 'Queue'), did: T('SDA', 'DID')}[S.k]; heads.forEach(h => h.splice(1, 0, sh)); }
     function openCalls(d){
       const recs = recsOf(d); if(!recs.length) return; hide();
-      const rows = recs.map(rowOf), cats = R.CATS.filter(([c]) => rows.some(x => x[2] === c)); let f = '';
+      const rows = recs.map(rowOf), cats = (R.multi ? R.runs.map(o => [o.sid, o.s.l]) : R.CATS).filter(([c]) => rows.some(x => x[2] === c)); let f = '';
       const body = () => { const L = rows.filter(x => !f || x[2] === f), MAX = 500;
-        return `<p class="muted gvcl">${esc(mLab(m[0]))} — ${esc(R.s.l)}<br>${T(`${nf(L.length)} appel${L.length > 1 ? 's' : ''}`, `${nf(L.length)} call${L.length > 1 ? 's' : ''}`)}${L.length > MAX ? T(` : les ${MAX} plus récents ici, tous dans Excel`, `: the ${MAX} most recent here, all in Excel`) : ''}${extMode && S.k !== 'ext' ? T(' · un appel transféré compte pour chaque employé qui lui a parlé', ' · a transferred call counts for each employee who talked on it') : ''}</p>
+        return `<p class="muted gvcl">${esc(hTitle)}<br>${T(`${nf(L.length)} appel${L.length > 1 ? 's' : ''}`, `${nf(L.length)} call${L.length > 1 ? 's' : ''}`)}${L.length > MAX ? T(` : les ${MAX} plus récents ici, tous dans Excel`, `: the ${MAX} most recent here, all in Excel`) : ''}${extMode && S.k !== 'ext' ? T(' · un appel transféré compte pour chaque employé qui lui a parlé', ' · a transferred call counts for each employee who talked on it') : ''}</p>
           ${cats.length > 1 ? `<div class="gvcf">${[['', T('Tous', 'All')], ...cats].map(([c, l]) => `<button type="button" class="btn${f === c ? ' primary' : ''}" data-gvf="${esc(c)}">${esc(l)} (${nf(c ? rows.filter(x => x[2] === c).length : rows.length)})</button>`).join('')}</div>` : ''}
           <p><button type="button" class="btn" data-gvxl>${T('Exporter en Excel', 'Export to Excel')}</button></p>
           <div class="tw"><table class="gvcalls"><thead><tr>${heads[0].map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${L.slice(0, MAX).map(x => `<tr>${x[0].map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; };

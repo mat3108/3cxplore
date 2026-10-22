@@ -1,7 +1,7 @@
 /* Générateur de graphique (20.3) : l'assistant reprend celui du générateur de rapport (.ask*, .grp*). Le graphique est sur la feuille blanche du
    rapport (.report, claire même en thème sombre) : couleurs vérifiées pour les daltoniens sur fond blanc (bleu, orange, turquoise, toutes les paires
    séparées ; le turquoise, plus pâle, est toujours accompagné de la légende et du tableau). La grille jour × heure suit une seule teinte, du pâle au foncé */
-.gvrep{--gv-s1:#2a78d6;--gv-s2:#eb6834;--gv-s3:#1baf7a;--gv-prev:#a9adb5;--gv-grid:#e8ebef;--gv-base:#b8bec8;--gv-ring:var(--panel);
+.gvrep,.gvmore{--gv-s1:#2a78d6;--gv-s2:#eb6834;--gv-s3:#1baf7a;--gv-prev:#a9adb5;--gv-grid:#e8ebef;--gv-base:#b8bec8;--gv-ring:var(--panel);
   --gv-h0:#cde2fb;--gv-h1:#9ec5f4;--gv-h2:#6da7ec;--gv-h3:#3987e5;--gv-h4:#256abf;--gv-h5:#184f95;--gv-h6:#0d366b;
   --gv-t0:#0d366b;--gv-t1:#0d366b;--gv-t2:#0b1d36;--gv-t3:#fff;--gv-t4:#fff;--gv-t5:#fff;--gv-t6:#fff}
 .gvrep .attkpi{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
@@ -19,7 +19,7 @@
 .gvsvg .gvx{stroke:var(--muted);stroke-width:1}
 .gv-s1{fill:var(--gv-s1);background:var(--gv-s1)}.gv-s2{fill:var(--gv-s2);background:var(--gv-s2)}.gv-s3{fill:var(--gv-s3);background:var(--gv-s3)}.gv-prev{fill:var(--gv-prev);background:var(--gv-prev)}
 .gvsvg .gvline{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.gvsvg .gvl-s1{stroke:var(--gv-s1)}.gvsvg .gvl-prev{stroke:var(--gv-prev)}
+.gvsvg .gvl-s1{stroke:var(--gv-s1)}.gvsvg .gvl-s2{stroke:var(--gv-s2)}.gvsvg .gvl-s3{stroke:var(--gv-s3)}.gvsvg .gvl-prev{stroke:var(--gv-prev)}
 .gvsvg .gvdot{stroke:var(--gv-ring);stroke-width:2}
 .gvsvg .gvhit{fill:transparent;pointer-events:all;outline:none}
 .gvsvg .gvhit.on,.gvsvg .gvhit:focus-visible{fill:color-mix(in srgb,var(--text) 5%,transparent)}
@@ -50,3 +50,10 @@
 .gvcl{margin:0 0 8px;font-size:13px}.gvcf{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}.gvcf .btn{padding:5px 10px;font-size:12.5px}
 .gvcalls{font-size:12.5px}.gvcalls td{white-space:nowrap;vertical-align:top}
 .gvcalls a{color:var(--accent);text-decoration:none}.gvcalls a:hover{text-decoration:underline}
+/* 20.5 : 2 ou 3 sujets comparés (une couleur chacun, bleu, orange, turquoise : les 3 couleurs vérifiées toutes paires) */
+.gvmore{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px 66px}
+.gvchip{display:inline-flex;align-items:center;gap:8px;padding:6px 6px 6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-weight:600;font-size:14px}
+.gvchip i,.gvkey{display:inline-block;width:12px;height:12px;border-radius:3px;flex:none}.gvkey{margin-right:6px;vertical-align:-1px}
+.gvchip button{border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:0 6px}.gvchip button:hover{color:var(--text)}
+.gvmore .gvchip:first-child{padding-right:12px}
+@media (max-width:560px){.gvmore{margin-left:0}}
