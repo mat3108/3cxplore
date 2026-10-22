@@ -15,8 +15,13 @@ function gsBuild(){
   FULL.groups.filter(g => !isSysGroup(g)).forEach(g => add('Département', `${g.number} ${g.name}`, segShort(SEGOF[g.number]), [g.number], () => showDN(g.number)));
   FULL.lines.forEach(l => {
     add('Trunk', `${l.number} ${l.gateway}`, l.extNumber ? phone(l.extNumber) : '', [l.number, l.extNumber], () => showDN(l.number));
-    const by = {}; l.rules.forEach(r => by[r.data] = r);
-    l.dids.forEach(d => add('SDA', phone(d), `${(by[d]?.name) || ''} ${dnName(by[d]?.office?.dn || '')}`.trim() || l.gateway, [d], () => gsOpenDid(d)));
+    // 20.3.3 : un SDA se trouve aussi par « sda », son magasin, le nom de sa règle entrante ou sa destination ; deux résultats : le diagramme et la fiche numéro
+    const by = {}, def = l.rules.find(r => r.cond === 'ForwardAll'); l.rules.forEach(r => by[r.data] = r);
+    const dst = x => !x || !x.to || x.to === 'None' ? '' : x.dn ? `${x.dn} ${dnName(x.dn)}`.trim() : x.to === 'External' ? phone(x.ext) : TO_FR[x.to] || x.to;
+    l.dids.forEach(d => { const r = by[d] || def, seg = DIDSEG[d] || SEG_COMMON, to = dst(r?.office), ooo = dst(r?.outOfOffice);
+      const sub = [segShort(seg), r?.name, to && '→ ' + to].filter(Boolean).join(' · ') || l.gateway, keys = [d, 'sda did numero entrant', segName(seg), r?.name, to, ooo, l.number];
+      add('SDA — diagramme', phone(d), sub, keys, () => gsOpenDid(d));
+      add('SDA — fiche numéro', phone(d), sub, keys, () => { location.hash = 'numero/' + (normNum(d) || d); }); });
   });
   FULL.phonebook.forEach(p => add('Contact', `${(p.first + ' ' + p.last).trim() || p.company}`, [p.company, p.phone].filter(Boolean).join(' · '), [p.phone, p.company, ...p.other], () => openDrawer(esc((p.first + ' ' + p.last).trim() || p.company),
     kv([['Entreprise', esc(p.company)], ['Téléphone', `<span class="mono">${esc(p.phone)}</span>`], ['Autres', p.other.map(o => esc(o)).join('<br>')], ['Portée', esc(p.scope)]]))));
@@ -39,7 +44,7 @@ function gsSearch(q){
     if(words.every(w => it.text.includes(w))) score = Math.max(score, gsNorm(it.label).startsWith(t) ? 80 : 40);
     if(score) out.push([score, it]);
   }
-  const res = out.sort((a, b) => b[0] - a[0] || a[1].label.localeCompare(b[1].label)).slice(0, 14).map(x => x[1]);
+  const res = out.sort((a, b) => b[0] - a[0] || a[1].label.localeCompare(b[1].label)).slice(0, 16).map(x => x[1]);
   // un numéro de téléphone complet : proposer l'historique du client
   const cn = normNum(q); if(cn && cn.length === 10){ res.unshift({kind: 'Client', label: phone(cn), sub: 'Historique du client (appels, rappels, enregistrements)', open: () => { location.hash = 'client/' + cn; }});
     res.unshift({kind: 'Numéro', label: phone(cn), sub: 'Fiche numéro : SDA, client ou employé, tout sur une page', open: () => { location.hash = 'numero/' + cn; }}); } // 18.3

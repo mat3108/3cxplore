@@ -26,7 +26,7 @@
   ],
   [
    "Rechercher",
-   "La barre de recherche (touche « / ») trouve un poste, une adresse MAC, un SDA, un nom ou une file. La palette de commandes (Ctrl+K, ou Cmd+K sur Mac) ouvre n'importe quel onglet, poste ou magasin en tapant quelques lettres."
+   "La barre de recherche (touche « / ») trouve un poste, une adresse MAC, un SDA, un nom ou une file. Pour un SDA, tapez son numéro (ou ses derniers chiffres), ou « sda » suivi du magasin ou de la destination (par exemple « sda KM » ou « sda service ») : chaque SDA propose son diagramme et sa fiche numéro. Le champ de recherche de l'accueil trouve la même chose, sous les pages. La palette de commandes (Ctrl+K, ou Cmd+K sur Mac) ouvre n'importe quel onglet, poste ou magasin en tapant quelques lettres."
   ],
   [
    "Aide sur un onglet",
@@ -934,7 +934,7 @@
    ],
    [
     "Search",
-    "The search bar (“/” key) finds an extension, a MAC address, a DID, a name or a queue. The command palette (Ctrl+K, or Cmd+K on Mac) opens any tab, extension or store by typing a few letters."
+    "The search bar (“/” key) finds an extension, a MAC address, a DID, a name or a queue. For a DID, type its number (or its last digits), or « sda » followed by the store or the destination (for example « sda KM » or « sda service »): each DID offers its diagram and its number sheet. The home page search field finds the same things, below the pages. The command palette (Ctrl+K, or Cmd+K on Mac) opens any tab, extension or store by typing a few letters."
    ],
    [
     "Help on a tab",

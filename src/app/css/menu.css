@@ -118,3 +118,4 @@ body.mini .pagehead .subtabs{display:flex}
 /* en-tête : la recherche garde de la place ; sous 1400 px, les boutons firmwares et mise à jour n'affichent que leur icône (le nom reste dans la bulle) */
 @media (min-width:801px){.top .gsearch{min-width:260px}}
 @media (min-width:801px) and (max-width:1400px){.top .fwhdr:not(.langbtn) .lb{display:none}}
+.hores .hogs{margin:8px 10px 2px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.hores a[data-gs] .pill{flex:none;width:10.5em;align-items:center;text-align:center}@media (max-width:560px){.hores a[data-gs]{flex-wrap:wrap;gap:4px 10px}.hores a[data-gs] .pill{width:auto}} /* 20.3.3 : résultats de la barre du haut dans la recherche de l'accueil */

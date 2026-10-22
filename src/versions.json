@@ -1,5 +1,28 @@
 [
  {
+  "version": "20.3.3",
+  "date": "2026-10-21",
+  "titre": "Trouver un SDA avec la barre de recherche",
+  "resume": "La recherche trouve un SDA par son numéro, mais aussi en tapant « sda » suivi du magasin, du nom de la règle entrante ou de la destination, dans la barre du haut comme dans le champ de l'accueil. Chaque SDA trouvé propose son diagramme et sa fiche numéro.",
+  "changements": [
+   "Barre de recherche : « sda » (ou « did ») liste les numéros entrants ; « sda KM », « sda service » ou le nom d'une règle entrante les filtrent par magasin, règle ou destination (heures d'ouverture et hors heures).",
+   "Chaque SDA affiche son magasin, sa règle entrante et sa destination ; la règle par défaut du trunk est prise en compte quand le SDA n'a pas de règle à lui.",
+   "Deux résultats par SDA : « SDA — diagramme » (le parcours de l'appel, comme avant) et « SDA — fiche numéro » (appels, qui répond, perdus, rappels).",
+   "Accueil : le champ « Vous pouvez aussi écrire ce que vous cherchez » trouve maintenant, sous les pages, ce que trouve la barre du haut (postes, SDA, files, téléphones, contacts), groupé sous « Dans le système ». Entrée ouvre le premier résultat.",
+   "Jusqu'à 16 résultats au lieu de 14."
+  ],
+  "onglets": [
+   [
+    "Barre de recherche",
+    "Trouver un SDA par « sda », le magasin, la règle ou la destination ; diagramme ou fiche numéro."
+   ],
+   [
+    "Accueil",
+    "Le champ de recherche trouve aussi les postes, les SDA, les files et les contacts."
+   ]
+  ]
+ },
+ {
   "version": "20.3.2",
   "date": "2026-10-21",
   "titre": "Les touches BLF du nouvel employé",

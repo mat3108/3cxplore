@@ -1376,6 +1376,7 @@ const EN = {
 "Sonneries manquées": "Missed rings",
 "Sonneries manquées (file)": "Missed rings (queue)",
 "Standard (IVR)": "IVR",
+"SDA — diagramme": "DID — diagram", "SDA — fiche numéro": "DID — number sheet",
 "Statistiques par magasin": "Statistics by store",
 "Sur les 30 derniers jours du backup, des appels entrants ont pris la branche « fermé » (ou pause) alors que l'horaire configuré indiquait ouvert.": "Over the backup's last 30 days, inbound calls took the “closed” (or break) branch while the configured schedule said open.",
 "Synthèse": "Summary",
