@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.5-2563eb)
+![Version](https://img.shields.io/badge/version-20.5.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -118,7 +118,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Licences et postes** | Postes jamais utilisés ou inactifs (seuil au choix), encore visés par un acheminement, en double ou désactivés ; téléphones à récupérer ; pic d'appels simultanés. |
 | **Magasins** | Codes de magasin détectés (nom, type Magasin/Commun, nombre d'éléments) et attribution de chaque département, file, standard, groupe de sonnerie et poste, avec correction manuelle. |
 | **Sauvegarde des réglages** | Export et import en un fichier de tous les réglages saisis dans l'interface (magasins, objectifs, suivi, notes, tâches, préférences). |
-| **Interface** | Option « Menu de gauche » : caché (par défaut) ou toujours affiché. |
+| **Interface** | Pastilles des rubriques sur plusieurs lignes sur ordinateur ; fondu sur le bord sur téléphone. |
 | **Sécurité** | Droits d'administration, double authentification, renvois externes, appels internationaux, connexions et changements sensibles. |
 | **Renvois externes** | Renvois vers des numéros externes : statuts, appels renvoyés, anciens employés, cellulaires de collègues, numéros inconnus. |
 | **Appels suspects** | Démarchage et robots : rafales, plusieurs SDA appelés, appels très courts ou de nuit répétés, appels masqués par heure. |
@@ -224,7 +224,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.5** | Comparer 2 ou 3 sur le même graphique |
+| **20.5.1** | Les pastilles des rubriques ne sont plus coupées |
+| 20.5 | Comparer 2 ou 3 sur le même graphique |
 | 20.4 | Les appels derrière chaque barre |
 | 20.3.3 | Trouver un SDA avec la barre de recherche |
 | 20.3.2 | Les touches BLF du nouvel employé |

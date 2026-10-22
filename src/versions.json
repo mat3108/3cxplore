@@ -1,5 +1,21 @@
 [
  {
+  "version": "20.5.1",
+  "date": "2026-10-22",
+  "titre": "Les pastilles des rubriques ne sont plus coupées",
+  "resume": "En haut des pages, les pastilles des autres pages de la rubrique reviennent à la ligne sur ordinateur : avec les 11 pages de « Les chiffres », les dernières étaient coupées.",
+  "changements": [
+   "Sur ordinateur, quand le menu de gauche est caché, les pastilles sous le fil d'Ariane tiennent sur plusieurs lignes au lieu d'une seule. Avant, dans « Les chiffres » (par exemple sur Appels en file), les dernières pages étaient coupées à droite, et la première pouvait l'être à gauche.",
+   "Sur téléphone, les pastilles restent sur une ligne que l'on fait glisser ; un fondu sur le bord montre qu'il en reste d'autres de ce côté."
+  ],
+  "onglets": [
+   [
+    "Interface",
+    "Pastilles des rubriques sur plusieurs lignes sur ordinateur ; fondu sur le bord sur téléphone."
+   ]
+  ]
+ },
+ {
   "version": "20.5",
   "date": "2026-10-21",
   "titre": "Comparer 2 ou 3 sur le même graphique",

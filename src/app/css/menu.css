@@ -67,6 +67,12 @@ body.mini #side #nav a.rb{justify-content:center;padding:5px 0}
 .pagehead .subtabs a.on .n{background:rgba(255,255,255,.25);color:#fff}
 body.mini .pagehead .subtabs{display:flex}
 @media (max-width:800px){.pagehead .subtabs{display:flex}}
+/* 20.5.1 : sur ordinateur, les pastilles reviennent à la ligne (une rubrique de 11 pages ne tenait pas : les dernières étaient coupées) ;
+   sur téléphone, une seule ligne que l'on fait glisser, avec un fondu sur le bord qui montre qu'il y en a d'autres */
+@media (min-width:801px){.pagehead .subtabs{flex-wrap:wrap;overflow:visible}}
+@media (max-width:800px){.pagehead .subtabs.more-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+  .pagehead .subtabs.more-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 36px);mask-image:linear-gradient(90deg,transparent,#000 36px)}
+  .pagehead .subtabs.more-l.more-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent)}}
 @media print{.pagehead{display:none}}
 
 /* accueil (20.1) : l'assistant — la mascotte pose une question, on répond avec un gros bouton */

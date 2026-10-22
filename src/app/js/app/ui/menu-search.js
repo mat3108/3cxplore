@@ -85,7 +85,10 @@ function decorate(tab){
     b.innerHTML = `Affichage limité au magasin <b>${esc(segName(SEG))}</b> — ${D.extensions.length} postes, ${D.queues.length} files, ${allDIDs.length} SDA, ${nf(D.calls.filter(c => callSeg(c) === SEG).length)} appels. <a href="#" id="segall">Voir tous les magasins</a>`;
     main.prepend(b); b.querySelector('#segall').addEventListener('click', e => { e.preventDefault(); window.__app.setSeg(''); }); }
   const st = subTabs(tab); if(st){ st.dataset.deco = '1'; main.prepend(st);
-    const s = st.querySelector('.subtabs'), o = s && s.querySelector('.on'); if(o && s.scrollWidth > s.clientWidth) s.scrollLeft = o.offsetLeft - s.offsetLeft - 16; }
+    const s = st.querySelector('.subtabs'), o = s && s.querySelector('.on'); if(o && s.scrollWidth > s.clientWidth) s.scrollLeft = o.offsetLeft - s.offsetLeft - 16;
+    // 20.5.1 : fondu sur le bord qui cache encore des pastilles (téléphone)
+    if(s){ const edge = () => { const m = s.scrollWidth - s.clientWidth; s.classList.toggle('more-l', m > 2 && s.scrollLeft > 2); s.classList.toggle('more-r', m > 2 && s.scrollLeft < m - 2); };
+      s.addEventListener('scroll', edge, {passive: true}); requestAnimationFrame(edge); } }
   // 16.3 : bouton « ? » à côté du titre de l'onglet : ouvre sa section du guide de l'utilisateur dans un nouvel onglet
   const h = main.querySelector('h2'); if(h && TAB_BY[tab] && !h.querySelector('.tabhelp')){ const a = document.createElement('a'); a.className = 'tabhelp';
     a.href = `${location.pathname.includes('/anciennes-versions/') ? '../' : ''}${document.documentElement.lang === 'en' ? 'documentation-en.html' : 'documentation.html'}#o-${tab}`; a.target = '_blank'; a.rel = 'noopener';
