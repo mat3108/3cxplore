@@ -121,9 +121,10 @@ function analyse(){
   const vacant = D.extensions.filter(e => /vacant|libre|test|temp/i.test(e.first + ' ' + e.last));
   if(vacant.length) add('vacant', 'obs', 'Postes', `${vacant.length} poste${vacant.length>1?'s':''} nommé${vacant.length>1?'s':''} « vacant », « test » ou similaire`,
     'Ces postes semblent temporaires ou non attribués.', 'Les réattribuer ou les supprimer.', vacant.map(e => itemDN(e.number)));
-  const noCid = D.extensions.filter(e => !e.callerId);
-  if(noCid.length) add('no-cid', 'obs', 'Postes', `${noCid.length} poste${noCid.length>1?'s':''} sans numéro d'appelant sortant (Caller ID)`,
-    'Ces postes utilisent le numéro d\'appelant par défaut du trunk lors des appels sortants.', 'Définir un Caller ID si un numéro précis doit s\'afficher.', noCid.map(e => itemDN(e.number)));
+  const noCid = noCidRows(); // 20.5.2 : problème à corriger (onglet Sans numéro de sortie)
+  if(noCid.length) add('no-cid', 'fix', 'Postes', `${noCid.length} poste${noCid.length>1?'s':''} sans numéro de sortie (Outbound Caller ID)`,
+    'Quand ces employés appellent l\'extérieur, c\'est le numéro par défaut du trunk qui s\'affiche chez le client, pas celui de leur magasin.', 'Mettre un SDA de leur magasin comme numéro de sortie (liste et numéro suggéré dans l\'onglet Sans numéro de sortie).',
+    noCid.map(x => ({html: dnLink(x.e.number) + (x.sugg ? ` → <span class="mono">${esc(phone(x.sugg.k) || x.sugg.raw)}</span>` : ''), text: x.e.number + ' ' + dnName(x.e.number)})));
   const remote = D.extensions.filter(e => !e.lanOnly);
   if(remote.length) add('remote', 'obs', 'Sécurité', `${remote.length} poste${remote.length>1?'s':''} autorisé${remote.length>1?'s':''} à s'enregistrer hors du réseau local`,
     'L\'option « réseau local seulement » n\'est pas activée : ces postes peuvent s\'enregistrer depuis Internet (télétravail, application mobile).',

@@ -237,6 +237,14 @@
    ],
    "astuce": "« Membre d'un autre magasin » est souvent voulu (personnel partagé) : à vérifier seulement s'il surprend."
   },
+  "sanscid": {
+   "sert": "Les postes sans numéro présenté lors des appels sortants (Outbound Caller ID), les appels qu'ils passent et le numéro à leur mettre.",
+   "comment": [
+    "Commencez par les postes qui ont appelé l'extérieur : leurs clients voient déjà le mauvais numéro.",
+    "Cliquez sur une ligne pour ouvrir la fiche de l'employé."
+   ],
+   "astuce": "Un poste qui n'appelle jamais l'extérieur (salle de réunion, fax, test) peut rester sans numéro."
+  },
   "numerotation": {
    "sert": "Le plan de numérotation : plages de numéros par magasin, numéros libres et postes hors plage.",
    "comment": [
@@ -1146,6 +1154,14 @@
      "Click a finding in the summary to filter the details."
     ],
     "astuce": "“Member from another store” is often intended (shared staff): check it only if it is surprising."
+   },
+   "sanscid": {
+    "sert": "Extensions with no caller ID on outbound calls (Outbound Caller ID), the calls they make and the number to give them.",
+    "comment": [
+     "Start with the extensions that called outside: their customers already see the wrong number.",
+     "Click a row to open the employee's sheet."
+    ],
+    "astuce": "An extension that never calls outside (meeting room, fax, test) can stay without a number."
    },
    "numerotation": {
     "sert": "The numbering plan: number ranges per store, free numbers and extensions outside their range.",

@@ -1,8 +1,8 @@
 // 3CXplore — service worker (généré par scripts/generate.mjs ; ne pas modifier à la main)
 // Garde une copie de l'outil pour le hors ligne et récupère la dernière version quand le réseau est disponible.
 // Les backups ne passent jamais par ici : ils sont lus depuis le disque, dans le navigateur.
-const CACHE = '3cxplore-20.5.1';
-const FILES = ["./", "./index.html", "./app/visualiseur-3cx-v20.5.1.html", "./app/documentation.html", "./app/documentation-en.html", "./app/changelog.html", "./app/firmwares-3cx.js", "./manifest.webmanifest", "./assets/icone-192.png", "./assets/icone-512.png", "./assets/logo-icone.svg"];
+const CACHE = '3cxplore-20.5.2';
+const FILES = ["./", "./index.html", "./app/visualiseur-3cx-v20.5.2.html", "./app/documentation.html", "./app/documentation-en.html", "./app/changelog.html", "./app/firmwares-3cx.js", "./manifest.webmanifest", "./assets/icone-192.png", "./assets/icone-512.png", "./assets/logo-icone.svg"];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith('3cxplore-') && n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
 // page d'accueil : on y redirige (vraie adresse) au lieu d'afficher son contenu sous une autre adresse,

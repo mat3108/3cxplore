@@ -1,5 +1,30 @@
 [
  {
+  "version": "20.5.2",
+  "date": "2026-10-23",
+  "titre": "Les postes sans numéro de sortie",
+  "resume": "Les postes sans numéro présenté (Outbound Caller ID) sont maintenant un problème à corriger, et une nouvelle page « Sans numéro de sortie » les liste avec le numéro à leur mettre.",
+  "changements": [
+   "À réparer → Sans numéro de sortie : chaque poste sans numéro présenté, son magasin et son département, ses appels sortants des 30 derniers jours et le numéro suggéré (celui que présentent le plus souvent les collègues du même magasin, un SDA de ce magasin d'abord). Filtre « Ont appelé l'extérieur », export CSV, clic sur une ligne pour la fiche employé.",
+   "Priorités : les postes sans numéro de sortie sont classés selon le nombre d'appels sortants passés sans le numéro du magasin (30 j).",
+   "Recommandations : ce n'est plus une simple observation mais un point « À corriger », avec le numéro suggéré à côté de chaque poste."
+  ],
+  "onglets": [
+   [
+    "Sans numéro de sortie",
+    "Nouvelle page : postes sans numéro présenté et numéro à leur mettre."
+   ],
+   [
+    "Priorités",
+    "Postes sans numéro de sortie, classés selon les appels sortants touchés."
+   ],
+   [
+    "Recommandations",
+    "Postes sans numéro de sortie : « À corriger » au lieu d'une observation."
+   ]
+  ]
+ },
+ {
   "version": "20.5.1",
   "date": "2026-10-22",
   "titre": "Les pastilles des rubriques ne sont plus coupées",
