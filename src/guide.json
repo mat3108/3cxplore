@@ -245,6 +245,14 @@
    ],
    "astuce": "Un poste qui n'appelle jamais l'extérieur (salle de réunion, fax, test) peut rester sans numéro."
   },
+  "urgence": {
+   "sert": "Pour chaque poste, le numéro que recevrait le 911 et le magasin auquel ce numéro appartient : le service d'urgence retrouve l'adresse à partir de ce numéro.",
+   "comment": [
+    "Commencez par les postes « Adresse d'un autre magasin » : les secours partiraient vers le mauvais magasin.",
+    "Cliquez sur une ligne pour ouvrir la fiche de l'employé."
+   ],
+   "astuce": "Un poste sans numéro de sortie envoie le numéro principal du trunk : celui d'un seul magasin."
+  },
   "numerotation": {
    "sert": "Le plan de numérotation : plages de numéros par magasin, numéros libres et postes hors plage.",
    "comment": [
@@ -1162,6 +1170,14 @@
      "Click a row to open the employee's sheet."
     ],
     "astuce": "An extension that never calls outside (meeting room, fax, test) can stay without a number."
+   },
+   "urgence": {
+    "sert": "For each extension, the number 911 would receive and the store that number belongs to: the emergency service finds the address from that number.",
+    "comment": [
+     "Start with the extensions marked “Another store's address”: responders would go to the wrong store.",
+     "Click a row to open the employee's sheet."
+    ],
+    "astuce": "An extension with no outbound caller ID sends the trunk's main number: that of a single store."
    },
    "numerotation": {
     "sert": "The numbering plan: number ranges per store, free numbers and extensions outside their range.",

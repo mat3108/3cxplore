@@ -1,7 +1,7 @@
 // ---------- Menu (20.0) : un seul menu, des rubriques qui s'ouvrent sur leurs pages (sous-menu), une couleur par rubrique ----------
 // [libellé, icône (onglet dont on reprend l'icône), pages de la rubrique] ; les adresses des pages (#flux, #postes…) ne changent pas
 const NAV_SETS = {
-  reparer: ['À réparer', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'corrections', 'pieges', 'doublons', 'sanscid', 'controle', 'sdainut']],
+  reparer: ['À réparer', 'priorites', ['priorites', 'reco', 'sante', 'actions', 'corrections', 'pieges', 'doublons', 'sanscid', 'urgence', 'controle', 'sdainut']],
   appels: ['Les appels', 'appels', ['appels', 'rappels', 'rappellent', 'numero', 'client', 'vip', 'delai', 'receptions', 'courts', 'parkings']],
   magasins: ['Les magasins', 'magasins', ['fichemag', 'rapport', 'deptrap', 'classement', 'cmpmag', 'objectifs', 'horaires', 'magasins']],
   personnes: ['Les personnes', 'employe', ['employe', 'annuaire', 'organigramme', 'agents', 'occupation', 'indisp', 'absences', 'historique']],

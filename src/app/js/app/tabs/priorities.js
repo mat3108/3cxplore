@@ -53,6 +53,11 @@ function prioAnalysis(){
     add(n30 ? A : R, {cat: 'Postes', title: `${nc.length} poste(s) sans numéro de sortie`, calls: n30, unit: 'appels sortants sans le numéro du magasin (30 j)',
       detail: (who.length ? who : nc).slice(0, 5).map(x => `${x.e.number} ${x.name}${x.out30 ? ` (${x.out30})` : ''}`).join(', ') + (nc.length > 5 ? '…' : ''),
       fix: 'Mettre un SDA du magasin comme numéro de sortie (Outbound Caller ID) de ces postes.', link: 'sanscid', sev: who.length ? 'fix' : 'obs'}); }
+  // 9) 911 (20.6) : postes dont le numéro envoyé au 911 est celui d'un autre magasin (mauvaise adresse)
+  const ug = urgAnalysis();
+  if(ug.bad.length){ const bs = {}; ug.bad.forEach(x => { (bs[x.seg] ||= []).push(x); });
+    add(R, {cat: 'Urgences', title: `${ug.bad.length} poste(s) enverraient au 911 l'adresse d'un autre magasin`, detail: Object.entries(bs).map(([s, l]) => `${segShort(s)} : ${l.length}`).join(', ') + ` · numéro envoyé : ${[...new Set(ug.bad.map(x => phone(x.num) || x.num))].slice(0, 3).join(', ')}`,
+      fix: 'Mettre comme numéro de sortie un SDA du magasin de chaque poste.', link: 'urgence', sev: 'crit'}); }
   // autres risques (sécurité, matériel, configuration) sans impact direct sur les appels
   const S = secAnalysis(), elevNo = S.elevated.filter(r => (!SEG || r.seg === SEG) && r.rank >= 5 && !['on', 'ms'].includes(r.fa));
   if(elevNo.length) add(R, {cat: 'Sécurité', title: `${elevNo.length} compte(s) avec accès complet au système sans MFA`, detail: elevNo.map(r => r.e.number + ' ' + (r.e.first + ' ' + r.e.last).trim()).join(', '), fix: 'Relier ces comptes à Microsoft 365 avec la connexion Microsoft, ou activer la double authentification 3CX.', link: 'securite', sev: 'crit'});
@@ -66,7 +71,7 @@ function prioAnalysis(){
   const lng = ph.filter(r => phLangBad(r.lang)); // 19.0.1
   if(lng.length) add(R, {cat: 'Téléphones', title: `${lng.length} téléphone(s) dans une autre langue que le français`, detail: lng.slice(0, 6).map(r => `${r.ext} ${r.model} (${phLang(r.lang)})`).join(', ') + (lng.length > 6 ? '…' : ''), fix: 'Choisir la langue Français pour ces téléphones dans la console 3CX, puis les reprovisionner (onglet Téléphones).', link: 'telephones', sev: 'fix'});
   if(er.length) add(R, {cat: 'Téléphones', title: `${er.length} firmware(s) effacé(s) depuis 30 jours`, detail: [...new Set(er.map(f => f[4]))].slice(0, 8).join(', '), fix: 'Relancer « Mettre à jour le firmware » sur ces téléphones après chaque modification.', link: 'telephones', sev: 'obs'});
-  analyse().filter(f => f.sev === 'crit' || f.sev === 'fix').forEach(f => { if(f.id === 'no-cid') return; if(/SDA|acheminement|férié|firmware|téléphone|MFA|authentification|aucun agent n'est connecté/i.test(f.title)) return;
+  analyse().filter(f => f.sev === 'crit' || f.sev === 'fix').forEach(f => { if(f.id === 'no-cid' || f.id === 'e911') return; if(/SDA|acheminement|férié|firmware|téléphone|MFA|authentification|aucun agent n'est connecté/i.test(f.title)) return;
     add(R, {cat: f.cat, title: f.title, detail: f.items.slice(0, 4).map(i => i.text).join(' ; ') + (f.items.length > 4 ? '…' : ''), fix: f.reco, link: 'reco', sev: f.sev}); });
   A.sort((a, b) => b.calls - a.calls); const SEVR = {crit: 0, fix: 1, obs: 2}; R.sort((a, b) => SEVR[a.sev] - SEVR[b.sev]);
   return {A, R, histDays};

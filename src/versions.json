@@ -1,5 +1,30 @@
 [
  {
+  "version": "20.6",
+  "date": "2026-10-23",
+  "titre": "Le bon numéro pour le 911",
+  "resume": "Nouvelle page « Appels au 911 » : pour chaque poste, le numéro que recevrait le 911 et le magasin auquel il appartient. Les postes qui enverraient l'adresse d'un autre magasin deviennent un problème critique.",
+  "changements": [
+   "À réparer → Appels au 911 : la règle sortante utilisée pour le 911, puis chaque poste avec le numéro envoyé (celui imposé par la règle, sinon le numéro de sortie du poste, sinon le numéro principal du trunk), le magasin de ce numéro et le constat : adresse d'un autre magasin, numéro sans magasin, numéro inconnu du serveur, bon magasin. Filtre par constat, export CSV, clic sur une ligne pour la fiche employé.",
+   "Les appels au 911 de l'historique sont listés avec le numéro qui serait envoyé aujourd'hui.",
+   "Priorités et Recommandations : les postes qui enverraient au 911 le numéro d'un autre magasin sont un problème « Critique »."
+  ],
+  "onglets": [
+   [
+    "Appels au 911",
+    "Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro."
+   ],
+   [
+    "Priorités",
+    "Postes qui enverraient au 911 l'adresse d'un autre magasin (critique)."
+   ],
+   [
+    "Recommandations",
+    "Nouveau point critique : numéro envoyé au 911 d'un autre magasin."
+   ]
+  ]
+ },
+ {
   "version": "20.5.2",
   "date": "2026-10-23",
   "titre": "Les postes sans numéro de sortie",

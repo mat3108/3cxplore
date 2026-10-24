@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.5.2-2563eb)
+![Version](https://img.shields.io/badge/version-20.6-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **88 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **89 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -39,9 +39,9 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 |---|---|
 | **Accueil** | Le champ de recherche trouve aussi les postes, les SDA, les files et les contacts. |
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
-| **Priorités** | Postes sans numéro de sortie, classés selon les appels sortants touchés. |
+| **Priorités** | Postes qui enverraient au 911 l'adresse d'un autre magasin (critique). |
 | **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
-| **Recommandations** | Postes sans numéro de sortie : « À corriger » au lieu d'une observation. |
+| **Recommandations** | Nouveau point critique : numéro envoyé au 911 d'un autre magasin. |
 | **Actions console** | Liste de tâches à faire dans la console 3CX, classées par moment, avec chemin, impact, éléments exacts, copie des MAC, suivi et impression. |
 | **Rapport** | Rapport imprimable / PDF par magasin : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes, téléphones à mettre à jour. |
 | **Fiche magasin** | Lien « Rapport du département » pour chaque département du magasin. |
@@ -53,6 +53,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Sans numéro de sortie** | Nouvelle page : postes sans numéro présenté et numéro à leur mettre. |
+| **Appels au 911** | Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
 | **Doublons et incohérences** | Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire. |
 | **Avant / après** | Parcours des SDA comparés entre le backup de référence et le backup actuel. |
@@ -225,7 +226,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.5.2** | Les postes sans numéro de sortie |
+| **20.6** | Le bon numéro pour le 911 |
+| 20.5.2 | Les postes sans numéro de sortie |
 | 20.5.1 | Les pastilles des rubriques ne sont plus coupées |
 | 20.5 | Comparer 2 ou 3 sur le même graphique |
 | 20.4 | Les appels derrière chaque barre |

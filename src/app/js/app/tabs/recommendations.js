@@ -84,6 +84,10 @@ function analyse(){
   // 7. Urgences
   if(!D.outbound.some(o => (o.prefix||'').split(',').some(p => p.trim() === '911')))
     add('no-911', 'crit', 'Sortant', 'Aucune règle sortante pour le 911', 'Aucune règle sortante ne correspond au préfixe 911.', 'Créer une règle prioritaire pour le 911 vers un trunk qui achemine les appels d\'urgence.', []);
+  const urg = urgAnalysis(); // 20.6 : numéro envoyé au 911 qui mène à l'adresse d'un autre magasin
+  if(urg.bad.length) add('e911', 'crit', 'Sortant', `${urg.bad.length} poste${urg.bad.length>1?'s':''} enverrai${urg.bad.length>1?'ent':'t'} au 911 le numéro d'un autre magasin`,
+    'Le service d\'urgence retrouve l\'adresse à partir du numéro reçu : pour ces postes, ce serait l\'adresse d\'un autre magasin.', 'Mettre comme numéro de sortie un SDA du magasin du poste (détail dans l\'onglet Appels au 911).',
+    urg.bad.map(x => ({html: dnLink(x.e.number) + ` → <span class="mono">${esc(phone(x.num) || x.num || '—')}</span>${x.ps ? ' (' + esc(segShort(x.ps)) + ')' : ''}`, text: x.e.number + ' ' + dnName(x.e.number)})));
 
   // 8. Courriel
   if(!D.info.mailHost) add('no-mail', 'fix', 'Système', 'Serveur courriel non configuré', 'Sans serveur courriel, 3CX ne peut pas envoyer les messages vocaux, alertes et rapports.', 'Configurer le serveur SMTP dans les paramètres courriel.', []);
