@@ -1,5 +1,22 @@
 [
  {
+  "version": "20.6.1",
+  "date": "2026-10-23",
+  "titre": "Le numéro de sortie du nouvel employé",
+  "resume": "L'assistant Nouvel employé ne recopie plus un numéro de sortie absent ou d'un autre magasin : il met le numéro du magasin et prévient quand il n'en trouve aucun.",
+  "changements": [
+   "Fiche de création de poste, étape Utilisateur : si le collègue modèle présente un SDA du magasin, son numéro est repris comme avant ; sinon, la fiche met le numéro que présentent le plus souvent les collègues du magasin (un SDA de ce magasin d'abord) et dit pourquoi le réglage du collègue ne doit pas être recopié (aucun numéro, ou numéro d'un autre magasin ou inconnu du serveur).",
+   "Si aucun numéro n'est trouvé pour le magasin, la fiche le signale « À remplir » et rappelle que sans numéro le client et le 911 recevraient le numéro principal du trunk.",
+   "Le numéro suggéré est calculé de la même façon que dans la page Sans numéro de sortie."
+  ],
+  "onglets": [
+   [
+    "Nouvel employé",
+    "Numéro de sortie prérempli avec celui du magasin, alerte s'il n'y en a aucun."
+   ]
+  ]
+ },
+ {
   "version": "20.6",
   "date": "2026-10-23",
   "titre": "Le bon numéro pour le 911",

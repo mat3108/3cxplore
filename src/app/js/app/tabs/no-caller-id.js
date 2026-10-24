@@ -1,12 +1,15 @@
 // ---------- Sans numéro de sortie (20.5.2) : postes sans numéro présenté (Outbound Caller ID), avec le numéro à mettre ----------
 // liste commune à l'onglet, aux Priorités et aux Recommandations ; numéro suggéré = celui le plus présenté par les collègues du même magasin (un SDA de ce magasin d'abord)
+// SDA du système -> magasin (20.6.1 : commun à l'assistant Nouvel employé)
+function cidDidSeg(){ const m = {}; FULL.lines.forEach(l => l.dids.forEach(d => { const k = normNum(d); if(k) m[k] = DIDSEG[d] || SEG_COMMON; })); return m; }
+// numéro de sortie suggéré pour un magasin : {k, raw, n, did} ou null
+function cidForStore(seg, didSeg = cidDidSeg()){ const m = {};
+  FULL.extensions.forEach(e => { const k = normNum(e.callerId); if(!k || (SEGOF[e.number] || SEG_COMMON) !== seg) return; const x = m[k] ||= {k, raw: e.callerId, n: 0, did: didSeg[k] === seg}; x.n++; });
+  return Object.values(m).sort((a, b) => b.did - a.did || b.n - a.n)[0] || null; }
 function noCidRows(){
   const inSeg = n => !SEG || (SEGOF[n] || SEG_COMMON) === SEG, all = FULL.calls;
   const end = all.length ? all[0][0] : new Date().toISOString(), lim30 = new Date(Date.parse(end) - 30 * 864e5).toISOString();
-  const didSeg = {}; FULL.lines.forEach(l => l.dids.forEach(d => { const k = normNum(d); if(k) didSeg[k] = DIDSEG[d] || SEG_COMMON; }));
-  const bySeg = {}; FULL.extensions.forEach(e => { const k = normNum(e.callerId); if(!k) return; const s = SEGOF[e.number] || SEG_COMMON, m = bySeg[s] ||= {};
-    const x = m[k] ||= {k, raw: e.callerId, n: 0, did: didSeg[k] === s}; x.n++; });
-  const sugg = s => Object.values(bySeg[s] || {}).sort((a, b) => b.did - a.did || b.n - a.n)[0] || null;
+  const didSeg = cidDidSeg(), memo = {}, sugg = s => s in memo ? memo[s] : (memo[s] = cidForStore(s, didSeg));
   const out = {}; for(const c of all){ if(c[1] !== 'out') continue; const x = out[c[2]] ||= {n: 0, n30: 0, last: ''}; x.n++; if(c[0] >= lim30) x.n30++; if(c[0] > x.last) x.last = c[0]; }
   return FULL.extensions.filter(e => !normNum(e.callerId) && inSeg(e.number)).map(e => { const seg = SEGOF[e.number] || SEG_COMMON, o = out[e.number] || {n: 0, n30: 0, last: ''};
     return {e, seg, name: (e.first + ' ' + e.last).trim(), depts: (e.groups || []).map(g => g.g).filter(n => n && !/^__/.test(n)), out: o.n, out30: o.n30, last: o.last, sugg: sugg(seg)}; });

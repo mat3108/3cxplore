@@ -3171,4 +3171,7 @@ const EN = {
 "Pour chaque poste, le numéro que recevrait le 911 et le magasin auquel ce numéro appartient : le service d'urgence retrouve l'adresse à partir de ce numéro.": "For each extension, the number 911 would receive and the store that number belongs to: the emergency service finds the address from that number.",
 "Commencez par les postes « Adresse d'un autre magasin » : les secours partiraient vers le mauvais magasin.": "Start with the extensions marked “Another store's address”: responders would go to the wrong store.",
 "Un poste sans numéro de sortie envoie le numéro principal du trunk : celui d'un seul magasin.": "An extension with no outbound caller ID sends the trunk's main number: that of a single store.",
+// 20.6.1 : numéro de sortie du nouvel employé
+"À ne pas recopier": "Do not copy",
+"À remplir": "To fill in",
 };

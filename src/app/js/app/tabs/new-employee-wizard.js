@@ -59,6 +59,18 @@ function nvKeys(M, num, o){
     if(!W.length) others.push(`Aucun collègue n'a de touche BLF vers ${esc(M.number)} : rien à ajouter ailleurs.`); }
   return {mine, others};
 }
+// numéro de sortie (20.6.1) : celui du collègue modèle s'il est un SDA du magasin, sinon le numéro suggéré du magasin ; alerte s'il n'y en a aucun
+function nvCid(M, seg){
+  const didSeg = cidDidSeg(), mk = normNum(M.callerId), ms = mk ? didSeg[mk] : undefined, out = [];
+  if(mk && ms === seg) return [`Numéro de sortie (Outbound Caller ID) : <b>${esc(phone(M.callerId) || M.callerId)}</b> (comme ${esc(M.number)})`];
+  const sg = cidForStore(seg, didSeg);
+  if(sg){ out.push(`Numéro de sortie (Outbound Caller ID) : <b>${esc(phone(sg.k) || sg.raw)}</b> <span class="muted">(présenté par ${nf(sg.n)} collègue${sg.n > 1 ? 's' : ''} du magasin${sg.did ? '' : ' ; ce n\'est pas un SDA du serveur, à vérifier'})</span>`);
+    out.push(mk ? `<span class="pill warn">À ne pas recopier</span> ${esc(M.number)} présente le ${esc(phone(M.callerId) || M.callerId)}, ${ms === undefined ? 'qui n\'est pas un SDA du serveur' : ms[0] === '@' ? 'un SDA qui ne mène à aucun magasin' : `un SDA du magasin ${esc(segShort(ms))}`}.`
+      : `<span class="pill warn">À ne pas recopier</span> ${esc(M.number)} n'a pas de numéro de sortie.`);
+    return out; }
+  const U = urgAnalysis();
+  return [`<span class="pill bad">À remplir</span> Numéro de sortie (Outbound Caller ID) : aucun numéro trouvé pour ce magasin. Demandez le SDA principal du magasin : sans numéro, le client et le 911 recevraient ${U.trunkNum ? `le ${esc(phone(U.trunkNum) || U.trunkNum)} du trunk${U.trunkSeg && U.trunkSeg[0] !== '@' ? ` (magasin ${esc(segShort(U.trunkSeg))})` : ''}` : 'le numéro du trunk'}.`];
+}
 V.nouvel = el => {
   const S = window.__nv ||= {seg: SEG && SEG[0] !== '@' ? SEG : '', model: '', num: '', first: '', last: '', email: ''};
   S.keys ||= {copy: true, watch: true, dept: true}; // 20.3.2 : options des touches du téléphone
@@ -75,7 +87,7 @@ V.nouvel = el => {
   const who = `${S.first} ${S.last}`.trim() || 'Nouvel employé';
   const K = M && (S.keys.copy || S.keys.dept || S.keys.watch) ? nvKeys(M, S.num || '…', S.keys) : null;
   const steps = M ? [
-    ['Utilisateur', 'Console 3CX → Utilisateurs (Users) → Ajouter', [`Poste : <b>${esc(S.num || '—')}</b>`, `Prénom : <b>${esc(S.first || '…')}</b> · Nom : <b>${esc(S.last || '…')}</b>`, `Courriel : <b>${esc(S.email || '…')}</b>`, `Caller ID sortant : <b>${esc(phone(M.callerId) || 'celui du trunk')}</b> (comme ${esc(M.number)})`]],
+    ['Utilisateur', 'Console 3CX → Utilisateurs (Users) → Ajouter', [`Poste : <b>${esc(S.num || '—')}</b>`, `Prénom : <b>${esc(S.first || '…')}</b> · Nom : <b>${esc(S.last || '…')}</b>`, `Courriel : <b>${esc(S.email || '…')}</b>`, ...nvCid(M, S.seg)]],
     ['Sécurité', 'Utilisateurs → poste → Sécurité / Intégrations', [mfa && mfa.k === 'ms' ? 'Relier le compte à <b>Microsoft 365</b> (synchronisation Entra ID) et laisser la connexion Microsoft active : MFA géré par Microsoft' : 'Activer la <b>double authentification</b> (2FA) ou relier le compte à Microsoft 365', `Réseau local seulement : <b>${M.lanOnly ? 'oui' : 'non'}</b>`]],
     ['Départements et rôles', 'Utilisateurs → poste → Départements (Groups)', mg.length ? mg.map(x => `${x.g.name === '__DEFAULT__' ? esc(gLabel(x.g)) : `<b>${esc(x.g.name)}</b>`} — rôle <b>${esc(VROLE_FR[x.role] || x.role)}</b>${(M.groups.find(g => g.primary) || {}).g === x.g.name ? ' <span class="pill">département principal</span>' : ''}${x.own ? ' <span class="pill acc">le collègue a des droits propres ici : à vérifier</span>' : ''}`) : ['Aucun département chez le collègue modèle']],
     ["Files d'attente", "Files d'attente (Call Queues) → file → Agents → Ajouter", M.queues.length ? M.queues.map(q => `<b>${esc(q)}</b> ${esc(dnName(q))}`) : ['Aucune']],

@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.6-2563eb)
+![Version](https://img.shields.io/badge/version-20.6.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -129,7 +129,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Fiche employé** | Bouton « Mises en attente » qui ouvre le rapport pour la même personne et la même période. |
 | **Corrections par usager** | Nouvel onglet : corrections à faire sur le poste de chaque employé. |
-| **Nouvel employé** | Touches BLF du nouveau poste et des collègues, au choix. |
+| **Nouvel employé** | Numéro de sortie prérempli avec celui du magasin, alerte s'il n'y en a aucun. |
 | **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
 | **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
 | **Ouverture d'un magasin** | Parkings partagés libres proposés et touches de parking à programmer, liés au Plan des parkings. |
@@ -226,7 +226,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.6** | Le bon numéro pour le 911 |
+| **20.6.1** | Le numéro de sortie du nouvel employé |
+| 20.6 | Le bon numéro pour le 911 |
 | 20.5.2 | Les postes sans numéro de sortie |
 | 20.5.1 | Les pastilles des rubriques ne sont plus coupées |
 | 20.5 | Comparer 2 ou 3 sur le même graphique |
