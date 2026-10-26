@@ -49,7 +49,7 @@ V.accueil = el => {
   el.querySelector('.ask').addEventListener('click', e => {
     const b = e.target.closest('button'); if(!b) return;
     if(b.hasAttribute('data-askclose')){ if(typeof BK !== 'undefined' && BK.closeDialog) BK.closeDialog(true); return; }
-    if(b.hasAttribute('data-askmenu')){ document.body.classList.add('navopen'); const q = $('#navq'); if(q) q.focus(); return; }
+    if(b.hasAttribute('data-askmenu')){ window.setNavOpen(true); return; }
     if(b.hasAttribute('data-askback')){ ASK_PATH.pop(); return draw(); }
     if(b.hasAttribute('data-askreset')){ ASK_PATH = []; return draw(); }
     if(!b.dataset.ask) return;

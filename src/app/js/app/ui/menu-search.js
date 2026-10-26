@@ -30,7 +30,7 @@ function navSearch(){
     if(e.key === 'ArrowDown' && cur.length){ e.preventDefault(); sel = (sel + 1) % cur.length; mark(); }
     else if(e.key === 'ArrowUp' && cur.length){ e.preventDefault(); sel = (sel - 1 + cur.length) % cur.length; mark(); }
     else if(e.key === 'Enter' && cur.length){ e.preventDefault(); const k = cur[sel].k; clear(); inp.blur(); document.body.classList.remove('navopen'); location.hash = '#' + k; }
-    else if(e.key === 'Escape'){ if(inp.value){ e.preventDefault(); e.stopPropagation(); clear(); } else inp.blur(); } });
+    else if(e.key === 'Escape'){ if(inp.value){ e.preventDefault(); e.stopPropagation(); clear(); } else if(document.body.classList.contains('navopen')) window.setNavOpen(false); else inp.blur(); } }); // Échap dans le champ vide : le menu ouvert par-dessus la page se referme et rend le focus au bouton Menu
   res.addEventListener('click', e => { const a = e.target.closest('[data-qk]'); if(!a) return; clear(); document.body.classList.remove('navopen'); });
   show();
 }
@@ -53,7 +53,7 @@ function buildNav(){
 buildNav(); navSearch();
 window.__app.rebuildNav = () => { buildNav(); navSearch(); route(); };
 // 20.1 : Échap referme le menu ouvert par-dessus la page
-if(!window.__navEscWired){ window.__navEscWired = true; document.addEventListener('keydown', e => { if(e.key === 'Escape' && document.body.classList.contains('navopen') && !document.getElementById('tour')) document.body.classList.remove('navopen'); }); }
+if(!window.__navEscWired){ window.__navEscWired = true; document.addEventListener('keydown', e => { if(e.key === 'Escape' && document.body.classList.contains('navopen') && !document.getElementById('tour')) window.setNavOpen(false); }); }
 $('#sub').textContent = `${D.info.company} · ${D.info.fqdn} · V${D.info.version}${SEG ? ' · magasin : ' + segShort(SEG) : ''}`;
 { const ss = $('#segsel'); ss.hidden = false; ss.classList.toggle('on', !!SEG);
   ss.innerHTML = `<option value="">Tous les magasins</option>` + SEG_LIST.map(c => `<option value="${esc(c)}"${c===SEG?' selected':''}>${esc(segShort(c))} · ${FULL.extensions.filter(e => SEGOF[e.number]===c).length} postes</option>`).join(''); }
@@ -73,6 +73,9 @@ function route(){
   document.querySelectorAll('#nav a[data-k]').forEach(a => { const o = a.dataset.k === tab; a.classList.toggle('on', o); if(o) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const onA = document.querySelector('#nav a.stn.on') || document.querySelector('#nav a.on'); if(onA && onA.scrollIntoView) onA.scrollIntoView({block: 'nearest'});
   closeDrawer(); V[tab]($('#main'), arg); window.scrollTo(0,0);
+  // clavier : Tab repart du contenu de la page, sauf si le focus est resté dans le bandeau ou dans le menu fixe à gauche
+  { const ae = document.activeElement, keep = ae && ae !== document.body && document.contains(ae) && (ae.closest('header') || (ae.closest('#side') && getComputedStyle($('#side')).position !== 'fixed'));
+    if(!keep) $('#main').focus({preventScroll: true}); }
 }
 // bandeau « magasin » et sous-onglets en haut de la page : ajoutés après chaque affichage d'un onglet,
 // y compris quand l'onglet se redessine lui-même (période, seuil, filtre…), sinon ils disparaissaient
@@ -90,7 +93,8 @@ function decorate(tab){
     if(s){ const edge = () => { const m = s.scrollWidth - s.clientWidth; s.classList.toggle('more-l', m > 2 && s.scrollLeft > 2); s.classList.toggle('more-r', m > 2 && s.scrollLeft < m - 2); };
       s.addEventListener('scroll', edge, {passive: true}); requestAnimationFrame(edge); } }
   // 16.3 : bouton « ? » à côté du titre de l'onglet : ouvre sa section du guide de l'utilisateur dans un nouvel onglet
-  const h = main.querySelector('h2'); if(h && TAB_BY[tab] && !h.querySelector('.tabhelp')){ const a = document.createElement('a'); a.className = 'tabhelp';
+  // (pas de « ? » dans un titre invisible, comme celui de l'accueil : il était un arrêt de Tab sans rien à voir)
+  const h = main.querySelector('h2'); if(h && !h.classList.contains('sr-only') && TAB_BY[tab] && !h.querySelector('.tabhelp')){ const a = document.createElement('a'); a.className = 'tabhelp';
     a.href = `${location.pathname.includes('/anciennes-versions/') ? '../' : ''}${document.documentElement.lang === 'en' ? 'documentation-en.html' : 'documentation.html'}#o-${tab}`; a.target = '_blank'; a.rel = 'noopener';
     a.title = "Aide sur cet onglet (guide de l'utilisateur)"; a.setAttribute('aria-label', a.title); a.textContent = '?'; h.appendChild(a); }
 }

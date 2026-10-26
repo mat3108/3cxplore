@@ -75,9 +75,42 @@
       document.body.classList.toggle('mini');
       try{ localStorage.setItem('nav3cx', document.body.classList.contains('mini') ? 'mini' : ''); }catch(e){}
     });
-    $$('#menubtn').addEventListener('click', () => document.body.classList.toggle('navopen'));
-    $$('#scrim').addEventListener('click', () => document.body.classList.remove('navopen'));
-    $$('#nav').addEventListener('click', e => { if(e.target.closest('a')) document.body.classList.remove('navopen'); });
+    // clavier : quand le menu s'ouvre par-dessus la page (téléphone, menu masqué), le focus y entre, Tab y tourne en rond,
+    // et il revient au bouton Menu (ou passe au contenu après un choix) quand le menu se referme
+    const side = $$('#side'), mbtn = $$('#menubtn'), overlay = () => getComputedStyle(side).position === 'fixed';
+    const focusables = root => [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+      .filter(x => x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden');
+    window.setNavOpen = (open, to) => {
+      const was = document.body.classList.contains('navopen'); document.body.classList.toggle('navopen', open); mbtn.setAttribute('aria-expanded', open);
+      if(!overlay()) return;
+      if(open){ if(!side.contains(document.activeElement)){ const f = focusables(side); if(f.length) f[0].focus(); } }
+      else if(was && (to === 'main' || side.contains(document.activeElement))) (to === 'main' ? $$('#main') : mbtn).focus({preventScroll: true});
+    };
+    mbtn.addEventListener('click', () => window.setNavOpen(!document.body.classList.contains('navopen')));
+    $$('#scrim').addEventListener('click', () => window.setNavOpen(false));
+    $$('#nav').addEventListener('click', e => { if(e.target.closest('a') && document.body.classList.contains('navopen')) window.setNavOpen(false, 'main'); });
+    side.addEventListener('keydown', e => {
+      if(e.key !== 'Tab' || !document.body.classList.contains('navopen') || !overlay()) return;
+      const f = focusables(side); if(!f.length) return; const i = f.indexOf(document.activeElement);
+      if(e.shiftKey && i <= 0){ e.preventDefault(); f[f.length - 1].focus(); }
+      else if(!e.shiftKey && (i < 0 || i === f.length - 1)){ e.preventDefault(); f[0].focus(); }
+    });
+    // flèches dans le menu : haut / bas d'une entrée à l'autre, droite ouvre une rubrique puis entre dans ses pages, gauche en ressort
+    $$('#nav').addEventListener('keydown', e => {
+      const nav = $$('#nav'), a = e.target.closest('a'), q = $$('#navq'), res = $$('#navqres');
+      if(e.target === q && !(e.key === 'ArrowDown' && (!res || res.hidden))) return;
+      const links = [...nav.querySelectorAll('a[href]')].filter(x => x.getClientRects().length), i = links.indexOf(a);
+      if(e.key === 'ArrowDown'){ e.preventDefault(); (links[i + 1] || links[0]).focus(); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); if(i === 0 && q && q.getClientRects().length) q.focus(); else (i > 0 ? links[i - 1] : links[links.length - 1]).focus(); }
+      else if(e.key === 'Home'){ e.preventDefault(); if(links[0]) links[0].focus(); }
+      else if(e.key === 'End'){ e.preventDefault(); if(links.length) links[links.length - 1].focus(); }
+      else if(e.key === 'ArrowRight' && a && a.dataset.set){ e.preventDefault(); const w = a.closest('.rbw');
+        if(!w.classList.contains('open')){ w.classList.add('open'); a.setAttribute('aria-expanded', 'true'); }
+        else { const s = w.querySelector('.stns a'); if(s && s.getClientRects().length) s.focus(); } }
+      else if(e.key === 'ArrowLeft' && a){ const w = a.closest('.rbw'); if(!w) return; e.preventDefault();
+        if(a.classList.contains('stn')) w.querySelector('.rb').focus(); else { w.classList.remove('open'); a.setAttribute('aria-expanded', 'false'); } }
+    });
+    const sk = $$('#skiplink'); if(sk) sk.addEventListener('click', e => { e.preventDefault(); $$('#main').focus(); });
     document.querySelectorAll('.themesw button').forEach(b => b.addEventListener('click', () => window.applyTheme(b.dataset.t)));
     { let t = ''; try{ t = localStorage.getItem('theme3cx') || ''; }catch(e){} window.applyTheme(t); }
   }

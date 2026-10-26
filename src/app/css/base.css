@@ -58,11 +58,15 @@ body.mini .collapse{justify-content:center;padding:11px 0}
 body.mini .collapse .ico{transform:rotate(180deg)}
 #menubtn{display:none}
 #scrim{display:none}
+/* clavier : le lien « Aller au contenu » n'apparaît qu'au premier Tab ; les zones qui reçoivent le focus après une navigation n'ont pas de contour */
+.skiplink{position:fixed;top:-80px;left:12px;z-index:60;padding:10px 16px;border-radius:10px;background:var(--accent);color:var(--on-accent,#fff);font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:top .12s}
+.skiplink:focus{top:12px;outline:2px solid var(--on-accent,#fff);outline-offset:-5px}
+#main:focus,#dt:focus{outline:none}
 main{padding:18px 24px 60px;max-width:1500px;margin:0 auto;flex:1;min-width:0}
 @media (max-width:800px){
   #menubtn{display:inline-flex;align-items:center}
-  #side{position:fixed;top:0;left:0;height:100%;width:260px;transform:translateX(-102%);transition:transform .18s;z-index:30;box-shadow:8px 0 24px rgba(0,0,0,.18)}
-  body.navopen #side{transform:none}
+  #side{position:fixed;top:0;left:0;height:100%;width:260px;transform:translateX(-102%);visibility:hidden;transition:transform .18s,visibility 0s .18s;z-index:30;box-shadow:8px 0 24px rgba(0,0,0,.18)}
+  body.navopen #side{transform:none;visibility:visible;transition:transform .18s,visibility 0s}
   body.navopen #scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:29}
   body.mini{--sw:260px}
   body.mini #nav .lb,body.mini #nav .n,body.mini .collapse .lb{display:revert}
@@ -128,8 +132,8 @@ a.dn{color:var(--accent);text-decoration:none;cursor:pointer} a.dn:hover{text-de
 .pager{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:8px}
 .pager button{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 9px;cursor:pointer}
 .pager button:disabled{opacity:.4;cursor:default}
-#drawer{position:fixed;top:0;right:0;height:100%;width:min(620px,100%);background:var(--panel);border-left:1px solid var(--line);box-shadow:-8px 0 24px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .18s;z-index:20;display:flex;flex-direction:column}
-#drawer.open{transform:none}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(620px,100%);background:var(--panel);border-left:1px solid var(--line);box-shadow:-8px 0 24px rgba(0,0,0,.12);transform:translateX(105%);visibility:hidden;transition:transform .18s,visibility 0s .18s;z-index:20;display:flex;flex-direction:column}
+#drawer.open{transform:none;visibility:visible;transition:transform .18s,visibility 0s}
 #drawer .dh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
 #drawer .dh h2{flex:1;font-size:16px}
 #drawer .dh button{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer}

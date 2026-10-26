@@ -111,8 +111,8 @@ body.mini .pagehead .subtabs{display:flex}
 @media (min-width:801px){
   html.navhide #menubtn{display:inline-flex;align-items:center;gap:7px;font-weight:700}
   html.navhide #menubtn .lb{display:inline}
-  html.navhide #side,html.navhide body.mini #side{position:fixed;top:0;left:0;height:100%;width:290px;transform:translateX(-102%);transition:transform .18s;z-index:30;box-shadow:8px 0 24px rgba(0,0,0,.18)}
-  html.navhide body.navopen #side{transform:none}
+  html.navhide #side,html.navhide body.mini #side{position:fixed;top:0;left:0;height:100%;width:290px;transform:translateX(-102%);visibility:hidden;transition:transform .18s,visibility 0s .18s;z-index:30;box-shadow:8px 0 24px rgba(0,0,0,.18)}
+  html.navhide body.navopen #side{transform:none;visibility:visible;transition:transform .18s,visibility 0s}
   html.navhide body.navopen #scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:29}
   html.navhide .collapse{display:none}
   html.navhide .pagehead .subtabs{display:flex}

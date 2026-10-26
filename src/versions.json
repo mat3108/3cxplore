@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.7",
+  "date": "2026-10-26",
+  "titre": "Le Tab du clavier suit les menus",
+  "resume": "Au clavier, la touche Tab ne se perd plus dans le menu ou le tiroir fermés : elle suit le menu ouvert, revient au bouton Menu quand il se ferme, et repart du contenu après un changement de page. Les flèches se promènent dans le menu.",
+  "changements": [
+   "Le menu de gauche et le tiroir de détail, quand ils sont fermés (glissés hors de l'écran), ne reçoivent plus le focus : avant, Tab passait par une trentaine de liens invisibles avant d'atteindre le contenu.",
+   "Menu ouvert par-dessus la page (téléphone, ou menu masqué sur ordinateur) : le focus entre dans la recherche du menu, Tab tourne en boucle dans le menu, Échap ou un clic sur le fond grisé le referment et rendent le focus au bouton Menu ; un choix de page le referme et place Tab sur le contenu.",
+   "Après un changement de page, Tab repart du contenu (fil d'Ariane, puis la page) au lieu de repartir du haut du bandeau. Avec le menu fixe à gauche, le focus reste sur la rubrique ouverte et Tab descend dans ses pages.",
+   "Flèches dans le menu : haut et bas passent d'une entrée à l'autre, droite ouvre une rubrique puis entre dans ses pages, gauche en ressort ou la referme ; Début et Fin vont au premier et au dernier.",
+   "Un lien « Aller au contenu » apparaît au premier Tab, en haut à gauche de la page.",
+   "Tiroir de détail : le focus arrive sur son titre, Tab va au bouton Fermer puis au contenu, et il revient d'où il venait à la fermeture.",
+   "Accueil : le bouton « ? » d'aide n'est plus ajouté dans le titre invisible de la page, c'était un arrêt de Tab sans rien à voir."
+  ],
+  "onglets": [
+   [
+    "Interface",
+    "Parcours de la touche Tab cohérent dans le menu, le tiroir et le contenu ; flèches dans le menu ; lien « Aller au contenu »."
+   ]
+  ]
+ },
+ {
   "version": "20.6.1",
   "date": "2026-10-23",
   "titre": "Le numéro de sortie du nouvel employé",

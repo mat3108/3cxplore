@@ -1,6 +1,6 @@
 const EN = {
 // cadre : bandeau, menu, écran d'accueil, chargement
-"Ouvrir le menu": "Open menu", "Menu principal": "Main menu", "Fermer": "Close", "Réduire le menu": "Collapse menu", "Réduire / agrandir le menu": "Collapse / expand menu",
+"Ouvrir le menu": "Open menu", "Aller au contenu": "Skip to content", "Menu principal": "Main menu", "Fermer": "Close", "Réduire le menu": "Collapse menu", "Réduire / agrandir le menu": "Collapse / expand menu",
 "3CXplore — explorez votre 3CX en profondeur": "3CXplore — explore your 3CX in depth",
 "Rechercher : poste, MAC, SDA, nom, file…": "Search: extension, MAC, DID, name, queue…", "Recherche globale (raccourci : /)": "Global search (shortcut: /)",
 "Vérifier les firmwares des téléphones (liste officielle 3CX)": "Check phone firmware (official 3CX list)", "Vérifier les firmwares": "Check firmware",
