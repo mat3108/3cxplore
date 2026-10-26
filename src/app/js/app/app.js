@@ -53,6 +53,7 @@
 //#include tabs/org-chart.js
 //#include tabs/reverse-references.js
 //#include tabs/employee-leaving-wizard.js
+//#include tabs/employee-change-wizard.js
 //#include tabs/where-used.js
 //#include tabs/shared-parking.js
 //#include tabs/blf-keys.js

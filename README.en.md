@@ -6,7 +6,7 @@
 >
 > A fully local web interface to **explore, analyse and audit a 3CX V20 phone system from its backup file**: configuration, call flows, statistics, security and recommendations, store by store.
 
-![Version](https://img.shields.io/badge/version-20.7-2563eb)
+![Version](https://img.shields.io/badge/version-20.8-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Data](https://img.shields.io/badge/data-100%25%20local-15803d)
 
@@ -42,7 +42,7 @@ Extensions · Phones · BLF keys · Key template · Numbering plan · Department
 Missed calls · Repeat callers · Number sheet · Customer history · Key numbers · Receptions · Time to answer · Statistics · Générateur de rapport · Chart generator · Department report · Call origin · Outbound call destinations · Outbound call costs · Internal calls · Agents · Agent occupancy · Key people · Volume forecast · Staffing by call volume · Store ranking · Very short calls · Call quality · Hours · IVR menus · Calls · Shared parking · Parking plan · Queue calls · Recordings · Voicemail & audio · Voicemail boxes
 
 ### System
-Targets · Compare stores · Licences and extensions · Stores · Settings backup · Interface · Security · External forwards · Suspicious calls · Visibility and rights · Rights matrix · Compare two users · Employee sheet · Fixes by user · New employee · Employee departure · Absences and leave · Opening a store · Employee history · Changes · Audit log · Parameters · Who can leave a message?
+Targets · Compare stores · Licences and extensions · Stores · Settings backup · Interface · Security · External forwards · Suspicious calls · Visibility and rights · Rights matrix · Compare two users · Employee sheet · Fixes by user · New employee · Employee departure · Employee change · Absences and leave · Opening a store · Employee history · Changes · Audit log · Parameters · Who can leave a message?
 <!-- ONGLETS:END -->
 
 ## 🔒 Privacy

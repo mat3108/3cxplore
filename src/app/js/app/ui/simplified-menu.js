@@ -15,7 +15,7 @@ const NAV_SETS = {
 };
 const NAV2 = [
   ['Tous les jours', ['accueil', 'dashboard', '@reparer', '@appels', '@magasins']],
-  ['Je veux…', ['nouvel', 'depart', 'ouvmag', 'feries']],
+  ['Je veux…', ['nouvel', 'depart', 'changement', 'ouvmag', 'feries']],
   ['Mon installation', ['@personnes', '@postes', '@chemin', '@vocal', '@securite']],
   ['Comprendre', ['@chiffres', '@historique']],
   ['Réglages', ['@reglages']],
@@ -39,4 +39,4 @@ const NAV_HINT = {
   reglages: 'L\'apparence de 3CXplore et la sauvegarde de vos réglages.',
 };
 // libellés du menu « Je veux… » : une action plutôt qu'un nom d'onglet
-const NAV_DO = {nouvel: 'Ajouter un employé', depart: 'Retirer un employé', ouvmag: 'Ouvrir un magasin', feries: 'Préparer les jours fériés'};
+const NAV_DO = {nouvel: 'Ajouter un employé', depart: 'Retirer un employé', changement: 'Remplacer un employé', ouvmag: 'Ouvrir un magasin', feries: 'Préparer les jours fériés'};

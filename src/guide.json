@@ -443,6 +443,15 @@
   "depart": {
    "sert": "La fiche de départ d'un employé : tout ce qui pointe vers son poste et ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif."
   },
+  "changement": {
+   "sert": "La marche à suivre quand quelqu'un prend la place de quelqu'un sur le même poste et le même téléphone : ce qui ne bouge pas et ce qu'il faut changer, sans départ ni arrivée.",
+   "comment": [
+    "Choisissez le magasin et l'employé remplacé, saisissez le nom et le courriel du nouvel employé, puis imprimez la fiche.",
+    "La fiche commence par ce qui ne change pas (numéro, SDA et menus qui mènent au poste, files, groupes, droits, touches des collègues, téléphone), puis liste ce qui appartient à la personne : identité, mot de passe et compte Microsoft 365 ou 2FA, courriel de bienvenue, cellulaire et renvois externes, NIP et messages de la messagerie vocale.",
+    "Si le nouvel employé fait un autre travail, choisissez un collègue modèle : la fiche dit quelles files, groupes, départements et touches ajouter ou retirer."
+   ],
+   "astuce": "Ne supprimez pas le poste pour en créer un autre : tout ce qui pointe vers lui (SDA, menus, touches des collègues) viserait un poste vide."
+  },
   "absences": {
    "sert": "Les absences prévues (vacances, congés, formation) : files, départements et groupes où la personne manque, ce qui reste sans personne, jours critiques, appels à répartir et remplaçants possibles.",
    "comment": [
@@ -1368,6 +1377,15 @@
    },
    "depart": {
     "sert": "An employee's departure sheet: everything that points to their extension and what to remove or hand over, with an optional replacement."
+   },
+   "changement": {
+    "sert": "The steps to follow when someone takes someone else's place on the same extension and phone: what stays put and what to change, without a departure and an arrival.",
+    "comment": [
+     "Choose the store and the replaced employee, type the new employee's name and email, then print the sheet.",
+     "The sheet starts with what does not change (number, DIDs and menus leading to the extension, queues, groups, rights, colleagues' keys, phone), then lists what belongs to the person: identity, password and Microsoft 365 account or 2FA, welcome email, mobile and external forwards, voicemail PIN and messages.",
+     "If the new employee does a different job, choose a model colleague: the sheet says which queues, groups, departments and keys to add or remove."
+    ],
+    "astuce": "Do not delete the extension to create another one: everything that points to it (DIDs, menus, colleagues' keys) would target an empty extension."
    },
    "absences": {
     "sert": "Planned absences (vacation, leave, training): queues, departments and groups where the person is missing, what is left with nobody, critical days, calls to share out and possible replacements.",

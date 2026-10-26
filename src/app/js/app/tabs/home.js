@@ -8,7 +8,7 @@ const ASK = {
     ['Un numéro de téléphone précis', 'numero', 'numero'], ['Combien de temps on attend avant de répondre', 'delai', 'delai'], ['Les appels très courts', 'courts', 'courts'], ['Tous les appels, un par un', 'appels', 'appels']]],
   reparer: ['On commence par quoi ?', [['Le plus urgent d\'abord', 'priorites', 'priorites'], ['La note de chaque magasin', 'sante', 'sante'],
     ['Ce qu\'il faut changer dans la console 3CX', 'actions', 'actions'], ['Les numéros qui ne mènent nulle part', 'controle', 'controle'], ['Les appels qui tournent en rond', 'pieges', 'pieges']]],
-  gens: ['Que se passe-t-il ?', [['Quelqu\'un arrive', 'nouvel', 'nouvel'], ['Quelqu\'un part', 'depart', 'depart'], ['Quelqu\'un est absent ou en congé', 'absences', 'absences'], ['Un magasin ouvre', 'ouvmag', 'ouvmag']]],
+  gens: ['Que se passe-t-il ?', [['Quelqu\'un arrive', 'nouvel', 'nouvel'], ['Quelqu\'un part', 'depart', 'depart'], ['Quelqu\'un remplace quelqu\'un', 'changement', 'changement'], ['Quelqu\'un est absent ou en congé', 'absences', 'absences'], ['Un magasin ouvre', 'ouvmag', 'ouvmag']]],
   magasin: ['Qu\'est-ce que vous voulez voir ?', [['Sa fiche', 'fichemag', 'fichemag'], ['Son rapport, à imprimer', 'rapport', 'rapport'], ['Son classement face aux autres', 'classement', 'classement'],
     ['Ses heures d\'ouverture', 'horaires', 'horaires'], ['Les jours fériés à préparer', 'feries', 'feries']]],
   trouver: ['Vous cherchez quoi ?', [['La fiche d\'un employé', 'employe', 'employe'], ['L\'annuaire', 'annuaire', 'annuaire'], ['Qui dépend de qui', 'organigramme', 'organigramme'], ['Un poste', 'postes', 'postes']]],

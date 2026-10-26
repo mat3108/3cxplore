@@ -1,5 +1,24 @@
 [
  {
+  "version": "20.8",
+  "date": "2026-10-26",
+  "titre": "Changement d'un employé",
+  "resume": "Nouvel assistant « Changement d'un employé » : quand quelqu'un prend la place de quelqu'un sur le même poste et le même téléphone, la fiche dit ce qui ne bouge pas et ce qu'il faut changer, au lieu d'un départ suivi d'une arrivée.",
+  "changements": [
+   "Menu « Je veux… » → Remplacer un employé (et accueil : Ajouter ou retirer quelqu'un → Quelqu'un remplace quelqu'un) : choisissez le magasin, l'employé remplacé et le nom du nouvel employé.",
+   "La fiche commence par ce qui ne change pas et qu'il ne faut pas toucher : le numéro et le numéro de sortie, les menus, SDA et renvois de collègues qui mènent au poste, les files, les groupes de sonnerie, les départements et rôles, les touches BLF des collègues, le téléphone et ses touches, les options du poste.",
+   "Puis ce qui appartient à la personne : identité (prénom, nom, courriel, cellulaire, reprovisionner le téléphone pour le nom affiché), compte et sécurité (régénérer le mot de passe, délier ou relier Microsoft 365 ou réinitialiser la 2FA, courriel de bienvenue), renvois vers un numéro externe à retirer, NIP, messages et message d'accueil de la messagerie vocale, enregistrements.",
+   "Si le nouvel employé fait un autre travail, un collègue modèle facultatif : la fiche dit quelles files, groupes, départements, rôles et touches ajouter ou retirer.",
+   "Fiche à cocher, à imprimer ou à copier, comme pour Nouvel employé et Départ d'un employé ; rien n'est modifié dans 3CX."
+  ],
+  "onglets": [
+   [
+    "Changement d'un employé",
+    "Nouvel assistant : ce qui ne bouge pas et ce qu'il faut changer quand quelqu'un remplace quelqu'un sur le même poste."
+   ]
+  ]
+ },
+ {
   "version": "20.7",
   "date": "2026-10-26",
   "titre": "Le Tab du clavier suit les menus",
