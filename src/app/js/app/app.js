@@ -77,6 +77,7 @@
 //#include tabs/agent-occupancy.js
 //#include tabs/important-numbers.js
 //#include tabs/voicemail.js
+//#include tabs/voicemail-paths.js
 //#include tabs/voicemail-recommendation.js
 //#include tabs/duplicates.js
 //#include tabs/call-trace.js

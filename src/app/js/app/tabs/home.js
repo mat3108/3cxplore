@@ -19,7 +19,7 @@ const ASK = {
   tel: ['Plutôt quoi ?', [['La liste des postes', 'postes', 'postes'], ['Les téléphones de bureau', 'telephones', 'telephones'], ['Les touches des téléphones', 'blf', 'blf'], ['Les lignes vers l\'extérieur', 'trunks', 'trunks']]],
   chiffres: ['Quels chiffres ?', [['Le résumé de tous les appels', 'stats', 'stats'], ['Un rapport sur une personne, une file ou un numéro', 'genrap', 'genrap'], ['Un graphique à mon goût', 'gengraph', 'gengraph'], ['D\'où viennent les appels', 'provenance', 'provenance'], ['Combien coûtent les appels sortants', 'couts', 'couts'],
     ['Combien de personnes il faut', 'effectif', 'effectif'], ['Le tableau de bord', 'dashboard', 'dashboard']]],
-  vocal: ['Lequel ?', [['Les boîtes vocales', 'messageries', 'messageries'], ['Qui peut laisser un message', 'recobv', 'recobv'], ['Les messages d\'accueil', 'audio', 'audio'], ['Les enregistrements', 'enreg', 'enreg']]],
+  vocal: ['Lequel ?', [['Les boîtes vocales', 'messageries', 'messageries'], ['Comment on arrive à une boîte vocale', 'vmchemins', 'vmchemins'], ['Qui peut laisser un message', 'recobv', 'recobv'], ['Les messages d\'accueil', 'audio', 'audio'], ['Les enregistrements', 'enreg', 'enreg']]],
   securite: ['Qu\'est-ce qui vous inquiète ?', [['Qui peut voir quoi', 'visibilite', 'visibilite'], ['Les renvois vers l\'extérieur', 'renvois', 'renvois'], ['Les appels bizarres', 'suspects', 'suspects'], ['Le bilan de sécurité', 'securite', 'securite']]],
   change: ['Depuis quand ?', [['Les dernières modifications', 'modifs', 'modifs'], ['Le journal complet', 'audit', 'audit'], ['Avant et après une date', 'avantapres', 'avantapres']]],
 };

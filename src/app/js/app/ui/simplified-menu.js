@@ -7,7 +7,7 @@ const NAV_SETS = {
   personnes: ['Les personnes', 'employe', ['employe', 'annuaire', 'organigramme', 'agents', 'occupation', 'indisp', 'absences', 'historique']],
   postes: ['Postes, téléphones et lignes', 'telephones', ['postes', 'telephones', 'blf', 'blfmodele', 'licences', 'trunks', 'sortant', 'numerotation']],
   chemin: ['Le chemin des appels', 'flux', ['simulateur', 'diagramme', 'flux', 'ivr', 'menus', 'sonnerie', 'files', 'groupes', 'pkplan']],
-  vocal: ['Messages vocaux', 'audio', ['messageries', 'recobv', 'audio', 'enreg']],
+  vocal: ['Messages vocaux', 'audio', ['messageries', 'vmchemins', 'recobv', 'audio', 'enreg']],
   securite: ['Sécurité et droits', 'securite', ['securite', 'renvois', 'suspects', 'visibilite', 'droits', 'comparer']],
   chiffres: ['Les chiffres', 'stats', ['stats', 'genrap', 'gengraph', 'statsfiles', 'provenance', 'destinations', 'couts', 'internes', 'qualite', 'effectif', 'prevision']],
   historique: ['Ce qui a changé', 'modifs', ['modifs', 'audit', 'suivi', 'comparaison', 'avantapres']],

@@ -400,6 +400,15 @@
    ],
    "astuce": "Le backup ne dit pas si un message a été écouté : « Jamais consultée » se base sur les appels du poste vers la messagerie."
   },
+  "vmchemins": {
+   "sert": "Pour chaque boîte vocale, le dessin de tout ce qui y mène : le poste lui-même selon son statut, les menus, files, groupes et départements qui y envoient, les collègues qui y renvoient, et les SDA qui arrivent sur chacun d'eux.",
+   "comment": [
+    "Choisissez une boîte dans la liste, cherchez-la par numéro, nom ou magasin, filtrez par type, ou cliquez une ligne du tableau : le dessin se lit de gauche à droite, jusqu'à la messagerie à droite.",
+    "Les flèches en pointillé sont des renvois qui n'existent que dans un autre statut que le statut actuel du poste.",
+    "Le tableau du bas compte les chemins de chaque boîte ; « 0 » veut dire qu'aucun appel ne peut y laisser de message."
+   ],
+   "astuce": "Un poste dont aucun statut ne renvoie vers sa messagerie laisse sonner dans le vide : vérifiez d'abord les boîtes à 0 chemin."
+  },
   "audio": {
    "sert": "Les messages vocaux, les messages des menus et des files (avec l'élément qui les utilise) et les messages d'accueil, tous écoutables."
   },
@@ -1334,6 +1343,15 @@
      "Fix the “Disabled but targeted” and “Email impossible” boxes first."
     ],
     "astuce": "The backup does not say whether a message was listened to: “Never checked” is based on the extension's calls to voicemail."
+   },
+   "vmchemins": {
+    "sert": "For each voicemail box, a drawing of everything that leads to it: the extension itself depending on its status, the menus, queues, groups and departments that send to it, the colleagues who forward to it, and the DIDs that reach each of them.",
+    "comment": [
+     "Choose a box in the list, search it by number, name or store, filter by type, or click a row of the table: the drawing reads left to right, up to the voicemail on the right.",
+     "Dashed arrows are forwards that exist only in a status other than the extension's current status.",
+     "The table at the bottom counts the paths of each box; “0” means no call can leave a message there."
+    ],
+    "astuce": "An extension with no status forwarding to its voicemail rings into the void: check the boxes with 0 paths first."
    },
    "audio": {
     "sert": "Voicemails, menu and queue messages (with the element that uses them) and greetings, all playable."

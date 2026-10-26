@@ -1,5 +1,24 @@
 [
  {
+  "version": "20.8.1",
+  "date": "2026-10-26",
+  "titre": "Chemins vers la boîte vocale",
+  "resume": "Nouvelle page dans Messages vocaux : pour chaque boîte vocale, le dessin de tout ce qui y mène, avec recherche et filtre par type.",
+  "changements": [
+   "Messages vocaux → Chemins vers la boîte vocale (et accueil : Les messages vocaux → Comment on arrive à une boîte vocale) : un dessin par boîte, lu de gauche à droite jusqu'à la messagerie.",
+   "Au milieu, ce qui envoie à la messagerie : le poste lui-même selon son statut (sans réponse avec le délai, occupé, téléphone non connecté, tous les appels hors heures…), les menus, files, groupes de sonnerie et départements qui y acheminent, les collègues qui y renvoient. En pointillé : les renvois qui n'existent que dans un autre statut que le statut actuel.",
+   "À gauche, ce qui arrive sur chacun d'eux : les SDA, les menus, et les files, groupes de sonnerie et départements dont le poste est membre (ils le font sonner).",
+   "Un champ de recherche (numéro, nom, magasin) et un filtre par type (poste, file, groupe de sonnerie) ; boutons Précédente / Suivante ; sous le dessin, la liste écrite de tous les chemins ; en bas, le tableau de toutes les boîtes avec le nombre de chemins (0 = aucun appel ne peut y laisser de message), cliquable.",
+   "Mêmes boîtes et mêmes chemins que l'onglet Messageries vocales ; un clic sur un élément du dessin ouvre sa fiche."
+  ],
+  "onglets": [
+   [
+    "Chemins vers la boîte vocale",
+    "Nouvelle page : le dessin de tout ce qui mène à chaque boîte vocale, avec recherche et filtre par type."
+   ]
+  ]
+ },
+ {
   "version": "20.8",
   "date": "2026-10-26",
   "titre": "Changement d'un employé",

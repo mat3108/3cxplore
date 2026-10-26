@@ -62,6 +62,8 @@ body.mini .collapse .ico{transform:rotate(180deg)}
 .skiplink{position:fixed;top:-80px;left:12px;z-index:60;padding:10px 16px;border-radius:10px;background:var(--accent);color:var(--on-accent,#fff);font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:top .12s}
 .skiplink:focus{top:12px;outline:2px solid var(--on-accent,#fff);outline-offset:-5px}
 #main:focus,#dt:focus{outline:none}
+/* 20.8.1 : chemins vers la boîte vocale */
+.vmdiag{overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:70vh}.vmdiag svg{display:block}@media print{.vmdiag{overflow:visible;max-height:none;border:0}}
 main{padding:18px 24px 60px;max-width:1500px;margin:0 auto;flex:1;min-width:0}
 @media (max-width:800px){
   #menubtn{display:inline-flex;align-items:center}

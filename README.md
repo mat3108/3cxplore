@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.8-2563eb)
+![Version](https://img.shields.io/badge/version-20.8.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **90 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **91 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -111,6 +111,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Enregistrements** | Liste des enregistrements référencés (les fichiers audio ne font pas partie du backup). |
 | **Messagerie & audio** | Messages vocaux, invites personnalisées (avec l'élément qui les utilise) et messages d'accueil, écoutables. |
 | **Messageries vocales** | État de chaque boîte vocale, envoi par courriel, annonce, messages conservés, consultation et acheminements qui y mènent. |
+| **Chemins vers la boîte vocale** | Nouvelle page : le dessin de tout ce qui mène à chaque boîte vocale, avec recherche et filtre par type. |
 
 ### Système
 | Onglet | À quoi il sert |
@@ -227,7 +228,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.8** | Changement d'un employé |
+| **20.8.1** | Chemins vers la boîte vocale |
+| 20.8 | Changement d'un employé |
 | 20.7 | Le Tab du clavier suit les menus |
 | 20.6.1 | Le numéro de sortie du nouvel employé |
 | 20.6 | Le bon numéro pour le 911 |
