@@ -81,6 +81,15 @@ function modelRows(rows){
     return {model: m, rec, srv, st, count: rs.length, rows: rs};
   });
 }
+// 20.8.2 : les téléphones regroupés par gabarit (fichier de provisionnement que 3CX a attribué au téléphone)
+function templateRows(rows){
+  return [...new Set(rows.map(r => r.template || ''))].sort((a, b) => !a ? 1 : !b ? -1 : a.localeCompare(b)).map(t => {
+    const rs = rows.filter(r => (r.template || '') === t), count = {};
+    rs.forEach(r => count[r.model] = (count[r.model] || 0) + 1);
+    const models = Object.entries(count).sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(b[0]));
+    return {template: t, count: rs.length, models, segs: [...new Set(rs.map(r => r.seg))], rows: rs};
+  });
+}
 const SRV_ST = {srvunk:{l:'Serveur non vérifié', c:'warn'}, srvok:{l:'Serveur à jour', c:'ok'}, missing:{l:'Firmware absent du serveur', c:'bad'}, srvold:{l:'Serveur en retard', c:'bad'}, nolist:{l:'Modèle hors liste 3CX', c:''}};
 const macFmt = m => String(m || '').replace(/(..)(?!$)/g, '$1:');
 
@@ -134,7 +143,7 @@ function openFwCheck(){
 }
 
 V.telephones = el => {
-  const rows = phoneRows(), n = s => rows.filter(r => r.st === s).length, mods = modelRows(rows), nLang = rows.filter(r => phLangBad(r.lang)).length;
+  const rows = phoneRows(), n = s => rows.filter(r => r.st === s).length, mods = modelRows(rows), tpls = templateRows(rows), nLang = rows.filter(r => phLangBad(r.lang)).length;
   const age = Math.round((Date.now() - Date.parse(FW_REF.date)) / 86400000);
   el.innerHTML = `<div id="pwrap"><h2>Téléphones</h2>
   <p class="lead">Inventaire des téléphones provisionnés et état de leur firmware, comparé à la version recommandée par 3CX pour chaque modèle. Sans firmware assigné, l'état est déduit de deux indices : la version annoncée par le téléphone dans les rapports de qualité d'appel (« À jour (vérifié) ») et un firmware assigné puis effacé par une modification (« Probablement à jour »). Cliquez sur un téléphone pour le détail. Le firmware affiché pour un téléphone est celui que 3CX lui a assigné ; vide si aucun n'est assigné (téléphone jamais mis à jour par 3CX, ou firmware effacé lors d'une modification du téléphone dans la console).</p>
@@ -154,6 +163,14 @@ V.telephones = el => {
     <td>${m.rec && m.rec.url && (m.st === 'missing' || m.st === 'srvold') ? `<a class="dlink" href="${esc(m.rec.url)}" target="_blank" rel="noopener" title="Fichier officiel 3CX">Télécharger ${esc(m.rec.file)}</a>` : ''}</td></tr>`).join('')}
   </tbody></table></div>
   ${mods.some(m => m.st === 'missing' || m.st === 'srvold') ? `<p class="note">Pour les modèles « Firmware absent du serveur » ou « Serveur en retard », 3CX télécharge normalement le firmware recommandé lors de l'action « Mettre à jour le firmware » (console 3CX → Téléphones) ; le lien permet de récupérer le fichier officiel au besoin.</p>` : ''}
+  <h3>Par gabarit</h3>
+  <p class="muted" style="margin:0 0 8px;font-size:12.5px">Le gabarit est le fichier de provisionnement que 3CX a attribué au téléphone ; il devrait correspondre à son modèle. Cliquez sur un gabarit pour n'afficher que ses téléphones dans la liste ci-dessous (un second clic enlève le filtre).</p>
+  <div class="tw" id="ptpl"><table><thead><tr><th>Gabarit</th><th class="num">Téléphones</th><th>Modèles</th><th class="num">Magasins</th><th>Téléphones</th></tr></thead><tbody>
+  ${tpls.map(t => `<tr class="click" data-tpl="${esc(t.template)}" title="Filtrer la liste sur ce gabarit"><td>${t.template ? `<span class="mono">${esc(t.template)}</span>` : '<span class="muted">Aucun gabarit</span>'}</td><td class="num">${t.count}</td>
+    <td>${t.models.map(([m, c]) => `${m ? esc(m) : '<span class="muted">modèle inconnu</span>'} <span class="muted">${c}</span>`).join(', ')}</td>
+    <td class="num" title="${esc(t.segs.map(segName).join(', '))}">${t.segs.length}</td>
+    <td>${Object.keys(PH_ST).filter(s => t.rows.some(r => r.st === s)).map(s => `<span class="pill ${PH_ST[s].c}">${PH_ST[s].l} : ${t.rows.filter(r => r.st === s).length}</span>`).join('')}</td></tr>`).join('')}
+  </tbody></table></div>
   <h3>Liste des téléphones</h3>
   <div id="pt"></div>
   <p class="note">Rappel : modifier un téléphone dans la console 3CX sans resélectionner son firmware efface le firmware assigné. Après une modification, relancez « Mettre à jour le firmware ».</p></div>`;
@@ -165,7 +182,7 @@ V.telephones = el => {
     filters: [
       {label: 'Tous les états', options: [['todo', 'À mettre à jour ou inconnu'], ['uptodate', 'À jour (assigné ou vérifié)'], ...PH_ORDER.map(k => [k, PH_ST[k].l])], test: (r, v) => v === 'todo' ? (r.st === 'old' || r.st === 'unk') : v === 'uptodate' ? (r.st === 'ok' || r.st === 'okv') : r.st === v},
       {label: 'Tous les modèles', options: [...new Set(rows.map(r => r.model))].sort().map(m => [m, m]), test: (r, v) => r.model === v},
-      {label: 'Tous les gabarits', options: [...new Set(rows.map(r => r.template))].sort().map(m => [m, m]), test: (r, v) => r.template === v},
+      {label: 'Tous les gabarits', options: [...[...new Set(rows.map(r => r.template).filter(Boolean))].sort().map(m => [m, m]), ...(rows.some(r => !r.template) ? [['-', 'Aucun gabarit']] : [])], test: (r, v) => v === '-' ? !r.template : r.template === v},
       {label: 'Toutes les langues', options: [['autre', 'Autre que le français'], ...[...new Set(rows.map(r => r.lang).filter(Boolean))].sort().map(l => [l, phLang(l)]), ['-', 'Non indiquée']], test: (r, v) => v === 'autre' ? phLangBad(r.lang) : v === '-' ? !r.lang : r.lang === v},
     ],
     cols: [
@@ -183,6 +200,15 @@ V.telephones = el => {
     onRow: showPhone,
   });
   const fs = $('#pt select[data-f="0"]'); if(fs && (n('old') + n('unk'))){ fs.value = 'todo'; fs.dispatchEvent(new Event('change')); }
+  // 20.8.2 : clic sur un gabarit = la liste ne montre que ses téléphones (tous les états) ; second clic = filtre enlevé
+  $('#ptpl').addEventListener('click', e => {
+    const tr = e.target.closest('tr[data-tpl]'); if(!tr) return;
+    const st = $('#pt select[data-f="0"]'), ft = $('#pt select[data-f="2"]'), v = tr.dataset.tpl || '-', on = ft.value !== v;
+    ft.value = on ? v : ''; ft.dispatchEvent(new Event('change'));
+    if(on && st.value){ st.value = ''; st.dispatchEvent(new Event('change')); }
+    $('#ptpl').querySelectorAll('tr.sel').forEach(x => x.classList.remove('sel')); if(on) tr.classList.add('sel');
+    if(on) $('#pt').scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
   $('#pt .bar').insertAdjacentHTML('beforeend', '<button class="btn" id="pexp" style="margin-left:auto">Exporter (CSV)</button>');
   $('#pexp').addEventListener('click', () => {
     const q = v => '"' + csvSafe(v) + '"';

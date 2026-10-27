@@ -134,6 +134,7 @@
    "sert": "L'inventaire des téléphones : modèle, adresse MAC, firmware actuel et recommandé, magasin, gabarit, et l'état de mise à jour de chaque appareil.",
    "comment": [
     "Filtrez les téléphones à mettre à jour.",
+    "Cliquez sur un gabarit dans « Par gabarit » pour ne voir que les téléphones qui l'utilisent.",
     "Exportez la liste en CSV pour planifier les mises à jour."
    ],
    "astuce": "Le bouton Firmwares de la barre du haut vérifie la liste officielle des firmwares 3CX."
@@ -1078,6 +1079,7 @@
     "sert": "The phone inventory: model, MAC address, current and recommended firmware, store, template, and the update status of each device.",
     "comment": [
      "Filter the phones to update.",
+     "Click a template in “By template” to see only the phones using it.",
      "Export the list to CSV to plan the updates."
     ],
     "astuce": "The Firmwares button in the top bar checks the official 3CX firmware list."

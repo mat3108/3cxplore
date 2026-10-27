@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.8.1-2563eb)
+![Version](https://img.shields.io/badge/version-20.8.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -62,7 +62,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | Onglet | À quoi il sert |
 |---|---|
 | **Postes** | Longues listes de départements repliées (« +N autres »). |
-| **Téléphones** | Inventaire des téléphones, comparaison avec les firmwares recommandés par 3CX (par modèle et par téléphone), état du serveur, vérification en ligne et export CSV. |
+| **Téléphones** | Tableau « Par gabarit » cliquable, filtre « Aucun gabarit ». |
 | **Touches BLF** | Touches programmées des téléphones : BLF, parkings, numérotation rapide, touches à corriger et qui surveille qui. |
 | **Modèle de touches** | Modèle de touches d'un département et fiche des touches à ajouter ou retirer sur chaque téléphone. |
 | **Plan de numérotation** | Plages de numéros par magasin, numéros libres et postes hors plage. |
@@ -228,7 +228,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.8.1** | Chemins vers la boîte vocale |
+| **20.8.2** | Les téléphones par gabarit |
+| 20.8.1 | Chemins vers la boîte vocale |
 | 20.8 | Changement d'un employé |
 | 20.7 | Le Tab du clavier suit les menus |
 | 20.6.1 | Le numéro de sortie du nouvel employé |

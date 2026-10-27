@@ -1,5 +1,22 @@
 [
  {
+  "version": "20.8.2",
+  "date": "2026-10-27",
+  "titre": "Les téléphones par gabarit",
+  "resume": "Onglet Téléphones : un tableau « Par gabarit » regroupe les téléphones selon le fichier de provisionnement que 3CX leur a attribué ; un clic sur un gabarit ne garde que ses téléphones dans la liste.",
+  "changements": [
+   "Téléphones → nouveau tableau « Par gabarit », entre « Par modèle » et la liste : pour chaque gabarit (fichier de provisionnement 3CX), le nombre de téléphones, les modèles qui l'utilisent, le nombre de magasins et l'état des firmwares.",
+   "Un clic sur un gabarit filtre la liste des téléphones sur ce gabarit (tous les états) ; un second clic enlève le filtre. Le filtre « Tous les gabarits » de la liste propose aussi « Aucun gabarit » quand un téléphone n'en a pas.",
+   "L'export CSV contenait déjà la colonne Gabarit : rien ne change."
+  ],
+  "onglets": [
+   [
+    "Téléphones",
+    "Tableau « Par gabarit » cliquable, filtre « Aucun gabarit »."
+   ]
+  ]
+ },
+ {
   "version": "20.8.1",
   "date": "2026-10-26",
   "titre": "Chemins vers la boîte vocale",
