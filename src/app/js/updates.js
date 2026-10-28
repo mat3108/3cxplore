@@ -76,11 +76,14 @@ function updPopRender(msg){
 if(!window.__updHdr){ window.__updHdr = true;
   document.addEventListener('click', async e => {
     const btn = e.target.closest && e.target.closest('#updbtn'), pop = document.getElementById('updpop');
-    if(btn){ if(pop.hidden){ updPopRender(); pop.hidden = false; } else pop.hidden = true; return; }
+    if(btn){ if(pop.hidden){ updPopRender(); pop.hidden = false; } else pop.hidden = true; btn.setAttribute('aria-expanded', !pop.hidden); return; }
     if(e.target.closest && e.target.closest('#updchk')){ const st = document.getElementById('updst'); if(st) st.textContent = 'Vérification…';
       const c = await updCheck(true); updBanner(c); updPopRender(c.err ? `Impossible de vérifier : ${c.err}.` : updCmp(c.tag, APP_VERSION) > 0 ? `${c.name || '3CXplore ' + c.tag.replace(/^v/, '')} est disponible.` : `Vous utilisez la dernière version (${APP_VERSION}).`); return; }
-    if(pop && !pop.hidden && !(e.target.closest && e.target.closest('#updpop'))) pop.hidden = true; });
-  document.addEventListener('keydown', e => { const pop = document.getElementById('updpop'); if(e.key === 'Escape' && pop && !pop.hidden) pop.hidden = true; });
+    if(pop && !pop.hidden && !(e.target.closest && e.target.closest('#updpop'))) updHide(); });
+  // 20.9.1 : Échap rend le focus au bouton ; quitter la fenêtre au clavier (Tab) la referme
+  const updHide = () => { const p = document.getElementById('updpop'), b = document.getElementById('updbtn'); if(p) p.hidden = true; if(b) b.setAttribute('aria-expanded', 'false'); };
+  document.addEventListener('keydown', e => { const pop = document.getElementById('updpop'); if(e.key === 'Escape' && pop && !pop.hidden){ const inside = pop.contains(document.activeElement); updHide(); if(inside) document.getElementById('updbtn').focus(); } });
+  document.addEventListener('focusin', e => { const pop = document.getElementById('updpop'); if(pop && !pop.hidden && !(e.target.closest && e.target.closest('#updpop, #updbtn'))) updHide(); });
   window.addEventListener('beforeinstallprompt', () => setTimeout(() => { updDot(); const pop = document.getElementById('updpop'); if(pop && !pop.hidden) updPopRender(); }, 0));
 }
 updDot();

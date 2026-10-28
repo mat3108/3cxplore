@@ -1,5 +1,29 @@
 [
  {
+  "version": "20.9.1",
+  "date": "2026-10-28",
+  "titre": "Le clavier dans les fenêtres et les tableaux",
+  "resume": "Au clavier, Tab ne s'échappe plus des fenêtres ouvertes par-dessus la page, le focus revient d'où on venait à leur fermeture, et les lignes de tableau et les liens vers un poste ou une file s'ouvrent avec Entrée.",
+  "changements": [
+   "Tiroir de détail, palette de commandes, Fermer le backup, Vérifier avant d'ouvrir et visite guidée : Tab et Maj+Tab tournent en boucle dans la fenêtre au lieu de partir dans la page cachée derrière ; à la fermeture (Échap, Annuler, Fermer), le focus revient sur l'élément qui l'a ouverte.",
+   "Lignes de tableau cliquables (Téléphones, Postes, Par gabarit, Doublons, Parcours des menus, Heures suggérées, Historique d'un client…) et liens vers un poste, une file, un menu ou un groupe : atteignables par Tab, ouverts par Entrée ou Espace. Avant, seule la souris pouvait les ouvrir.",
+   "Fermer le backup : le focus arrive sur Annuler, et non plus sur « Fermer et effacer » ; Entrée n'efface plus le backup par mégarde.",
+   "Mises à jour et installation : Échap rend le focus au bouton, la fenêtre se referme quand Tab la quitte, et le bouton indique si elle est ouverte.",
+   "Bandeau du haut : en revenant en arrière avec Maj+Tab, un champ ne peut plus recevoir le focus en restant caché sous le bandeau, sur ordinateur comme sur téléphone.",
+   "Menu : le bouton Menu dit « Fermer le menu » quand il est ouvert ; choisir une page dans la recherche du menu ou dans la palette le referme proprement et met le focus sur la page ; dans le menu réduit, la flèche droite ne fait plus semblant d'ouvrir une rubrique dont les pages sont cachées."
+  ],
+  "onglets": [
+   [
+    "Tous les onglets",
+    "Lignes de tableau et liens vers un poste ou une file ouverts au clavier."
+   ],
+   [
+    "Menu et bandeau",
+    "Fenêtres qui gardent le focus, retour du focus à la fermeture, bandeau qui ne cache plus le champ actif."
+   ]
+  ]
+ },
+ {
   "version": "20.9",
   "date": "2026-10-28",
   "titre": "Les postes 1000 à 1005 de l'intégrateur",

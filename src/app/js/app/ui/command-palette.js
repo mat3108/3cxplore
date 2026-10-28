@@ -38,7 +38,8 @@ window.__app.openPalette = () => {
   };
   const close = () => { ov.remove(); document.removeEventListener('keydown', key, true); };
   const go = i => { const c = cur[i]; if(!c) return; if(c.key){ recents = [c.key, ...recents.filter(k => k !== c.key)].slice(0, 6); try{ localStorage.setItem('palette3cx', JSON.stringify(recents)); }catch(e){} }
-    close(); document.body.classList.remove('navopen'); c.run(); };
+    if(c.key && c.key.startsWith('tab:')) ov.__opener = null; // 20.9.1 : une page choisie : le focus va au contenu, pas au bouton de la palette
+    close(); if(window.setNavOpen && document.body.classList.contains('navopen')) window.setNavOpen(false); else document.body.classList.remove('navopen'); c.run(); };
   const key = e => { if(e.key === 'Escape'){ e.preventDefault(); close(); }
     else if(e.key === 'ArrowDown'){ e.preventDefault(); sel = Math.min(sel + 1, cur.length - 1); render(); }
     else if(e.key === 'ArrowUp'){ e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }

@@ -81,7 +81,7 @@
     const focusables = root => [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')]
       .filter(x => x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden');
     window.setNavOpen = (open, to) => {
-      const was = document.body.classList.contains('navopen'); document.body.classList.toggle('navopen', open); mbtn.setAttribute('aria-expanded', open);
+      const was = document.body.classList.contains('navopen'); document.body.classList.toggle('navopen', open); mbtn.setAttribute('aria-expanded', open); mbtn.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
       if(!overlay()) return;
       if(open){ if(!side.contains(document.activeElement)){ const f = focusables(side); if(f.length) f[0].focus(); } }
       else if(was && (to === 'main' || side.contains(document.activeElement))) (to === 'main' ? $$('#main') : mbtn).focus({preventScroll: true});
@@ -104,12 +104,43 @@
       else if(e.key === 'ArrowUp'){ e.preventDefault(); if(i === 0 && q && q.getClientRects().length) q.focus(); else (i > 0 ? links[i - 1] : links[links.length - 1]).focus(); }
       else if(e.key === 'Home'){ e.preventDefault(); if(links[0]) links[0].focus(); }
       else if(e.key === 'End'){ e.preventDefault(); if(links.length) links[links.length - 1].focus(); }
-      else if(e.key === 'ArrowRight' && a && a.dataset.set){ e.preventDefault(); const w = a.closest('.rbw');
+      else if(e.key === 'ArrowRight' && a && a.dataset.set){ if(document.body.classList.contains('mini') && !overlay()) return; e.preventDefault(); const w = a.closest('.rbw'); // 20.9.1 : menu réduit, sous-pages cachées : rien à ouvrir
         if(!w.classList.contains('open')){ w.classList.add('open'); a.setAttribute('aria-expanded', 'true'); }
         else { const s = w.querySelector('.stns a'); if(s && s.getClientRects().length) s.focus(); } }
       else if(e.key === 'ArrowLeft' && a){ const w = a.closest('.rbw'); if(!w) return; e.preventDefault();
         if(a.classList.contains('stn')) w.querySelector('.rb').focus(); else { w.classList.remove('open'); a.setAttribute('aria-expanded', 'false'); } }
     });
+    // 20.9.1 : fenêtres par-dessus la page (palette, fermer le backup, vérifier avant d'ouvrir, visite guidée) et tiroir de détail :
+    //          Tab y tourne en rond au lieu de partir dans la page cachée derrière, et à la fermeture le focus revient à l'élément qui les a ouvertes
+    const modalBox = () => { const m = [...document.querySelectorAll('[aria-modal="true"]')].filter(x => x.getClientRects().length); if(m.length) return m[m.length - 1];
+      const d = $$('#drawer'); return d && d.classList.contains('open') ? d : null; };
+    document.addEventListener('keydown', e => {
+      if(e.key !== 'Tab' || e.altKey || e.ctrlKey || e.metaKey) return; const box = modalBox(); if(!box) return;
+      const f = focusables(box), i = f.indexOf(document.activeElement);
+      if(!f.length){ e.preventDefault(); return; }
+      if(i < 0){ e.preventDefault(); (e.shiftKey ? f[f.length - 1] : f[0]).focus(); }
+      else if(e.shiftKey && i === 0){ e.preventDefault(); f[f.length - 1].focus(); }
+      else if(!e.shiftKey && i === f.length - 1){ e.preventDefault(); f[0].focus(); }
+    }, true);
+    let lastOut = null; const shown = x => !!x && document.contains(x) && x.getClientRects().length > 0 && getComputedStyle(x).visibility !== 'hidden';
+    document.addEventListener('focusin', e => { if(!e.target.closest('[aria-modal="true"]')) lastOut = e.target; }, true);
+    new MutationObserver(ms => ms.forEach(m => {
+      m.addedNodes.forEach(n => { if(n.nodeType === 1 && (n.matches('[aria-modal="true"]') || n.querySelector('[aria-modal="true"]'))) n.__opener = lastOut; });
+      m.removedNodes.forEach(n => { if(n.nodeType !== 1 || !('__opener' in n)) return; const a = document.activeElement;
+        if(a && a !== document.body && document.contains(a)) return; // le focus est déjà ailleurs (tiroir ouvert, page choisie…)
+        (shown(n.__opener) ? n.__opener : $$('#main')).focus({preventScroll: true}); });
+    })).observe(document.body, {childList: true});
+    // 20.9.1 : lignes de tableau cliquables et liens vers un poste, une file, un menu… : atteignables par Tab, ouverts par Entrée ou Espace
+    const KB_SEL = 'tr.click:not([tabindex]), a.dn:not([href]):not([tabindex])';
+    const kbMark = x => { x.tabIndex = 0; if(x.tagName === 'A') x.setAttribute('role', 'link'); };
+    const kbScan = n => { if(n.nodeType !== 1) return; if(n.matches(KB_SEL)) kbMark(n); n.querySelectorAll(KB_SEL).forEach(kbMark); };
+    new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(kbScan))).observe(document.body, {childList: true, subtree: true});
+    kbScan(document.body);
+    document.addEventListener('keydown', e => { if(e.key !== 'Enter' && e.key !== ' ') return; const t = e.target;
+      if(!t.matches || !t.matches('tr.click, a.dn:not([href])')) return; e.preventDefault(); t.click(); });
+    // 20.9.1 : le bandeau reste en haut de l'écran ; un élément qui reçoit le focus ne doit pas finir caché dessous (marge de défilement = hauteur du bandeau)
+    { const hd = document.querySelector('header'), setH = () => document.documentElement.style.setProperty('--hdrh', hd.offsetHeight + 'px');
+      if(hd){ setH(); if(window.ResizeObserver) new ResizeObserver(setH).observe(hd); else window.addEventListener('resize', setH); } }
     const sk = $$('#skiplink'); if(sk) sk.addEventListener('click', e => { e.preventDefault(); $$('#main').focus(); });
     document.querySelectorAll('.themesw button').forEach(b => b.addEventListener('click', () => window.applyTheme(b.dataset.t)));
     { let t = ''; try{ t = localStorage.getItem('theme3cx') || ''; }catch(e){} window.applyTheme(t); }

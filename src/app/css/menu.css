@@ -48,6 +48,7 @@ html,body{font-family:var(--ui-font)}
 /* menu réduit : seulement les pastilles des rubriques */
 body.mini #side #nav .rbw.open .stns,body.mini #side #nav .rbc,body.mini #side #nav .ng{display:none}
 body.mini #side #nav a.rb{justify-content:center;padding:5px 0}
+html{scroll-padding-top:calc(var(--hdrh, 56px) + 8px)} /* 20.9.1 : un élément qui reçoit le focus ne finit pas caché sous le bandeau fixe */
 @media (max-width:800px){body.mini #side #nav .rbw.open .stns{display:block}body.mini #side #nav .rbc{display:block}body.mini #side #nav .ng{display:block}body.mini #side #nav a.rb{justify-content:flex-start;padding:5px 8px}}
 
 /* haut de la page : où je suis, puis les autres pages de la rubrique */

@@ -29,9 +29,9 @@ function navSearch(){
   inp.addEventListener('keydown', e => {
     if(e.key === 'ArrowDown' && cur.length){ e.preventDefault(); sel = (sel + 1) % cur.length; mark(); }
     else if(e.key === 'ArrowUp' && cur.length){ e.preventDefault(); sel = (sel - 1 + cur.length) % cur.length; mark(); }
-    else if(e.key === 'Enter' && cur.length){ e.preventDefault(); const k = cur[sel].k; clear(); inp.blur(); document.body.classList.remove('navopen'); location.hash = '#' + k; }
+    else if(e.key === 'Enter' && cur.length){ e.preventDefault(); const k = cur[sel].k; clear(); if(window.setNavOpen && document.body.classList.contains('navopen')) window.setNavOpen(false, 'main'); else inp.blur(); location.hash = '#' + k; }
     else if(e.key === 'Escape'){ if(inp.value){ e.preventDefault(); e.stopPropagation(); clear(); } else if(document.body.classList.contains('navopen')) window.setNavOpen(false); else inp.blur(); } }); // Échap dans le champ vide : le menu ouvert par-dessus la page se referme et rend le focus au bouton Menu
-  res.addEventListener('click', e => { const a = e.target.closest('[data-qk]'); if(!a) return; clear(); document.body.classList.remove('navopen'); });
+  res.addEventListener('click', e => { const a = e.target.closest('[data-qk]'); if(!a) return; clear(); }); // 20.9.1 : le menu se referme par le clic dans #nav (bouton Menu et focus remis en ordre)
   show();
 }
 // 20.0 : un seul menu. Une rubrique s'ouvre sur ses pages (le sous-menu, dessiné comme une ligne avec ses arrêts) quand on y entre.

@@ -51,7 +51,7 @@
     ov.querySelector('#clno').addEventListener('click', end);
     const ck = id => { const c = ov.querySelector('#' + id); return !!(c && c.checked); };
     ov.querySelector('#clyes').addEventListener('click', async () => { const o = {ref: ck('clref'), rappels: ck('clrap'), notes: ck('clnot'), all: ck('clall')}; end(); await close(o); });
-    ov.querySelector('#clyes').focus();
+    ov.querySelector('#clno').focus(); // 20.9.1 : Annuler par défaut, Entrée ne doit pas effacer le backup par mégarde
   }
   // enregistrements : rattacher à nouveau le zip après un rechargement de la page, lire un enregistrement
   async function linkRecZip(file){

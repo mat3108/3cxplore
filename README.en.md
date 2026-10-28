@@ -6,7 +6,7 @@
 >
 > A fully local web interface to **explore, analyse and audit a 3CX V20 phone system from its backup file**: configuration, call flows, statistics, security and recommendations, store by store.
 
-![Version](https://img.shields.io/badge/version-20.9-2563eb)
+![Version](https://img.shields.io/badge/version-20.9.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Data](https://img.shields.io/badge/data-100%25%20local-15803d)
 
