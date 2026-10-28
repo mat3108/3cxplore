@@ -3096,7 +3096,7 @@ const EN = {
 "La sécurité": "Security",
 "L'apparence de 3CXplore": "How 3CXplore looks",
 "La liste des postes": "The list of extensions",
-"Les téléphones de bureau": "Desk phones",
+"Les téléphones de bureau": "Desk phones", "Les téléphones par gabarit": "Phones by template", "(gabarit": "(template", ") · firmware recommandé": ") · recommended firmware", ") : reste attribué au poste, avec ses touches programmées": "): stays assigned to the extension, with its programmed keys",
 "Les touches des téléphones": "Phone keys",
 "Les lignes vers l'extérieur": "Outside lines",
 "Le résumé de tous les appels": "The summary of all calls",

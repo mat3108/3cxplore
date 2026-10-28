@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.8.2-2563eb)
+![Version](https://img.shields.io/badge/version-20.8.3-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -37,7 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
-| **Accueil** | Le champ de recherche trouve aussi les postes, les SDA, les files et les contacts. |
+| **Accueil** | Choix « Les téléphones par gabarit » dans Les téléphones et leurs touches. |
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Postes qui enverraient au 911 l'adresse d'un autre magasin (critique). |
 | **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
@@ -130,9 +130,9 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparer deux utilisateurs** | Deux postes côte à côte et les changements pour aligner le second sur le premier. |
 | **Fiche employé** | Bouton « Mises en attente » qui ouvre le rapport pour la même personne et la même période. |
 | **Corrections par usager** | Nouvel onglet : corrections à faire sur le poste de chaque employé. |
-| **Nouvel employé** | Numéro de sortie prérempli avec celui du magasin, alerte s'il n'y en a aucun. |
-| **Départ d'un employé** | Fiche de départ : ce qui pointe vers le poste, ce qu'il faut retirer ou transmettre, avec un remplaçant facultatif. |
-| **Changement d'un employé** | Nouvel assistant : ce qui ne bouge pas et ce qu'il faut changer quand quelqu'un remplace quelqu'un sur le même poste. |
+| **Nouvel employé** | Gabarit du téléphone en chasse fixe. |
+| **Départ d'un employé** | Gabarit de chaque téléphone. |
+| **Changement d'un employé** | Gabarit de chaque téléphone. |
 | **Absences et congés** | Absences prévues, éléments laissés sans personne, jours critiques, appels à répartir et remplaçants possibles. |
 | **Ouverture d'un magasin** | Parkings partagés libres proposés et touches de parking à programmer, liés au Plan des parkings. |
 | **Historique d'un employé** | Chronologie d'un poste d'après le journal d'audit : modifications, ajouts et retraits, changements de rôle, auteurs. |
@@ -228,7 +228,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.8.2** | Les téléphones par gabarit |
+| **20.8.3** | Le gabarit à l'accueil et dans les assistants |
+| 20.8.2 | Les téléphones par gabarit |
 | 20.8.1 | Chemins vers la boîte vocale |
 | 20.8 | Changement d'un employé |
 | 20.7 | Le Tab du clavier suit les menus |

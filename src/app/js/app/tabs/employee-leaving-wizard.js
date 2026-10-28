@@ -33,7 +33,7 @@ V.depart = el => {
       `Enregistrements d'appels : <b>${nf(recs)}</b>${recs ? ' — vérifier la durée de conservation avant de supprimer le poste' : ''}`]]);
     const mfa = (() => { try{ return mfaOf(E); }catch(e){ return null; } })(), ext = E.profiles.some(p => p.routes.some(([, d]) => d.to === 'External'));
     steps.push(['Téléphone et compte', 'Téléphones (Phones) ; Utilisateurs → poste', [
-      ...E.devices.map(d => `Téléphone <b>${esc(d.model || d.template)}</b> (MAC <span class="mono">${esc(d.mac)}</span>) — réinitialiser ou réattribuer${RP ? ` à ${to}` : ''}`),
+      ...E.devices.map(d => `Téléphone <b>${esc(d.model || d.template)}</b> (gabarit <span class="mono">${esc(d.template || '—')}</span>, MAC <span class="mono">${esc(d.mac)}</span>) — réinitialiser ou réattribuer${RP ? ` à ${to}` : ''}`),
       ...(E.devices.length ? [] : ['Aucun téléphone physique (application ou client Web seulement)']),
       ext ? '<b>Retirer les renvois vers un numéro externe</b> (cellulaire personnel) de tous les statuts' : 'Aucun renvoi externe à retirer',
       E.mobile ? 'Effacer le numéro de cellulaire du poste' : null,

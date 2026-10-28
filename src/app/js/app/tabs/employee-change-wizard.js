@@ -29,7 +29,7 @@ V.changement = el => {
       mg.length ? `Départements et rôles : ${mg.map(x => `${x.g.name === '__DEFAULT__' ? esc(gLabel(x.g)) : `<b>${esc(x.g.name)}</b>`} (${esc(VROLE_FR[x.role] || x.role)}${prim === x.g.name ? ', principal' : ''})`).join(', ')} — les mêmes droits que l'ancien employé`
         : 'Aucun département : les droits par défaut',
       W.length ? `<b>${W.length}</b> collègue${W.length > 1 ? 's ont' : ' a'} une touche BLF vers ce poste (${esc(W.join(', '))}) : elle${W.length > 1 ? 's restent' : ' reste'} bonne${W.length > 1 ? 's' : ''}, seul le nom affiché change` : 'Aucun collègue n\'a de touche BLF vers ce poste',
-      ...(E.devices.length ? E.devices.map(d => `Téléphone <b>${esc(d.model || d.template)}</b> (MAC <span class="mono">${esc(macFmt(d.mac))}</span>) : reste attribué au poste, avec ses touches programmées`) : ['Aucun téléphone de bureau (application ou client Web seulement)']),
+      ...(E.devices.length ? E.devices.map(d => `Téléphone <b>${esc(d.model || d.template)}</b> (gabarit <span class="mono">${esc(d.template || '—')}</span>, MAC <span class="mono">${esc(macFmt(d.mac))}</span>) : reste attribué au poste, avec ses touches programmées`) : ['Aucun téléphone de bureau (application ou client Web seulement)']),
       `Options du poste : enregistrement des appels <b>${E.record ? 'oui' : 'non'}</b>, messagerie vocale <b>${E.vm ? 'activée' : 'désactivée'}</b>, renvois vers la messagerie et les collègues — à garder tels quels`]]);
     // 2. l'identité
     steps.push(['Identité', 'Utilisateurs (Users) → poste → Général (General)', [

@@ -142,7 +142,7 @@ function openFwCheck(){
   const fg = $('#fwforget'); if(fg) fg.addEventListener('click', () => { try{ localStorage.removeItem(FW_REF_KEY); }catch(e){} closeDrawer(); BK.rerun(); });
 }
 
-V.telephones = el => {
+V.telephones = (el, arg) => { // 20.8.3 : arg « gabarit » (accueil) = ouvrir la page sur le tableau « Par gabarit »
   const rows = phoneRows(), n = s => rows.filter(r => r.st === s).length, mods = modelRows(rows), tpls = templateRows(rows), nLang = rows.filter(r => phLangBad(r.lang)).length;
   const age = Math.round((Date.now() - Date.parse(FW_REF.date)) / 86400000);
   el.innerHTML = `<div id="pwrap"><h2>Téléphones</h2>
@@ -163,7 +163,7 @@ V.telephones = el => {
     <td>${m.rec && m.rec.url && (m.st === 'missing' || m.st === 'srvold') ? `<a class="dlink" href="${esc(m.rec.url)}" target="_blank" rel="noopener" title="Fichier officiel 3CX">Télécharger ${esc(m.rec.file)}</a>` : ''}</td></tr>`).join('')}
   </tbody></table></div>
   ${mods.some(m => m.st === 'missing' || m.st === 'srvold') ? `<p class="note">Pour les modèles « Firmware absent du serveur » ou « Serveur en retard », 3CX télécharge normalement le firmware recommandé lors de l'action « Mettre à jour le firmware » (console 3CX → Téléphones) ; le lien permet de récupérer le fichier officiel au besoin.</p>` : ''}
-  <h3>Par gabarit</h3>
+  <h3 id="ptplh">Par gabarit</h3>
   <p class="muted" style="margin:0 0 8px;font-size:12.5px">Le gabarit est le fichier de provisionnement que 3CX a attribué au téléphone ; il devrait correspondre à son modèle. Cliquez sur un gabarit pour n'afficher que ses téléphones dans la liste ci-dessous (un second clic enlève le filtre).</p>
   <div class="tw" id="ptpl"><table><thead><tr><th>Gabarit</th><th class="num">Téléphones</th><th>Modèles</th><th class="num">Magasins</th><th>Téléphones</th></tr></thead><tbody>
   ${tpls.map(t => `<tr class="click" data-tpl="${esc(t.template)}" title="Filtrer la liste sur ce gabarit"><td>${t.template ? `<span class="mono">${esc(t.template)}</span>` : '<span class="muted">Aucun gabarit</span>'}</td><td class="num">${t.count}</td>
@@ -209,6 +209,7 @@ V.telephones = el => {
     $('#ptpl').querySelectorAll('tr.sel').forEach(x => x.classList.remove('sel')); if(on) tr.classList.add('sel');
     if(on) $('#pt').scrollIntoView({behavior: 'smooth', block: 'start'});
   });
+  if(arg === 'gabarit') setTimeout(() => { const h = $('#ptplh'), hd = $('header'); if(h) window.scrollTo(0, h.getBoundingClientRect().top + window.scrollY - (hd ? hd.offsetHeight : 0) - 8); }, 0);
   $('#pt .bar').insertAdjacentHTML('beforeend', '<button class="btn" id="pexp" style="margin-left:auto">Exporter (CSV)</button>');
   $('#pexp').addEventListener('click', () => {
     const q = v => '"' + csvSafe(v) + '"';
