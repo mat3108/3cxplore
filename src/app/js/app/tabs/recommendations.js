@@ -218,6 +218,17 @@ function analyse(){
       'Ajouter les jours fériés dans les horaires des départements (console 3CX → Départements → Jours fériés).',
       mh.map(r => ({html: `${dnLink(r.g.number)} <span class="muted">— ${r.missingHol.map(([n, d]) => esc(n) + ' ' + d.slice(5)).join(', ')}</span>`, text: `${r.g.number} ${r.g.name} : ${r.missingHol.map(([n, d]) => n + ' ' + d).join(', ')}`})));
   }
+  // 15. (20.9) Postes 1000 à 1005 réservés aux comptes de l'intégrateur. Son nom n'est pas écrit dans le code :
+  //     on compare l'empreinte FNV-1a de chaque suite de 8 lettres du prénom et du nom à celle du nom de l'intégrateur.
+  const fnv = s => { let h = 0x811c9dc5; for(let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193) >>> 0; return h; };
+  const INTEG = [0x0d6d2797, 8], isInteg = e => { const w = `${e.first || ''}${e.last || ''}`.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g, '');
+    for(let i = 0; i + INTEG[1] <= w.length; i++) if(fnv(w.slice(i, i + INTEG[1])) === INTEG[0]) return true; return false; };
+  const onlyDefault = e => (e.groups || []).length === 1 && e.groups[0].g === '__DEFAULT__';
+  const resv = D.extensions.filter(e => /^\d+$/.test(e.number) && +e.number >= 1000 && +e.number <= 1005 && !isInteg(e) && onlyDefault(e));
+  if(resv.length) add('reserved-1000', 'fix', 'Postes', `${resv.length} poste${resv.length>1?'s':''} de 1000 à 1005 utilisé${resv.length>1?'s':''} par un autre usager que l'intégrateur`,
+    'Les postes 1000 à 1005 sont réservés aux comptes de l\'intégrateur. Ceux-ci portent le nom d\'un autre usager et ne sont que dans le département par défaut.',
+    'Renuméroter ces usagers hors de la plage 1000 à 1005, ou rendre le poste au compte de l\'intégrateur (console 3CX → Utilisateurs).',
+    resv.map(e => ({html: `${dnLink(e.number)} <span class="muted">— ${esc((e.first + ' ' + e.last).trim() || 'sans nom')}, département par défaut seulement</span>`, text: `${e.number} ${(e.first + ' ' + e.last).trim()}`})));
   const order = {crit:0, fix:1, obs:2};
   return F.sort((a,b) => order[a.sev]-order[b.sev]);
 }

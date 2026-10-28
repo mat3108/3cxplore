@@ -3096,7 +3096,7 @@ const EN = {
 "La sécurité": "Security",
 "L'apparence de 3CXplore": "How 3CXplore looks",
 "La liste des postes": "The list of extensions",
-"Les téléphones de bureau": "Desk phones", "Les téléphones par gabarit": "Phones by template", "(gabarit": "(template", ") · firmware recommandé": ") · recommended firmware", ") : reste attribué au poste, avec ses touches programmées": "): stays assigned to the extension, with its programmed keys",
+"Les téléphones de bureau": "Desk phones", "Les postes 1000 à 1005 sont réservés aux comptes de l'intégrateur. Ceux-ci portent le nom d'un autre usager et ne sont que dans le département par défaut.": "Extensions 1000 to 1005 are reserved for the integrator's accounts. These carry another user's name and are only in the default department.", "Renuméroter ces usagers hors de la plage 1000 à 1005, ou rendre le poste au compte de l'intégrateur (console 3CX → Utilisateurs).": "Renumber these users outside the 1000 to 1005 range, or give the extension back to the integrator's account (3CX console → Users).", "Les téléphones par gabarit": "Phones by template", "(gabarit": "(template", ") · firmware recommandé": ") · recommended firmware", ") : reste attribué au poste, avec ses touches programmées": "): stays assigned to the extension, with its programmed keys",
 "Les touches des téléphones": "Phone keys",
 "Les lignes vers l'extérieur": "Outside lines",
 "Le résumé de tous les appels": "The summary of all calls",

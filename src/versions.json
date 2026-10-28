@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.9",
+  "date": "2026-10-28",
+  "titre": "Les postes 1000 à 1005 de l'intégrateur",
+  "resume": "Nouvelle vérification : un poste de 1000 à 1005 qui porte le nom d'un autre usager que l'intégrateur et qui n'est que dans le département par défaut est signalé comme une chose à réparer.",
+  "changements": [
+   "Recommandations, Priorités et compteur de l'accueil : « Postes de 1000 à 1005 utilisés par un autre usager que l'intégrateur », à corriger, avec la liste des postes et la marche à suivre.",
+   "Un poste est signalé quand son prénom et son nom ne contiennent pas le nom de l'intégrateur et qu'il n'est membre que du département par défaut.",
+   "Le nom de l'intégrateur n'est pas écrit dans le code : il est reconnu par une empreinte."
+  ],
+  "onglets": [
+   [
+    "Recommandations",
+    "Vérification des postes 1000 à 1005 réservés à l'intégrateur."
+   ],
+   [
+    "Priorités",
+    "Même vérification dans Autres risques."
+   ]
+  ]
+ },
+ {
   "version": "20.8.3",
   "date": "2026-10-28",
   "titre": "Le gabarit à l'accueil et dans les assistants",
