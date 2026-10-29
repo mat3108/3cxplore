@@ -66,3 +66,6 @@ html.nav-degrade #nav a.on{background:color-mix(in srgb,var(--panel) 65%,transpa
 .nvpv-degrade{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 30%,var(--panel)),var(--panel))}.nvpv-degrade i.on{background:rgba(255,255,255,.55);box-shadow:none}
 /* 19.0.2 : catégories du menu soulignées */
 #nav .ng{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+/* 20.10 : Suivi après implantation */
+#impsheet .report.imp-main{max-width:816px;padding:30px 36px}#impsheet .report.dgp{margin-top:18px}.imp-t{font-size:12.5px}.imp-t td.nw,.imp-t th.imp-chk,.imp-t td.imp-chk{white-space:nowrap}.imp-t td.imp-chk{text-align:center}.imp-t td.imp-chk input{width:16px;height:16px}.imp-t tr.imp-fax td{background:var(--warn-soft)}.imp-note{font-size:12px;margin:6px 0 0}.imp-dids{font-size:12px;line-height:1.7;margin:10px 0 0;overflow-wrap:anywhere}.imp-dids .mono{white-space:nowrap}
+@media print{#secprint .imp-page{break-before:page}#secprint .imp-t{font-size:10.5px}#secprint .imp-t th,#secprint .imp-t td{padding:3px 5px}#secprint .imp-t tr.imp-fax td{background:#fff6e0}#secprint .imp-t td.imp-chk input{-webkit-appearance:checkbox;appearance:auto}#secprint .imp-faxsec{break-inside:avoid}}

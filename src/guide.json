@@ -358,7 +358,8 @@
   "stats": {
    "sert": "La comparaison des magasins sur une période : taux de réponse, appels perdus, attente en file, heures de pointe, évolution quotidienne, et une carte de chaleur jour × heure.",
    "comment": [
-    "Choisissez la période (elle est partagée avec plusieurs onglets) et exportez en CSV."
+    "Choisissez la période (elle est partagée avec plusieurs onglets) et exportez en CSV.",
+    "L'attente moyenne en file porte sur les appels servis par un agent ; l'attente moyenne avant abandon, sur les appels qui ont quitté la file sans être servis. Les appels en transit (un poste de l'autre 3CX qui sort par le trunk d'ici via un bridge) ne sont pas comptés comme entrants."
    ]
   },
   "provenance": {
@@ -576,6 +577,14 @@
     "Imprimez la liste pour le technicien (une page par employé si vous le souhaitez) ou exportez-la en Excel."
    ],
    "astuce": "Au prochain backup, la liste est recalculée : une correction faite dans la console disparaît d'elle-même."
+  },
+  "implantation": {
+   "sert": "Le document à imprimer quand l'implantation d'un magasin est terminée : tous les numéros entrants (SDA) avec leur destination (ouvert, fermé, fériés), les lignes de fax à tester pour ne pas les oublier, puis le parcours des appels de chaque SDA en diagramme.",
+   "comment": [
+    "Choisissez le magasin (ou Tous les magasins), puis Imprimer / PDF : chaque diagramme commence sur une nouvelle page ; les SDA qui suivent exactement le même parcours partagent un seul diagramme.",
+    "La section Fax repère les lignes dont la règle entrante mène au serveur de fax 3CX ou à un poste nommé « fax », les fax détectés sur la ligne dans l'historique des appels et les fax transférés à la main par un employé ; une case Testé est prête à cocher sur le papier.",
+    "Exporter la liste (CSV) donne le tableau des SDA pour Excel. Décochez Parcours des appels pour n'imprimer que la liste et les fax."
+   ]
   }
  },
  "glossaire": [
@@ -587,7 +596,8 @@
     "diagramme",
     "simulateur",
     "controle",
-    "sdainut"
+    "sdainut",
+    "implantation"
    ],
    "formes": [
     "SDA",
@@ -1303,7 +1313,8 @@
    "stats": {
     "sert": "Comparison of stores over a period: answer rate, lost calls, queue wait, peak hours, daily trend, and a day × hour heat map.",
     "comment": [
-     "Choose the period (it is shared with several tabs) and export to CSV."
+     "Choose the period (it is shared with several tabs) and export to CSV.",
+     "The average queue wait covers calls served by an agent; the average wait before abandon covers calls that left the queue without being served. Transit calls (an extension of the other 3CX going out through this system's trunk over a bridge) are not counted as inbound."
     ]
    },
    "provenance": {
@@ -1521,6 +1532,14 @@
      "Print the list for the technician (one page per employee if you wish) or export it to Excel."
     ],
     "astuce": "With the next backup, the list is recalculated: a fix made in the console disappears by itself."
+   },
+   "implantation": {
+    "sert": "The document to print once a store's deployment is finished: every incoming number (DID) with its destination (open, closed, holidays), the fax lines to test so they are not forgotten, then the call path of every DID as a diagram.",
+    "comment": [
+     "Choose the store (or All stores), then Print / PDF: every diagram starts on a new page; DIDs that follow exactly the same path share one diagram.",
+     "The Fax section spots the lines whose inbound rule leads to the 3CX fax server or to an extension named “fax”, the faxes detected on the line in the call history and the faxes transferred by hand by an employee; a Tested box is ready to tick on paper.",
+     "Export the list (CSV) gives the DID table for Excel. Untick Call paths to print only the list and the faxes."
+    ]
    }
   },
   "glossaire": [
@@ -1532,7 +1551,8 @@
      "diagramme",
      "simulateur",
      "controle",
-     "sdainut"
+     "sdainut",
+     "implantation"
     ],
     "formes": [
      "DID",

@@ -81,6 +81,7 @@
     });
     D.parks = qa(ten, 'DN/ParkExtension').map(p => txt(p, 'Number'));
     D.parkInfo = qa(ten, 'DN/ParkExtension').map(p => { const pr = props(p); return {number: txt(p, 'Number'), auto: pr.PARK_AUTOPICKUP || '', timeout: pr.PARK_TIMEOUT_PICKUP || '', dest: pr.PARK_TIMEOUT_DESTINATION || ''}; });
+    D.faxServers = qa(ten, 'DN/FaxExtension').map(f => txt(f, 'Number')).filter(Boolean); // 20.10 : numéro(s) du serveur de fax 3CX (Suivi après implantation)
     // touches programmées des téléphones (propriété SHARED_BLFS : BLF, parking partagé, numérotation rapide, ligne, statut, connexion aux files)
     const parseBlfs = x => { if(!x) return []; try{ const d = new DOMParser().parseFromString(x, 'application/xml'); return [...d.getElementsByTagName('BLF')].map(b => { const t = b.getAttribute('BLFType') || '';
       return {no: +b.getAttribute('BLFNo') || 0, type: t, v: t === 'Line' || t === 'None' ? '' : [...b.childNodes].filter(c => c.nodeType === 3).map(c => c.nodeValue).join('').trim()}; }).sort((a, b) => a.no - b.no); }catch(e){ return []; } };

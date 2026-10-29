@@ -2,7 +2,8 @@
 // chaque élément une seule fois ; un élément déjà affiché est rappelé par un renvoi « voir plus haut »
 const DGP_KEY = 'diagportrait3cx';
 const dgpOn = () => { try{ return localStorage.getItem(DGP_KEY) === '1'; }catch(e){ return false; } };
-function renderFlowPortrait(g, r){
+function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA
+  o = o || {};
   const kids = {}; g.edges.forEach(e => (kids[e.from] ||= []).push(e));
   const shown = new Set(), num = {}; let html = '', k = 0;
   // plusieurs cas qui mènent au même élément : « … ou … » (chaque cas dans sa propre balise pour la traduction)
@@ -19,8 +20,8 @@ function renderFlowPortrait(g, r){
   };
   walk('did', 0, []); g.nodes.forEach((n, id) => { if(!shown.has(id)) walk(id, 0, []); });
   const used = [...new Set([...g.nodes.values()].map(n => n.kind))];
-  return `<div class="report dgp" id="dgpsheet"><header class="rpcover"><div class="rpk">Parcours des appels · 3CXplore</div><h1>${esc(phone(r.did))}</h1>
-    <div class="rpmeta">${esc(segName(DIDSEG[r.did] || SEG_COMMON))} · trunk ${esc(r.line.gateway || r.line.number)} · ${esc(ruleLabel(r))} · ${nf(g.nodes.size)} éléments${lineCalls[r.did] ? ` · ${nf(lineCalls[r.did])} appels reçus dans le backup` : ''} · préparé le ${esc(new Date().toLocaleDateString('fr-CA'))}</div></header>
+  return `<div class="report dgp" id="dgpsheet"><header class="rpcover"><div class="rpk">Parcours des appels · 3CXplore</div><h1>${esc(o.title || phone(r.did))}</h1>
+    <div class="rpmeta">${o.meta || `${esc(segName(DIDSEG[r.did] || SEG_COMMON))} · trunk ${esc(r.line.gateway || r.line.number)} · ${esc(ruleLabel(r))} · ${nf(g.nodes.size)} éléments${lineCalls[r.did] ? ` · ${nf(lineCalls[r.did])} appels reçus dans le backup` : ''} · préparé le ${esc(new Date().toLocaleDateString('fr-CA'))}`}</div></header>${o.extra || ''}
     <div class="dgp-body">${html}</div>
     <div class="dgp-leg">${used.map(kd => { const st = KIND_STYLE[kd] || KIND_STYLE.other; return `<span><i style="background:${st.c}"></i>${esc(st.t)}</span>`; }).join('')}</div>
     <div class="rpfoot">Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro. Configuration du backup du ${esc(bkDate(FULL.info.date))}.</div></div>`;

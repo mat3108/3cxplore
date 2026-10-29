@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.9.1-2563eb)
+![Version](https://img.shields.io/badge/version-20.10-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -19,7 +19,7 @@
 - **Aucune donnée envoyée** : le backup `.zip` est lu directement dans le navigateur ; rien ne quitte le poste.
 - **Mises à jour signalées** : au démarrage, un bandeau indique si une version plus récente est publiée (désactivable).
 - **Pensé pour les systèmes à plusieurs sites** : tout se filtre par magasin (ou site) grâce au sélecteur du bandeau ; le magasin est déduit du code au début du nom des départements.
-- **91 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
+- **92 onglets** répartis en quatre sections, du tableau de bord jusqu'au simulateur d'appel.
 
 ## 🚀 Démarrage
 
@@ -37,7 +37,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 ### Vue d'ensemble
 | Onglet | À quoi il sert |
 |---|---|
-| **Accueil** | Choix « Les téléphones par gabarit » dans Les téléphones et leurs touches. |
+| **Accueil** | Réponses vers le suivi après implantation. |
 | **Tableau de bord** | Volume d'appels par jour sur des jours consécutifs, avec les dates dans le titre. |
 | **Priorités** | Même vérification dans Autres risques. |
 | **Note de santé** | Pastilles Serv. / Conf. / Sécu. / Tél. au lieu de S C S T ; « /100 » plus lisible. |
@@ -52,6 +52,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Simulateur d'appel** | Heures du département propriétaire d'une file, d'un menu ou d'un groupe de sonnerie. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
+| **Suivi après implantation** | Nouvelle page : SDA et destinations, fax à tester, diagrammes des parcours, à imprimer. |
 | **Sans numéro de sortie** | Nouvelle page : postes sans numéro présenté et numéro à leur mettre. |
 | **Appels au 911** | Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
@@ -228,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.9.1** | Le clavier dans les fenêtres et les tableaux |
+| **20.10** | Le suivi après implantation |
+| 20.9.1 | Le clavier dans les fenêtres et les tableaux |
 | 20.9 | Les postes 1000 à 1005 de l'intégrateur |
 | 20.8.3 | Le gabarit à l'accueil et dans les assistants |
 | 20.8.2 | Les téléphones par gabarit |

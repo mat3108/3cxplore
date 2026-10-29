@@ -3192,4 +3192,21 @@ const EN = {
 // 20.6.1 : numéro de sortie du nouvel employé
 "À ne pas recopier": "Do not copy",
 "À remplir": "To fill in",
+// 20.10 : Suivi après implantation
+"Suivi après implantation": "Post-deployment follow-up", "Faire le suivi après l'implantation": "Follow up after the deployment",
+"Le suivi après l'implantation d'un magasin": "The follow-up after a store's deployment", "Le suivi après son implantation": "The follow-up after its deployment",
+"Le document à imprimer quand l'implantation d'un magasin est terminée : tous les numéros entrants (SDA) avec leur destination selon le moment, les lignes de fax à tester pour ne pas les oublier, puis le parcours des appels de chaque SDA en diagramme. Les SDA qui suivent le même parcours partagent un seul diagramme.": "The document to print once a store's deployment is finished: every incoming number (DID) with its destination by time of day, the fax lines to test so they are not forgotten, then the call path of every DID as a diagram. DIDs that follow the same path share one diagram.",
+"Parcours des appels (diagrammes)": "Call paths (diagrams)", "Exporter la liste (CSV)": "Export the list (CSV)", "Suivi après implantation · 3CXplore": "Post-deployment follow-up · 3CXplore",
+"Numéros entrants (SDA) et leur destination": "Incoming numbers (DIDs) and their destination", "Règle": "Rule", "Ouvert": "Open", "Fermé": "Closed", "Fériés": "Holidays", "idem": "same",
+"« idem » : la règle entrante ne change pas de destination à ce moment ; ce sont les horaires du département qui s'appliquent ensuite. « Règle par défaut du trunk » : le SDA n'a pas de règle propre.": "“same”: the inbound rule does not change destination at that time; the department's hours then apply. “trunk default rule”: the DID has no rule of its own.",
+"Aucun SDA rattaché à ce magasin.": "No DID attached to this store.", "Fax — à ne pas oublier": "Fax — not to forget",
+"Avant de fermer l'implantation, tester la réception d'un fax sur chaque ligne ci-dessous, et l'envoi s'il y a un télécopieur. Cochez quand c'est fait.": "Before closing the deployment, test receiving a fax on each line below, and sending if there is a fax machine. Tick when done.",
+"Numéro": "Number", "Comment on le sait": "How we know", "Où il arrive": "Where it arrives", "Dernier fax": "Last fax", "Testé": "Tested",
+"La règle entrante mène au fax": "The inbound rule leads to the fax", "Serveur de fax 3CX": "3CX fax server", "après détection du fax sur la ligne": "after fax detection on the line",
+"aucun SDA ne mène directement à ce poste": "no DID leads directly to this extension", "Aucun fax repéré": "No fax found",
+"Aucune règle entrante ne mène au fax, aucun poste ne s'appelle fax et aucun fax n'est arrivé dans l'historique. Vérifiez quand même auprès du magasin s'il a un télécopieur.": "No inbound rule leads to the fax, no extension is named fax and no fax arrived in the history. Still check with the store whether it has a fax machine.",
+"Aucune règle entrante ne mène au fax, aucun poste ne s'appelle fax et aucun fax n'est arrivé dans l'historique pour ce magasin. Vérifiez quand même auprès du magasin s'il a un télécopieur.": "No inbound rule leads to the fax, no extension is named fax and no fax arrived in the history for this store. Still check with the store whether it has a fax machine.",
+"Repérage : règle entrante vers le serveur de fax 3CX ou vers un poste dont le nom ou le courriel contient « fax » ; fax détectés par 3CX sur la ligne dans l'historique des appels ; fax transférés à la main par un employé.": "Detection: inbound rule to the 3CX fax server or to an extension whose name or email contains “fax”; faxes detected by 3CX on the line in the call history; faxes transferred by hand by an employee.",
+"Parcours des appels": "Call paths", "Aucun SDA.": "No DID.", "Ces SDA suivent le même parcours :": "These DIDs follow the same path:", "Règle entrante de chaque SDA": "Inbound rule of each DID", "numéro absent de la liste des SDA du trunk": "number missing from the trunk's DID list",
+"Imprimer / PDF": "Print / PDF", "Tous les magasins": "All stores",
 };

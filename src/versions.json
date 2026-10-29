@@ -1,5 +1,28 @@
 [
  {
+  "version": "20.10",
+  "date": "2026-10-29",
+  "titre": "Le suivi après implantation",
+  "resume": "Nouvelle page « Suivi après implantation », dans « Je veux… » et à l'accueil (« Autre chose ») : un seul document à imprimer pour fermer l'implantation d'un magasin, avec tous les SDA et leur destination, les lignes de fax à ne pas oublier et le parcours des appels de chaque SDA en diagramme.",
+  "changements": [
+   "Suivi après implantation : le tableau de tous les SDA du magasin (ou de tout le système) avec le trunk, la règle, la destination ouvert / fermé / fériés et le nombre d'appels reçus ; export CSV.",
+   "Section « Fax — à ne pas oublier » : les lignes dont la règle entrante mène au serveur de fax 3CX ou à un poste nommé « fax », les fax détectés sur la ligne dans l'historique des appels (avec la date du dernier) et les fax transférés à la main par un employé, chacune avec une case Testé à cocher sur le papier ; les postes fax sans SDA sont aussi listés.",
+   "Parcours des appels : le diagramme en portrait de chaque SDA, un par page, du plus appelé au moins appelé ; les SDA qui suivent exactement le même parcours partagent un seul diagramme, avec la liste de leurs numéros.",
+   "Menu : « Faire le suivi après l'implantation » dans « Je veux… » ; accueil : réponse « Le suivi après l'implantation d'un magasin » sous « Autre chose », et « Le suivi après son implantation » sous « Voir mon magasin ».",
+   "Lecture du backup : le numéro du serveur de fax 3CX est lu ; pour un backup déjà ouvert avec une version antérieure, il est retrouvé dans l'historique des appels."
+  ],
+  "onglets": [
+   [
+    "Suivi après implantation",
+    "Nouvelle page : SDA et destinations, fax à tester, diagrammes des parcours, à imprimer."
+   ],
+   [
+    "Accueil",
+    "Réponses vers le suivi après implantation."
+   ]
+  ]
+ },
+ {
   "version": "20.9.1",
   "date": "2026-10-28",
   "titre": "Le clavier dans les fenêtres et les tableaux",
