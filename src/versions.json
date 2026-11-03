@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.10.1",
+  "date": "2026-11-03",
+  "titre": "Les transferts revenus à la réception",
+  "resume": "Fiche employé et Réceptions : les appels qu'une personne a transférés, où la destination n'a pas répondu et qui sont revenus chez elle ou à une réception, avec les destinations qui renvoient le plus et les appels transférés plusieurs fois.",
+  "changements": [
+   "Fiche employé : nouvelle section « Transferts revenus à la réception » : appels transférés, revenus faute de réponse (sans réponse, occupé, ne pas déranger, absent…), transférés plusieurs fois, revenus 2 fois ou plus et terminés sans réponse ; les destinations qui renvoient l'appel et les 20 derniers appels concernés, chacun ouvrant son parcours détaillé. Aussi dans l'export Excel (onglet « Transferts revenus »).",
+   "Réceptions : colonnes « Transférés » et « Revenus après transfert » pour chaque poste, indicateur « Revenus après un transfert » pour toutes les réceptions, et le détail du poste choisi sous la carte de chaleur.",
+   "Un retour est compté quand l'appel sonne de nouveau chez la personne qui l'a transféré ou à un poste de réception, après un renvoi faute de réponse ; les transferts vers un parking (déjà suivis dans Parkings partagés), un menu ou une messagerie ne sont pas comptés."
+  ],
+  "onglets": [
+   [
+    "Fiche employé",
+    "Section Transferts revenus à la réception, aussi dans l'export Excel."
+   ],
+   [
+    "Réceptions",
+    "Transferts revenus par poste et détail du poste choisi."
+   ]
+  ]
+ },
+ {
   "version": "20.10",
   "date": "2026-10-29",
   "titre": "Le suivi après implantation",

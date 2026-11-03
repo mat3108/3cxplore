@@ -64,6 +64,8 @@ V.employe = (el, arg) => {
     if(CST_REGS.some(([k]) => rate(k) || fee(k))) cost = R.outCalls.filter(c => c[10] === 'ans' && c[8] > 0).reduce((s, c) => { const [r] = dstOf(c[4]); const sec = Math.ceil(c[8] / C.inc) * C.inc; return s + sec / 60 * rate(r) + fee(r); }, 0); }catch(e){}
   // ce qui dépend d'elle et ce qu'il faut corriger sur son poste
   const issues = empIssues(E).map(x => [x.cat, x.text, x.sev, x.href]); /* 18.4 : liste commune avec Corrections par usager */
+  // 20.10.1 : appels qu'elle a transférés, restés sans réponse et revenus chez elle ou à une réception
+  let bnc = null; try{ bnc = bounceAnalysis(from, to, recNumbers())[E.number] || null; }catch(e){}
   let indisp = null; try{ indisp = indispAnalysis().people.find(p => p.a === E.number) || null; }catch(e){}
   let abs = []; try{ const t = absToday(); abs = absLoad().filter(a => a.ext === E.number && a.to >= t); }catch(e){}
   let hx = []; try{ hx = hxEvents(E.number).slice().sort((a, b) => a.t < b.t ? 1 : -1); }catch(e){}
@@ -94,6 +96,10 @@ V.employe = (el, arg) => {
       <p class="muted" style="font-size:12px">Carte : appels entrants répondus et appels sortants, par jour de semaine et par heure. Sonneries sans réponse : le poste a sonné sans que la personne réponde (délai dépassé, appel renvoyé) ; les sonneries arrêtées parce qu'un collègue a répondu ou que l'appelant a raccroché sont comptées à part. Taux d'occupation : part du temps connecté aux files passée en conversation.</p></section>
     ${qrows.length ? `<section class="rps"><h2>Files d'attente</h2><table class="rpt"><thead><tr><th>File</th><th class="num">Sonneries répondues</th><th class="num">Sonneries expirées</th><th class="num">Taux de réponse</th><th class="num">Appels servis</th></tr></thead><tbody>${qrows.map(x => `<tr><td>${dnLink(x.q)}</td><td class="num">${nf(x.ans)}</td><td class="num">${nf(x.exp)}</td><td class="num">${pc(x.ans, x.ans + x.exp)}</td><td class="num">${nf(x.served)}</td></tr>`).join('')}</tbody></table>
       <p class="muted" style="font-size:12px">Temps connecté aux files sur la période : ${R.onH ? (Math.round(R.onH * 10) / 10).toString().replace('.', ',') + ' h' : '–'}.</p></section>` : ''}
+    ${bnc ? `<section class="rps"><h2>Transferts revenus à la réception</h2><div class="rpkpis">${kp('Appels transférés', nf(bnc.calls))}${kp('Revenus faute de réponse', bnc.backCalls ? `${nf(bnc.backCalls)} (${pc(bnc.backCalls, bnc.calls)})` : '0', bnc.backCalls / bnc.calls > .2 ? 'warn' : '')}
+      ${kp('Transférés plusieurs fois', nf(bnc.multiTr))}${kp('Revenus 2 fois ou plus', nf(bnc.multiBack), bnc.multiBack ? 'warn' : '')}${kp('Terminés sans réponse', nf(bnc.lost), bnc.lost ? 'warn' : '')}</div>
+      ${bnc.backCalls ? bounceHTML(bnc, 'rpt') : ''}
+      <p class="muted" style="font-size:12px">Appels entrants que cette personne a transférés, où la destination n'a pas répondu (sans réponse, occupé, ne pas déranger…) et qui ont sonné de nouveau chez elle ou à une réception. Transférés plusieurs fois : au moins deux transferts dans le même appel. Terminés sans réponse : personne n'a répondu après le dernier retour. Les transferts vers un parking, un menu ou une messagerie ne sont pas comptés.</p></section>` : ''}
     <section class="rps"><h2>Qualité et coûts</h2>${kv([['Clients qui rappellent (48 h)', rep && rep.n ? `${pc(rep.r, rep.n)} <span class="muted">(${nf(rep.r)} sur ${nf(rep.n)} appels servis)</span>` : '–'],
         ['Destinations des appels sortants', destT ? destTop.map(([k, v]) => `${esc((DST_REG.find(x => x[0] === k) || [, k])[1])} ${pc(v, destT)}`).join(' · ') : '–'],
         ['Coût des appels sortants', cost != null ? `${money(cost)} <span class="muted">(≈ ${money(cost * 30.4 / days)} par mois)</span>` : '<span class="muted">tarifs à saisir dans l\'onglet Coût des appels sortants</span>'],
@@ -106,14 +112,16 @@ V.employe = (el, arg) => {
     </div></div>`;
   $('#empsel').addEventListener('change', e => { S.ext = e.target.value; save(); });
   perWire('empp', S.p, first, last, v => { S.p = v; save(); });
+  $('#empsheet').addEventListener('click', e => { const tr = e.target.closest('tr[data-bnc]'); if(tr && bnc && !e.target.closest('a')) openCall(bnc.list[+tr.dataset.bnc].c); });
   $('#empprint').addEventListener('click', () => printHTML($('#empsheet').outerHTML.replace('id="empsheet"', '')));
   $('#empxl').addEventListener('click', () => {
     const sh = [{name: 'Fiche', rows: [['Rubrique', 'Valeur'], ['Poste', E.number], ['Nom', nm(E)], ['Magasin', segName(seg)], ['Période', `${from} au ${to}`], ['Entrants répondus', R.inAns], ['Conversation moyenne entrants (s)', avg(R.inTalk, R.inAns)],
       ['Sonneries reçues', R.rings], ['Sonneries sans réponse', R.ringMiss], ['Sonneries arrêtées (un collègue a répondu)', R.ringCanc], ['Délai de décroché médian (s)', med(R.pick) ?? ''], ['Sortants', R.out], ['Sortants aboutis', R.outAns], ['Conversation moyenne sortants (s)', avg(R.outTalk, R.outAns)],
       ['Internes passés', R.intOut], ['Internes reçus', R.intIn], ['Temps au téléphone (s)', R.inTalk + R.outTalk], ["Taux d'occupation (files)", R.occ != null ? Math.round(100 * R.occ) + ' %' : ''],
-      ['Clients qui rappellent (48 h)', rep && rep.n ? `${rep.r} / ${rep.n}` : ''], ['Coût des appels sortants', cost != null ? cost.toFixed(2) : '']]},
+      ['Clients qui rappellent (48 h)', rep && rep.n ? `${rep.r} / ${rep.n}` : ''], ['Appels transférés', bnc ? bnc.calls : 0], ['Revenus à la réception faute de réponse', bnc ? bnc.backCalls : 0], ['Transférés plusieurs fois (revenus)', bnc ? bnc.multiTr : 0], ['Revenus 2 fois ou plus', bnc ? bnc.multiBack : 0], ['Coût des appels sortants', cost != null ? cost.toFixed(2) : '']]},
       {name: 'Par jour', rows: [['Jour', 'Entrants répondus', 'Sortants', 'Internes passés']].concat(dlist.map(d => { const x = R.day[d] || {in: 0, out: 0, int: 0}; return [d, x.in, x.out, x.int]; }))},
       {name: "Files d'attente", rows: [['File', 'Sonneries répondues', 'Sonneries expirées', 'Appels servis']].concat(qrows.map(x => [`${x.q} ${dnName(x.q)}`, x.ans, x.exp, x.served]))},
+      {name: 'Transferts revenus', rows: [['Date', 'Appelant', 'Transferts', 'Retours', 'Issue']].concat((bnc ? bnc.list : []).map(({c, T}) => [fmtD(c[0]), phone(c[2]) || c[2], T.map(x => `${x.to}${x.back ? ` (${BNC_WHY[x.why] || x.why}, revenu)` : ''}`).join(' → '), T.filter(x => x.back).length, (ST[c[10]] || [c[10]])[0]]))},
       {name: 'À corriger', rows: [['Sujet', 'Constat']].concat(issues.map(([t, d]) => [t, d]))}];
     const a = document.createElement('a'); a.href = URL.createObjectURL(XL.build(sh).blob); a.download = `fiche-employe-${E.number}.xlsx`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); });
 };

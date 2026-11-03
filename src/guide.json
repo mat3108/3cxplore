@@ -310,7 +310,7 @@
    "astuce": "Une alerte apparaît sur le tableau de bord et dans Priorités quand un contact important attend un rappel."
   },
   "receptions": {
-   "sert": "Les postes de réception : appels présentés, répondus et perdus, mises en parking, appels simultanés et heures de surcharge."
+   "sert": "Les postes de réception : appels présentés, répondus et perdus, mises en parking, appels simultanés, heures de surcharge et appels transférés revenus à la réception faute de réponse."
   },
   "delai": {
    "sert": "Le temps d'attente du client avant qu'une personne décroche : médiane, 90 % des appels, objectif, répartition, par heure, par magasin et par personne."
@@ -437,7 +437,7 @@
    "sert": "Deux postes côte à côte et les changements à faire pour aligner le second sur le premier."
   },
   "employe": {
-   "sert": "Tout ce que le backup sait d'une personne, sur une seule page imprimable : son poste et ses téléphones, ses appels (répondus, manqués, sortants, internes, délai de décroché), son travail en file d'attente et son taux d'occupation, sa carte de chaleur, la qualité du service et le coût de ses appels, ce qui dépend d'elle et ce qu'il faut corriger sur son poste.",
+   "sert": "Tout ce que le backup sait d'une personne, sur une seule page imprimable : son poste et ses téléphones, ses appels (répondus, manqués, sortants, internes, délai de décroché), son travail en file d'attente et son taux d'occupation, les appels qu'elle a transférés et qui sont revenus à la réception faute de réponse, sa carte de chaleur, la qualité du service et le coût de ses appels, ce qui dépend d'elle et ce qu'il faut corriger sur son poste.",
    "comment": [
     "Choisissez l'employé et la période ; la fiche s'ouvre aussi avec le bouton « Fiche employé » de la fiche d'un poste.",
     "Imprimez-la ou enregistrez-la en PDF pour un entretien, ou exportez-la en Excel."
@@ -1265,7 +1265,7 @@
     "astuce": "An alert appears on the dashboard and in Priorities when an important contact is waiting for a call-back."
    },
    "receptions": {
-    "sert": "Reception extensions: calls presented, answered and lost, parked calls, simultaneous calls and overload hours."
+    "sert": "Reception extensions: calls presented, answered and lost, parked calls, simultaneous calls, overload hours and transferred calls that came back to reception for lack of an answer."
    },
    "delai": {
     "sert": "How long the customer waits before a person picks up: median, 90 % of calls, goal, distribution, by hour, by store and by person."
@@ -1392,7 +1392,7 @@
     "sert": "Two extensions side by side and the changes needed to align the second with the first."
    },
    "employe": {
-    "sert": "Everything the backup knows about a person, on a single printable page: their extension and phones, their calls (answered, missed, outbound, internal, pick-up delay), their queue work and occupancy rate, their heat map, service quality and the cost of their calls, what depends on them and what to fix on their extension.",
+    "sert": "Everything the backup knows about a person, on a single printable page: their extension and phones, their calls (answered, missed, outbound, internal, pick-up delay), their queue work and occupancy rate, the calls they transferred that came back to reception for lack of an answer, their heat map, service quality and the cost of their calls, what depends on them and what to fix on their extension.",
     "comment": [
      "Choose the employee and the period; the sheet also opens from the “Employee sheet” button in an extension's details.",
      "Print it or save it as PDF for a meeting, or export it to Excel."
