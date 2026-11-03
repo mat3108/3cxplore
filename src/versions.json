@@ -1,5 +1,21 @@
 [
  {
+  "version": "20.10.2",
+  "date": "2026-11-03",
+  "titre": "Les heures dans Réceptions",
+  "resume": "Réceptions : à côté de la période, un choix d'heures (de … h à … h) pour ne compter que les appels d'une partie de la journée, par exemple les heures d'ouverture.",
+  "changements": [
+   "Réceptions : nouveau choix « Heures » (de 0 h à 24 h par défaut). Seuls les appels qui commencent dans la plage choisie sont comptés, partout dans la page : appels présentés, répondus et perdus, parkings, appels simultanés, transferts revenus à la réception et heures de surcharge. La carte de chaleur n'affiche que les heures choisies.",
+   "La plage est retenue dans ce navigateur avec les postes ajoutés ou exclus ; une heure de début après l'heure de fin est corrigée d'elle-même."
+  ],
+  "onglets": [
+   [
+    "Réceptions",
+    "Choix des heures à côté de la période."
+   ]
+  ]
+ },
+ {
   "version": "20.10.1",
   "date": "2026-11-03",
   "titre": "Les transferts revenus à la réception",

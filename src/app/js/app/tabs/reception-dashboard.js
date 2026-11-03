@@ -23,9 +23,9 @@ function callBounces(c, rec){
 }
 // par personne qui transfère : appels transférés, transferts revenus, destinations qui renvoient, appels concernés (du plus récent au plus ancien) ;
 // « terminés sans réponse » : personne n'a répondu après le dernier retour (l'appelant raccroche, messagerie…)
-function bounceAnalysis(from, to, rec){
+function bounceAnalysis(from, to, rec, inH){
   const P = {};
-  for(const c of FULL.calls){ const d = localParts(c[0])[0]; if(d < from) break; if(d > to || c[1] !== 'in') continue;
+  for(const c of FULL.calls){ const lp = localParts(c[0]), d = lp[0]; if(d < from) break; if(d > to || c[1] !== 'in' || (inH && !inH(lp[1]))) continue;
     const T = callBounces(c, rec); if(!T.length) continue;
     const by = {}; T.forEach(x => (by[x.from] ||= []).push(x));
     Object.entries(by).forEach(([n, l]) => { const m = P[n] ||= {n, calls: 0, tr: 0, back: 0, backCalls: 0, multiTr: 0, multiBack: 0, lost: 0, dest: {}, list: []}, b = l.filter(x => x.back);
@@ -47,24 +47,27 @@ function bounceHTML(m, cls){
 V.receptions = el => {
   const S = window.__rcp ||= {per: '30', extra: [], off: [], sel: ''}, RK = 'receptions3cx:' + (FULL.info.fqdn || '');
   // postes ajoutés ou exclus : mémorisés dans ce navigateur
-  if(!S.loaded){ try{ const j = JSON.parse(localStorage.getItem(RK) || '{}'); S.extra = j.extra || []; S.off = j.off || []; }catch(e){} S.loaded = 1; }
-  const keep = () => { try{ localStorage.setItem(RK, JSON.stringify({extra: S.extra, off: S.off})); }catch(e){} };
+  if(!S.loaded){ try{ const j = JSON.parse(localStorage.getItem(RK) || '{}'); S.extra = j.extra || []; S.off = j.off || []; S.hf = j.hf; S.ht = j.ht; }catch(e){} S.loaded = 1; }
+  // 20.10.2 : plage d'heures (heure de début de l'appel, fuseau du système 3CX) ; 0 h à 24 h = toute la journée
+  if(!(S.hf >= 0 && S.hf <= 23)) S.hf = 0; if(!(S.ht > S.hf && S.ht <= 24)) S.ht = 24;
+  const hf = S.hf, ht = S.ht, allH = hf === 0 && ht === 24, inH = h => h >= hf && h < ht, hTxt = h => h + ' h';
+  const keep = () => { try{ localStorage.setItem(RK, JSON.stringify({extra: S.extra, off: S.off, hf: S.hf, ht: S.ht})); }catch(e){} };
   const all = FULL.calls, lastDay = all.length ? localParts(all[0][0])[0] : new Date().toISOString().slice(0, 10), firstDay = all.length ? callHist().first : lastDay;
   const [from, to] = perRange(S.per, firstDay, lastDay);
   const recs = [...new Set([...recAuto(), ...S.extra])].filter(n => !S.off.includes(n) && DN[n] && (!SEG || SEGOF[n] === SEG));
   const set = new Set(recs), M = {}; recs.forEach(n => M[n] = {n, off: 0, ans: 0, lost: 0, talk: 0, iv: [], heat: Array.from({length: 7}, () => Array.from({length: 24}, () => ({o: 0, l: 0}))), park: 0, phang: 0, pback: 0});
   const days = new Set();
-  for(const c of all){ if(c[1] !== 'in') continue; const d = localParts(c[0])[0]; if(d < from || d > to) continue; days.add(d);
+  for(const c of all){ if(c[1] !== 'in') continue; const lp0 = localParts(c[0]), d = lp0[0]; if(d < from || d > to || !inH(lp0[1])) continue; days.add(d);
     const at = new Set(c[9].filter(p => p[1] === 'extension' && set.has(p[0])).map(p => p[0])); if(!at.size) continue;
     const ansBy = new Map(c[11]), t = new Date(c[0]), lpc = localParts(c[0]), wd = lpc[2], h = lpc[1], lost = ST_LOST.has(c[10]);
     at.forEach(n => { const m = M[n]; m.off++; if(ansBy.has(n)){ m.ans++; m.talk += ansBy.get(n); } else if(lost) m.lost++;
       const hc = m.heat[wd][h]; hc.o++; if(!ansBy.has(n) && lost) hc.l++; const st = Date.parse(c[0]); m.iv.push([st, st + Math.max(1, c[7]) * 1000]); }); }
-  (FULL.parkCalls || []).forEach(r => { const m = M[r[4]]; if(!m || r[3] === 'direct') return; const d = localParts(r[0])[0]; if(d < from || d > to) return; m.park++; if(r[3] === 'hangup') m.phang++; if(r[3] === 'back' || r[3] === 'timeout') m.pback++; });
+  (FULL.parkCalls || []).forEach(r => { const m = M[r[4]]; if(!m || r[3] === 'direct') return; const lp = localParts(r[0]), d = lp[0]; if(d < from || d > to || !inH(lp[1])) return; m.park++; if(r[3] === 'hangup') m.phang++; if(r[3] === 'back' || r[3] === 'timeout') m.pback++; });
   // appels simultanés : balayage des intervalles
   Object.values(M).forEach(m => { const ev = []; m.iv.forEach(([a, b]) => { ev.push([a, 1]); ev.push([b, -1]); }); ev.sort((x, y) => x[0] - y[0] || x[1] - y[1]);
     let cur = 0, mx = 0, t2 = 0, last = 0; ev.forEach(([t, d]) => { if(cur >= 2) t2 += t - last; cur += d; last = t; if(cur > mx) mx = cur; }); m.maxSim = mx; m.sim2 = t2; delete m.iv; });
   const rows = Object.values(M).filter(m => m.off).sort((a, b) => b.off - a.off), nd = days.size || 1;
-  const BN = bounceAnalysis(from, to, set), bz = {n: '', calls: 0, tr: 0, back: 0, backCalls: 0, multiTr: 0, multiBack: 0, lost: 0, dest: {}, list: []};
+  const BN = bounceAnalysis(from, to, set, allH ? null : inH), bz = {n: '', calls: 0, tr: 0, back: 0, backCalls: 0, multiTr: 0, multiBack: 0, lost: 0, dest: {}, list: []};
   if(!rows.some(m => m.n === S.sel)) S.sel = rows[0]?.n || '';
   const sel = M[S.sel], pc = (a, b) => b ? Math.round(100 * a / b) + ' %' : '—';
   const tot = rows.reduce((t, m) => ({off: t.off + m.off, ans: t.ans + m.ans, lost: t.lost + m.lost, park: t.park + m.park, phang: t.phang + m.phang, trc: t.trc + (BN[m.n] || bz).calls, bc: t.bc + (BN[m.n] || bz).backCalls}), {off: 0, ans: 0, lost: 0, park: 0, phang: 0, trc: 0, bc: 0});
@@ -78,7 +81,8 @@ V.receptions = el => {
     <p class="lead">Les postes de réception (nom contenant « réception » ou rôle Réceptionniste, plus ceux que vous ajoutez) : appels qui leur sont présentés, répondus, perdus, mises en parking et appels raccrochés en parking, appels simultanés et heures de surcharge — pour savoir où ajouter de l'aide${SEG ? ` — magasin <b>${esc(segName(SEG))}</b>` : ''}.</p>
     <div class="bar"><label class="count">Période</label>${perUI('rcper', S.per, firstDay, lastDay)}
       <label class="count">Ajouter un poste</label><select id="rcadd"><option value="">—</option>${others.map(e => `<option value="${esc(e.number)}">${esc(e.number + ' ' + (e.first + ' ' + e.last).trim())}</option>`).join('')}</select>
-      <span class="count">du ${esc(from)} au ${esc(to)}</span></div>
+      <label class="count">Heures</label><select id="rchf" aria-label="De">${Array.from({length: 24}, (_, h) => `<option value="${h}"${h === hf ? ' selected' : ''}>${hTxt(h)}</option>`).join('')}</select> à <select id="rcht" aria-label="À">${Array.from({length: 24}, (_, h) => h + 1).map(h => `<option value="${h}"${h === ht ? ' selected' : ''}>${hTxt(h)}</option>`).join('')}</select>
+      <span class="count">du ${esc(from)} au ${esc(to)}${allH ? '' : `, de ${hTxt(hf)} à ${hTxt(ht)}`}</span></div>
     <div class="grid kpis">${[['Postes de réception', nf(rows.length)], ['Appels présentés', nf(tot.off)], ['Répondus par la réception', pc(tot.ans, tot.off)], ['Perdus pendant la sonnerie', pc(tot.lost, tot.off)], ['Mises en parking', nf(tot.park)], ['Raccrochés en parking', pc(tot.phang, tot.park)], ['Revenus après un transfert', tot.trc ? `${nf(tot.bc)} (${pc(tot.bc, tot.trc)})` : '—']].map(([l, v]) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${esc(l)}</div></div>`).join('')}</div>
     <div class="tw"><table><thead><tr><th>Poste</th><th>Magasin</th><th class="num">Appels / jour</th><th class="num">Présentés</th><th class="num">Répondus</th><th class="num">Perdus</th><th class="num">Conv. moy.</th><th class="num">Parking</th><th class="num">Raccrochés en parking</th><th class="num">Simultanés max</th><th class="num">Temps à 2+ appels</th><th class="num">Transférés</th><th class="num">Revenus après transfert</th><th></th></tr></thead><tbody>
       ${rows.map(m => { const lr = m.lost / (m.off || 1), hr = m.phang / (m.park || 1), b = BN[m.n] || bz, br = b.backCalls / (b.calls || 1);
@@ -89,7 +93,7 @@ V.receptions = el => {
           <td>${S.extra.includes(m.n) ? `<button class="btn" data-rcdel="${esc(m.n)}" title="Retirer de la liste">×</button>` : `<button class="btn" data-rcoff="${esc(m.n)}" title="Ne pas considérer comme réception">×</button>`}</td></tr>`; }).join('') || '<tr><td colspan="14" class="muted">Aucun poste de réception trouvé : ajoutez-en un avec « Ajouter un poste ».</td></tr>'}</tbody></table></div>
     ${S.off.length ? `<p class="muted" style="font-size:12.5px">Exclus : ${S.off.map(n => `${esc(n)} <a href="#" data-rcon="${esc(n)}">rétablir</a>`).join(' · ')}</p>` : ''}
     ${sel ? `<h3>${dnLink(sel.n)} — appels présentés par jour et par heure</h3>
-      <div class="card" style="overflow:auto"><table class="rcheat"><thead><tr><th></th>${Array.from({length: 24}, (_, h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${sel.heat.map((r, wd) => `<tr><th>${WD[wd]}</th>${r.map((x, h) => { const a = x.o / mxO, lr = x.o ? x.l / x.o : 0;
+      <div class="card" style="overflow:auto"><table class="rcheat"><thead><tr><th></th>${Array.from({length: 24}, (_, h) => h).filter(inH).map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${sel.heat.map((r, wd) => `<tr><th>${WD[wd]}</th>${r.map((x, h) => { if(!inH(h)) return ''; const a = x.o / mxO, lr = x.o ? x.l / x.o : 0;
         return `<td title="${WD[wd]} ${h} h : ${x.o} appel(s) présenté(s), ${x.l} perdu(s)" style="background:${x.o ? `color-mix(in srgb, ${lr > .2 ? 'var(--bad)' : lr > .1 ? 'var(--warn)' : 'var(--accent)'} ${Math.round(15 + 85 * a)}%, var(--panel))` : 'transparent'}">${x.o ? x.o : ''}</td>`; }).join('')}</tr>`).join('')}</tbody></table>
         <div class="legend"><span><i style="background:var(--accent)"></i>Peu de pertes</span><span><i style="background:var(--warn)"></i>Plus de 10 % perdus</span><span><i style="background:var(--bad)"></i>Plus de 20 % perdus</span><span class="muted">Intensité = nombre d'appels sur la période</span></div></div>
       <h3>Heures de surcharge</h3><div class="card" style="font-size:13px">${slots.map(x => `<div><b>${WD[x.wd]} ${x.h} h</b> <span class="muted">— ${x.l} appel${x.l > 1 ? 's' : ''} perdu${x.l > 1 ? 's' : ''} sur ${x.o} présenté${x.o > 1 ? 's' : ''} (${pc(x.l, x.o)})</span></div>`).join('') || '<span class="muted">Aucun appel perdu pendant la sonnerie sur la période.</span>'}
@@ -97,9 +101,11 @@ V.receptions = el => {
       <h3>${dnLink(sel.n)} — transferts revenus à la réception</h3>
       ${sb.backCalls ? `<div class="grid kpis">${[['Appels transférés', nf(sb.calls)], ['Revenus faute de réponse', `${nf(sb.backCalls)} (${pc(sb.backCalls, sb.calls)})`], ['Transférés plusieurs fois', nf(sb.multiTr)], ['Revenus 2 fois ou plus', nf(sb.multiBack)], ['Terminés sans réponse', nf(sb.lost)]].map(([l, v]) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${esc(l)}</div></div>`).join('')}</div>
         ${bounceHTML(sb, '')}` : `<p class="muted">${sb.calls ? `Aucun des ${nf(sb.calls)} appels transférés n'est revenu à la réception faute de réponse.` : 'Aucun appel transféré sur la période.'}</p>`}` : ''}
-    <p class="note">Appels présentés : appels entrants qui ont sonné à ce poste (directement, par une file ou un groupe). Perdus : appels présentés qui ne se sont terminés par aucune réponse (abandon, raccroché au menu ou en parking, non répondu). Temps à 2+ appels : durée moyenne par jour pendant laquelle au moins deux appels étaient en cours pour ce poste. Revenus après transfert : appels que ce poste a transférés, où la destination n'a pas répondu (sans réponse, occupé, ne pas déranger…) et qui ont sonné de nouveau à ce poste ou à une autre réception ; les transferts vers un parking, un menu ou une messagerie ne sont pas comptés. Terminés sans réponse : personne n'a répondu après le dernier retour.</p></div>`;
+    <p class="note">Appels présentés : appels entrants qui ont sonné à ce poste (directement, par une file ou un groupe). Perdus : appels présentés qui ne se sont terminés par aucune réponse (abandon, raccroché au menu ou en parking, non répondu). Heures : seuls les appels qui commencent dans la plage choisie sont comptés (heure du système 3CX). Temps à 2+ appels : durée moyenne par jour pendant laquelle au moins deux appels étaient en cours pour ce poste. Revenus après transfert : appels que ce poste a transférés, où la destination n'a pas répondu (sans réponse, occupé, ne pas déranger…) et qui ont sonné de nouveau à ce poste ou à une autre réception ; les transferts vers un parking, un menu ou une messagerie ne sont pas comptés. Terminés sans réponse : personne n'a répondu après le dernier retour.</p></div>`;
   const re = () => { keep(); V.receptions(el); };
   perWire('rcper', S.per, firstDay, lastDay, v => { S.per = v; re(); });
+  $('#rchf').addEventListener('change', e => { S.hf = +e.target.value; if(S.ht <= S.hf) S.ht = S.hf + 1; re(); });
+  $('#rcht').addEventListener('change', e => { S.ht = +e.target.value; if(S.hf >= S.ht) S.hf = S.ht - 1; re(); });
   $('#rcadd').addEventListener('change', e => { if(e.target.value){ S.extra.push(e.target.value); S.off = S.off.filter(n => n !== e.target.value); re(); } });
   $('#rcwrap').addEventListener('click', e => {
     const d = e.target.closest('[data-rcdel]'), o = e.target.closest('[data-rcoff]'), on = e.target.closest('[data-rcon]'), tr = e.target.closest('tr[data-rc]');

@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.10.1-2563eb)
+![Version](https://img.shields.io/badge/version-20.10.2-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -85,7 +85,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Fiche numéro** | Nouvel onglet : tout sur un numéro (SDA, client, employé) sur une page. |
 | **Historique client** | Chaque appel de la chronologie ouvre son parcours détaillé. |
 | **Numéros importants** | Contacts clés suivis appel par appel : manqués, rappels en retard, délais, interlocuteurs ; alerte sur le tableau de bord. |
-| **Réceptions** | Transferts revenus par poste et détail du poste choisi. |
+| **Réceptions** | Choix des heures à côté de la période. |
 | **Délai avant réponse** | Temps d'attente du client avant qu'une personne décroche : médiane, 90 %, objectif, répartition, par heure, par magasin et par personne. |
 | **Statistiques** | « Tout l'historique » part du vrai début de l'historique. |
 | **Générateur de rapport** | Jours avant l'historique grisés, moyennes sur les jours couverts, comparaison seulement si possible. |
@@ -229,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.10.1** | Les transferts revenus à la réception |
+| **20.10.2** | Les heures dans Réceptions |
+| 20.10.1 | Les transferts revenus à la réception |
 | 20.10 | Le suivi après implantation |
 | 20.9.1 | Le clavier dans les fenêtres et les tableaux |
 | 20.9 | Les postes 1000 à 1005 de l'intégrateur |

@@ -310,7 +310,8 @@
    "astuce": "Une alerte apparaît sur le tableau de bord et dans Priorités quand un contact important attend un rappel."
   },
   "receptions": {
-   "sert": "Les postes de réception : appels présentés, répondus et perdus, mises en parking, appels simultanés, heures de surcharge et appels transférés revenus à la réception faute de réponse."
+   "sert": "Les postes de réception : appels présentés, répondus et perdus, mises en parking, appels simultanés, heures de surcharge et appels transférés revenus à la réception faute de réponse.",
+   "astuce": "Choisissez les heures (par exemple de 8 h à 17 h) pour ne compter que les appels des heures d'ouverture."
   },
   "delai": {
    "sert": "Le temps d'attente du client avant qu'une personne décroche : médiane, 90 % des appels, objectif, répartition, par heure, par magasin et par personne."
@@ -1265,7 +1266,8 @@
     "astuce": "An alert appears on the dashboard and in Priorities when an important contact is waiting for a call-back."
    },
    "receptions": {
-    "sert": "Reception extensions: calls presented, answered and lost, parked calls, simultaneous calls, overload hours and transferred calls that came back to reception for lack of an answer."
+    "sert": "Reception extensions: calls presented, answered and lost, parked calls, simultaneous calls, overload hours and transferred calls that came back to reception for lack of an answer.",
+    "astuce": "Choose the hours (for example 8 h to 17 h) to count only the calls during opening hours."
    },
    "delai": {
     "sert": "How long the customer waits before a person picks up: median, 90 % of calls, goal, distribution, by hour, by store and by person."
