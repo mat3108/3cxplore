@@ -489,7 +489,11 @@
    ]
   },
   "avantapres": {
-   "sert": "Le parcours de chaque SDA comparé entre le backup de référence et le backup actuel : améliorés, dégradés, changés."
+   "sert": "Le parcours de chaque SDA comparé entre le backup de référence et le backup actuel : améliorés, dégradés, changés ; et un rapport à imprimer avec les diagrammes d'avant et d'après, les éléments modifiés surlignés.",
+   "comment": [
+    "Chargez d'abord l'ancien backup dans l'onglet Comparaison.",
+    "« Préparer le rapport » puis « Imprimer / PDF » : pour chaque SDA dont le parcours a changé, le diagramme d'avant puis celui d'après."
+   ]
   },
   "modifs": {
    "sert": "Les changements de configuration d'un magasin sur une période, avec l'avant et l'après de chaque champ."
@@ -1446,7 +1450,11 @@
     ]
    },
    "avantapres": {
-    "sert": "The path of each DID compared between the reference backup and the current backup: improved, worse, changed."
+    "sert": "The path of each DID compared between the reference backup and the current backup: improved, worse, changed; and a printable report with the before and after diagrams, changed elements highlighted.",
+    "comment": [
+     "First load the older backup in the Comparison tab.",
+     "« Prepare the report » then « Print / PDF »: for each DID whose flow changed, the before diagram then the after diagram."
+    ]
    },
    "modifs": {
     "sert": "A store's configuration changes over a period, with the before and after of each field."

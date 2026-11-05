@@ -2,7 +2,7 @@
 // chaque élément une seule fois ; un élément déjà affiché est rappelé par un renvoi « voir plus haut »
 const DGP_KEY = 'diagportrait3cx';
 const dgpOn = () => { try{ return localStorage.getItem(DGP_KEY) === '1'; }catch(e){ return false; } };
-function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA
+function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA ; o.mark (20.10.4) : éléments à surligner
   o = o || {};
   const kids = {}; g.edges.forEach(e => (kids[e.from] ||= []).push(e));
   const shown = new Set(), num = {}; let html = '', k = 0;
@@ -13,7 +13,7 @@ function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, e
     const st = KIND_STYLE[n.kind] || KIND_STYLE.other;
     if(shown.has(id)){ html += `<div class="dgp-row" style="--d:${depth}">${depth ? '<span class="dgp-arr">↳</span>' : ''}${lbl(label)}<div class="dgp-ref" style="--c:${st.c}"><span>${esc(st.t)}</span> <b>${esc(n.title)}</b>${n.sub ? ` <span class="mono">${esc(n.sub)}</span>` : ''} <span class="muted">(voir plus haut, n° ${num[id]})</span></div></div>`; return; }
     shown.add(id); num[id] = ++k;
-    html += `<div class="dgp-row" style="--d:${depth}">${depth ? '<span class="dgp-arr">↳</span>' : ''}${lbl(label)}<div class="dgp-box" style="--c:${st.c}"><div class="dgp-k"><span class="dgp-n">${num[id]}</span> <span>${esc(st.t)}</span>${n.sub ? ` · <span class="mono">${esc(n.sub)}</span>` : ''}</div><div class="dgp-t">${esc(n.title)}</div>`
+    html += `<div class="dgp-row" style="--d:${depth}">${depth ? '<span class="dgp-arr">↳</span>' : ''}${lbl(label)}<div class="dgp-box${o.mark && o.mark.has(id) ? ' dgp-chg' : ''}" style="--c:${st.c}"><div class="dgp-k"><span class="dgp-n">${num[id]}</span> <span>${esc(st.t)}</span>${n.sub ? ` · <span class="mono">${esc(n.sub)}</span>` : ''}</div><div class="dgp-t">${esc(n.title)}</div>`
       + n.lines.map(l => `<div class="dgp-l">${esc(l)}</div>`).join('')
       + (n.agents ? `<div class="dgp-l"><b>${n.agents.length} agent${n.agents.length > 1 ? 's' : ''}</b> : ${n.agents.slice(0, 24).map(esc).join(' · ')}${n.agents.length > 24 ? ` · + ${n.agents.length - 24}` : ''}</div>` : '') + `</div></div>`;
     (kids[id] || []).filter(e => !e.back || true).forEach(e => walk(e.to, depth + 1, e.labels));

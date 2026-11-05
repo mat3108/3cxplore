@@ -1,5 +1,23 @@
 [
  {
+  "version": "20.10.4",
+  "date": "2026-11-05",
+  "titre": "Les parcours avant / après en rapport",
+  "resume": "Avant / après : un rapport à imprimer ou en PDF avec, pour chaque SDA dont la configuration du parcours a changé entre les deux backups, le diagramme d'avant puis celui d'après, les éléments modifiés surlignés.",
+  "changements": [
+   "Avant / après : nouveau bouton « Préparer le rapport », puis « Imprimer / PDF ». Pour chaque SDA dont le parcours a changé, le diagramme du parcours (en portrait) avec la configuration du backup avant, puis avec celle du backup après, l'un sous l'autre.",
+   "Surlignés : dans « Avant », les éléments modifiés ou retirés ensuite ; dans « Après », les éléments nouveaux ou modifiés (horaires, destinations, touches de menu, délais, agents, messages, nom de la règle entrante, statut et renvoi des postes). Un élément n'est pas surligné parce qu'un élément plus loin dans le parcours a changé.",
+   "Les SDA qui ont exactement le même changement partagent un seul couple de diagrammes ; les SDA nouveaux (après seulement) et retirés (avant seulement) sont inclus, les SDA au parcours identique sont listés à la fin.",
+   "Le rapport suit le magasin choisi dans le bandeau, ou tous les magasins."
+  ],
+  "onglets": [
+   [
+    "Avant / après",
+    "Rapport des parcours (diagrammes) avant / après, éléments modifiés surlignés."
+   ]
+  ]
+ },
+ {
   "version": "20.10.3",
   "date": "2026-11-05",
   "titre": "Le rapport complet par magasin",

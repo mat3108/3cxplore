@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.10.3-2563eb)
+![Version](https://img.shields.io/badge/version-20.10.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -57,7 +57,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Appels au 911** | Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
 | **Doublons et incohérences** | Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire. |
-| **Avant / après** | Parcours des SDA comparés entre le backup de référence et le backup actuel. |
+| **Avant / après** | Rapport des parcours (diagrammes) avant / après, éléments modifiés surlignés. |
 
 ### Configuration
 | Onglet | À quoi il sert |
@@ -229,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.10.3** | Le rapport complet par magasin |
+| **20.10.4** | Les parcours avant / après en rapport |
+| 20.10.3 | Le rapport complet par magasin |
 | 20.10.2 | Les heures dans Réceptions |
 | 20.10.1 | Les transferts revenus à la réception |
 | 20.10 | Le suivi après implantation |
