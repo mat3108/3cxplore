@@ -100,6 +100,19 @@ function simulate(did, day, min, keys, ctx, opt){
         return nx ? overflow('les membres du groupe sonnent', nx) : {end: 'human', why: 'les membres du groupe sonnent'};
       }
       if(node.kind === 'Poste'){
+        // 20.11 : exceptions de renvoi, essayées par priorité avant le statut du poste ; la première qui correspond renvoie l'appel immédiatement
+        const fr = fwdRulesOn(o);
+        if(fr.length && o.enabled !== false){
+          const dep = (o.groups || []).map(g => Object.values(DNX).find(x => x.kind === 'Département' && x.name === g.g)).find(x => x && !isSysGroup(x.obj));
+          const hol = dep ? deptSchedule(dep.obj).isHol(day) : !!simHol(day);
+          let hit = -1; const unk = [];
+          for(let i = 0; i < fr.length; i++){ const m = fwdRuleMatch(fr[i], day, min, wd, hol); if(m === true){ hit = i; break; } if(m === null) unk.push(i + 1); }
+          if(hit >= 0){ st({kind: 'Poste', dn: d.dn, title: d.dn + ' ' + nmX(d.dn), cls: 'ok', branch: `Exception ${hit + 1} : renvoi immédiat`,
+              lines: [`Exception ${hit + 1} sur ${fr.length} : ${fwdRuleWhen(fr[hit])}`, ...(hit ? [`Exception${hit > 1 ? 's' : ''} ${Array.from({length: hit}, (_, j) => j + 1).join(', ')} : ne s'applique${hit > 1 ? 'nt' : ''} pas à ce moment`] : []),
+                ...(unk.length ? [`Exception${unk.length > 1 ? 's' : ''} ${unk.join(', ')} : dépend de l'appelant ou des heures d'ouverture du poste, non simulé${unk.length > 1 ? 'es' : 'e'}`] : [])]});
+            d = fr[hit].dest; continue; }
+          note = `${fr.length} exception${fr.length > 1 ? 's' : ''} de renvoi : aucune ne s'applique à ce moment${unk.length ? ` (${unk.join(', ')} non simulée${unk.length > 1 ? 's' : ''})` : ''}`;
+        }
         const p = o.profiles.find(x => x.name === o.profile) || o.profiles[0];
         const avail = p ? p.routes.some(r => /^AvailableRoute/.test(r[0])) : true; // 19.0.3 : type du statut lu dans son profil (les statuts personnalisés peuvent être de type Absent)
         const rt = p ? p.routes.find(r => avail ? /^AvailableRoute › NoAnswer › AllCalls/.test(r[0]) : /^AwayRoute › External/.test(r[0])) : null;

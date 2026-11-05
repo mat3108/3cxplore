@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.10.6-2563eb)
+![Version](https://img.shields.io/badge/version-20.11-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -46,10 +46,10 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Rapport** | Rapport imprimable / PDF par magasin : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes, téléphones à mettre à jour. |
 | **Fiche magasin** | Lien « Rapport du département » pour chaque département du magasin. |
 | **Suivi** | Évolution des indicateurs d'un backup à l'autre (service, problèmes, téléphones, parc), par système ou par magasin ; ajout d'anciens backups, export / import de l'historique. |
-| **Comparaison** | Nom des destinations lu dans chaque backup. |
+| **Comparaison** | Exceptions de renvoi des postes comparées. |
 | **Flux d'appels** | Chaque numéro (DID) avec sa règle entrante et l'arbre d'acheminement complet : département → standard IVR (touche par touche) → files d'attente → agents, pour les heures d'ouverture et hors heures. |
-| **Flux d'appel (diagramme)** | Interrupteur « Portrait (lettre) » et impression PDF au format lettre. |
-| **Simulateur d'appel** | Heures du département propriétaire d'une file, d'un menu ou d'un groupe de sonnerie. |
+| **Flux d'appel (diagramme)** | Une branche par exception de renvoi d'un poste. |
+| **Simulateur d'appel** | L'exception de renvoi qui s'applique au moment choisi. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Suivi après implantation** | Nouvelle page : SDA et destinations, fax à tester, diagrammes des parcours, à imprimer. |
@@ -229,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.10.6** | Le détail de chaque étape dans Avant / après |
+| **20.11** | Les exceptions de renvoi décortiquées |
+| 20.10.6 | Le détail de chaque étape dans Avant / après |
 | 20.10.5 | Les bons noms dans Comparaison |
 | 20.10.4 | Les parcours avant / après en rapport |
 | 20.10.3 | Le rapport complet par magasin |

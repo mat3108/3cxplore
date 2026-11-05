@@ -71,6 +71,10 @@ function buildFlow(entry){
       ownerBranches(n, o).forEach(([l, r]) => { if(!skip(r)) addEdge(id, target(r), l); });
     } else if(d.kind==='Poste'){
       if(o.email) node.lines.push(o.email);
+      // 20.11 : exceptions de renvoi : une branche par exception, dans l'ordre où 3CX les essaie
+      const fr = fwdRulesOn(o);
+      if(fr.length){ node.lines.push(`${fr.length} exception${fr.length > 1 ? 's' : ''} de renvoi : la première qui correspond renvoie l'appel immédiatement`);
+        fr.forEach((r, i) => { if(!skip(r.dest)) addEdge(id, target(r.dest), fwdRuleLabel(r, i + 1)); }); }
     }
     return id;
   }
@@ -208,3 +212,26 @@ function renderFlow(g){
   return {svg: s + '</svg>', W, Hh};
 }
 
+
+// ---------- Exceptions de renvoi d'un poste (20.11) ----------
+// exceptions actives, par priorité (un backup lu par une version antérieure n'en a pas : rechargez-le)
+const fwdRulesOn = o => (o && o.fwdRules || []).filter(r => r.enabled && r.dest && r.dest.to && r.dest.to !== 'None');
+// quand l'exception s'applique : heures, appelant, type d'appel
+function fwdRuleWhen(r){
+  const h = !r.hours || r.hours.type === 'AllHours' ? 'toutes heures' : r.hours.type === 'SpecificHours' ? (hoursSummary(r.hours).filter(t => !/fermé$/.test(t)).join(', ') || 'aucune heure') : r.hours.type === 'OfficeHours' ? 'heures d\'ouverture' : r.hours.type === 'OutOfOfficeHours' ? 'hors des heures d\'ouverture' : r.hours.type;
+  const who = !r.data || r.data === '*' ? '' : ' · appelant ' + r.data;
+  const ct = r.callType === 'External' ? ' · appels externes' : r.callType === 'Internal' ? ' · appels internes' : '';
+  return h + who + ct + (r.hours && r.hours.type === 'SpecificHours' && !r.ignoreHol ? ' · sauf fériés' : '');
+}
+const fwdRuleLabel = (r, i) => `Exception ${i} : ${fwdRuleWhen(r)}`;
+// l'exception correspond-elle à ce moment ? true / false, ou null si on ne peut pas le savoir (appelant précis, heures d'ouverture du poste)
+function fwdRuleMatch(r, day, min, wd, hol){
+  if(r.callType === 'Internal') return false; // le simulateur suit un appel externe
+  if(r.data && r.data !== '*') return null;
+  const t = r.hours ? r.hours.type : 'AllHours';
+  if(t === 'AllHours' || !t) return true;
+  if(t !== 'SpecificHours') return null;
+  if(!r.ignoreHol && hol) return false;
+  const ps = (r.hours.days || []).find(x => x.day === DAYS_EN[wd])?.p || [];
+  return ps.some(([b, e]) => min >= toMin(b) && min < toMin(e));
+}

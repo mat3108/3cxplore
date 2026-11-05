@@ -25,7 +25,8 @@ function cmpCategories(X, bare){ // bare (20.10.5) : destinations sans nom, pour
   return [
     {key: 'postes', label: 'Postes', items: X.extensions, id: e => e.number, name: e => `${e.number} ${(e.first + ' ' + e.last).trim()}`, link: e => e.number,
       fields: e => ({'Nom': (e.first + ' ' + e.last).trim(), 'Courriel': e.email, 'Caller ID': phone(e.callerId), 'Mobile': phone(e.mobile), 'Actif': yn(e.enabled), 'Enregistrement': yn(e.record), 'Messagerie': yn(e.vm), 'Réseau local seulement': yn(e.lanOnly),
-        'Départements': e.groups.filter(g => !/^(__|SYSTEM$)/.test(g.g)).map(g => g.g + (g.role ? ' (' + g.role + ')' : '')), 'Files': e.queues, 'Groupes de sonnerie': e.ringGroups, 'Téléphones (MAC)': e.devices.map(d => macFmt(d.mac) + ' ' + (d.model || ''))})},
+        'Départements': e.groups.filter(g => !/^(__|SYSTEM$)/.test(g.g)).map(g => g.g + (g.role ? ' (' + g.role + ')' : '')), 'Files': e.queues, 'Groupes de sonnerie': e.ringGroups, 'Téléphones (MAC)': e.devices.map(d => macFmt(d.mac) + ' ' + (d.model || '')),
+        'Exceptions de renvoi': (e.fwdRules || []).map((r, i) => `${fwdRuleLabel(r, i + 1)} → ${cmpDest(r.dest)}${r.enabled ? '' : ' (désactivée)'}`)})},
     {key: 'phones', label: 'Téléphones', items: phones, id: d => (d.mac || '').toUpperCase(), name: d => `${macFmt(d.mac)} — ${d.model || d.template}`, link: d => d.ext,
       fields: d => ({'Poste': d.ext + ' ' + d.user, 'Modèle': d.model, 'Gabarit': d.template, 'Firmware assigné': d.firmware ? fwVersion(d.firmware) : '— (aucun)', 'Langue': d.lang})},
     {key: 'files', label: "Files d'attente", items: X.queues, id: q => q.number, name: q => `${q.number} ${q.name}`, link: q => q.number,

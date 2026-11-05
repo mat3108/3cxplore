@@ -1,5 +1,31 @@
 [
  {
+  "version": "20.11",
+  "date": "2026-11-05",
+  "titre": "Les exceptions de renvoi décortiquées",
+  "resume": "Les exceptions de renvoi d'un poste (par exemple un poste qui sert d'aiguillage selon l'heure) sont lues dans le backup : chaque exception devient une branche du diagramme, le simulateur suit celle qui s'applique au moment choisi, et la Comparaison les liste.",
+  "changements": [
+   "Postes avec exceptions de renvoi (règles de renvoi par heures ou par appelant, essayées par ordre de priorité ; la première qui correspond renvoie l'appel immédiatement) : elles sont maintenant lues dans le backup. Rechargez votre backup pour les voir.",
+   "Flux d'appel (diagramme) et diagramme en portrait : une branche par exception, avec ses heures (« Exception 2 : Lun–Ven 07:15–08:00 · sauf fériés »), l'appelant ou le type d'appel s'ils sont précisés, et sa destination dessinée à la suite.",
+   "Simulateur, Contrôle des SDA, Avant / après et le rapport des parcours : au moment simulé, l'exception qui s'applique renvoie l'appel (« Exception 3 : renvoi immédiat »), avec les exceptions écartées. Jours fériés : ceux du département du poste, sauf si l'exception les ignore. Une exception qui dépend de l'appelant précis est signalée comme non simulée.",
+   "Comparaison : nouveau champ « Exceptions de renvoi » pour les postes."
+  ],
+  "onglets": [
+   [
+    "Flux d'appel (diagramme)",
+    "Une branche par exception de renvoi d'un poste."
+   ],
+   [
+    "Simulateur d'appel",
+    "L'exception de renvoi qui s'applique au moment choisi."
+   ],
+   [
+    "Comparaison",
+    "Exceptions de renvoi des postes comparées."
+   ]
+  ]
+ },
+ {
   "version": "20.10.6",
   "date": "2026-11-05",
   "titre": "Le détail de chaque étape dans Avant / après",

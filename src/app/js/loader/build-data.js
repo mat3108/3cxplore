@@ -99,7 +99,12 @@
         mobile: pr.MOBILENUMBER || '', enabled: txt(e, 'Enabled') === 'True', profile: txt(e, 'CurrentProfile'), queueStatus: txt(e, 'QueueStatus'),
         userStatus: txt(e, 'UserStatus'), record: txt(e, 'RecordCalls') === 'True', vm: txt(e, 'VMEnabled') === 'True', vmEmail: txt(e, 'VMEmailOptions'),
         noAnswer: txt(e, 'NoAnswerTimeout'), lanOnly: pr.ALLOW_LAN_ONLY === '1', azure: pr.AZURE_UPN || '', blfs: parseBlfs(pr.SHARED_BLFS), hidePresence: txt(e, 'HidePresence') === 'True',
-        groups: extGroups[num] || [], queues: extQueues[num] || [], ringGroups: extRgs[num] || [], devices, profiles, props: p2};
+        groups: extGroups[num] || [], queues: extQueues[num] || [], ringGroups: extRgs[num] || [], devices, profiles, props: p2,
+        // 20.11 : exceptions de renvoi (ForwardingRules) : par ordre de priorité, la première qui correspond renvoie l'appel immédiatement
+        fwdRules: qa(e, 'ForwardingRules/ExtensionRule').map(r => { const c = q1(r, 'Conditions'), h = q1(r, 'Hours');
+          return {prio: +txt(r, 'Priority') || 0, enabled: txt(r, 'Enabled') !== 'False', callType: (q1(c, 'CallType') || {getAttribute: () => ''}).getAttribute('Type') || '',
+            cond: (q1(c, 'Condition') || {getAttribute: () => ''}).getAttribute('Type') || '', data: txt(r, 'Data'), hours: hours(r), ignoreHol: !!h && h.getAttribute('IgnoreHolidays') === 'True', dest: dest(q1(r, 'Destination'))}; })
+          .sort((a, b) => a.prio - b.prio)};
     });
     D.lines = qa(ten, 'DN/ExternalLine').map(l => ({
       number: txt(l, 'Number'), gateway: txt(l, 'Gateway'), extNumber: txt(l, 'ExternalNumber'), direction: txt(l, 'Direction'), sim: txt(l, 'SimultaneousCalls'),
