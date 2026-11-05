@@ -9,11 +9,16 @@ function backupDateISO(s){
   const d = new Date(`${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}T${String(h).padStart(2, '0')}:${m[5]}:${m[6] || '00'}Z`);
   return isNaN(d) ? '' : d.toISOString();
 }
-const cmpDest = d => !d || !d.to || d.to === 'None' ? '—' : d.to === 'External' ? 'Externe ' + phone(d.ext) : `${TO_FR[d.to] || d.to}${d.dn ? ' ' + d.dn + (dnName(d.dn) ? ' ' + dnName(d.dn) : '') : ''}`;
+// 20.10.5 : nom de la destination lu dans le backup comparé (nameOf), pas dans le backup actuel : un numéro réutilisé par un autre élément gardait le nom du nouveau
+const cmpDestN = (d, nameOf) => !d || !d.to || d.to === 'None' ? '—' : d.to === 'External' ? 'Externe ' + phone(d.ext) : `${TO_FR[d.to] || d.to}${d.dn ? ' ' + d.dn + (nameOf(d.dn) ? ' ' + nameOf(d.dn) : '') : ''}`;
+const cmpDest = d => cmpDestN(d, dnName);
+// noms des éléments d'un backup, par numéro
+const cmpNames = X => { const m = {}; (X.extensions || []).forEach(e => m[e.number] = (e.first + ' ' + e.last).trim()); [X.queues, X.ivrs, X.ringGroups, X.groups].forEach(l => (l || []).forEach(o => m[o.number] = o.name)); return n => m[n] || ''; };
 const cmpHours = h => hoursSummary(h).join(' ; ') || '—';
 const yn = b => b ? 'oui' : 'non';
 // définition des catégories comparées : clé unique + champs (texte ou liste)
-function cmpCategories(X){
+function cmpCategories(X, bare){ // bare (20.10.5) : destinations sans nom, pour comparer les numéros seulement
+  const nameOf = bare ? () => '' : cmpNames(X), cmpDest = d => cmpDestN(d, nameOf); // 20.10.5 : destinations nommées d'après ce backup
   const lines = X.lines || [], ruleOf = {};
   lines.forEach(l => { const by = {}; l.rules.forEach(r => by[r.data] = r); const def = l.rules.find(r => r.cond === 'ForwardAll'); l.dids.forEach(d => ruleOf[d] = {l, r: by[d] || def, def: !by[d]}); });
   const phones = []; X.extensions.forEach(e => e.devices.forEach(d => d.mac && phones.push({...d, ext: e.number, user: (e.first + ' ' + e.last).trim()})));
@@ -47,6 +52,8 @@ function cmpCategories(X){
 }
 function cmpDiff(OLD, NEW){
   const co = cmpCategories(OLD), cn = cmpCategories(NEW);
+  // 20.10.5 : on compare les destinations sans leur nom (un élément simplement renommé n'est pas un changement de ce qui pointe vers lui), on affiche avec le nom de chaque backup
+  const bo = cmpCategories(OLD, true), bn = cmpCategories(NEW, true);
   return cn.map((cat, i) => {
     const o = co[i], mo = new Map(o.items.map(x => [cat.id(x), x])), mn = new Map(cat.items.map(x => [cat.id(x), x]));
     const added = [], removed = [], changed = [];
@@ -54,14 +61,14 @@ function cmpDiff(OLD, NEW){
     mo.forEach((x, k) => { if(!mn.has(k)) removed.push(x); });
     mn.forEach((x, k) => {
       const y = mo.get(k); if(!y) return;
-      const fa = o.fields(y), fb = cat.fields(x), diffs = [];
+      const fa = o.fields(y), fb = cat.fields(x), ga = bo[i].fields(y), gb = bn[i].fields(x), diffs = [];
       Object.keys(fb).forEach(f => {
-        const a = fa[f], b = fb[f];
+        const a = fa[f], b = fb[f], a0 = ga[f], b0 = gb[f];
         if(Array.isArray(b) || Array.isArray(a)){
-          const A = new Set(a || []), B = new Set(b || []);
-          const plus = [...B].filter(v => !A.has(v)), minus = [...A].filter(v => !B.has(v));
+          const A0 = new Set(a0 || []), B0 = new Set(b0 || []);
+          const plus = [...new Set((b || []).filter((v, j) => !A0.has((b0 || [])[j])))], minus = [...new Set((a || []).filter((v, j) => !B0.has((a0 || [])[j])))];
           if(plus.length || minus.length) diffs.push({f, plus, minus});
-        } else if(String(a ?? '') !== String(b ?? '')) diffs.push({f, a: a ?? '', b: b ?? ''});
+        } else if(String(a0 ?? '') !== String(b0 ?? '')) diffs.push({f, a: a ?? '', b: b ?? ''});
       });
       if(diffs.length) changed.push({x, diffs});
     });

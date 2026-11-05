@@ -1,5 +1,21 @@
 [
  {
+  "version": "20.10.5",
+  "date": "2026-11-05",
+  "titre": "Les bons noms dans Comparaison",
+  "resume": "Comparaison : le nom d'une destination est lu dans le backup concerné. Un numéro réutilisé par un nouvel élément n'affiche plus le nom de l'ancien (ou l'inverse).",
+  "changements": [
+   "Comparaison : dans « avant », une destination (département, file, menu, groupe, poste) est nommée d'après le backup d'avant ; dans « après », d'après le backup d'après. Jusqu'ici, les deux côtés prenaient le nom du backup actuel : par exemple, un SDA renvoyé vers un département supprimé puis recréé sous le même numéro affichait le nom de l'ancien département.",
+   "Les changements comptés ne bougent pas : un élément simplement renommé apparaît dans sa propre catégorie, pas comme un changement de tout ce qui pointe vers lui."
+  ],
+  "onglets": [
+   [
+    "Comparaison",
+    "Nom des destinations lu dans chaque backup."
+   ]
+  ]
+ },
+ {
   "version": "20.10.4",
   "date": "2026-11-05",
   "titre": "Les parcours avant / après en rapport",
