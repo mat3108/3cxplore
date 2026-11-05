@@ -1,6 +1,6 @@
   // ---------- Fermeture et effacement des données conservées dans le navigateur ----------
   const LS_GROUPS = {rappels: ['rappels3cx:'], notes: ['notes3cx:'],
-    all: ['seg3cx:', 'segsel3cx:', 'objectifs3cx:', 'suivi3cx:', 'actions3cx:', 'corrections3cx:', 'fw3cx-colle', 'stats3cx-periode', 'rapport3cx-sections', 'modifs3cx-periode', 'simulateur3cx', 'quoideneuf3cx:', 'feries3cx:', 'vip3cx:', 'absences3cx:', 'rappellentexc3cx:', 'rappellent3cx', 'couts3cx:', 'pkplan3cx:', 'visite3cx', 'visiteauto3cx']};
+    all: ['seg3cx:', 'segsel3cx:', 'objectifs3cx:', 'suivi3cx:', 'actions3cx:', 'corrections3cx:', 'fw3cx-colle', 'stats3cx-periode', 'rapport3cx-sections', 'rapport3cx-orientation', 'rapport3cx-diagramme', 'modifs3cx-periode', 'simulateur3cx', 'quoideneuf3cx:', 'feries3cx:', 'vip3cx:', 'absences3cx:', 'rappellentexc3cx:', 'rappellent3cx', 'couts3cx:', 'pkplan3cx:', 'visite3cx', 'visiteauto3cx']};
   const lsKeys = g => { const out = []; try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(LS_GROUPS[g].some(p => k.startsWith(p))) out.push(k); } }catch(e){} return out; };
   const rappelsCount = () => lsKeys('rappels').reduce((a, k) => { try{ return a + Object.keys(JSON.parse(localStorage.getItem(k) || '{}')).length; }catch(e){ return a; } }, 0);
   const KEEP_WIN = ['__appListeners', '__runBatch', '__printBatch', '__app', '__recUrls', '__wnWired'];

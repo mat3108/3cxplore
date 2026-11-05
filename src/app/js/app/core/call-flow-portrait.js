@@ -17,12 +17,63 @@ function rptDirWire(root, cb){ root.querySelectorAll('[data-rpd]').forEach(b => 
   try{ localStorage.setItem(RPD_KEY, b.dataset.rpd); }catch(e){} root.querySelectorAll('[data-rpd]').forEach(x => { const on = x.dataset.rpd === b.dataset.rpd; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); if(cb) cb(); })); }
 // phrase « Lecture : … » des rapports selon le sens choisi
 const rptRead = txt => rptHoriz() ? txt.replace("Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment", "Lecture : de gauche à droite, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment").replace(". Un élément déjà affiché est rappelé par son numéro.", '. Une flèche en pointillé revient vers un élément déjà affiché.') : txt;
+// 20.11.4 : zoom des diagrammes horizontaux (mêmes gestes que l'onglet Flux d'appel) et plein écran
+const DGH_BAR = full => `<div class="dghbar"><button type="button" class="btn" data-dgz="-1" title="Zoom arrière" aria-label="Zoom arrière">−</button><span class="dghpct" aria-live="polite"></span><button type="button" class="btn" data-dgz="1" title="Zoom avant" aria-label="Zoom avant">+</button><button type="button" class="btn" data-dgz="0" title="Ajuster à la fenêtre">Ajuster</button><button type="button" class="btn" data-dgz="100" title="Taille réelle">100 %</button>${full ? '<button type="button" class="btn" data-dgz="full" title="Ouvrir ce diagramme en plein écran">Plein écran</button>' : '<button type="button" class="btn" data-dgz="close" title="Fermer le plein écran (Échap)">Fermer</button>'}</div>`;
+const dghSvg = b => b.querySelector('.dgh-view svg');
+const dghW = b => dghSvg(b).viewBox.baseVal.width, dghH = b => dghSvg(b).viewBox.baseVal.height;
+const dghZoom = b => b.dataset.z ? +b.dataset.z : dghSvg(b).getBoundingClientRect().width / dghW(b);
+// ajusté : à la largeur dans le rapport ; à la largeur et à la hauteur en plein écran
+const dghFit = b => { const v = b.querySelector('.dgh-view'); return b.classList.contains('dghfs') ? Math.min((v.clientWidth - 24) / dghW(b), (v.clientHeight - 24) / dghH(b)) : null; };
+function dghSet(b, z, at){ // z : facteur, ou null pour ajuster ; at : point gardé sous la souris {x, y} relatif à la zone
+  const v = b.querySelector('.dgh-view'), s = dghSvg(b); if(!s) return;
+  const old = dghZoom(b), p = at || {x: v.clientWidth / 2, y: v.clientHeight / 2};
+  const fit = z == null; if(fit) z = dghFit(b); if(fit) b.dataset.fit = '1'; else delete b.dataset.fit;
+  if(z == null){ delete b.dataset.z; s.style.width = ''; s.style.maxWidth = dghW(b) + 'px'; b.classList.remove('zoomed'); }
+  else { z = Math.min(3, Math.max(0.05, z)); b.dataset.z = z; s.style.width = Math.round(dghW(b) * z) + 'px'; s.style.maxWidth = 'none'; b.classList.toggle('zoomed', v.scrollWidth > v.clientWidth + 1 || v.scrollHeight > v.clientHeight + 1); }
+  const r = dghZoom(b) / old; v.scrollLeft = (v.scrollLeft + p.x) * r - p.x; v.scrollTop = (v.scrollTop + p.y) * r - p.y;
+  const pc = (b.__bar || b).querySelector('.dghpct'); if(pc) pc.textContent = Math.round(dghZoom(b) * 100) + ' %';
+}
+function dghOpen(b){
+  const ttl = (b.closest('.rpflow')?.querySelector('.rpflowh h3') || b.closest('.dgp')?.querySelector('h1'))?.textContent || 'Parcours des appels';
+  const grp = b.closest('.apgrp')?.querySelector('h2')?.textContent;
+  const o = document.createElement('div'); o.id = 'dghfull'; o.className = 'report dghfull'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-label', ttl);
+  o.innerHTML = `<div class="dghfhead"><div class="dghft">${grp ? `<span class="muted">${esc(grp.trim())}</span>` : ''}<b>${esc(ttl.trim())}</b></div>${DGH_BAR(false)}</div><div class="dgh-body dghfs"><div class="dgh-view">${dghSvg(b).outerHTML}</div></div>`;
+  o.__back = b.querySelector('[data-dgz=full]');
+  document.body.appendChild(o); document.body.classList.add('dghopen');
+  const fb = o.querySelector('.dghfs'); fb.__bar = o.querySelector('.dghbar');
+  dghSet(fb, null); o.querySelector('[data-dgz=close]').focus();
+}
+function dghClose(){ const o = document.getElementById('dghfull'); if(!o) return; const back = o.__back; o.remove(); document.body.classList.remove('dghopen'); if(back && back.isConnected) back.focus(); }
+if(!window.__dghWired){ window.__dghWired = true;
+  const body = t => { const o = t.closest('#dghfull'); return o ? o.querySelector('.dghfs') : t.closest('.dgh-body'); };
+  document.addEventListener('click', e => { const k = e.target.closest('[data-dgz]'); if(!k) return; const b = body(k); if(!b) return; const z = k.dataset.dgz;
+    if(z === 'full') return dghOpen(b); if(z === 'close') return dghClose();
+    dghSet(b, z === '0' ? null : z === '100' ? 1 : dghZoom(b) * (+z > 0 ? 1.25 : 0.8)); });
+  // Ctrl + molette (ou pincement sur le pavé tactile) : zoom autour du pointeur
+  document.addEventListener('wheel', e => { if(!(e.ctrlKey || e.metaKey)) return; const v = e.target.closest && e.target.closest('.dgh-view'); if(!v) return; e.preventDefault();
+    const b = body(v), r = v.getBoundingClientRect(); dghSet(b, dghZoom(b) * (e.deltaY < 0 ? 1.1 : 0.9), {x: e.clientX - r.left, y: e.clientY - r.top}); }, {passive: false});
+  // glisser pour se déplacer dans un diagramme agrandi
+  let drag = null;
+  document.addEventListener('pointerdown', e => { const v = e.target.closest && e.target.closest('.dgh-view'); if(!v || e.button !== 0 || !body(v).classList.contains('zoomed')) return;
+    drag = {v, x: e.clientX, y: e.clientY, l: v.scrollLeft, t: v.scrollTop}; v.classList.add('grab'); e.preventDefault(); });
+  window.addEventListener('pointermove', e => { if(drag){ drag.v.scrollLeft = drag.l - (e.clientX - drag.x); drag.v.scrollTop = drag.t - (e.clientY - drag.y); } });
+  window.addEventListener('pointerup', () => { if(drag){ drag.v.classList.remove('grab'); drag = null; } });
+  document.addEventListener('keydown', e => { const o = document.getElementById('dghfull'); if(!o) return;
+    if(e.key === 'Escape'){ e.preventDefault(); dghClose(); }
+    else if(e.key === 'Tab'){ const f = [...o.querySelectorAll('button')]; if(e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length - 1].focus(); } else if(!e.shiftKey && document.activeElement === f[f.length - 1]){ e.preventDefault(); f[0].focus(); } }
+    else if((e.key === '+' || e.key === '=' || e.key === '-') && !e.metaKey && !e.ctrlKey){ e.preventDefault(); const b = o.querySelector('.dghfs'); dghSet(b, dghZoom(b) * (e.key === '-' ? 0.8 : 1.25)); }
+    else if(e.key === '0'){ e.preventDefault(); dghSet(o.querySelector('.dghfs'), null); } });
+  window.addEventListener('resize', () => { const o = document.getElementById('dghfull'); if(o){ const b = o.querySelector('.dghfs'); if(b.dataset.fit) dghSet(b, null); } });
+  window.addEventListener('hashchange', dghClose);
+  // le pourcentage s'affiche quand le diagramme apparaît
+  new MutationObserver(() => document.querySelectorAll('.dgh-body:not(.dghfs) .dghpct:empty').forEach(p => { const b = p.closest('.dgh-body'); if(b.isConnected && dghSvg(b) && dghSvg(b).getBoundingClientRect().width) p.textContent = Math.round(dghZoom(b) * 100) + ' %'; })).observe(document.body, {childList: true, subtree: true});
+}
 // impression de ce qui est affiché dans la page (window.print) avec l'orientation choisie
 function rptPrintPage(cls){ const st = document.createElement('style'); st.textContent = `@media print{@page{size:letter ${rptOrient()}}}`; document.head.appendChild(st);
   document.body.classList.add(cls); window.print(); setTimeout(() => { st.remove(); document.body.classList.remove(cls); }, 800); }
 function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA ; o.mark (20.10.4) : éléments à surligner ; o.horiz (20.11.3) : diagramme de gauche à droite
   o = o || {};
-  if(o.horiz) return dgpPage(g, r, o, (() => { const f = renderFlow(g, {mark: o.mark, inline: true}); return `<div class="dgh-body">${f.svg.replace(/ width="[\d.]+" height="[\d.]+"/, ` style="max-width:${f.W}px"`)}</div>`; })());
+  if(o.horiz) return dgpPage(g, r, o, (() => { const f = renderFlow(g, {mark: o.mark, inline: true}); return `<div class="dgh-body">${DGH_BAR(true)}<div class="dgh-view">${f.svg.replace(/ width="[\d.]+" height="[\d.]+"/, ` style="max-width:${f.W}px"`)}</div></div>`; })());
   const kids = {}; g.edges.forEach(e => (kids[e.from] ||= []).push(e));
   const shown = new Set(), num = {}; let html = '', k = 0;
   // plusieurs cas qui mènent au même élément : « … ou … » (chaque cas dans sa propre balise pour la traduction)

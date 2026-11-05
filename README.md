@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.11.3-2563eb)
+![Version](https://img.shields.io/badge/version-20.11.4-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -57,7 +57,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Appels au 911** | Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
 | **Doublons et incohérences** | Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire. |
-| **Avant / après** | Diagrammes avant / après verticaux ou horizontaux. |
+| **Avant / après** | Zoom et plein écran des diagrammes horizontaux. |
 
 ### Configuration
 | Onglet | À quoi il sert |
@@ -229,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.11.3** | Les diagrammes à la verticale ou à l'horizontale |
+| **20.11.4** | Zoomer dans les diagrammes horizontaux |
+| 20.11.3 | Les diagrammes à la verticale ou à l'horizontale |
 | 20.11.2 | Les rapports en portrait ou en paysage |
 | 20.11.1 | Toutes les exceptions sous le poste |
 | 20.11 | Les exceptions de renvoi décortiquées |

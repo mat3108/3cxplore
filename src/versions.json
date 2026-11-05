@@ -1,5 +1,27 @@
 [
  {
+  "version": "20.11.4",
+  "date": "2026-11-05",
+  "titre": "Zoomer dans les diagrammes horizontaux",
+  "resume": "Rapport par magasin et rapport avant / après, diagrammes en horizontal : chaque diagramme a sa barre de zoom et un bouton « Plein écran » pour lire les grands parcours.",
+  "changements": [
+   "Au-dessus de chaque diagramme horizontal : −, +, Ajuster, 100 % et le pourcentage. Ctrl + molette (ou pincer sur le pavé tactile) zoome autour du pointeur ; une fois agrandi, glisser pour se déplacer.",
+   "« Plein écran » ouvre le diagramme sur tout l'écran, ajusté à la fenêtre, avec les mêmes commandes ; Échap ou « Fermer » revient au rapport. Au clavier : + et − pour zoomer, 0 pour ajuster.",
+   "À l'impression et en PDF, les diagrammes reprennent la largeur de la page, quel que soit le zoom ; la barre n'est pas imprimée. Dans le PDF, les diagrammes restent nets quand on zoome dans la visionneuse.",
+   "« Effacer les autres réglages » efface aussi les choix Portrait / Paysage et Vertical / Horizontal des rapports."
+  ],
+  "onglets": [
+   [
+    "Rapport par magasin",
+    "Zoom et plein écran des diagrammes horizontaux."
+   ],
+   [
+    "Avant / après",
+    "Zoom et plein écran des diagrammes horizontaux."
+   ]
+  ]
+ },
+ {
   "version": "20.11.3",
   "date": "2026-11-05",
   "titre": "Les diagrammes à la verticale ou à l'horizontale",

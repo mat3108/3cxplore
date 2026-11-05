@@ -102,6 +102,7 @@
     "Choisissez le magasin et cochez les sections voulues, ou cliquez « Rapport complet » pour tout cocher.",
     "« Tous les rapports complets » génère d'un coup un rapport complet par magasin, dans un seul document.",
     "« Diagrammes : Vertical / Horizontal » : les parcours des SDA de haut en bas ou de gauche à droite.",
+    "En horizontal, chaque diagramme a sa barre de zoom (−, +, Ajuster, 100 %, Ctrl + molette, glisser pour se déplacer) et « Plein écran » ; Échap referme.",
     "« Page : Portrait / Paysage » oriente la page à l'impression et en PDF (retenu pour la prochaine fois).",
     "Imprimez, ou enregistrez en PDF depuis la fenêtre d'impression."
    ]
@@ -496,6 +497,7 @@
     "Chargez d'abord l'ancien backup dans l'onglet Comparaison.",
     "« Préparer le rapport » puis « Imprimer / PDF » : pour chaque SDA dont le parcours a changé, le diagramme d'avant puis celui d'après.",
     "« Diagrammes : Vertical / Horizontal » : les parcours de haut en bas ou de gauche à droite, éléments modifiés surlignés dans les deux cas.",
+    "En horizontal, chaque diagramme a sa barre de zoom (−, +, Ajuster, 100 %, Ctrl + molette, glisser pour se déplacer) et « Plein écran » ; Échap referme.",
     "« Page : Portrait / Paysage » oriente la page du rapport à l'impression et en PDF."
    ]
   },
@@ -1067,6 +1069,7 @@
      "Choose the store and tick the sections you want, or click « Full report » to tick them all.",
      "« All full reports » builds a full report for every store at once, in a single document.",
      "« Diagrams: Vertical / Horizontal »: DID call flows from top to bottom or from left to right.",
+     "In horizontal mode, each diagram has its zoom bar (−, +, Fit, 100 %, Ctrl + wheel, drag to move) and « Full screen »; Esc closes it.",
      "« Page: Portrait / Landscape » sets the page orientation when printing and in the PDF (remembered for next time).",
      "Print, or save as PDF from the print window."
     ]
@@ -1461,6 +1464,7 @@
      "First load the older backup in the Comparison tab.",
      "« Prepare the report » then « Print / PDF »: for each DID whose flow changed, the before diagram then the after diagram.",
      "« Diagrams: Vertical / Horizontal »: flows from top to bottom or from left to right, changed elements highlighted either way.",
+     "In horizontal mode, each diagram has its zoom bar (−, +, Fit, 100 %, Ctrl + wheel, drag to move) and « Full screen »; Esc closes it.",
      "« Page: Portrait / Landscape » sets the report page orientation when printing and in the PDF."
     ]
    },
