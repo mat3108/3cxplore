@@ -53,7 +53,7 @@ V.avantapres = el => {
       : `<details class="card ccat apr"${r.trend === 'down' ? ' open' : ''}><summary><span class="pill ${TR[r.trend][1]}">${TR[r.trend][0]}</span> <b class="mono">${esc(phone(r.did))}</b> <span class="muted">${esc(segShort(DIDSEG[r.did] || SEG_COMMON))} · ${nf(r.calls)} appels${r.moments.some(m => m.br) ? ' · vers un autre 3CX : issue non comparable' : ''}</span>
           <span style="margin-left:auto;font-size:12.5px">${r.moments.map(m => `<span class="pill ${TR[m.trend][1]}" title="${esc(endTxt(m.b) + ' ⟶ ' + endTxt(m.a))}">${esc(m.l)}</span>`).join(' ')}</span></summary>
         <div style="padding:0 12px 12px">${r.moments.slice(0, 3).map(m => `<div class="apm"><div class="muted" style="font-size:12.5px;margin:6px 0"><b>${esc(m.l)}</b> (${esc(m.day)} ${esc(m.t)}) : ${esc(endTxt(m.b))} <b>⟶</b> ${esc(endTxt(m.a))}</div>
-          <div class="apcols">${[['Avant', m.b], ['Après', m.a]].map(([lbl, R]) => `<div><div class="bkt">${lbl}</div><ol class="apsteps">${R.steps.map((s, i) => `<li class="${i >= m.div ? 'diff' : ''}${s.soft ? ' soft' : ''}"><span class="muted">${esc(s.kind)}</span> ${esc(s.dn ? s.dn + ' ' + s.title.replace(new RegExp('^' + s.dn + ' '), '') : s.title)}${s.branch ? ` <span class="pill">${esc(s.branch)}</span>` : ''}</li>`).join('')}</ol></div>`).join('')}</div></div>`).join('')}
+          <div class="apcols">${[['Avant', m.b, before.ctx], ['Après', m.a, after.ctx]].map(([lbl, R, cx]) => `<div><div class="bkt">${lbl}</div><ol class="apsteps">${R.steps.map((s, i) => `<li class="${i >= m.div ? 'diff' : ''}${s.soft ? ' soft' : ''}"><span class="muted">${esc(s.kind)}</span> ${esc(s.dn ? s.dn + ' ' + s.title.replace(new RegExp('^' + s.dn + ' '), '') : s.title)}${s.branch ? ` <span class="pill">${esc(s.branch)}</span>` : ''}${apStepDetail(s, cx)}</li>`).join('')}</ol></div>`).join('')}</div></div>`).join('')}
           ${r.moments.length > 3 ? `<div class="muted" style="font-size:12.5px">+${r.moments.length - 3} autre(s) moment(s) modifié(s)</div>` : ''}
           <a class="dlink" href="#simulateur/${esc(r.did)}" style="font-size:12.5px">Ouvrir dans le simulateur (backup actuel) ▸</a></div></details>`).join('') + (ch.length > 150 ? `<p class="muted">+${ch.length - 150} autres SDA.</p>` : '')
       : '<p><span class="pill ok">Aucun changement</span> Tous les SDA suivent le même parcours dans les deux backups aux moments contrôlés.</p>'}
@@ -131,4 +131,12 @@ function apFlowReport(ids, before, after){
     ${blocks || '<p><b>Aucun parcours modifié.</b> Tous les SDA ont exactement le même parcours dans les deux backups.</p>'}
     ${same.length ? `<section class="rps"><h2>Parcours identiques (${nf(same.length)} SDA)</h2><p class="rpnote">${same.sort((a, b) => (lineCalls[b] || 0) - (lineCalls[a] || 0)).map(d => esc(phone(d))).join(', ')}</p></section>` : ''}
     <footer class="rpfoot">Généré par 3CXplore — configuration des backups du ${esc(dk(before.date))} et du ${esc(dk(after.date))}. Un changement de configuration n'a pas toujours d'effet sur l'issue de l'appel : la liste « SDA dont le parcours a changé » de l'onglet simule l'issue à des moments clés.</footer></article></div>`;
+}
+
+// 20.10.6 : détail d'une étape (message, horaires, stratégie et délais, statut du poste…) et ses agents, nommés d'après le backup de cette colonne
+function apStepDetail(s, cx){
+  const nm = n => cx ? (cx.DN[n] ? cx.DN[n].name : '') : dnName(n);
+  const lines = (s.lines || []).filter(Boolean);
+  const ag = s.agents && s.agents.length ? `<div class="apdet"><b>${s.agents.length} agent${s.agents.length > 1 ? 's' : ''}</b> : ${s.agents.slice(0, 20).map(([a, ok]) => esc(a + (nm(a) ? ' ' + nm(a) : '')) + (ok ? '' : ' <span class="apoff">(déconnecté)</span>')).join(' · ')}${s.agents.length > 20 ? ` · + ${s.agents.length - 20}` : ''}</div>` : '';
+  return lines.map(l => `<div class="apdet">${esc(l)}</div>`).join('') + ag;
 }

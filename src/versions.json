@@ -1,5 +1,21 @@
 [
  {
+  "version": "20.10.6",
+  "date": "2026-11-05",
+  "titre": "Le détail de chaque étape dans Avant / après",
+  "resume": "Avant / après : sous chaque étape du parcours, son détail (trunk, horaires, message du menu, stratégie et délais de la file, agents, statut du poste…), avant comme après.",
+  "changements": [
+   "Avant / après : chaque étape des colonnes « Avant » et « Après » affiche maintenant son détail, comme dans le simulateur : trunk du SDA, horaires du département et destination suivie, message du menu, stratégie et délais de la file ou du groupe, agents connectés, statut actuel du poste, raison d'une fin d'appel.",
+   "La liste des agents d'une file ou d'un groupe est affichée (20 premiers), les agents déconnectés en rouge ; chaque nom est lu dans le backup de la colonne (un employé renommé ou arrivé entre les deux backups porte le bon nom)."
+  ],
+  "onglets": [
+   [
+    "Avant / après",
+    "Détail de chaque étape du parcours, avant et après."
+   ]
+  ]
+ },
+ {
   "version": "20.10.5",
   "date": "2026-11-05",
   "titre": "Les bons noms dans Comparaison",
