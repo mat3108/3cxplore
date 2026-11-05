@@ -6,7 +6,7 @@
 >
 > Une interface web, entièrement locale, pour **explorer, analyser et auditer un système téléphonique 3CX V20 à partir de son fichier de backup** — configuration, flux d'appels, statistiques, sécurité et recommandations, magasin par magasin.
 
-![Version](https://img.shields.io/badge/version-20.11-2563eb)
+![Version](https://img.shields.io/badge/version-20.11.1-2563eb)
 ![3CX](https://img.shields.io/badge/3CX-V20-0d9488)
 ![Données](https://img.shields.io/badge/donn%C3%A9es-100%20%25%20locales-15803d)
 ![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-64748b)
@@ -49,7 +49,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Comparaison** | Exceptions de renvoi des postes comparées. |
 | **Flux d'appels** | Chaque numéro (DID) avec sa règle entrante et l'arbre d'acheminement complet : département → standard IVR (touche par touche) → files d'attente → agents, pour les heures d'ouverture et hors heures. |
 | **Flux d'appel (diagramme)** | Une branche par exception de renvoi d'un poste. |
-| **Simulateur d'appel** | L'exception de renvoi qui s'applique au moment choisi. |
+| **Simulateur d'appel** | Toutes les exceptions de renvoi du poste, avec leur état. |
 | **Contrôle des SDA** | Simulation de tous les SDA à des moments clés, problèmes regroupés par cause. |
 | **SDA inutilisés** | SDA jamais appelés, plus appelés depuis longtemps ou très peu appelés, par trunk, avec l'économie possible. |
 | **Suivi après implantation** | Nouvelle page : SDA et destinations, fax à tester, diagrammes des parcours, à imprimer. |
@@ -57,7 +57,7 @@ Le backup est mémorisé dans le navigateur jusqu'à **« Fermer le backup »**,
 | **Appels au 911** | Nouvelle page : numéro envoyé au 911 par chaque poste et magasin de ce numéro. |
 | **Pièges d'acheminement** | Boucles, destinations disparues ou désactivées, files, groupes et menus sans issue, SDA vers messagerie. |
 | **Doublons et incohérences** | Postes, numéros présentés, éléments et SDA configurés deux fois ou de façon contradictoire. |
-| **Avant / après** | Détail de chaque étape du parcours, avant et après. |
+| **Avant / après** | Toutes les exceptions de renvoi du poste, l'active en gras. |
 
 ### Configuration
 | Onglet | À quoi il sert |
@@ -229,7 +229,8 @@ Chaque changement est une nouvelle version : une modification de `src/app/` (jus
 <!-- VERSIONS:START -->
 | Version | Nouveauté |
 |---|---|
-| **20.11** | Les exceptions de renvoi décortiquées |
+| **20.11.1** | Toutes les exceptions sous le poste |
+| 20.11 | Les exceptions de renvoi décortiquées |
 | 20.10.6 | Le détail de chaque étape dans Avant / après |
 | 20.10.5 | Les bons noms dans Comparaison |
 | 20.10.4 | Les parcours avant / après en rapport |

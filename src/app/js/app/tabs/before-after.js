@@ -138,5 +138,5 @@ function apStepDetail(s, cx){
   const nm = n => cx ? (cx.DN[n] ? cx.DN[n].name : '') : dnName(n);
   const lines = (s.lines || []).filter(Boolean);
   const ag = s.agents && s.agents.length ? `<div class="apdet"><b>${s.agents.length} agent${s.agents.length > 1 ? 's' : ''}</b> : ${s.agents.slice(0, 20).map(([a, ok]) => esc(a + (nm(a) ? ' ' + nm(a) : '')) + (ok ? '' : ' <span class="apoff">(déconnecté)</span>')).join(' · ')}${s.agents.length > 20 ? ` · + ${s.agents.length - 20}` : ''}</div>` : '';
-  return lines.map(l => `<div class="apdet">${esc(l)}</div>`).join('') + ag;
+  return lines.map(l => `<div class="apdet${/^▶/.test(l) ? ' aphit' : ''}">${esc(l)}</div>`).join('') + ag; // 20.11.1 : exception qui s'applique en gras
 }

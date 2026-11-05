@@ -22,7 +22,7 @@ function simulate(did, day, min, keys, ctx, opt){
   const wd = simWd(day), steps = [], seen = new Set();
   let soft = false, budget = 40;
   let note = null;
-  const st = o => { const x = Object.assign({lines: [], soft}, o); if(note){ x.lines = [note, ...x.lines]; note = null; } steps.push(x); return x; };
+  const st = o => { const x = Object.assign({lines: [], soft}, o); if(note){ x.lines = [...[].concat(note), ...x.lines]; note = null; } steps.push(x); return x; };
   const entry = DIDX.find(r => r.did === did);
   if(!entry) return {steps, end: 'lost', why: 'SDA inconnu'};
   st({kind: 'SDA', title: phone(did), lines: [`Trunk ${entry.line.gateway || entry.line.number}`]});
@@ -105,13 +105,14 @@ function simulate(did, day, min, keys, ctx, opt){
         if(fr.length && o.enabled !== false){
           const dep = (o.groups || []).map(g => Object.values(DNX).find(x => x.kind === 'Département' && x.name === g.g)).find(x => x && !isSysGroup(x.obj));
           const hol = dep ? deptSchedule(dep.obj).isHol(day) : !!simHol(day);
-          let hit = -1; const unk = [];
-          for(let i = 0; i < fr.length; i++){ const m = fwdRuleMatch(fr[i], day, min, wd, hol); if(m === true){ hit = i; break; } if(m === null) unk.push(i + 1); }
+          let hit = -1; const unk = [], res = [];
+          for(let i = 0; i < fr.length; i++){ const m = fwdRuleMatch(fr[i], day, min, wd, hol); res.push(m); if(m === true){ hit = i; break; } if(m === null) unk.push(i + 1); }
+          // 20.11.1 : toutes les exceptions, même celles qui ne s'appliquent pas à ce moment : heures, destination (nommée d'après ce backup) et état
+          const all = fr.map((r, i) => `${i === hit ? '▶ ' : ''}Exception ${i + 1} : ${fwdRuleWhen(r)} → ${cmpDestN(r.dest, nmX)} — ${i === hit ? 's\'applique à ce moment' : hit >= 0 && i > hit ? 'non essayée (une exception plus prioritaire s\'applique)' : res[i] === null ? 'non simulée (dépend de l\'appelant ou des heures d\'ouverture du poste)' : 'ne s\'applique pas à ce moment'}`);
           if(hit >= 0){ st({kind: 'Poste', dn: d.dn, title: d.dn + ' ' + nmX(d.dn), cls: 'ok', branch: `Exception ${hit + 1} : renvoi immédiat`,
-              lines: [`Exception ${hit + 1} sur ${fr.length} : ${fwdRuleWhen(fr[hit])}`, ...(hit ? [`Exception${hit > 1 ? 's' : ''} ${Array.from({length: hit}, (_, j) => j + 1).join(', ')} : ne s'applique${hit > 1 ? 'nt' : ''} pas à ce moment`] : []),
-                ...(unk.length ? [`Exception${unk.length > 1 ? 's' : ''} ${unk.join(', ')} : dépend de l'appelant ou des heures d'ouverture du poste, non simulé${unk.length > 1 ? 'es' : 'e'}`] : [])]});
+              lines: [`${fr.length} exception${fr.length > 1 ? 's' : ''} de renvoi, essayées dans l'ordre : l'exception ${hit + 1} s'applique`, ...all]});
             d = fr[hit].dest; continue; }
-          note = `${fr.length} exception${fr.length > 1 ? 's' : ''} de renvoi : aucune ne s'applique à ce moment${unk.length ? ` (${unk.join(', ')} non simulée${unk.length > 1 ? 's' : ''})` : ''}`;
+          note = [`${fr.length} exception${fr.length > 1 ? 's' : ''} de renvoi : aucune ne s'applique à ce moment${unk.length ? ` (${unk.join(', ')} non simulée${unk.length > 1 ? 's' : ''})` : ''}`, ...all];
         }
         const p = o.profiles.find(x => x.name === o.profile) || o.profiles[0];
         const avail = p ? p.routes.some(r => /^AvailableRoute/.test(r[0])) : true; // 19.0.3 : type du statut lu dans son profil (les statuts personnalisés peuvent être de type Absent)

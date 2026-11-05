@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.11.1",
+  "date": "2026-11-05",
+  "titre": "Toutes les exceptions sous le poste",
+  "resume": "Simulateur et Avant / après : sous un poste qui a des exceptions de renvoi, toutes ses exceptions sont listées avec leurs heures, leur destination et leur état au moment simulé, même celles qui ne s'appliquent pas.",
+  "changements": [
+   "Sous l'étape du poste : une ligne par exception, dans l'ordre où 3CX les essaie, avec ses heures (« Lun–Ven 07:15–08:00 · sauf fériés »), sa destination (« → File 9365 … ») et son état à ce moment : s'applique, ne s'applique pas, non essayée (une exception plus prioritaire s'applique) ou non simulée.",
+   "L'exception qui s'applique est marquée « ▶ » et, dans Avant / après, écrite en gras ; quand aucune ne s'applique, la liste est aussi affichée avant le statut du poste.",
+   "Destinations nommées d'après le backup de la colonne (avant ou après)."
+  ],
+  "onglets": [
+   [
+    "Simulateur d'appel",
+    "Toutes les exceptions de renvoi du poste, avec leur état."
+   ],
+   [
+    "Avant / après",
+    "Toutes les exceptions de renvoi du poste, l'active en gras."
+   ]
+  ]
+ },
+ {
   "version": "20.11",
   "date": "2026-11-05",
   "titre": "Les exceptions de renvoi décortiquées",
