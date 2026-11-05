@@ -101,6 +101,7 @@
    "comment": [
     "Choisissez le magasin et cochez les sections voulues, ou cliquez « Rapport complet » pour tout cocher.",
     "« Tous les rapports complets » génère d'un coup un rapport complet par magasin, dans un seul document.",
+    "« Page : Portrait / Paysage » oriente la page à l'impression et en PDF (retenu pour la prochaine fois).",
     "Imprimez, ou enregistrez en PDF depuis la fenêtre d'impression."
    ]
   },
@@ -492,7 +493,8 @@
    "sert": "Le parcours de chaque SDA comparé entre le backup de référence et le backup actuel : améliorés, dégradés, changés ; et un rapport à imprimer avec les diagrammes d'avant et d'après, les éléments modifiés surlignés.",
    "comment": [
     "Chargez d'abord l'ancien backup dans l'onglet Comparaison.",
-    "« Préparer le rapport » puis « Imprimer / PDF » : pour chaque SDA dont le parcours a changé, le diagramme d'avant puis celui d'après."
+    "« Préparer le rapport » puis « Imprimer / PDF » : pour chaque SDA dont le parcours a changé, le diagramme d'avant puis celui d'après.",
+    "« Page : Portrait / Paysage » oriente la page du rapport à l'impression et en PDF."
    ]
   },
   "modifs": {
@@ -1062,6 +1064,7 @@
     "comment": [
      "Choose the store and tick the sections you want, or click « Full report » to tick them all.",
      "« All full reports » builds a full report for every store at once, in a single document.",
+     "« Page: Portrait / Landscape » sets the page orientation when printing and in the PDF (remembered for next time).",
      "Print, or save as PDF from the print window."
     ]
    },
@@ -1453,7 +1456,8 @@
     "sert": "The path of each DID compared between the reference backup and the current backup: improved, worse, changed; and a printable report with the before and after diagrams, changed elements highlighted.",
     "comment": [
      "First load the older backup in the Comparison tab.",
-     "« Prepare the report » then « Print / PDF »: for each DID whose flow changed, the before diagram then the after diagram."
+     "« Prepare the report » then « Print / PDF »: for each DID whose flow changed, the before diagram then the after diagram.",
+     "« Page: Portrait / Landscape » sets the report page orientation when printing and in the PDF."
     ]
    },
    "modifs": {

@@ -29,7 +29,7 @@ V.rapport = el => {
       <label class="count">Magasin <select id="rpseg"><option value="">Tous les magasins</option>${SEG_LIST.map(c => `<option value="${esc(c)}"${c === S ? ' selected' : ''}>${esc(segShort(c))}</option>`).join('')}</select></label>
       <label class="count">Période ${perUI('rppm', perOfStats(P), firstDay, lastDay)}</label>
       <div class="rpsec">${RPT_SECTIONS.map(([k, l]) => `<label><input type="checkbox" data-s="${k}"${sec.has(k) ? ' checked' : ''}> ${esc(l)}</label>`).join('')}</div>
-      <div><button class="btn" id="rpfull" title="Coche toutes les sections">Rapport complet</button> <button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
+      <div><button class="btn" id="rpfull" title="Coche toutes les sections">Rapport complet</button> ${rptOrientUI()} <button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
     </div>
     <div class="card rpctl" id="rpbatch">
       <div style="flex:1;min-width:260px"><b>Tous les magasins en une fois</b><div class="muted" style="font-size:12.5px">Génère un rapport par magasin (mêmes sections et même période), réunis dans un seul document à imprimer ou enregistrer en PDF : chaque magasin commence sur une nouvelle page.</div>
@@ -57,7 +57,8 @@ V.rapport = el => {
   $('#rpbfull').addEventListener('click', () => runAll(true));
   $('#rpfull').addEventListener('click', () => { rptAll(); V.rapport(el); });
   const bp = $('#rpbprint'); if(bp) bp.addEventListener('click', () => window.__printBatch());
-  $('#rpprint').addEventListener('click', () => { document.body.classList.add('printing-report'); window.print(); setTimeout(() => document.body.classList.remove('printing-report'), 500); });
+  $('#rpprint').addEventListener('click', () => rptPrintPage('printing-report'));
+  rptOrientWire(el); // 20.11.2 : portrait / paysage
 
   // ----- données de la période pour le magasin -----
   const inS = c => !S || callSeg(c) === S;

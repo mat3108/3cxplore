@@ -95,8 +95,8 @@ if(!window.__runBatch){
     const R = window.__batchResult; if(!R) return;
     const box = document.createElement('div'); box.id = 'batchprint';
     box.innerHTML = R.items.map(x => `<article class="report batchrep">${x.html}</article>`).join('');
-    document.body.appendChild(box); document.body.classList.add('printing-batch');
-    window.print();
-    setTimeout(() => { box.remove(); document.body.classList.remove('printing-batch'); }, 800);
+    document.body.appendChild(box);
+    rptPrintPage('printing-batch'); // 20.11.2 : orientation choisie dans le Rapport par magasin
+    setTimeout(() => box.remove(), 800);
   };
 }

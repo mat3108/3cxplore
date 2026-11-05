@@ -2,6 +2,16 @@
 // chaque élément une seule fois ; un élément déjà affiché est rappelé par un renvoi « voir plus haut »
 const DGP_KEY = 'diagportrait3cx';
 const dgpOn = () => { try{ return localStorage.getItem(DGP_KEY) === '1'; }catch(e){ return false; } };
+// 20.11.2 : orientation de la page des rapports à l'impression ou en PDF (portrait / paysage), retenue dans le navigateur
+const RPO_KEY = 'rapport3cx-orientation';
+const rptOrient = () => { try{ return localStorage.getItem(RPO_KEY) === 'landscape' ? 'landscape' : 'portrait'; }catch(e){ return 'portrait'; } };
+const rptPageCSS = () => `<style>@page{size:letter ${rptOrient()};margin:12mm}</style>`;
+const rptOrientUI = () => `<span class="rpori" title="Orientation de la page à l'impression ou en PDF"><span class="muted">Page</span> ${[['portrait', 'Portrait'], ['landscape', 'Paysage']].map(([v, l]) => `<button type="button" class="btn${rptOrient() === v ? ' on' : ''}" data-rpo="${v}" aria-pressed="${rptOrient() === v}">${l}</button>`).join('')}</span>`;
+function rptOrientWire(root){ const sync = () => { document.body.classList.toggle('rp-land', rptOrient() === 'landscape'); root.querySelectorAll('[data-rpo]').forEach(x => { const on = x.dataset.rpo === rptOrient(); x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); };
+  root.querySelectorAll('[data-rpo]').forEach(b => b.addEventListener('click', () => { try{ localStorage.setItem(RPO_KEY, b.dataset.rpo); }catch(e){} sync(); })); sync(); }
+// impression de ce qui est affiché dans la page (window.print) avec l'orientation choisie
+function rptPrintPage(cls){ const st = document.createElement('style'); st.textContent = `@media print{@page{size:letter ${rptOrient()}}}`; document.head.appendChild(st);
+  document.body.classList.add(cls); window.print(); setTimeout(() => { st.remove(); document.body.classList.remove(cls); }, 800); }
 function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA ; o.mark (20.10.4) : éléments à surligner
   o = o || {};
   const kids = {}; g.edges.forEach(e => (kids[e.from] ||= []).push(e));

@@ -45,7 +45,7 @@ V.avantapres = el => {
     <div class="grid kpis">${[['SDA comparés', nf(rows.length), ''], ['Parcours changés', nf(cnt(r => r.kind === 'changed')), ''], ['Améliorés', nf(cnt(r => r.trend === 'up')), 'ok'], ['Dégradés', nf(cnt(r => r.trend === 'down')), cnt(r => r.trend === 'down') ? 'bad' : 'ok'], ['Nouveaux SDA', nf(cnt(r => r.kind === 'new')), ''], ['SDA retirés', nf(cnt(r => r.kind === 'gone')), '']]
       .map(([l, v, c]) => `<div class="card kpi ph ${c}"><div class="v" style="font-size:21px">${v}</div><div class="l">${l}</div></div>`).join('')}</div>
     <div class="card rpctl noprint" id="apflowcard"><div style="flex:1;min-width:260px"><b>Rapport des parcours avant / après</b><div class="muted" style="font-size:12.5px">Le diagramme du parcours des appels de chaque SDA dont la configuration a changé : d'abord avant (${esc(before.date)}), puis après (${esc(after.date)}), les éléments modifiés surlignés. SDA nouveaux et retirés inclus ; les SDA au parcours identique sont seulement listés. À imprimer ou enregistrer en PDF.</div></div>
-      <div><button class="btn" id="apflowgo">Préparer le rapport</button> <button class="btn primary" id="apflowpr" hidden>Imprimer / PDF</button></div></div>
+      <div><button class="btn" id="apflowgo">Préparer le rapport</button> ${rptOrientUI()} <button class="btn primary" id="apflowpr" hidden>Imprimer / PDF</button></div></div>
     <div id="apflowbox" hidden></div>
     <h3>SDA dont le parcours a changé (${ch.length})</h3>
     ${ch.length ? ch.slice(0, 150).map(r => r.kind === 'new' ? `<div class="card apr"><span class="pill acc">Nouveau</span> <b class="mono">${esc(phone(r.did))}</b> <span class="muted">${esc(segShort(DIDSEG[r.did] || SEG_COMMON))} · n'existait pas dans le backup avant</span></div>`
@@ -61,7 +61,8 @@ V.avantapres = el => {
   // 20.10.4 : rapport des parcours (diagrammes) avant / après
   $('#apflowgo').addEventListener('click', () => { const box = $('#apflowbox'), on = box.hidden; box.hidden = !on; $('#apflowpr').hidden = !on; $('#apflowgo').textContent = on ? 'Masquer le rapport' : 'Préparer le rapport';
     if(on){ box.innerHTML = '<p class="muted">Préparation…</p>'; setTimeout(() => { try{ box.innerHTML = apFlowReport(ids, before, after); }catch(er){ console.error(er); box.innerHTML = '<p class="muted">Erreur : ' + esc(er.message) + '</p>'; } box.scrollIntoView({behavior: 'smooth'}); }, 30); } });
-  $('#apflowpr').addEventListener('click', () => { const a = $('#apflowsheet'); if(a) printHTML('<style>@page{size:letter portrait;margin:12mm}</style>' + a.innerHTML); });
+  $('#apflowpr').addEventListener('click', () => { const a = $('#apflowsheet'); if(a) printHTML(rptPageCSS() + a.innerHTML); });
+  rptOrientWire(el); // 20.11.2 : portrait / paysage
 };
 
 // ---------- Rapport des parcours avant / après (20.10.4) ----------
