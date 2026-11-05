@@ -1,5 +1,26 @@
 [
  {
+  "version": "20.11.3",
+  "date": "2026-11-05",
+  "titre": "Les diagrammes à la verticale ou à l'horizontale",
+  "resume": "Rapport par magasin et rapport des parcours avant / après : un choix « Diagrammes : Vertical / Horizontal » dessine les parcours de haut en bas (comme avant) ou de gauche à droite, comme dans l'onglet Flux d'appel (diagramme).",
+  "changements": [
+   "Horizontal : le diagramme de l'onglet Flux d'appel, ajusté à la largeur de la page ; les retours vers un élément déjà affiché sont en pointillé. À combiner avec la page en paysage pour les grands parcours.",
+   "Avant / après : en horizontal aussi, les éléments modifiés sont surlignés en jaune.",
+   "Le choix est retenu dans le navigateur, partagé entre les deux rapports, et s'applique aussi à « Tous les rapports complets »."
+  ],
+  "onglets": [
+   [
+    "Rapport par magasin",
+    "Diagrammes de parcours verticaux ou horizontaux."
+   ],
+   [
+    "Avant / après",
+    "Diagrammes avant / après verticaux ou horizontaux."
+   ]
+  ]
+ },
+ {
   "version": "20.11.2",
   "date": "2026-11-05",
   "titre": "Les rapports en portrait ou en paysage",

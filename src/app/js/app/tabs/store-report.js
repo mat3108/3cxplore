@@ -10,7 +10,7 @@ function rptSections(){ try{ const v = JSON.parse(localStorage.getItem(RPT_KEY) 
     localStorage.setItem(RPT_KEY + '-v510', '1'); localStorage.setItem(RPT_KEY + '-v616', '1'); localStorage.setItem(RPT_KEY + '-v20103', '1'); return new Set(v); } }catch(e){} return new Set(RPT_SECTIONS.map(s => s[0])); }
 const rptAll = () => { try{ localStorage.setItem(RPT_KEY, JSON.stringify(RPT_SECTIONS.map(s => s[0]))); }catch(e){} };
 // 20.10.3 : diagramme en portrait d'un groupe de SDA (suivi après implantation), sans sa page de garde, pour s'insérer dans le rapport
-const rptFlowHTML = grp => impFlowHTML(grp).replace('class="report dgp imp-page"', 'class="dgp rpflow"')
+const rptFlowHTML = grp => impFlowHTML(grp, {horiz: rptHoriz()}).replace('class="report dgp imp-page"', 'class="dgp rpflow"')
   .replace(/<header class="rpcover"><div class="rpk">[^<]*<\/div><h1>([\s\S]*?)<\/h1>/, '<header class="rpflowh"><h3>$1</h3>').replace(/<div class="rpfoot">[\s\S]*?<\/div><\/div>$/, '</div>');
 
 V.rapport = el => {
@@ -29,7 +29,7 @@ V.rapport = el => {
       <label class="count">Magasin <select id="rpseg"><option value="">Tous les magasins</option>${SEG_LIST.map(c => `<option value="${esc(c)}"${c === S ? ' selected' : ''}>${esc(segShort(c))}</option>`).join('')}</select></label>
       <label class="count">Période ${perUI('rppm', perOfStats(P), firstDay, lastDay)}</label>
       <div class="rpsec">${RPT_SECTIONS.map(([k, l]) => `<label><input type="checkbox" data-s="${k}"${sec.has(k) ? ' checked' : ''}> ${esc(l)}</label>`).join('')}</div>
-      <div><button class="btn" id="rpfull" title="Coche toutes les sections">Rapport complet</button> ${rptOrientUI()} <button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
+      <div><button class="btn" id="rpfull" title="Coche toutes les sections">Rapport complet</button> ${rptDirUI()} ${rptOrientUI()} <button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
     </div>
     <div class="card rpctl" id="rpbatch">
       <div style="flex:1;min-width:260px"><b>Tous les magasins en une fois</b><div class="muted" style="font-size:12.5px">Génère un rapport par magasin (mêmes sections et même période), réunis dans un seul document à imprimer ou enregistrer en PDF : chaque magasin commence sur une nouvelle page.</div>
@@ -59,6 +59,7 @@ V.rapport = el => {
   const bp = $('#rpbprint'); if(bp) bp.addEventListener('click', () => window.__printBatch());
   $('#rpprint').addEventListener('click', () => rptPrintPage('printing-report'));
   rptOrientWire(el); // 20.11.2 : portrait / paysage
+  rptDirWire(el, () => V.rapport(el)); // 20.11.3 : diagrammes verticaux / horizontaux
 
   // ----- données de la période pour le magasin -----
   const inS = c => !S || callSeg(c) === S;
@@ -167,7 +168,7 @@ V.rapport = el => {
   ${sect('erreurs', 'Erreurs et incohérences à corriger', errHTML())}
   ${sect('sda', 'SDA et acheminement', T(['SDA', 'Règle', 'Heures d\'ouverture', 'Hors heures', 'Appels (période)'], dids.map(r => `<tr><td class="mono">${esc(phone(r.did))}</td><td>${esc(r.rule ? (r.rule.name || (r.isDefault ? 'règle par défaut du trunk' : 'règle du SDA')) : 'aucune')}</td>
       <td>${esc(cmpDest(r.rule?.office))}</td><td>${r.rule?.altOOO ? esc(cmpDest(r.rule.outOfOffice)) : '(idem)'}</td><td class="num">${nf(st.didCalls[r.did] || 0)}</td></tr>`)))}
-  ${sect('diag', 'Parcours des appels de tous les SDA', flowGroups.length ? `<p class="rpnote">${nf(flowRows.length)} SDA, ${nf(flowGroups.length)} parcours différent${flowGroups.length > 1 ? 's' : ''} : les SDA qui suivent exactement le même parcours partagent un seul diagramme, du plus appelé au moins appelé (appels reçus dans tout le backup). Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro.</p>` + flowGroups.map(rptFlowHTML).join('') : '<p>Aucun SDA.</p>')}
+  ${sect('diag', 'Parcours des appels de tous les SDA', flowGroups.length ? `<p class="rpnote">${rptRead(`${nf(flowRows.length)} SDA, ${nf(flowGroups.length)} parcours différent${flowGroups.length > 1 ? 's' : ''} : les SDA qui suivent exactement le même parcours partagent un seul diagramme, du plus appelé au moins appelé (appels reçus dans tout le backup). Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro.`)}</p>` + flowGroups.map(rptFlowHTML).join('') : '<p>Aucun SDA.</p>')}
   ${sect('horaires', 'Horaires et jours fériés', T(['Département', 'Horaires', 'Pauses', 'Fermé pendant l\'ouverture', 'Avant ouverture /sem.', 'Après fermeture /sem.', 'Fériés à venir non configurés'], H.map(r => `<tr><td>${esc(r.g.number + ' ' + r.g.name)}</td>
       <td>${hoursSummary(r.g.hours).map(esc).join('<br>')}</td><td>${r.g.breakTime?.days?.length ? hoursSummary(r.g.breakTime).map(esc).join('<br>') : '—'}</td><td class="num">${r.closedWhileOpen.length}</td>
       <td class="num">${(r.before.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td class="num">${(r.after.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td>${r.missingHol.map(([n, d]) => esc(n) + ' (' + d + ')').join(', ') || '—'}</td></tr>`)))}

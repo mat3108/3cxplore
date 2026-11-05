@@ -9,11 +9,20 @@ const rptPageCSS = () => `<style>@page{size:letter ${rptOrient()};margin:12mm}</
 const rptOrientUI = () => `<span class="rpori" title="Orientation de la page à l'impression ou en PDF"><span class="muted">Page</span> ${[['portrait', 'Portrait'], ['landscape', 'Paysage']].map(([v, l]) => `<button type="button" class="btn${rptOrient() === v ? ' on' : ''}" data-rpo="${v}" aria-pressed="${rptOrient() === v}">${l}</button>`).join('')}</span>`;
 function rptOrientWire(root){ const sync = () => { document.body.classList.toggle('rp-land', rptOrient() === 'landscape'); root.querySelectorAll('[data-rpo]').forEach(x => { const on = x.dataset.rpo === rptOrient(); x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); };
   root.querySelectorAll('[data-rpo]').forEach(b => b.addEventListener('click', () => { try{ localStorage.setItem(RPO_KEY, b.dataset.rpo); }catch(e){} sync(); })); sync(); }
+// 20.11.3 : sens des diagrammes de parcours dans les rapports (vertical : de haut en bas ; horizontal : de gauche à droite), retenu dans le navigateur
+const RPD_KEY = 'rapport3cx-diagramme';
+const rptHoriz = () => { try{ return localStorage.getItem(RPD_KEY) === 'h'; }catch(e){ return false; } };
+const rptDirUI = () => `<span class="rpori" title="Sens des diagrammes de parcours dans le rapport"><span class="muted">Diagrammes</span> ${[['v', 'Vertical'], ['h', 'Horizontal']].map(([v, l]) => `<button type="button" class="btn${(rptHoriz() ? 'h' : 'v') === v ? ' on' : ''}" data-rpd="${v}" aria-pressed="${(rptHoriz() ? 'h' : 'v') === v}">${l}</button>`).join('')}</span>`;
+function rptDirWire(root, cb){ root.querySelectorAll('[data-rpd]').forEach(b => b.addEventListener('click', () => { if((rptHoriz() ? 'h' : 'v') === b.dataset.rpd) return;
+  try{ localStorage.setItem(RPD_KEY, b.dataset.rpd); }catch(e){} root.querySelectorAll('[data-rpd]').forEach(x => { const on = x.dataset.rpd === b.dataset.rpd; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); if(cb) cb(); })); }
+// phrase « Lecture : … » des rapports selon le sens choisi
+const rptRead = txt => rptHoriz() ? txt.replace("Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment", "Lecture : de gauche à droite, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment").replace(". Un élément déjà affiché est rappelé par son numéro.", '. Une flèche en pointillé revient vers un élément déjà affiché.') : txt;
 // impression de ce qui est affiché dans la page (window.print) avec l'orientation choisie
 function rptPrintPage(cls){ const st = document.createElement('style'); st.textContent = `@media print{@page{size:letter ${rptOrient()}}}`; document.head.appendChild(st);
   document.body.classList.add(cls); window.print(); setTimeout(() => { st.remove(); document.body.classList.remove(cls); }, 800); }
-function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA ; o.mark (20.10.4) : éléments à surligner
+function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, extra} pour un diagramme partagé par plusieurs SDA ; o.mark (20.10.4) : éléments à surligner ; o.horiz (20.11.3) : diagramme de gauche à droite
   o = o || {};
+  if(o.horiz) return dgpPage(g, r, o, (() => { const f = renderFlow(g, {mark: o.mark, inline: true}); return `<div class="dgh-body">${f.svg.replace(/ width="[\d.]+" height="[\d.]+"/, ` style="max-width:${f.W}px"`)}</div>`; })());
   const kids = {}; g.edges.forEach(e => (kids[e.from] ||= []).push(e));
   const shown = new Set(), num = {}; let html = '', k = 0;
   // plusieurs cas qui mènent au même élément : « … ou … » (chaque cas dans sa propre balise pour la traduction)
@@ -29,12 +38,15 @@ function renderFlowPortrait(g, r, o){ // o (20.10, facultatif) : {title, meta, e
     (kids[id] || []).filter(e => !e.back || true).forEach(e => walk(e.to, depth + 1, e.labels));
   };
   walk('did', 0, []); g.nodes.forEach((n, id) => { if(!shown.has(id)) walk(id, 0, []); });
+  return dgpPage(g, r, o, `<div class="dgp-body">${html}</div>`);
+}
+function dgpPage(g, r, o, body){
   const used = [...new Set([...g.nodes.values()].map(n => n.kind))];
   return `<div class="report dgp" id="dgpsheet"><header class="rpcover"><div class="rpk">Parcours des appels · 3CXplore</div><h1>${esc(o.title || phone(r.did))}</h1>
     <div class="rpmeta">${o.meta || `${esc(segName(DIDSEG[r.did] || SEG_COMMON))} · trunk ${esc(r.line.gateway || r.line.number)} · ${esc(ruleLabel(r))} · ${nf(g.nodes.size)} éléments${lineCalls[r.did] ? ` · ${nf(lineCalls[r.did])} appels reçus dans le backup` : ''} · préparé le ${esc(new Date().toLocaleDateString('fr-CA'))}`}</div></header>${o.extra || ''}
-    <div class="dgp-body">${html}</div>
+    ${body}
     <div class="dgp-leg">${used.map(kd => { const st = KIND_STYLE[kd] || KIND_STYLE.other; return `<span><i style="background:${st.c}"></i>${esc(st.t)}</span>`; }).join('')}</div>
-    <div class="rpfoot">Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro. Configuration du backup du ${esc(bkDate(FULL.info.date))}.</div></div>`;
+    <div class="rpfoot">${o.horiz ? "Lecture : de gauche à droite, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Une flèche en pointillé revient vers un élément déjà affiché." : "Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro."} Configuration du backup du ${esc(bkDate(FULL.info.date))}.</div></div>`;
 }
 const ruleLabel = r => r.rule ? (r.rule.name || (r.isDefault ? 'règle par défaut du trunk' : 'règle du SDA')) : 'aucune règle';
 V.diagramme = (el, arg) => {

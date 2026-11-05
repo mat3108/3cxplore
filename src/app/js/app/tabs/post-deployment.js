@@ -39,7 +39,7 @@ function impFlowGroups(rows){
   const tot = grp => grp.rows.reduce((t, x) => t + x.calls, 0);
   return [...groups.values()].sort((a, b) => tot(b) - tot(a));
 }
-function impFlowHTML(grp){
+function impFlowHTML(grp, o2){ // o2 (20.11.3) : options ajoutées au diagramme, par exemple {horiz}
   const n = grp.rows.length, g = grp.g, first = grp.rows[0], calls = grp.rows.reduce((t, x) => t + x.calls, 0);
   if(n > 1){
     const did = g.nodes.get('did'); did.title = `${n} SDA`; did.sub = [...new Set(grp.rows.map(x => x.r.line.gateway || x.r.line.number))].join(', '); did.lines = calls ? [`${nf(calls)} appels reçus dans le backup`] : [];
@@ -48,7 +48,7 @@ function impFlowHTML(grp){
   const segs = [...new Set(grp.rows.map(x => x.seg))];
   const meta = n > 1 ? `${segs.map(s => esc(segName(s))).join(', ')} · ${nf(g.nodes.size)} éléments${calls ? ` · ${nf(calls)} appels reçus dans le backup` : ''} · préparé le ${esc(new Date().toLocaleDateString('fr-CA'))}` : null;
   const extra = n > 1 ? `<p class="imp-dids"><b>Ces SDA suivent le même parcours :</b> ${grp.rows.map(x => `<span class="mono">${esc(phone(x.did))}</span>`).join(', ')}</p>` : '';
-  return renderFlowPortrait(g, first.r, {title: n > 1 ? `${n} SDA avec le même parcours` : phone(first.did), meta, extra}).replace(' id="dgpsheet"', '').replace('class="report dgp"', 'class="report dgp imp-page"');
+  return renderFlowPortrait(g, first.r, {title: n > 1 ? `${n} SDA avec le même parcours` : phone(first.did), meta, extra, ...(o2 || {})}).replace(' id="dgpsheet"', '').replace('class="report dgp"', 'class="report dgp imp-page"');
 }
 V.implantation = el => {
   const stores = SEG_LIST.filter(s => s[0] !== '@');

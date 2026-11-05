@@ -158,8 +158,10 @@ function layoutFlow(g){
   return {pos, H, W, Hh};
 }
 function trunc(s, n){ s = String(s ?? ''); return s.length > n ? s.slice(0, n-1)+'…' : s; }
-function renderFlow(g){
+function renderFlow(g, o){ // o (20.11.3, facultatif) : {mark, inline} — éléments à surligner ; pointes de flèche dessinées (rapports : plusieurs diagrammes par page)
+  o = o || {};
   const {pos, H, W, Hh} = layoutFlow(g);
+  const tip = (x, y, up) => up ? `<path d="M${x-4},${y+9} L${x},${y} L${x+4},${y+9} z" class="f-arrow"/>` : `<path d="M${x-9},${y-4} L${x},${y} L${x-9},${y+4} z" class="f-arrow"/>`;
   let s = `<svg xmlns="http://www.w3.org/2000/svg" class="flowsvg" viewBox="0 0 ${W} ${Hh}" width="${W}" height="${Hh}" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif">
   <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-arrow"/></marker></defs>`;
   // arêtes
@@ -180,21 +182,21 @@ function renderFlow(g){
         const c1 = ax + Math.min(140, (bx-ax)*0.6), c2 = bx - Math.min(80, (bx-ax)*0.4);
         d += ` C${c1},${ay} ${c2},${by} ${bx},${by}`;
       }
-      s += `<path d="${d}" class="f-edge" marker-end="url(#arr)"/><circle cx="${x1}" cy="${y1}" r="2.5" class="f-arrow"/>`;
+      s += (o.inline ? `<path d="${d}" class="f-edge"/>` + tip(x2-2, y2) : `<path d="${d}" class="f-edge" marker-end="url(#arr)"/>`) + `<circle cx="${x1}" cy="${y1}" r="2.5" class="f-arrow"/>`;
       if(label) s += `<text x="${x1+8}" y="${y1-4}" class="f-elabel">${esc(trunc(label, 30))}</text>`;
     } else {
       // retour vers un élément déjà affiché : courbe par le bas
       const x1 = a.x+NW/2, y1 = a.y+H[e.from], x2 = b.x+NW/2+20, y2 = b.y+H[e.to];
       const yb = Math.max(y1, y2) + 40;
       d = `M${x1},${y1} C${x1},${yb} ${x2},${yb} ${x2},${y2+2}`;
-      s += `<path d="${d}" class="f-edge back" marker-end="url(#arr)"/>`;
+      s += o.inline ? `<path d="${d}" class="f-edge back"/>` + tip(x2, y2+2, true) : `<path d="${d}" class="f-edge back" marker-end="url(#arr)"/>`;
       if(label) s += `<text x="${(x1+x2)/2}" y="${yb-8}" text-anchor="middle" class="f-elabel">${esc(trunc(label, 34))} ↺</text>`;
     }
   });
   // nœuds
   g.nodes.forEach(n => {
     const p = pos[n.id], h = H[n.id], st = KIND_STYLE[n.kind] || KIND_STYLE.other;
-    s += `<g class="f-node${n.dn?' click':''}" ${n.dn?`data-dn="${esc(n.dn)}"`:''} transform="translate(${p.x},${p.y})">
+    s += `<g class="f-node${n.dn?' click':''}${o.mark && o.mark.has(n.id) ? ' f-chg' : ''}" ${n.dn?`data-dn="${esc(n.dn)}"`:''} transform="translate(${p.x},${p.y})">
       <title>${esc(st.t+' — '+n.title+(n.sub?' ('+n.sub+')':''))}</title>
       <rect width="${NW}" height="${h}" rx="9" class="f-box" style="stroke:${st.c}"/>
       <rect width="5" height="${h}" rx="2" style="fill:${st.c}"/>
