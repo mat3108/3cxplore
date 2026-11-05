@@ -292,13 +292,15 @@ audio{height:30px;max-width:260px}
 .rpreco p{margin:3px 0} .rpsev{font-size:11px;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .rpitems{color:var(--muted);font-size:11.5px}
 .rpdiag{margin:10px 0 18px;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.rpflow{margin:12px 0 18px;border:1px solid var(--line);border-radius:8px;padding:10px 14px} .rpflowh h3{margin:0 0 2px} .rpflow .rpmeta{font-size:12px;color:var(--muted)} .rpflow .imp-dids{font-size:12px;margin:6px 0 0}
+.rpsev-bad{color:var(--bad)} .rpsev-warn{color:var(--warn)} .rpt td.rpdids{font-size:11.5px;white-space:normal;min-width:180px}
 .rpfoot{margin-top:28px;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
 @media print{
   body.printing-report header,body.printing-report #side,body.printing-report #scrim,body.printing-report #drawer,body.printing-report .noprint,body.printing-report .segbar{display:none!important}
   body.printing-report,body.printing-report main{background:#fff!important;padding:0!important;max-width:none!important}
   body.printing-report .layout{display:block}
   .report{box-shadow:none;margin:0;padding:0;max-width:none;border-radius:0}
-  .report h2{break-after:avoid} .rpt tr,.rpreco,.rpkpis div{break-inside:avoid} .rpdiag{break-inside:avoid}
+  .report h2{break-after:avoid} .rpt tr,.rpreco,.rpkpis div{break-inside:avoid} .rpdiag{break-inside:avoid} .rpflowh{break-after:avoid}
   @page{margin:14mm}
 }
 @media (max-width:700px){.report{padding:20px 16px} .rpkpis{grid-template-columns:repeat(2,1fr)}}

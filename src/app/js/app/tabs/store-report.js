@@ -1,12 +1,17 @@
 // ---------- Rapport par magasin (imprimable / PDF) ----------
-const RPT_SECTIONS = [['synthese', 'Synthèse'], ['sante', 'Note de santé'], ['suivi', 'Évolution (suivi dans le temps)'], ['reco', 'Recommandations'], ['sda', 'SDA et acheminement'], ['diag', 'Diagrammes des principaux SDA'], ['horaires', 'Horaires et jours fériés'],
-  ['files', "Files d'attente"], ['agents', 'Performance des agents'], ['postes', 'Postes'], ['tel', 'Téléphones à mettre à jour']];
+const RPT_SECTIONS = [['synthese', 'Synthèse'], ['sante', 'Note de santé'], ['suivi', 'Évolution (suivi dans le temps)'], ['reco', 'Recommandations'], ['erreurs', 'Erreurs et incohérences à corriger'], ['sda', 'SDA et acheminement'], ['diag', 'Parcours des appels de tous les SDA'], ['horaires', 'Horaires et jours fériés'],
+  ['files', "Files d'attente"], ['agents', 'Performance des agents'], ['postes', 'Postes'], ['tel', 'Téléphones à mettre à jour'], ['audit', "Modifications de la configuration (journal d'audit)"]];
 const RPT_KEY = 'rapport3cx-sections';
 function rptSections(){ try{ const v = JSON.parse(localStorage.getItem(RPT_KEY) || 'null');
   if(Array.isArray(v)){ // une section ajoutée depuis le dernier choix est cochée par défaut
     if(!localStorage.getItem(RPT_KEY + '-v510') && !v.includes('suivi')){ v.splice(1, 0, 'suivi'); localStorage.setItem(RPT_KEY, JSON.stringify(v)); }
     if(!localStorage.getItem(RPT_KEY + '-v616') && !v.includes('sante')){ v.splice(1, 0, 'sante'); localStorage.setItem(RPT_KEY, JSON.stringify(v)); }
-    localStorage.setItem(RPT_KEY + '-v510', '1'); localStorage.setItem(RPT_KEY + '-v616', '1'); return new Set(v); } }catch(e){} return new Set(RPT_SECTIONS.map(s => s[0])); }
+    if(!localStorage.getItem(RPT_KEY + '-v20103')){ ['erreurs', 'audit'].forEach(k => { if(!v.includes(k)) v.push(k); }); localStorage.setItem(RPT_KEY, JSON.stringify(v)); } // 20.10.3 : nouvelles sections cochées
+    localStorage.setItem(RPT_KEY + '-v510', '1'); localStorage.setItem(RPT_KEY + '-v616', '1'); localStorage.setItem(RPT_KEY + '-v20103', '1'); return new Set(v); } }catch(e){} return new Set(RPT_SECTIONS.map(s => s[0])); }
+const rptAll = () => { try{ localStorage.setItem(RPT_KEY, JSON.stringify(RPT_SECTIONS.map(s => s[0]))); }catch(e){} };
+// 20.10.3 : diagramme en portrait d'un groupe de SDA (suivi après implantation), sans sa page de garde, pour s'insérer dans le rapport
+const rptFlowHTML = grp => impFlowHTML(grp).replace('class="report dgp imp-page"', 'class="dgp rpflow"')
+  .replace(/<header class="rpcover"><div class="rpk">[^<]*<\/div><h1>([\s\S]*?)<\/h1>/, '<header class="rpflowh"><h3>$1</h3>').replace(/<div class="rpfoot">[\s\S]*?<\/div><\/div>$/, '</div>');
 
 V.rapport = el => {
   const all = FULL.calls, sec = rptSections();
@@ -19,17 +24,17 @@ V.rapport = el => {
   const title = S ? segName(S) : 'Tous les magasins';
   el.innerHTML = `<div id="rpwrap"><div class="noprint">
     <h2>Rapport par magasin</h2>
-    <p class="lead">Rapport prêt à imprimer ou à enregistrer en PDF (Imprimer → Enregistrer au format PDF) pour un magasin : synthèse, recommandations, acheminement des appels, horaires, files, agents, postes et téléphones.</p>
+    <p class="lead">Rapport prêt à imprimer ou à enregistrer en PDF (Imprimer → Enregistrer au format PDF) pour un magasin : synthèse, recommandations, erreurs et incohérences à corriger, acheminement et parcours des appels de tous les SDA, horaires, files, agents, postes, téléphones et modifications faites dans la console. « Rapport complet » coche toutes les sections.</p>
     <div class="card rpctl">
       <label class="count">Magasin <select id="rpseg"><option value="">Tous les magasins</option>${SEG_LIST.map(c => `<option value="${esc(c)}"${c === S ? ' selected' : ''}>${esc(segShort(c))}</option>`).join('')}</select></label>
       <label class="count">Période ${perUI('rppm', perOfStats(P), firstDay, lastDay)}</label>
       <div class="rpsec">${RPT_SECTIONS.map(([k, l]) => `<label><input type="checkbox" data-s="${k}"${sec.has(k) ? ' checked' : ''}> ${esc(l)}</label>`).join('')}</div>
-      <div><button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
+      <div><button class="btn" id="rpfull" title="Coche toutes les sections">Rapport complet</button> <button class="btn primary" id="rpprint">Imprimer / PDF</button></div>
     </div>
     <div class="card rpctl" id="rpbatch">
       <div style="flex:1;min-width:260px"><b>Tous les magasins en une fois</b><div class="muted" style="font-size:12.5px">Génère un rapport par magasin (mêmes sections et même période), réunis dans un seul document à imprimer ou enregistrer en PDF : chaque magasin commence sur une nouvelle page.</div>
         ${window.__batchResult ? `<div style="margin-top:6px"><span class="pill ok">${window.__batchResult.items.length} rapports prêts</span> <span class="muted" style="font-size:12px">générés le ${esc(fmtD(window.__batchResult.at))} · ${esc(window.__batchResult.items.map(x => x.name).join(', '))}</span></div>` : ''}</div>
-      <div><button class="btn" id="rpball">Générer tous les rapports</button>${window.__batchResult ? ' <button class="btn primary" id="rpbprint">Imprimer / PDF (tous)</button>' : ''}</div>
+      <div><button class="btn" id="rpball">Générer tous les rapports</button> <button class="btn" id="rpbfull" title="Coche toutes les sections, puis génère un rapport par magasin">Tous les rapports complets</button>${window.__batchResult ? ' <button class="btn primary" id="rpbprint">Imprimer / PDF (tous)</button>' : ''}</div>
     </div>
     <div class="card rpctl" id="rpxlsx">
       <div style="flex:1;min-width:260px"><b>Export Excel complet</b><div class="muted" style="font-size:12.5px">Un fichier .xlsx avec une feuille par sujet : postes, téléphones, files d'attente, SDA et leur issue à des moments clés, jours fériés à saisir, comptes à droits élevés, renvois externes, personnes indispensables, créneaux sous-dotés et recommandations${S ? ` — magasin ${esc(segShort(S))}` : ''}. Créé dans le navigateur, rien n'est envoyé.</div><div id="rpxmsg" class="muted" style="font-size:12px;margin-top:4px"></div></div>
@@ -42,11 +47,15 @@ V.rapport = el => {
   $('#rpx').addEventListener('click', () => { const b = $('#rpx'); b.disabled = true; b.textContent = 'Préparation…';
     setTimeout(() => { try{ const r = exportXlsx(); $('#rpxmsg').textContent = `Fichier créé : ${r.sheets.length} feuilles, ${(r.size / 1048576).toFixed(1).replace('.', ',')} Mo — ${r.sheets.map(x => x[0] + ' (' + nf(x[1]) + ')').join(', ')}.`; }
       catch(er){ console.error(er); $('#rpxmsg').textContent = 'Erreur pendant l\'export : ' + er.message; } b.disabled = false; b.textContent = 'Exporter en Excel'; }, 30); });
-  $('#rpball').addEventListener('click', () => {
+  const runAll = full => {
     const stores = SEG_LIST.filter(x => x[0] !== '@');
-    if(!confirm(`Générer ${stores.length} rapports (un par magasin) ? Comptez environ une seconde par magasin.`)) return;
+    if(!confirm(`Générer ${stores.length} rapports${full ? ' complets' : ''} (un par magasin) ? Comptez environ ${full ? 'deux secondes' : 'une seconde'} par magasin.`)) return;
+    if(full) rptAll();
     window.__runBatch(stores, SEG);
-  });
+  };
+  $('#rpball').addEventListener('click', () => runAll(false));
+  $('#rpbfull').addEventListener('click', () => runAll(true));
+  $('#rpfull').addEventListener('click', () => { rptAll(); V.rapport(el); });
   const bp = $('#rpbprint'); if(bp) bp.addEventListener('click', () => window.__printBatch());
   $('#rpprint').addEventListener('click', () => { document.body.classList.add('printing-report'); window.print(); setTimeout(() => document.body.classList.remove('printing-report'), 500); });
 
@@ -79,7 +88,49 @@ V.rapport = el => {
 
   // SDA du magasin
   const dids = allDIDs.slice().sort((a, b) => (st.didCalls[b.did] || 0) - (st.didCalls[a.did] || 0));
-  const topDids = dids.filter(r => r.rule && r.rule.office && r.rule.office.to !== 'None').slice(0, 3);
+  // 20.10.3 : parcours de tous les SDA du magasin, un diagramme par parcours différent
+  const flowRows = sec.has('diag') ? impData(S).rows : [], flowGroups = flowRows.length ? impFlowGroups(flowRows) : [];
+
+  // 20.10.3 : erreurs et incohérences — pièges d'acheminement (configuration) et contrôle des SDA à des moments clés (simulation)
+  const SVL = {bad: ['Appel perdu', 'bad'], warn: ['À vérifier', 'warn'], info: ['Information', '']}, SVO = {bad: 0, warn: 1, info: 2};
+  // SDA déclaré sur plusieurs trunks : l'appel suit la règle du trunk par lequel il arrive, donc deux acheminements possibles pour un même numéro
+  const dupDids = () => { const by = {}, all = []; // tous les trunks du backup (en vue magasin, allDIDs ne contient que ceux du magasin)
+    FULL.lines.forEach(l => { const rb = {}; l.rules.forEach(r => rb[r.data] = r); const def = l.rules.find(r => r.cond === 'ForwardAll'); l.dids.forEach(d => all.push({did: d, line: l, rule: rb[d] || def})); });
+    all.forEach(r => (by[phone(r.did)] ||= []).push(r)); // même numéro écrit de deux façons (avec ou sans le 1) : regroupé sur le numéro affiché
+    return Object.entries(by).filter(([, l]) => l.length > 1 && (!S || l.some(r => (DIDSEG[r.did] || SEG_COMMON) === S))).map(([num, l]) => { const dest = [...new Set(l.map(r => cmpDest(r.rule?.office)))], sms = l.some(r => /\bsms\b/i.test(r.line.gateway || ''));
+      return {cat: 'dupdid', sev: sms ? 'info' : 'warn', el: num, title: `SDA déclaré sur ${l.length} trunks${dest.length > 1 ? ', avec des destinations différentes' : ''}`,
+        detail: l.map(r => `${r.did} sur le trunk ${r.line.number} ${r.line.gateway || ''} → ${cmpDest(r.rule?.office)}`).join(' ; '), fix: sms ? "Normal si l'un des trunks ne sert qu'aux SMS ; sinon, garder le SDA sur un seul trunk." : "Garder le SDA sur un seul trunk (celui de l'opérateur qui l'achemine) et le retirer des autres."}; }); };
+  const traps = sec.has('erreurs') ? trapAnalysis().filter(t => !S || (SEGOF[t.el] || SEG_COMMON) === S).concat(dupDids()).sort((a, b) => SVO[a.sev] - SVO[b.sev] || a.cat.localeCompare(b.cat)) : [];
+  const ctl = sec.has('erreurs') && allDIDs.length ? ctlRun() : null;
+  const errHTML = () => {
+    const nB = traps.filter(t => t.sev === 'bad').length + (ctl ? ctl.causes.filter(c => c.sev === 'bad').length : 0), nW = traps.filter(t => t.sev === 'warn').length + (ctl ? ctl.causes.filter(c => c.sev === 'warn').length : 0);
+    const nInfo = traps.filter(t => t.sev === 'info').length + (ctl ? ctl.causes.filter(c => c.sev === 'info').length : 0);
+    const pill = s => `<span class="rpsev rpsev-${s}">${esc(SVL[s][0])}</span>`;
+    const el2 = n => esc(n + (dnName(n) ? ' ' + dnName(n) : ''));
+    const head = `<div class="rpkpis">${[['Appels perdus possibles', nB], ['À vérifier', nW], ['Information', nInfo], ['SDA simulés', ctl ? nf(ctl.rows.length) : '–']].map(([l, v]) => `<div><b>${v}</b><span>${l}</span></div>`).join('')}</div>`;
+    const t1 = `<h3>Pièges d'acheminement (configuration)</h3>` + T(['Gravité', 'Catégorie', 'Élément', 'Problème', 'À faire'], traps.map(t => `<tr><td>${pill(t.sev)}</td><td>${esc((TRAP_CAT[t.cat] || ['SDA en double'])[0])}</td><td>${el2(t.el)}</td>
+      <td>${esc(t.title)}${t.detail ? `<div class="muted">${esc(t.detail)}</div>` : ''}</td><td>${esc(t.fix)}</td></tr>`));
+    const t2 = !ctl ? '' : `<h3>Contrôle des SDA à des moments clés (simulation)</h3><p class="rpnote">Chaque SDA est simulé sans choix du client dans les menus : ${ctl.M.map(m => esc(`${m[1]} (${m[2]})`)).join(', ')}. Les problèmes sont regroupés par cause.</p>` +
+      T(['Gravité', 'Problème', 'Où', 'Moments touchés', 'SDA touchés', 'Appels (backup)'], ctl.causes.map(c => `<tr><td>${pill(c.sev)}</td><td>${esc(c.title)}</td><td>${esc(c.detail || [...c.items].join(', '))}</td><td>${esc([...c.moments].join(', '))}</td>
+        <td class="rpdids">${[...c.dids].slice(0, 30).map(d => esc(phone(d))).join(', ')}${c.dids.size > 30 ? ` … (+${c.dids.size - 30})` : ''}</td><td class="num">${nf(c.calls)}</td></tr>`));
+    return (nB + nW + nInfo ? head : '<p><b>Aucune erreur ni incohérence détectée.</b> Toutes les destinations existent, aucune boucle, et chaque SDA mène à une personne, une messagerie ou un renvoi aux moments contrôlés.</p>') + t1 + t2 +
+      `<p class="rpnote">Pièges : boucles où l'appel tourne sans aboutir, destinations qui n'existent plus, postes désactivés, files, groupes et menus sans issue, SDA qui ne mènent qu'à une messagerie, SDA déclarés sur plusieurs trunks. « Aucun agent connecté » reflète le moment du backup. Les jours fériés non configurés sont dans la section Horaires ; les autres points de configuration dans Recommandations.</p>`;
+  };
+
+  // 20.10.3 : modifications faites dans la console pour ce magasin sur la période (journal d'audit)
+  const auditHTML = () => {
+    const allM = modEntries(); if(!allM.length) return "<p>Le journal d'audit de ce backup ne contient aucune modification.</p>";
+    const aFrom = from || allM[allM.length - 1].day, aTo = to || allM[0].day;
+    const rows = allM.filter(r => r.day >= aFrom && r.day <= aTo && (!S || r.segs.has(S)));
+    const nCom = S && S !== SEG_COMMON ? allM.filter(r => r.day >= aFrom && r.day <= aTo && !r.segs.has(S) && r.segs.has(SEG_COMMON)).length : 0;
+    const by = f => { const o = {}; rows.forEach(r => { const k = f(r) || '—'; o[k] = (o[k] || 0) + 1; }); return Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${esc(k)} (${nf(v)})`).join(', ') || '–'; };
+    const cnt = k => rows.filter(r => r.a[1] === k).length, nFw = rows.filter(r => r.fwErased).length, nOther = rows.length - cnt('Création') - cnt('Modification') - cnt('Suppression'), MAX = 300, cut = v => { v = String(v ?? ''); return v.length > 80 ? v.slice(0, 80) + '…' : v; };
+    return `<p>${nf(rows.length)} changement${rows.length > 1 ? 's' : ''} du ${aFrom} au ${aTo} : ${nf(cnt('Création'))} création${cnt('Création') > 1 ? 's' : ''}, ${nf(cnt('Modification'))} modification${cnt('Modification') > 1 ? 's' : ''}, ${nf(cnt('Suppression'))} suppression${cnt('Suppression') > 1 ? 's' : ''}${nOther ? `, ${nf(nOther)} autre${nOther > 1 ? 's' : ''} action${nOther > 1 ? 's' : ''}` : ''}${nFw ? `, dont ${nf(nFw)} firmware${nFw > 1 ? 's' : ''} effacé${nFw > 1 ? 's' : ''}` : ''}.</p>
+      ${rows.length ? `<p><b>Par qui :</b> ${by(r => r.a[3])}<br><b>Quoi :</b> ${by(r => r.type)}</p>` : ''}
+      ${rows.length ? T(['Date', 'Action', 'Type', 'Élément', 'Par', 'Changements (avant → après)'], rows.slice(0, MAX).map(r => `<tr><td class="nw">${esc(fmtD(r.a[0]))}</td><td>${esc(r.a[1])}</td><td>${esc(r.type)}</td><td>${esc(cut(r.a[4] || '—'))}</td><td>${esc(r.a[3] || '—')}</td>
+        <td>${r.fwErased ? `<b>Firmware effacé : ${esc(r.fwErased)} → aucun</b><br>` : ''}${r.a[1] === 'Création' ? `Élément créé${r.a[6].length ? ` (${nf(r.a[6].length)} champs réglés)` : ''}` : r.a[6].slice(0, 8).map(c => `<b>${esc(c[0])}</b> : ${esc(cut(c[1]))} → ${esc(cut(c[2]))}`).join('<br>') + (r.a[6].length > 8 ? `<br>… (+${r.a[6].length - 8} champs)` : '')}</td></tr>`)) : ''}
+      <p class="rpnote">${rows.length > MAX ? `Les ${MAX} changements les plus récents sont listés sur ${nf(rows.length)} ; le détail complet, champ par champ, est dans l'onglet Modifications (export CSV). ` : ''}Le magasin d'un changement est déduit du numéro ou du nom de l'élément.${nCom ? ` ${nf(nCom)} changement${nCom > 1 ? 's' : ''} commun${nCom > 1 ? 's' : ''} à tout le système (trunks, paramètres…) sur la même période ne sont pas listés ici.` : ''} Les connexions à la console et les actions sur les enregistrements ne sont pas comptées ; les valeurs sensibles ne sont jamais affichées.</p>`;
+  };
 
   $('#report').innerHTML = `
   <header class="rpcover">
@@ -112,9 +163,10 @@ V.rapport = el => {
   })())}
   ${sect('reco', 'Recommandations', F.filter(f => f.sev !== 'obs').length || F.length ? F.map(f => `<div class="rpreco ${f.sev}"><div><span class="rpsev">${SEV[f.sev].l}</span> <b>${esc(f.title)}</b></div><p>${esc(f.detail)}</p><p><i>Recommandation :</i> ${esc(f.reco)}</p>
       ${f.items.length ? `<p class="rpitems">${f.items.slice(0, 40).map(i => esc(i.text)).join(' · ')}${f.items.length > 40 ? ` · … (+${f.items.length - 40})` : ''}</p>` : ''}</div>`).join('') : '<p>Aucune recommandation.</p>')}
+  ${sect('erreurs', 'Erreurs et incohérences à corriger', errHTML())}
   ${sect('sda', 'SDA et acheminement', T(['SDA', 'Règle', 'Heures d\'ouverture', 'Hors heures', 'Appels (période)'], dids.map(r => `<tr><td class="mono">${esc(phone(r.did))}</td><td>${esc(r.rule ? (r.rule.name || (r.isDefault ? 'règle par défaut du trunk' : 'règle du SDA')) : 'aucune')}</td>
       <td>${esc(cmpDest(r.rule?.office))}</td><td>${r.rule?.altOOO ? esc(cmpDest(r.rule.outOfOffice)) : '(idem)'}</td><td class="num">${nf(st.didCalls[r.did] || 0)}</td></tr>`)))}
-  ${sect('diag', 'Diagrammes des principaux SDA', topDids.map(r => { const g = renderFlow(buildFlow(r)); return `<div class="rpdiag"><h3>${esc(phone(r.did))} <span class="muted">— ${nf(st.didCalls[r.did] || 0)} appels sur la période</span></h3>${g.svg.replace('<svg ', `<svg style="width:100%;height:auto;max-height:640px" `)}</div>`; }).join('') || '<p>Aucun SDA acheminé.</p>')}
+  ${sect('diag', 'Parcours des appels de tous les SDA', flowGroups.length ? `<p class="rpnote">${nf(flowRows.length)} SDA, ${nf(flowGroups.length)} parcours différent${flowGroups.length > 1 ? 's' : ''} : les SDA qui suivent exactement le même parcours partagent un seul diagramme, du plus appelé au moins appelé (appels reçus dans tout le backup). Lecture : de haut en bas, l'appel passe d'un élément au suivant ; le texte sur la flèche indique le choix ou le moment (touche du menu, ouvert / fermé, délai). Un élément déjà affiché est rappelé par son numéro.</p>` + flowGroups.map(rptFlowHTML).join('') : '<p>Aucun SDA.</p>')}
   ${sect('horaires', 'Horaires et jours fériés', T(['Département', 'Horaires', 'Pauses', 'Fermé pendant l\'ouverture', 'Avant ouverture /sem.', 'Après fermeture /sem.', 'Fériés à venir non configurés'], H.map(r => `<tr><td>${esc(r.g.number + ' ' + r.g.name)}</td>
       <td>${hoursSummary(r.g.hours).map(esc).join('<br>')}</td><td>${r.g.breakTime?.days?.length ? hoursSummary(r.g.breakTime).map(esc).join('<br>') : '—'}</td><td class="num">${r.closedWhileOpen.length}</td>
       <td class="num">${(r.before.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td class="num">${(r.after.reduce((a, b) => a + b, 0) / r.weeks).toFixed(1)}</td><td>${r.missingHol.map(([n, d]) => esc(n) + ' (' + d + ')').join(', ') || '—'}</td></tr>`)))}
@@ -126,6 +178,7 @@ V.rapport = el => {
       <td>${esc(e.devices.map(d => d.model || d.template).join(', ') || '—')}</td><td>${esc(e.queues.join(', '))}</td></tr>`)))}
   ${sect('tel', 'Téléphones à mettre à jour', `<p>${phTodo.length} téléphone${phTodo.length > 1 ? 's' : ''} sur ${ph.length} : firmware plus ancien que la version recommandée par 3CX, ou version inconnue (aucun firmware assigné et aucun indice). À traiter depuis la console 3CX : Téléphones → Mettre à jour le firmware.</p>` +
       T(['Poste', 'Modèle', 'MAC', 'État', 'Recommandé 3CX'], phTodo.map(r => `<tr><td>${esc(r.ext + ' ' + r.user)}</td><td>${esc(r.model)}</td><td class="mono">${esc(macFmt(r.mac))}</td><td>${PH_ST[r.st].l}</td><td class="mono">${esc(r.rec || '—')}</td></tr>`)))}
+  ${sect('audit', "Modifications de la configuration (journal d'audit)", auditHTML())}
   <footer class="rpfoot">Généré par 3CXplore — données issues du backup du ${esc(bkDate(FULL.info.date))}.</footer>`;
 };
 

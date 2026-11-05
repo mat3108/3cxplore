@@ -97,9 +97,10 @@
    "astuce": "La note évolue d'un backup à l'autre : suivez-la dans l'onglet Suivi."
   },
   "rapport": {
-   "sert": "Un rapport imprimable ou en PDF, pour un magasin ou tout le système : synthèse, recommandations, SDA et diagrammes, horaires, files, agents, postes et téléphones à mettre à jour.",
+   "sert": "Un rapport imprimable ou en PDF, pour un magasin ou tout le système : synthèse, recommandations, erreurs et incohérences à corriger, SDA et parcours des appels de tous les SDA, horaires, files, agents, postes, téléphones à mettre à jour et modifications faites dans la console (journal d'audit).",
    "comment": [
-    "Choisissez le magasin et cochez les sections voulues.",
+    "Choisissez le magasin et cochez les sections voulues, ou cliquez « Rapport complet » pour tout cocher.",
+    "« Tous les rapports complets » génère d'un coup un rapport complet par magasin, dans un seul document.",
     "Imprimez, ou enregistrez en PDF depuis la fenêtre d'impression."
    ]
   },
@@ -1053,9 +1054,10 @@
     "astuce": "The score changes from one backup to the next: follow it in the Tracking tab."
    },
    "rapport": {
-    "sert": "A printable or PDF report for a store or the whole system: summary, recommendations, DIDs and diagrams, hours, queues, agents, extensions and phones to update.",
+    "sert": "A printable or PDF report for a store or the whole system: summary, recommendations, errors and inconsistencies to fix, DIDs and the call flow of every DID, hours, queues, agents, extensions, phones to update and changes made in the console (audit log).",
     "comment": [
-     "Choose the store and tick the sections you want.",
+     "Choose the store and tick the sections you want, or click « Full report » to tick them all.",
+     "« All full reports » builds a full report for every store at once, in a single document.",
      "Print, or save as PDF from the print window."
     ]
    },

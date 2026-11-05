@@ -1,5 +1,24 @@
 [
  {
+  "version": "20.10.3",
+  "date": "2026-11-05",
+  "titre": "Le rapport complet par magasin",
+  "resume": "Rapport par magasin : le parcours des appels de tous les SDA (un diagramme par parcours différent), les erreurs et incohérences à corriger, et les modifications faites dans la console. Un bouton « Rapport complet » coche tout, pour un magasin ou pour tous les magasins d'un coup.",
+  "changements": [
+   "Rapport par magasin : la section « Parcours des appels de tous les SDA » remplace les diagrammes des 3 principaux SDA. Chaque SDA du magasin y figure ; ceux qui suivent exactement le même parcours partagent un seul diagramme (en portrait, lisible sur une page lettre), du plus appelé au moins appelé.",
+   "Nouvelle section « Erreurs et incohérences à corriger » : les pièges d'acheminement du magasin (boucles, destinations disparues, postes désactivés, files, groupes et menus sans issue, SDA qui ne mènent qu'à une messagerie) avec ce qu'il faut faire, puis le contrôle de chaque SDA à des moments clés (semaine, midi, soir, nuit, fin de semaine, prochain jour férié), problèmes regroupés par cause.",
+   "Nouvelle section « Modifications de la configuration (journal d'audit) » : les changements faits dans la console pour le magasin pendant la période du rapport, par qui et quoi, avec la valeur avant et après de chaque champ modifié (300 plus récents ; le détail complet reste dans l'onglet Modifications).",
+   "Bouton « Rapport complet » : coche toutes les sections d'un clic. Bouton « Tous les rapports complets » : coche toutes les sections puis génère un rapport par magasin, réunis dans un seul document à imprimer ou enregistrer en PDF.",
+   "Les deux nouvelles sections sont cochées d'office, même si vous aviez déjà choisi vos sections."
+  ],
+  "onglets": [
+   [
+    "Rapport par magasin",
+    "Parcours de tous les SDA, erreurs et incohérences, journal d'audit ; bouton « Rapport complet »."
+   ]
+  ]
+ },
+ {
   "version": "20.10.2",
   "date": "2026-11-03",
   "titre": "Les heures dans Réceptions",
